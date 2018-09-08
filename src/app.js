@@ -20,12 +20,13 @@ import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
 import { translationMessages } from './i18n';
+import { loadState } from './utils/ls';
 
 // Import CSS reset and Global Styles
 import './global-styles';
 
 // Create redux store with history
-const initialState = {};
+const initialState = loadState() || {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');

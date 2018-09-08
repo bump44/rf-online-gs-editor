@@ -15,10 +15,9 @@
           "stage-0"
         ],
         "plugins": [
-          "react-hot-loader/babel",
-          "styled-components",
           "transform-async-to-generator",
-          "transform-es2015-classes"
+          "styled-components",
+          "react-hot-loader/babel"
         ],
         "sourceMaps": "inline"
       }
@@ -38,11 +37,10 @@
           "stage-0"
         ],
         "plugins": [
+          "transform-async-to-generator",
           "transform-react-remove-prop-types",
           "transform-react-inline-elements",
           "transform-react-constant-elements",
-          "transform-async-to-generator",
-          "transform-es2015-classes",
           "styled-components"
         ],
         "sourceMaps": "none"
