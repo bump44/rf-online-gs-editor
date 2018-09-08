@@ -1,0 +1,9 @@
+node_modules
+out
+coverage
+build
+stats.json
+
+.DS_Store
+npm-debug.log
+.idea

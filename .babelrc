@@ -1,0 +1,30 @@
+{
+  "presets": [
+    ["env", {
+      "targets": { "node": 8 },
+      "useBuiltIns": true,
+      "modules": false
+    }],
+    "react",
+    "stage-0"
+  ],
+  "plugins": ["styled-components"],
+  "env": {
+    "production": {
+      "only": [
+        "app"
+      ],
+      "plugins": [
+        "transform-react-remove-prop-types",
+        "transform-react-inline-elements",
+        "transform-react-constant-elements"
+      ]
+    },
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node"
+      ]
+    }
+  }
+}
