@@ -6,6 +6,7 @@ import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
+import globalReducer from './containers/App/reducer';
 import languageProviderReducer from './containers/LanguageProvider/reducer';
 
 /*
@@ -43,6 +44,7 @@ export default function createReducer(injectedReducers) {
   return combineReducers({
     route: routeReducer,
     language: languageProviderReducer,
+    global: globalReducer,
     ...injectedReducers,
   });
 }

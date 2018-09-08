@@ -16,7 +16,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 import createHistory from 'history/createMemoryHistory';
 
-import App from './containers/App';
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
@@ -32,6 +31,8 @@ const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {
+  const App = require('./containers/App').default; // eslint-disable-line
+
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
@@ -50,7 +51,7 @@ if (module.hot) {
   // Hot reloadable React components and translation json files
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['./i18n', './containers/App'], () => {
+  module.hot.accept(() => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     render(translationMessages);
   });

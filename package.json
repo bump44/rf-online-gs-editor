@@ -5,7 +5,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "cross-env NODE_ENV=development electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -106,6 +106,7 @@
     "react-apollo": "^2.1.11",
     "react-dom": "^16.5.0",
     "react-helmet": "^5.2.0",
+    "react-hot-loader": "^4.3.6",
     "react-intl": "^2.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
