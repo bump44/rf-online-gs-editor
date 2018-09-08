@@ -13,11 +13,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
+import { ApolloProvider } from 'react-apollo';
 import createHistory from 'history/createMemoryHistory';
 
 import App from './containers/App';
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
+import apolloClient from './apollo';
 import { translationMessages } from './i18n';
 
 // Import CSS reset and Global Styles
@@ -34,7 +36,9 @@ const render = messages => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <ApolloProvider client={apolloClient}>
+            <App />
+          </ApolloProvider>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

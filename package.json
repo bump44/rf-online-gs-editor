@@ -15,7 +15,8 @@
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "prettify": "prettier --write"
   },
   "keywords": [],
   "author": "mivl",
@@ -88,14 +89,21 @@
     }
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.2.9",
+    "apollo-client": "^2.4.1",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-http": "^1.5.4",
     "babel-polyfill": "^6.26.0",
     "electron-compile": "^6.4.3",
     "electron-squirrel-startup": "^1.0.0",
     "fontfaceobserver": "^2.0.13",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.9.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
+    "react-apollo": "^2.1.11",
     "react-dom": "^16.5.0",
     "react-helmet": "^5.2.0",
     "react-intl": "^2.4.0",
