@@ -5,17 +5,20 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import packagejson from '../../../package.json';
+import Button from '../Button';
 
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.PureComponent {
   render() {
+    const { isLoggedIn, currentUser, onClickLogout } = this.props;
+
     return (
       <Wrapper>
         <Brand>
@@ -33,21 +36,50 @@ class Header extends React.PureComponent {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="field is-grouped">
-                <p className="control">
-                  <LinkButton to="/projects/create" className="is-primary">
-                    <FormattedMessage {...messages.createProject} />
-                  </LinkButton>
-                </p>
-                <p className="control">
-                  <LinkButton to="/login" className="is-black">
-                    <FormattedMessage {...messages.signIn} />
-                  </LinkButton>
-                </p>
-                <p className="control">
-                  <LinkButton to="/register" className="is-black">
-                    <FormattedMessage {...messages.signUp} />
-                  </LinkButton>
-                </p>
+                {!isLoggedIn && (
+                  <React.Fragment>
+                    <p className="control">
+                      <LinkButton to="/login" className="is-black">
+                        <FormattedMessage {...messages.signIn} />
+                      </LinkButton>
+                    </p>
+                    <p className="control">
+                      <LinkButton to="/register" className="is-black">
+                        <FormattedMessage {...messages.signUp} />
+                      </LinkButton>
+                    </p>
+                  </React.Fragment>
+                )}
+                {isLoggedIn && (
+                  <React.Fragment>
+                    <UserControlBlock>
+                      <div className="username">
+                        <i className="fas fa-user" />
+                        &nbsp;
+                        {currentUser.get('login')}
+                      </div>
+                      <div className="rolename">
+                        {currentUser.getIn(['role', 'title'])}
+                      </div>
+                    </UserControlBlock>
+                    <p className="control">
+                      <LinkButton
+                        to="/projects/create"
+                        className="is-primary"
+                        title="Create new project"
+                      >
+                        <i className="fas fa-plus" />
+                      </LinkButton>
+                    </p>
+                    <div className="control">
+                      <Button
+                        onClick={onClickLogout}
+                        icon="sign-out-alt"
+                        className="is-danger"
+                      />
+                    </div>
+                  </React.Fragment>
+                )}
               </div>
             </div>
           </div>
@@ -57,27 +89,41 @@ class Header extends React.PureComponent {
   }
 }
 
-Header.propTypes = {};
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  currentUser: PropTypes.shape({
+    login: PropTypes.string,
+    email: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+  }),
+  onClickLogout: PropTypes.func,
+};
+
+Header.defaultProps = {
+  isLoggedIn: false,
+  currentUser: null,
+  onClickLogout: null,
+};
 
 export default Header;
 
 const Wrapper = styled.header.attrs({ className: 'navbar' })`
   background: #2a3142;
   -webkit-app-region: drag;
-`;
 
+  .control,
+  .button,
+  .navbar-item {
+    -webkit-app-region: no-drag;
+  }
+`;
 const Brand = styled.div.attrs({ className: 'navbar-brand' })``;
-
-const LinkButton = styled(NavLink).attrs({ to: '/', className: 'button' })`
-  -webkit-app-region: no-drag;
-`;
-
+const LinkButton = styled(NavLink).attrs({ to: '/', className: 'button' })``;
 const LinkItem = styled(NavLink).attrs({ to: '/', className: 'navbar-item' })`
   color: #ddd;
-  -webkit-app-region: no-drag;
   transition: all 0.1s ease;
 `;
-
 const LinkItemBrand = styled(LinkItem).attrs({ to: '/' })`
   text-transform: uppercase;
   font-weight: bold;
@@ -102,4 +148,16 @@ const BrandVersionBadge = styled.span`
   font-size: 10px;
   text-transform: lowercase;
   color: gray;
+`;
+
+const UserControlBlock = styled.div.attrs({ className: 'control' })`
+  color: #fff;
+
+  .username {
+    font-size: 14px;
+  }
+
+  .rolename {
+    font-size: 12px;
+  }
 `;

@@ -31,7 +31,7 @@ class Button extends React.PureComponent {
         {icon && (
           <span>
             <i className={`fas fa-${icon}`} />
-            &nbsp;
+            {children && <span>&nbsp;</span>}
           </span>
         )}
         {children}
@@ -60,4 +60,8 @@ Button.defaultProps = {
 
 export default Button;
 
-const SButton = styled.button.attrs({ className: 'button' })``;
+const SButton = styled.button.attrs({ className: 'button' })`
+  &:hover {
+    cursor: pointer;
+  }
+`;
