@@ -10,6 +10,10 @@ injectGlobal`
     padding: 10px;
   }
 
+  .columns {
+    margin-right: -0.55rem;
+  }
+
   @media screen and (min-width: 1088px) {
     .container.is-fluid {
       margin-left: 0px;
