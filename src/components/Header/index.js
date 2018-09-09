@@ -18,7 +18,12 @@ import Button from '../Button';
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.PureComponent {
   render() {
-    const { isLoggedIn, currentUser, onClickLogout } = this.props;
+    const {
+      isLoggedIn,
+      currentUser,
+      currentProject,
+      onClickLogout,
+    } = this.props;
 
     return (
       <Wrapper>
@@ -36,6 +41,22 @@ class Header extends React.PureComponent {
             <LinkItem to="/projects">
               <FormattedMessage {...messages.Projects} />
             </LinkItem>
+            {currentProject && (
+              <div className="navbar-item">
+                <div className="field is-grouped">
+                  <p className="control">
+                    <LinkButton
+                      to={`/project/${currentProject.get('id')}`}
+                      className="is-info"
+                    >
+                      <i className="fas fa-info" />
+                      &nbsp;
+                      {currentProject.get('title')}
+                    </LinkButton>
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="navbar-end">
             <div className="navbar-item">
@@ -96,12 +117,14 @@ class Header extends React.PureComponent {
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
+  currentProject: PropTypes.instanceOf(Map),
   onClickLogout: PropTypes.func,
 };
 
 Header.defaultProps = {
   isLoggedIn: false,
   currentUser: null,
+  currentProject: null,
   onClickLogout: null,
 };
 
