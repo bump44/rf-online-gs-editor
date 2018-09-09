@@ -22,6 +22,7 @@ import messages from './messages';
 import { loadingStart } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
+import { makeSelectProject } from '../ProjectPage/selectors';
 import Header from '../../components/Header';
 import ProjectMedia from '../../components/ProjectMedia';
 import ProjectsTabs from '../../components/ProjectsTabs';
@@ -57,7 +58,12 @@ export class ProjectsPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoggedIn, currentUser, projectsPage } = this.props;
+    const {
+      isLoggedIn,
+      currentUser,
+      currentProject,
+      projectsPage,
+    } = this.props;
     const { result } = projectsPage;
     const { projectsMy, projectsNew } = result;
 
@@ -68,7 +74,11 @@ export class ProjectsPage extends React.PureComponent {
           <meta name="description" content="Description of ProjectsPage" />
         </Helmet>
 
-        <Header isLoggedIn={isLoggedIn} currentUser={currentUser} />
+        <Header
+          isLoggedIn={isLoggedIn}
+          currentUser={currentUser}
+          currentProject={currentProject}
+        />
 
         <div className="container is-fluid p-10">
           <ProjectsTabs isLoggedIn={isLoggedIn} />
@@ -114,16 +124,19 @@ ProjectsPage.propTypes = {
   fnLoadingStart: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
+  currentProject: PropTypes.instanceOf(Map),
 };
 
 ProjectsPage.defaultProps = {
   currentUser: null,
+  currentProject: null,
 };
 
 const mapStateToProps = createStructuredSelector({
   projectsPage: makeSelectProjectsPage(),
   isLoggedIn: makeSelectIsLoggedIn(),
   currentUser: makeSelectCurrentUser(),
+  currentProject: makeSelectProject(),
 });
 
 function mapDispatchToProps(dispatch) {

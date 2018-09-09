@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -21,11 +22,17 @@ import messages from './messages';
 import Header from '../../components/Header';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
+import { makeSelectProject } from '../ProjectPage/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
   render() {
-    const { isLoggedIn, currentUser, fnLogoutCurrentUser } = this.props;
+    const {
+      isLoggedIn,
+      currentUser,
+      currentProject,
+      fnLogoutCurrentUser,
+    } = this.props;
 
     return (
       <div>
@@ -37,6 +44,7 @@ export class HomePage extends React.PureComponent {
         <Header
           onClickLogout={fnLogoutCurrentUser}
           currentUser={currentUser}
+          currentProject={currentProject}
           isLoggedIn={isLoggedIn}
         />
         <FormattedMessage {...messages.header} />
@@ -47,12 +55,21 @@ export class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  currentUser: PropTypes.instanceOf(Map),
+  currentProject: PropTypes.instanceOf(Map),
+};
+
+HomePage.defaultProps = {
+  currentUser: null,
+  currentProject: null,
 };
 
 const mapStateToProps = createStructuredSelector({
   homePage: makeSelectHomePage(),
   isLoggedIn: makeSelectIsLoggedIn(),
   currentUser: makeSelectCurrentUser(),
+  currentProject: makeSelectProject(),
 });
 
 function mapDispatchToProps(dispatch) {
