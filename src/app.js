@@ -15,12 +15,13 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 import createHistory from 'history/createMemoryHistory';
+import throttle from 'lodash/throttle';
 
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
 import { translationMessages } from './i18n';
-import { loadState } from './utils/ls';
+import { loadState, saveState } from './utils/ls';
 
 // Import CSS reset and Global Styles
 import './global-styles';
@@ -30,6 +31,19 @@ const initialState = loadState() || {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+
+store.subscribe(
+  throttle(
+    () =>
+      saveState({
+        global: store
+          .getState()
+          .get('global')
+          .toJS(),
+      }),
+    1000,
+  ),
+);
 
 const render = messages => {
   const App = require('./containers/App').default; // eslint-disable-line
