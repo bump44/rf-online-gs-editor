@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map } from 'immutable';
+import { NavLink } from 'react-router-dom';
 import cx from 'classnames';
 import moment from 'moment';
 
@@ -15,14 +16,14 @@ import moment from 'moment';
 // import messages from './messages';
 
 function ProjectMedia({ project, currentUser }) {
-  const { title, createdAt, owner } = project;
+  const { title, id, createdAt, owner } = project;
   const isCurrentIsOwner = currentUser && currentUser.get('id') === owner.id;
 
   return (
     <Media>
       <div className="media-content">
         <p className="title is-4">
-          {title}
+          <NavLink to={`/project/${id}`}>{title}</NavLink>
           &nbsp;
           <small className="has-text-grey is-size-7 is-italic">
             {moment(createdAt).format('LLL')}
@@ -45,6 +46,7 @@ function ProjectMedia({ project, currentUser }) {
 
 ProjectMedia.propTypes = {
   project: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     owner: PropTypes.shape({
