@@ -31,7 +31,10 @@ class Header extends React.PureComponent {
         <div className="navbar-menu">
           <div className="navbar-start">
             <LinkItem to="/">
-              <FormattedMessage {...messages.home} />
+              <FormattedMessage {...messages.Home} />
+            </LinkItem>
+            <LinkItem to="/projects">
+              <FormattedMessage {...messages.Projects} />
             </LinkItem>
           </div>
           <div className="navbar-end">

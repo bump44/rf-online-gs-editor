@@ -15,9 +15,13 @@ export default defineMessages({
     id: 'app.components.Header.brand',
     defaultMessage: 'RFGSEditor',
   },
-  home: {
-    id: 'app.components.Header.home',
+  Home: {
+    id: 'app.components.Header.Home',
     defaultMessage: 'Home',
+  },
+  Projects: {
+    id: 'app.components.Header.Projects',
+    defaultMessage: 'Projects',
   },
   createProject: {
     id: 'app.components.Header.createProject',
