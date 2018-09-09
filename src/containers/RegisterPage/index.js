@@ -21,6 +21,7 @@ import messages from './messages';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
+import Notification from '../../components/Notification';
 import FormWrapper from './FormWrapper';
 import * as actions from './actions';
 
@@ -60,9 +61,17 @@ export class RegisterPage extends React.PureComponent {
       changeLogin,
       changeEmail,
       changePassword,
+      submit,
     } = this.props;
 
-    const { login, email, password, isLoading } = registerPage;
+    const {
+      login,
+      email,
+      password,
+      isLoading,
+      isError,
+      errorMessage,
+    } = registerPage;
 
     return (
       <div>
@@ -75,6 +84,10 @@ export class RegisterPage extends React.PureComponent {
 
         <div className="container is-fluid p-10">
           <FormWrapper>
+            {isError && (
+              <Notification className="is-danger">{errorMessage}</Notification>
+            )}
+
             {this.renderField({
               label: <FormattedMessage {...messages.Login} />,
               icon: 'user',
@@ -95,7 +108,12 @@ export class RegisterPage extends React.PureComponent {
               type: 'password',
             })}
 
-            <Button loading={isLoading} className="is-primary" icon="user">
+            <Button
+              onClick={submit}
+              loading={isLoading}
+              className="is-primary"
+              icon="user"
+            >
               <FormattedMessage {...messages.SubmitRegisterForm} />
             </Button>
           </FormWrapper>
@@ -111,10 +129,14 @@ RegisterPage.propTypes = {
     login: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
+    isLoading: PropTypes.bool,
+    isError: PropTypes.bool,
+    errorMessage: PropTypes.string,
   }),
   changeLogin: PropTypes.func.isRequired,
   changeEmail: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,6 +149,7 @@ function mapDispatchToProps(dispatch) {
     changeLogin: evt => dispatch(actions.changeLogin(evt.target.value)),
     changeEmail: evt => dispatch(actions.changeEmail(evt.target.value)),
     changePassword: evt => dispatch(actions.changePassword(evt.target.value)),
+    submit: () => dispatch(actions.submit()),
   };
 }
 
