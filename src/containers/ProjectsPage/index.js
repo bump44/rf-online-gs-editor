@@ -20,8 +20,9 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { loadingStart } from './actions';
-import Header from '../../components/Header';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
+import { logoutCurrentUser } from '../App/actions';
+import Header from '../../components/Header';
 import ProjectMedia from '../../components/ProjectMedia';
 import ProjectsTabs from '../../components/ProjectsTabs';
 
@@ -30,6 +31,29 @@ export class ProjectsPage extends React.PureComponent {
   componentWillMount() {
     const { fnLoadingStart } = this.props;
     fnLoadingStart(); // loading projects
+  }
+
+  renderCardWithItems({ items, total }, { title = {} }) {
+    const { currentUser } = this.props;
+
+    return (
+      <div className="card">
+        <div className="card-content p-0">
+          <p className="title is-6 p-10 m-0">
+            <FormattedMessage {...title} />{' '}
+            <small className="tag">{total}</small>
+          </p>
+
+          {items.map(item => (
+            <ProjectMedia
+              project={item}
+              key={item.id}
+              currentUser={currentUser}
+            />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -52,33 +76,15 @@ export class ProjectsPage extends React.PureComponent {
           <div className="columns">
             {isLoggedIn && (
               <div className="column">
-                <h1 className="title">
-                  <FormattedMessage {...messages.titleMyProjects} />{' '}
-                  <small className="tag">{projectsMy.total}</small>
-                </h1>
-
-                {projectsMy.items.map(item => (
-                  <ProjectMedia
-                    project={item}
-                    key={item.id}
-                    currentUser={currentUser}
-                  />
-                ))}
+                {this.renderCardWithItems(projectsMy, {
+                  title: messages.titleMyProjects,
+                })}
               </div>
             )}
             <div className="column">
-              <h1 className="title">
-                <FormattedMessage {...messages.titleNewProjects} />{' '}
-                <small className="tag">{projectsNew.total}</small>
-              </h1>
-
-              {projectsNew.items.map(item => (
-                <ProjectMedia
-                  project={item}
-                  key={item.id}
-                  currentUser={currentUser}
-                />
-              ))}
+              {this.renderCardWithItems(projectsNew, {
+                title: messages.titleNewProjects,
+              })}
             </div>
           </div>
         </div>
@@ -124,6 +130,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fnLoadingStart: () => dispatch(loadingStart()),
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
   };
 }
 
