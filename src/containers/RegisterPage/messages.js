@@ -23,4 +23,8 @@ export default defineMessages({
     id: 'app.containers.RegisterPage.Password',
     defaultMessage: 'Password',
   },
+  SubmitRegisterForm: {
+    id: 'app.containers.RegisterPage.SubmitRegisterForm',
+    defaultMessage: 'Register',
+  },
 });

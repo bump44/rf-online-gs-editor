@@ -20,6 +20,7 @@ import saga from './saga';
 import messages from './messages';
 
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 import FormWrapper from './FormWrapper';
 import * as actions from './actions';
 
@@ -61,7 +62,7 @@ export class RegisterPage extends React.PureComponent {
       changePassword,
     } = this.props;
 
-    const { login, email, password } = registerPage;
+    const { login, email, password, isLoading } = registerPage;
 
     return (
       <div>
@@ -93,6 +94,10 @@ export class RegisterPage extends React.PureComponent {
               onChange: changePassword,
               type: 'password',
             })}
+
+            <Button loading={isLoading} className="is-primary" icon="user">
+              <FormattedMessage {...messages.SubmitRegisterForm} />
+            </Button>
           </FormWrapper>
         </div>
       </div>
