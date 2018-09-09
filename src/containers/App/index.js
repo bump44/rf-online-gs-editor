@@ -18,6 +18,7 @@ import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import RegisterPage from '../RegisterPage';
 import ProjectsPage from '../ProjectsPage';
+import ProjectPage from '../ProjectPage';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/projects" component={ProjectsPage} />
+        <Route exact path="/project/:id" component={ProjectPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
