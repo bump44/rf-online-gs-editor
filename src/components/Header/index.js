@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -91,12 +92,7 @@ class Header extends React.PureComponent {
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
-  currentUser: PropTypes.shape({
-    login: PropTypes.string,
-    email: PropTypes.string,
-    createdAt: PropTypes.string,
-    updatedAt: PropTypes.string,
-  }),
+  currentUser: PropTypes.instanceOf(Map),
   onClickLogout: PropTypes.func,
 };
 
