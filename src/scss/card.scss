@@ -1,0 +1,14 @@
+.card {
+  box-shadow: 0 -3px 31px 0 rgba(0,0,0,.05), 0 6px 20px 0 rgba(0,0,0,.02);
+  border: 0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.card .media:not(:last-child) {
+  margin-bottom: 0;
+}
