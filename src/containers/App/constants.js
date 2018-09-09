@@ -8,3 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+export const CHANGE_CURRENT_USER = 'global/CHANGE_CURRENT_USER';
+export const CHANGE_CURRENT_USER_TOKEN = 'global/CHANGE_CURRENT_USER_TOKEN';
+export const LOGOUT_CURRENT_USER = 'global/LOGOUT_CURRENT_USER';
