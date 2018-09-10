@@ -19,10 +19,22 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'network-only',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all',
+  },
+};
+
 const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
   connectToDevTools: process.env.NODE_ENV !== 'production',
+  defaultOptions,
 });
 
 export default apolloClient;
