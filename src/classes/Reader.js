@@ -1,4 +1,4 @@
-/* eslint-disable no-plusplus, no-unneeded-ternary, default-case, no-fallthrough */
+/* eslint-disable no-plusplus, no-unneeded-ternary, default-case, no-fallthrough, no-console */
 import fs from 'fs';
 import iconv from 'iconv-lite';
 
@@ -200,6 +200,7 @@ export default class Reader {
       'GenProps:',
       props,
     );
+
     throw new Error(
       `Undefined field type ${typeof field.getType()}: ${field.getLen()}`,
     );
