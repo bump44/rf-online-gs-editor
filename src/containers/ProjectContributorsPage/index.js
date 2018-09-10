@@ -20,12 +20,13 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
+import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
+import { makeSelectProject } from '../ProjectPage/selectors';
+import { logoutCurrentUser } from '../App/actions';
 import Header from '../../components/Header';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
-import { makeSelectProject } from '../ProjectPage/selectors';
 import Button from '../../components/Button';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -56,6 +57,7 @@ export class ProjectContributorsPage extends React.PureComponent {
       currentUser,
       currentProject,
       projectContributorsPage,
+      fnLogoutCurrentUser,
     } = this.props;
 
     const {
@@ -81,7 +83,9 @@ export class ProjectContributorsPage extends React.PureComponent {
           isLoggedIn={isLoggedIn}
           currentUser={currentUser}
           currentProject={currentProject}
+          onClickLogout={fnLogoutCurrentUser}
         />
+
         <div className="container is-fluid p-10">
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
@@ -136,6 +140,7 @@ export class ProjectContributorsPage extends React.PureComponent {
 ProjectContributorsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fnChangeId: PropTypes.func.isRequired,
+  fnLogoutCurrentUser: PropTypes.func.isRequired,
   projectContributorsPage: PropTypes.shape({
     id: PropTypes.string.isRequired,
   }),
@@ -160,6 +165,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fnChangeId: id => dispatch(changeId(id)),
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
   };
 }
 
