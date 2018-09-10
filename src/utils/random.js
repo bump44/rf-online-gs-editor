@@ -25,7 +25,7 @@ const numberSuffix = (min = 1, max = 99) => {
 };
 
 /**
- * Generate random server item codes (eq. iyyyy99, iyayy05)
+ * Generate random server item codes without type prefix (eq. yyy99, ayy05)
  */
 const serverCode = () => {
   const w3 = words(3);
