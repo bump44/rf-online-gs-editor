@@ -74,7 +74,7 @@ export class ProjectImportPage extends React.Component {
     } = this.props;
 
     const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id);
+    const projectImports = projectsImports.get(project.id, Map({}));
 
     return map(files, (file, key) => {
       const fileActions = fnProjectsImportsChangeFilePropValue[key];
