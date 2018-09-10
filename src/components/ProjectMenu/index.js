@@ -6,13 +6,19 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function ProjectMenu({ projectId }) {
+function ProjectMenu({ projectId, project, currentUser }) {
+  const isCurrentIsOwner =
+    project &&
+    currentUser &&
+    currentUser.get('id') === project.getIn(['owner', 'id']);
+
   return (
     <Aside>
       <p className="menu-label">
@@ -30,36 +36,40 @@ function ProjectMenu({ projectId }) {
           </Link>
         </li>
       </ul>
-      <p className="menu-label">
-        <FormattedMessage {...messages.Administration} />
-      </p>
-      <ul className="menu-list">
-        <li>
-          <Link to={`/project/${projectId}/details`}>
-            <FormattedMessage {...messages.UpdateDetails} />
-          </Link>
-        </li>
-        <li>
-          <Link to={`/project/${projectId}/remove`}>
-            <FormattedMessage {...messages.RemoveProject} />
-          </Link>
-        </li>
-      </ul>
-      <p className="menu-label">
-        <FormattedMessage {...messages.ImportExportFiles} />
-      </p>
-      <ul className="menu-list">
-        <li>
-          <Link to={`/project/${projectId}/import`}>
-            <FormattedMessage {...messages.ImportFiles} />
-          </Link>
-        </li>
-        <li>
-          <Link to={`/project/${projectId}/export`}>
-            <FormattedMessage {...messages.ExportFiles} />
-          </Link>
-        </li>
-      </ul>
+      {isCurrentIsOwner && (
+        <React.Fragment>
+          <p className="menu-label">
+            <FormattedMessage {...messages.Administration} />
+          </p>
+          <ul className="menu-list">
+            <li>
+              <Link to={`/project/${projectId}/details`}>
+                <FormattedMessage {...messages.UpdateDetails} />
+              </Link>
+            </li>
+            <li>
+              <Link to={`/project/${projectId}/remove`}>
+                <FormattedMessage {...messages.RemoveProject} />
+              </Link>
+            </li>
+          </ul>
+          <p className="menu-label">
+            <FormattedMessage {...messages.ImportExportFiles} />
+          </p>
+          <ul className="menu-list">
+            <li>
+              <Link to={`/project/${projectId}/import`}>
+                <FormattedMessage {...messages.ImportFiles} />
+              </Link>
+            </li>
+            <li>
+              <Link to={`/project/${projectId}/export`}>
+                <FormattedMessage {...messages.ExportFiles} />
+              </Link>
+            </li>
+          </ul>
+        </React.Fragment>
+      )}
     </Aside>
   );
 }
@@ -67,12 +77,12 @@ function ProjectMenu({ projectId }) {
 ProjectMenu.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   projectId: PropTypes.string.isRequired,
-  currentProject: PropTypes.instanceOf(Map),
+  project: PropTypes.instanceOf(Map),
   currentUser: PropTypes.instanceOf(Map),
 };
 
 ProjectMenu.defaultProps = {
-  currentProject: null,
+  project: null,
   currentUser: null,
 };
 
