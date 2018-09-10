@@ -24,6 +24,10 @@ const AuthorizedQuery = gql`
         id
         createdAt
         updatedAt
+        owner {
+          id
+          login
+        }
       }
       total
     }
@@ -39,6 +43,10 @@ const NonAuthorizedQuery = gql`
         id
         createdAt
         updatedAt
+        owner {
+          id
+          login
+        }
       }
       total
     }
