@@ -17,8 +17,11 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import RegisterPage from '../RegisterPage';
-import ProjectsPage from '../ProjectsPage';
+
+// Project(s)
+import ProjectCreatePage from '../ProjectCreatePage';
 import ProjectPage from '../ProjectPage';
+import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
   return (
@@ -26,8 +29,12 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
+
+        {/* Project(s) */}
         <Route exact path="/projects" component={ProjectsPage} />
+        <Route exact path="/project/create" component={ProjectCreatePage} />
         <Route exact path="/project/:id" component={ProjectPage} />
+
         <Route component={NotFoundPage} />
       </Switch>
     </div>
