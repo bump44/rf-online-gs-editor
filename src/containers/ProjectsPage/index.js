@@ -63,6 +63,7 @@ export class ProjectsPage extends React.PureComponent {
       currentUser,
       currentProject,
       projectsPage,
+      fnLogoutCurrentUser,
     } = this.props;
     const { result } = projectsPage;
     const { projectsMy, projectsNew } = result;
@@ -76,6 +77,7 @@ export class ProjectsPage extends React.PureComponent {
 
         <Header
           isLoggedIn={isLoggedIn}
+          onClickLogout={fnLogoutCurrentUser}
           currentUser={currentUser}
           currentProject={currentProject}
         />
@@ -122,6 +124,7 @@ ProjectsPage.propTypes = {
     }),
   }),
   fnLoadingStart: PropTypes.func.isRequired,
+  fnLogoutCurrentUser: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
