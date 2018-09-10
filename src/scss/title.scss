@@ -1,5 +1,9 @@
 .title {
   color: #5b626b;
+  font-weight: 500;
+  small {
+    font-weight: 300;
+  }
   &.m-0 {
     margin: 0;
   }
