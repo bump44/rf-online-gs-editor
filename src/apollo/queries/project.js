@@ -8,6 +8,7 @@ export default gql`
       id
       createdAt
       updatedAt
+      isPublic
       owner {
         id
         login

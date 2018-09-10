@@ -2,13 +2,19 @@ import gql from 'graphql-tag';
 
 const AuthorizedQuery = gql`
   query {
-    projects(take: 15, skip: 0, sort: { createdAt: -1 }) {
+    projects(
+      take: 15
+      skip: 0
+      sort: { createdAt: -1 }
+      where: { isPublic: true }
+    ) {
       items {
         title
         name
         id
         createdAt
         updatedAt
+        isPublic
         owner {
           id
           login
@@ -24,6 +30,7 @@ const AuthorizedQuery = gql`
         id
         createdAt
         updatedAt
+        isPublic
         owner {
           id
           login
@@ -43,6 +50,7 @@ const NonAuthorizedQuery = gql`
         id
         createdAt
         updatedAt
+        isPublic
         owner {
           id
           login
