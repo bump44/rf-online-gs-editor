@@ -120,7 +120,7 @@ class Struct {
       console.error('Invalid field', 'Last pushed:', this.lastPushed); // eslint-disable-line
 
       throw new Error(
-        `You must be pass a valid field, received "${typeof field}"!`,
+        `You must be pass a valid Struct/Field/Array, received "${typeof field}"!`,
       );
     });
 
