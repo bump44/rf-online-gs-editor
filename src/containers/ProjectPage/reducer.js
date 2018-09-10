@@ -24,7 +24,10 @@ export const initialState = fromJS({
 function projectPageReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_ID:
-      return state.set('id', action.id).set('project', null);
+      return state
+        .set('id', action.id)
+        .set('project', null)
+        .set('isLoaded', false);
     case CHANGE_FIELD_VALUE:
       return state.set(action.key, action.value);
     case CHANGE_PROJECT:
