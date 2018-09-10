@@ -89,7 +89,7 @@ class Header extends React.PureComponent {
                     </UserControlBlock>
                     <p className="control">
                       <LinkButton
-                        to="/projects/create"
+                        to="/project/create"
                         className="is-primary"
                         title="Create new project"
                       >
