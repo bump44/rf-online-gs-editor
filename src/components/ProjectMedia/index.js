@@ -16,13 +16,13 @@ import moment from 'moment';
 // import messages from './messages';
 
 function ProjectMedia({ project, currentUser }) {
-  const { title, name, id, createdAt, owner, isPublic } = project;
+  const { title, description, name, id, createdAt, owner, isPublic } = project;
   const isCurrentIsOwner = currentUser && currentUser.get('id') === owner.id;
 
   return (
     <Media>
       <div className="media-content">
-        <p className="title is-6">
+        <p className="title is-6 mb-5">
           <small>
             <i
               className={cx('fas', {
@@ -36,6 +36,7 @@ function ProjectMedia({ project, currentUser }) {
           &nbsp;
           <small className="has-text-grey is-size-7 is-italic">#{name}</small>
         </p>
+        {description && <Description>{description}</Description>}
         <p>
           <span
             className={cx('tag', 'is-small', {
@@ -59,6 +60,7 @@ ProjectMedia.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     isPublic: PropTypes.bool.isRequired,
@@ -93,4 +95,9 @@ const Media = styled.div.attrs({ className: 'media' })`
   &:hover {
     background: #ddd;
   }
+`;
+
+const Description = styled.p`
+  margin-bottom: 7px;
+  font-size: 12px;
 `;

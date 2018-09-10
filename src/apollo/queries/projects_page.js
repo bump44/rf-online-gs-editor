@@ -10,6 +10,7 @@ const AuthorizedQuery = gql`
     ) {
       items {
         title
+        description
         name
         id
         createdAt
@@ -26,6 +27,7 @@ const AuthorizedQuery = gql`
     projectsMy(take: 15, skip: 0, sort: { createdAt: -1 }) {
       items {
         title
+        description
         name
         id
         createdAt
@@ -46,6 +48,7 @@ const NonAuthorizedQuery = gql`
     projects(take: 15, skip: 0, sort: { createdAt: -1 }) {
       items {
         title
+        description
         name
         id
         createdAt

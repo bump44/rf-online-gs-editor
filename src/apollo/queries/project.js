@@ -4,6 +4,7 @@ export default gql`
   query($id: String!) {
     project(id: $id) {
       title
+      description
       name
       id
       createdAt
