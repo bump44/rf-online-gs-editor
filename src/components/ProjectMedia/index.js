@@ -16,13 +16,22 @@ import moment from 'moment';
 // import messages from './messages';
 
 function ProjectMedia({ project, currentUser }) {
-  const { title, name, id, createdAt, owner } = project;
+  const { title, name, id, createdAt, owner, isPublic } = project;
   const isCurrentIsOwner = currentUser && currentUser.get('id') === owner.id;
 
   return (
     <Media>
       <div className="media-content">
         <p className="title is-6">
+          <small>
+            <i
+              className={cx('fas', {
+                'fa-unlock': isPublic,
+                'fa-lock': !isPublic,
+              })}
+            />
+          </small>
+          &nbsp;
           <NavLink to={`/project/${id}`}>{title}</NavLink>
           &nbsp;
           <small className="has-text-grey is-size-7 is-italic">#{name}</small>
@@ -52,6 +61,7 @@ ProjectMedia.propTypes = {
     title: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
+    isPublic: PropTypes.bool.isRequired,
     owner: PropTypes.shape({
       login: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
