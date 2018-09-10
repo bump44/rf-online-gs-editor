@@ -16,20 +16,18 @@ import moment from 'moment';
 // import messages from './messages';
 
 function ProjectMedia({ project, currentUser }) {
-  const { title, id, createdAt, owner } = project;
+  const { title, name, id, createdAt, owner } = project;
   const isCurrentIsOwner = currentUser && currentUser.get('id') === owner.id;
 
   return (
     <Media>
       <div className="media-content">
-        <p className="title is-4">
+        <p className="title is-6">
           <NavLink to={`/project/${id}`}>{title}</NavLink>
           &nbsp;
-          <small className="has-text-grey is-size-7 is-italic">
-            {moment(createdAt).format('LLL')}
-          </small>
+          <small className="has-text-grey is-size-7 is-italic">#{name}</small>
         </p>
-        <p className="subtitle is-6">
+        <p>
           <span
             className={cx('tag', 'is-small', {
               'is-success': isCurrentIsOwner,
@@ -38,6 +36,10 @@ function ProjectMedia({ project, currentUser }) {
           >
             @{owner.login}
           </span>
+          &nbsp;
+          <small className="has-text-grey is-size-7 is-italic">
+            {moment(createdAt).format('LLL')}
+          </small>
         </p>
       </div>
     </Media>
@@ -48,6 +50,7 @@ ProjectMedia.propTypes = {
   project: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     owner: PropTypes.shape({
       login: PropTypes.string.isRequired,
