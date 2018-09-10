@@ -47,7 +47,9 @@ export class HomePage extends React.PureComponent {
           currentProject={currentProject}
           isLoggedIn={isLoggedIn}
         />
-        <FormattedMessage {...messages.header} />
+        <div className="container is-fluid p-10">
+          <FormattedMessage {...messages.header} />
+        </div>
       </div>
     );
   }
@@ -55,6 +57,7 @@ export class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  fnLogoutCurrentUser: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
