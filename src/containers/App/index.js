@@ -21,6 +21,7 @@ import RegisterPage from '../RegisterPage';
 // Project(s)
 import ProjectCreatePage from '../ProjectCreatePage';
 import ProjectPage from '../ProjectPage';
+import ProjectContributorsPage from '../ProjectContributorsPage';
 import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
@@ -34,6 +35,11 @@ export default function App() {
         <Route exact path="/projects" component={ProjectsPage} />
         <Route exact path="/project/create" component={ProjectCreatePage} />
         <Route exact path="/project/:id" component={ProjectPage} />
+        <Route
+          exact
+          path="/project/:id/contributors"
+          component={ProjectContributorsPage}
+        />
 
         <Route component={NotFoundPage} />
       </Switch>
