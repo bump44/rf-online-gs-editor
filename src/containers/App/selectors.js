@@ -12,4 +12,14 @@ const makeSelectCurrentUser = () =>
 const makeSelectIsLoggedIn = () =>
   createSelector(selectGlobal, globalState => globalState.get('isLoggedIn'));
 
-export { makeSelectLocation, makeSelectCurrentUser, makeSelectIsLoggedIn };
+const makeSelectProjectsImports = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('projectsImports'),
+  );
+
+export {
+  makeSelectLocation,
+  makeSelectCurrentUser,
+  makeSelectIsLoggedIn,
+  makeSelectProjectsImports,
+};

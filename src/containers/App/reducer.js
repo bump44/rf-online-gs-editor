@@ -3,6 +3,7 @@ import {
   CHANGE_CURRENT_USER,
   CHANGE_CURRENT_USER_TOKEN,
   LOGOUT_CURRENT_USER,
+  PROJECTS_IMPORTS_CHANGE_PROP_VALUE,
 } from './constants';
 import { saveTokenMe } from '../../utils/ls';
 
@@ -11,10 +12,33 @@ const initialState = fromJS({
   isLoggedIn: false,
   currentUser: null,
   currentUserToken: '',
+
+  /**
+   * Projects Imports Operations
+   * {
+   *  [project.id]: {
+   *    [fileKey]: {
+   *      filePath: 'C:/...',
+   *      status: WAITING/PROCESSING/FINISHED/ERROR/CANCELLED,
+   *      errorMessage: '',
+   *      projectId: '',
+   *      fileKey: '',
+   *      countTotal: 0,
+   *      countCompleted: 0,
+   *      importType: SKIP/REPLACE,
+   *    }
+   *  }
+   */
+  projectsImports: {},
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case PROJECTS_IMPORTS_CHANGE_PROP_VALUE:
+      return state.setIn(
+        ['projectsImports', action.projectId, action.fileKey, action.propKey],
+        action.propValue,
+      );
     case CHANGE_CURRENT_USER:
       return state
         .set('currentUser', fromJS(action.user))
