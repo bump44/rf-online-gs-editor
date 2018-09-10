@@ -24,8 +24,8 @@ import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import Header from '../../components/Header';
 import Notification from '../../components/Notification';
 import ProjectMedia from '../../components/ProjectMedia';
-import ProjectsTabs from '../../components/ProjectsTabs';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import ProjectMenu from '../../components/ProjectMenu';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectPage extends React.PureComponent {
@@ -51,7 +51,14 @@ export class ProjectPage extends React.PureComponent {
 
   render() {
     const { isLoggedIn, currentUser, currentProject, projectPage } = this.props;
-    const { project, isLoaded, isError, errorMessage, isLoading } = projectPage;
+    const {
+      project,
+      isLoaded,
+      isError,
+      errorMessage,
+      isLoading,
+      id,
+    } = projectPage;
 
     return (
       <div>
@@ -67,7 +74,6 @@ export class ProjectPage extends React.PureComponent {
         />
 
         <div className="container is-fluid p-10">
-          <ProjectsTabs isLoggedIn={isLoggedIn} />
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
           )}
@@ -75,10 +81,23 @@ export class ProjectPage extends React.PureComponent {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <ProjectMedia currentUser={currentUser} project={project} />
+            <div className="columns">
+              <div className="column is-2">
+                <ProjectMenu
+                  isLoggedIn={isLoggedIn}
+                  project={currentProject}
+                  projectId={id}
+                  currentUser={currentUser}
+                />
+              </div>
+              <div className="column">
+                <p className="title is-4">
+                  <FormattedMessage {...messages.header} />
+                </p>
+                <ProjectMedia currentUser={currentUser} project={project} />
+              </div>
+            </div>
           )}
-
-          <FormattedMessage {...messages.header} />
         </div>
       </div>
     );
