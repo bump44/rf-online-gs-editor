@@ -26,7 +26,7 @@ function ProjectMenu({ projectId, project, currentUser }) {
       </p>
       <ul className="menu-list">
         <li>
-          <Link to={`/project/${projectId}`}>
+          <Link exact to={`/project/${projectId}`}>
             <FormattedMessage {...messages.Dashboard} />
           </Link>
         </li>
