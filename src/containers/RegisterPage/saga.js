@@ -30,14 +30,14 @@ export function* submit() {
     const { token, user } = result.data.userRegister;
 
     // dispatch to global
+    yield put(changeIsLoading(false));
     yield put(changeCurrentUserToken(token));
     yield put(changeCurrentUser(user));
   } catch (err) {
     yield put(changeIsError(true));
     yield put(changeErrorMessage(err.message));
+    yield put(changeIsLoading(false));
   }
-
-  yield put(changeIsLoading(false));
 }
 
 export function* watchSubmit() {
