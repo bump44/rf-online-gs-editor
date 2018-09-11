@@ -195,7 +195,7 @@ export class ProjectImportPage extends React.Component {
                     })}
                   />
                   &nbsp;
-                  {fileStatus === WAITING && (
+                  {fileStatus !== PROCESSING && (
                     <FormattedMessage {...messages.Start} />
                   )}
                   {fileStatus === PROCESSING && (
