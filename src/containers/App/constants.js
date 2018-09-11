@@ -15,3 +15,12 @@ export const LOGOUT_CURRENT_USER = 'global/LOGOUT_CURRENT_USER';
 
 export const PROJECTS_IMPORTS_CHANGE_PROP_VALUE =
   'global/PROJECTS_IMPORTS_CHANGE_PROP_VALUE';
+
+// constants
+export const SKIP = 'skip';
+export const REPLACE = 'replace';
+export const WAITING = 'waiting';
+export const PROCESSING = 'processing';
+export const FINISHED = 'finished';
+export const ERROR = 'error';
+export const CANCELLED = 'cancelled';
