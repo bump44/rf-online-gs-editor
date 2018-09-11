@@ -27,4 +27,20 @@ export default defineMessages({
     id: 'app.containers.ProjectImportPage.ServerFiles',
     defaultMessage: 'Server Files',
   },
+  RewriteItems: {
+    id: 'app.containers.ProjectImportPage.RewriteItems',
+    defaultMessage: 'Rewrite items if they already exist',
+  },
+  SelectFile: {
+    id: 'app.containers.ProjectImportPage.SelectFile',
+    defaultMessage: 'Select file',
+  },
+  Start: {
+    id: 'app.containers.ProjectImportPage.Start',
+    defaultMessage: 'Start',
+  },
+  Cancel: {
+    id: 'app.containers.ProjectImportPage.Cancel',
+    defaultMessage: 'Cancel',
+  },
 });

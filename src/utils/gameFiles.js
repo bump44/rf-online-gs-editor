@@ -33,16 +33,19 @@ export const FILES = {
     path: 'DataTable/Item.edf',
     resolve: RESOLVERS.CLIENT_ITEM,
     type: FILE_TYPE_CLIENT,
+    extensions: ['dat', 'edf'],
   },
   'DataTable/Store.edf': {
     path: 'DataTable/Store.edf',
     resolve: RESOLVERS.CLIENT_STORE,
     type: FILE_TYPE_CLIENT,
+    extensions: ['dat', 'edf'],
   },
   'DataTable/[locale]/NDItem.edf': {
     path: 'DataTable/[locale]/NDItem.edf',
     resolve: RESOLVERS.CLIENT_ITEM_ND,
     type: FILE_TYPE_CLIENT_ND,
+    extensions: ['dat', 'edf'],
   },
 };
 

@@ -8,6 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import map from 'lodash/map';
 import styled from 'styled-components';
+import cx from 'classnames';
+import { remote } from 'electron';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -22,28 +24,34 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
+import { makeSelectProject } from '../ProjectPage/selectors';
+import { CLIENT_FILES, FILES } from '../../utils/gameFiles';
+
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImports,
 } from '../App/selectors';
-import { makeSelectProject } from '../ProjectPage/selectors';
+
 import {
   logoutCurrentUser,
   projectsImportsBindActionsWithFileKey,
 } from '../App/actions';
 
+import { REPLACE, SKIP, WAITING, PROCESSING } from '../App/constants';
+
 import Header from '../../components/Header';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
-import { CLIENT_FILES, FILES } from '../../utils/gameFiles';
+import Button from '../../components/Button';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectImportPage extends React.Component {
   constructor(props) {
     super(props);
     this.renderFiles = this.renderFiles.bind(this);
+    this.onClickSelectFilePath = this.onClickSelectFilePath.bind(this);
   }
 
   componentWillMount() {
@@ -66,6 +74,37 @@ export class ProjectImportPage extends React.Component {
     }
   }
 
+  onClickSelectFilePath(fileKey) {
+    const { fnProjectsImportsChangeFilePropValue } = this.props;
+    const fileActions = fnProjectsImportsChangeFilePropValue[fileKey];
+
+    const fileData = FILES[fileKey];
+    const title = fileData.title || fileData.path;
+    const extensions = fileData.extensions || [];
+    const defaultPath = fileData.path || '';
+
+    remote.dialog.showOpenDialog(
+      {
+        properties: ['openFile'],
+        title,
+        defaultPath,
+        filters: [
+          {
+            name: extensions.map(ext => `.${ext}`).join(', '),
+            extensions,
+          },
+          { name: 'All Files', extensions: ['*'] },
+        ],
+      },
+      filePaths => {
+        if (filePaths && filePaths.length >= 1) {
+          const [filePath] = filePaths;
+          fileActions.changeFilePath(filePath);
+        }
+      },
+    );
+  }
+
   renderFiles(files = {}) {
     const {
       fnProjectsImportsChangeFilePropValue,
@@ -80,18 +119,82 @@ export class ProjectImportPage extends React.Component {
       const fileActions = fnProjectsImportsChangeFilePropValue[key];
       const fileState = projectImports.get(key, Map({}));
       const filePath = fileState.get('filePath', '').trim();
+      const fileStatus = fileState.get('status');
+
+      /* eslint-disable react/jsx-no-bind */
+      /* TODO: move this to another pure component  */
+      const onClickSelectFilePath = this.onClickSelectFilePath.bind(null, key);
 
       return (
         <FileRow key={key}>
           <div className="overlay" />
           <div className="file-actions">
+            <span className="tag is-pulled-right is-small file-status-tag">
+              {fileStatus}
+            </span>
+
             <div className="import-type">
-              <button
-                type="button"
-                onClick={() => fileActions.changeImportType('LOL')}
-              >
-                Todo Change Import Type
-              </button>
+              <div className="field">
+                <label className="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={fileState.get('importType') === REPLACE}
+                    onChange={evt =>
+                      fileActions.changeImportType(
+                        evt.target.checked ? REPLACE : SKIP,
+                      )
+                    }
+                    value={1}
+                  />
+                  <FormattedMessage {...messages.RewriteItems} />
+                </label>
+              </div>
+            </div>
+
+            <Button
+              className="is-small is-primary"
+              onClick={onClickSelectFilePath}
+            >
+              <i className="fas fa-hand-pointer" />
+              &nbsp;
+              <FormattedMessage {...messages.SelectFile} />
+            </Button>
+
+            {filePath && (
+              <React.Fragment>
+                &nbsp;
+                <Button
+                  className="is-small"
+                  onClick={() => fileActions.changeFilePath('')}
+                >
+                  <i className="fas fa-times" />
+                </Button>
+              </React.Fragment>
+            )}
+
+            <div className="is-pulled-right">
+              {filePath && (
+                <Button
+                  className={cx('is-small', {
+                    'is-primary': fileStatus === WAITING,
+                    'is-warning': fileStatus === PROCESSING,
+                  })}
+                >
+                  <i
+                    className={cx('fas', {
+                      'fa-play': fileStatus === WAITING,
+                      'fa-times': fileStatus === PROCESSING,
+                    })}
+                  />
+                  &nbsp;
+                  {fileStatus === WAITING && (
+                    <FormattedMessage {...messages.Start} />
+                  )}
+                  {fileStatus === PROCESSING && (
+                    <FormattedMessage {...messages.Cancel} />
+                  )}
+                </Button>
+              )}
             </div>
           </div>
           <div className="file-type">
@@ -267,7 +370,7 @@ const FileRow = styled.div`
   .file-actions,
   .overlay {
     visible: hidden;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.9);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -282,6 +385,17 @@ const FileRow = styled.div`
     background: transparent;
     color: #fff;
     padding: 10px;
+    .checkbox:hover {
+      color: #f1f1f1;
+    }
+    .field {
+      margin-bottom: 5px;
+    }
+    .file-status-tag {
+      font-size: 11px;
+      line-height: 11px;
+      height: auto;
+    }
   }
 
   &:hover {
