@@ -27,6 +27,14 @@ export default defineMessages({
     id: 'app.components.ProjectMenu.Administration',
     defaultMessage: 'Administration',
   },
+  Manage: {
+    id: 'app.components.ProjectMenu.Manage',
+    defaultMessage: 'Manage',
+  },
+  Items: {
+    id: 'app.components.ProjectMenu.Items',
+    defaultMessage: 'Items',
+  },
   UpdateDetails: {
     id: 'app.components.ProjectMenu.UpdateDetails',
     defaultMessage: 'Update Details',
