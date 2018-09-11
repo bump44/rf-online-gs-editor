@@ -22,9 +22,10 @@ export const FILE_TYPES = {
 
 // Saga resolvers
 export const RESOLVERS = {
-  CLIENT_ITEM: 'ClientItem',
-  CLIENT_ITEM_ND: 'ClientItemND',
-  CLIENT_STORE: 'ClientStore',
+  CLIENT_ITEM: 'clientItemResolve',
+  CLIENT_ITEM_ND: 'clientItemND',
+  CLIENT_STORE: 'clientStore',
+  SERVER_ITEM: 'serverItem',
 };
 
 // All of resolved files
@@ -46,6 +47,12 @@ export const FILES = {
     resolve: RESOLVERS.CLIENT_ITEM_ND,
     type: FILE_TYPE_CLIENT_ND,
     extensions: ['dat', 'edf'],
+  },
+  'Script/AnimusItem.dat': {
+    path: 'Script/AnimusItem.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    extensions: ['dat'],
   },
 };
 
