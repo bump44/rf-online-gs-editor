@@ -30,6 +30,7 @@ import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImports,
+  makeSelectProjectsImportsProcessingData,
 } from '../App/selectors';
 
 import {
@@ -278,6 +279,7 @@ export class ProjectImportPage extends React.Component {
       currentProject,
       projectImportPage,
       fnLogoutCurrentUser,
+      projectsImportsProcessingData,
     } = this.props;
 
     const {
@@ -301,6 +303,7 @@ export class ProjectImportPage extends React.Component {
           currentUser={currentUser}
           currentProject={currentProject}
           onClickLogout={fnLogoutCurrentUser}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <div className="container is-fluid p-10">
@@ -383,6 +386,7 @@ const mapStateToProps = createStructuredSelector({
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
   projectsImports: makeSelectProjectsImports(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
 });
 
 function mapDispatchToProps(dispatch, props) {
