@@ -27,7 +27,7 @@ import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
   return (
-    <div>
+    <div className="is-fullheight">
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
