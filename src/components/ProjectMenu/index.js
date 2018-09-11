@@ -39,6 +39,20 @@ function ProjectMenu({ projectId, project, currentUser }) {
       {isCurrentIsOwner && (
         <React.Fragment>
           <p className="menu-label">
+            <FormattedMessage {...messages.Manage} />
+          </p>
+          <ul className="menu-list">
+            <li>
+              <Link to={`/project/${projectId}/items`}>
+                <FormattedMessage {...messages.Items} />
+                &nbsp;
+                <span className="tag is-small is-primary">
+                  {project.getIn(['items', 'total'])}
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p className="menu-label">
             <FormattedMessage {...messages.Administration} />
           </p>
           <ul className="menu-list">
