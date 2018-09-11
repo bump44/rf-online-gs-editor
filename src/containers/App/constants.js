@@ -30,3 +30,6 @@ export const PROCESSING = 'processing';
 export const FINISHED = 'finished';
 export const ERROR = 'error';
 export const CANCELLED = 'cancelled';
+
+export const ANNOUNCE_PROJECT_COUNT_ITEMS =
+  'ANNOUNCE(s)/ANNOUNCE_PROJECT_COUNT_ITEMS';

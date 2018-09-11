@@ -8,7 +8,16 @@ import {
   PROJECTS_IMPORTS_CHANGE_PROP_VALUE,
   PROJECTS_IMPORTS_START_FILE_IMPORT,
   PROJECTS_IMPORTS_CANCEL_FILE_IMPORT,
+  ANNOUNCE_PROJECT_COUNT_ITEMS,
 } from './constants';
+
+export function announceProjectCountItems({ count, id }) {
+  return {
+    type: ANNOUNCE_PROJECT_COUNT_ITEMS,
+    count,
+    id,
+  };
+}
 
 export function changeCurrentUser(user) {
   return {

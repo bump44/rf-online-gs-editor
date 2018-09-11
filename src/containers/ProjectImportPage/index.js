@@ -19,12 +19,11 @@ import { compose } from 'redux';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import makeSelectProjectImportPage from './selectors';
+import makeSelectProjectImportPage, { makeSelectProject } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
-import { makeSelectProject } from '../ProjectPage/selectors';
 import { CLIENT_FILES, FILES, SERVER_FILES } from '../../utils/gameFiles';
 
 import {

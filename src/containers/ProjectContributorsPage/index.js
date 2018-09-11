@@ -15,13 +15,14 @@ import { compose } from 'redux';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import makeSelectProjectContributorsPage from './selectors';
+import makeSelectProjectContributorsPage, {
+  makeSelectProject,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
-import { makeSelectProject } from '../ProjectPage/selectors';
 import { logoutCurrentUser } from '../App/actions';
 import Header from '../../components/Header';
 import Notification from '../../components/Notification';

@@ -11,6 +11,10 @@ const selectProjectContributorsPageDomain = state =>
 /**
  * Other specific selectors
  */
+const makeSelectProject = () =>
+  createSelector(selectProjectContributorsPageDomain, substate =>
+    substate.get('project'),
+  );
 
 /**
  * Default selector used by ProjectContributorsPage
@@ -22,4 +26,4 @@ const makeSelectProjectContributorsPage = () =>
   );
 
 export default makeSelectProjectContributorsPage;
-export { selectProjectContributorsPageDomain };
+export { selectProjectContributorsPageDomain, makeSelectProject };

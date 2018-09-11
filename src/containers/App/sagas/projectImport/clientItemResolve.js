@@ -5,6 +5,7 @@ import { COUNT } from '../../../../classes/constants';
 import ClientItemReader from '../../../../structs/client/item/reader';
 import apolloClient from '../../../../apollo';
 import projectItemImportClientMutation from '../../../../apollo/mutations/project_item_import_client';
+import { announceProjectCountItems } from '../../actions';
 
 /**
  * Import Client Items Resolver
@@ -40,7 +41,7 @@ export default function* defaultSaga({
 
     let t = 0;
     while (chunks.length > t) {
-      /* const result = */ yield call(apolloClient.mutate, {
+      const result = yield call(apolloClient.mutate, {
         mutation: projectItemImportClientMutation,
         variables: {
           projectId,
@@ -49,6 +50,9 @@ export default function* defaultSaga({
           importType,
         },
       });
+
+      const nextTotal = result.data.projectItemImportClient.total;
+      yield put(announceProjectCountItems({ count: nextTotal, id: projectId }));
 
       countCompleted += chunks[t].length;
       yield put(actions.changeCountCompleted(countCompleted));
