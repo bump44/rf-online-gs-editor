@@ -49,6 +49,12 @@ export const projectsImports = {
       propKey: 'importType',
     });
   },
+  changeFilePath(args) {
+    return projectsImports.changePropValue({
+      ...args,
+      propKey: 'filePath',
+    });
+  },
 };
 
 export const projectsImportsActionNames = pull(
