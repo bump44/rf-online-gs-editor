@@ -25,7 +25,7 @@ import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
 import { makeSelectProject } from '../ProjectPage/selectors';
-import { CLIENT_FILES, FILES } from '../../utils/gameFiles';
+import { CLIENT_FILES, FILES, SERVER_FILES } from '../../utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
@@ -36,6 +36,8 @@ import {
 import {
   logoutCurrentUser,
   projectsImportsBindActionsWithFileKey,
+  projectsImportsStartFileImport,
+  projectsImportsCancelFileImport,
 } from '../App/actions';
 
 import {
@@ -118,7 +120,14 @@ export class ProjectImportPage extends React.Component {
       fnProjectsImportsChangeFilePropValue,
       projectsImports,
       projectImportPage,
+      fnProjectsImportsStartFileImport,
+      fnProjectsImportsCancelFileImport,
     } = this.props;
+
+    const startActions = {
+      fnProjectsImportsStartFileImport,
+      fnProjectsImportsCancelFileImport,
+    };
 
     const { project } = projectImportPage;
     const projectImports = projectsImports.get(project.id, Map({}));
@@ -128,6 +137,24 @@ export class ProjectImportPage extends React.Component {
       const fileState = projectImports.get(key, Map({}));
       const filePath = fileState.get('filePath', '').trim();
       const fileStatus = fileState.get('status', WAITING);
+      const countTotal = fileState.get('countTotal', 0);
+      const countCompleted = fileState.get('countCompleted', 0);
+      const percent = (() => {
+        if (countTotal <= 0) return 0;
+        if (countCompleted >= countTotal) return 100;
+        return ((countCompleted / countTotal) * 100).toFixed(1);
+      })();
+
+      const onClickStartAction =
+        fileStatus !== PROCESSING
+          ? 'fnProjectsImportsStartFileImport'
+          : 'fnProjectsImportsCancelFileImport';
+
+      const onClickStart = () =>
+        startActions[onClickStartAction]({
+          projectId: project.id,
+          fileKey: key,
+        });
 
       /* eslint-disable react/jsx-no-bind */
       /* TODO: move this to another pure component  */
@@ -187,6 +214,7 @@ export class ProjectImportPage extends React.Component {
                     'is-primary': fileStatus === WAITING,
                     'is-warning': fileStatus === PROCESSING,
                   })}
+                  onClick={onClickStart}
                 >
                   <i
                     className={cx('fas', {
@@ -221,6 +249,17 @@ export class ProjectImportPage extends React.Component {
           <div className="file-title">{file.title || file.path}</div>
           <div className="is-clearfix" />
           <div className="file-selected">
+            {fileStatus === PROCESSING && (
+              <React.Fragment>
+                <div className="message">{percent}%</div>
+                <progress
+                  className="progress is-small is-info"
+                  value={percent}
+                  max="100"
+                />
+              </React.Fragment>
+            )}
+
             <code>
               {filePath.substring(
                 filePath.length > 64 ? filePath.length - 64 : 0,
@@ -310,9 +349,7 @@ export class ProjectImportPage extends React.Component {
                       <FormattedMessage {...messages.ServerFiles} />
                     </p>
 
-                    <div className="card">
-                      <div className="card-content">...</div>
-                    </div>
+                    <div className="card">{this.renderFiles(SERVER_FILES)}</div>
                   </div>
                 </div>
               </div>
@@ -362,6 +399,10 @@ function mapDispatchToProps(dispatch, props) {
     dispatch,
     fnChangeId: id => dispatch(changeId(id)),
     fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
+    fnProjectsImportsStartFileImport: args =>
+      dispatch(projectsImportsStartFileImport(args)),
+    fnProjectsImportsCancelFileImport: args =>
+      dispatch(projectsImportsCancelFileImport(args)),
     fnProjectsImportsChangeFilePropValue,
   };
 }
@@ -394,7 +435,7 @@ const FileRow = styled.div`
     position: absolute;
     left: 0px;
     top: 0px;
-    z-index: 1;
+    z-index: 3;
     opacity: 0;
     transition: all 0.1s ease;
   }
@@ -444,9 +485,30 @@ const FileRow = styled.div`
     margin-right: 0;
     float: none;
     margin-top: 5px;
+    position: relative;
     code {
       font-size: 11px;
       display: block;
+    }
+
+    .progress {
+      margin: 0;
+      position: absolute;
+      min-height: 21px;
+      border-radius: 0;
+      left: 0;
+      top: 0;
+      opacity: 0.9;
+      z-index: 1;
+    }
+
+    .message {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: black;
+      z-index: 2;
+      background: transparent;
     }
   }
 `;
