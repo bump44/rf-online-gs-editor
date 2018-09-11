@@ -1,12 +1,14 @@
 import Promise from 'bluebird';
 import { forEach, map } from 'lodash';
 import Reader from './Reader';
+import { COUNT, OFFSET, BLOCK_SIZE, TOTAL_SIZE } from './constants';
 
 export default class FileReader {
-  constructor({ name, path }) {
+  constructor({ name, path, struct = [] }) {
     this.name = name;
     this.path = path;
     this.reader = new Reader({ path });
+    this.struct = struct;
 
     this.cache = {
       headers: undefined,
@@ -57,8 +59,8 @@ export default class FileReader {
         0,
       );
 
-      if (header.nCount > 120000) {
-        throw new Error(`Header count value: ${header.nCount}`);
+      if (header[COUNT] > 120000) {
+        throw new Error(`Header count value: ${header[COUNT]}`);
       }
 
       const getBlocks = () => {
@@ -66,12 +68,12 @@ export default class FileReader {
           return [];
         }
 
-        return map(Array.from(Array(header.nCount)), (empty, arrayIndex) => {
-          const baseOffset = header.nOffset + headerWeight;
-          const blockOffset = arrayIndex * header.nBlockSize;
+        return map(Array.from(Array(header[COUNT])), (empty, arrayIndex) => {
+          const baseOffset = header[OFFSET] + headerWeight;
+          const blockOffset = arrayIndex * header[BLOCK_SIZE];
           const blockReader = this.reader.getBlock(
             baseOffset + blockOffset,
-            header.nBlockSize,
+            header[BLOCK_SIZE],
           );
           const values = {};
 
@@ -127,15 +129,15 @@ export default class FileReader {
         });
       }
 
-      if (header.nTotalSize === undefined) {
-        header.nTotalSize = header.nCount * header.nBlockSize;
+      if (header[TOTAL_SIZE] === undefined) {
+        header[TOTAL_SIZE] = header[COUNT] * header[BLOCK_SIZE];
       }
 
-      if (header.nOffset === undefined) {
-        header.nOffset = autoNOffset; // auto-calc offset
+      if (header[OFFSET] === undefined) {
+        header[OFFSET] = autoNOffset; // auto-calc offset
       }
 
-      autoNOffset += header.nTotalSize + headerSize;
+      autoNOffset += header[TOTAL_SIZE] + headerSize;
 
       // header weights
       // const headerWeight = struct.header.reduce((accumulator, field) => {
@@ -143,8 +145,8 @@ export default class FileReader {
       // }, 0);
 
       // this.reader.increaseOffset(headerWeight);
-      // this.reader.increaseOffset(header.nTotalSize);
-      this.reader.increaseOffset(header.nCount * header.nBlockSize);
+      // this.reader.increaseOffset(header[TOTAL_SIZE]);
+      this.reader.increaseOffset(header[COUNT] * header[BLOCK_SIZE]);
 
       results.push({
         type: struct.type,
