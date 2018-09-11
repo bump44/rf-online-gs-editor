@@ -38,7 +38,15 @@ import {
   projectsImportsBindActionsWithFileKey,
 } from '../App/actions';
 
-import { REPLACE, SKIP, WAITING, PROCESSING } from '../App/constants';
+import {
+  REPLACE,
+  SKIP,
+  WAITING,
+  PROCESSING,
+  FINISHED,
+  ERROR,
+  CANCELLED,
+} from '../App/constants';
 
 import Header from '../../components/Header';
 import Notification from '../../components/Notification';
@@ -198,7 +206,17 @@ export class ProjectImportPage extends React.Component {
             </div>
           </div>
           <div className="file-type">
-            <span className="tag is-info is-small">{file.type}</span>
+            <span
+              className={cx('tag', 'is-small', {
+                'is-info': fileStatus === WAITING,
+                'is-primary': fileStatus === PROCESSING,
+                'is-success': fileStatus === FINISHED,
+                'is-danger': fileStatus === ERROR,
+                'is-warning': fileStatus === CANCELLED,
+              })}
+            >
+              {fileStatus}
+            </span>
           </div>
           <div className="file-title">{file.title || file.path}</div>
           <div className="is-clearfix" />
