@@ -4,6 +4,7 @@ import {
   CHANGE_CURRENT_USER_TOKEN,
   LOGOUT_CURRENT_USER,
   PROJECTS_IMPORTS_CHANGE_PROP_VALUE,
+  WAITING,
 } from './constants';
 import { saveTokenMe } from '../../utils/ls';
 
@@ -35,10 +36,26 @@ const initialState = fromJS({
 function appReducer(state = initialState, action) {
   switch (action.type) {
     case PROJECTS_IMPORTS_CHANGE_PROP_VALUE:
-      return state.setIn(
-        ['projectsImports', action.projectId, action.fileKey, action.propKey],
-        action.propValue,
-      );
+      return state
+        .setIn(
+          ['projectsImports', action.projectId, action.fileKey, action.propKey],
+          action.propValue,
+        )
+        .setIn(
+          ['projectsImports', action.projectId, action.fileKey, 'projectId'],
+          action.projectId,
+        )
+        .setIn(
+          ['projectsImports', action.projectId, action.fileKey, 'fileKey'],
+          action.fileKey,
+        )
+        .setIn(
+          ['projectsImports', action.projectId, action.fileKey, 'status'],
+          state.getIn(
+            ['projectsImports', action.projectId, action.fileKey, 'status'],
+            WAITING, // defaultStatus
+          ),
+        );
     case CHANGE_CURRENT_USER:
       return state
         .set('currentUser', fromJS(action.user))
