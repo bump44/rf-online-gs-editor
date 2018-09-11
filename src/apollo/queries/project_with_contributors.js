@@ -19,6 +19,9 @@ export default gql`
           title
         }
       }
+      items {
+        total
+      }
     }
   }
 `;

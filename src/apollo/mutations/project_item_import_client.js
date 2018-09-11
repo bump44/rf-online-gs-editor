@@ -13,11 +13,6 @@ export default gql`
       blocks: $blocks
       importType: $importType
     ) {
-      items {
-        client {
-          strName
-        }
-      }
       total
     }
   }
