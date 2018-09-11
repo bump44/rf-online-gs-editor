@@ -119,7 +119,7 @@ export class ProjectImportPage extends React.Component {
       const fileActions = fnProjectsImportsChangeFilePropValue[key];
       const fileState = projectImports.get(key, Map({}));
       const filePath = fileState.get('filePath', '').trim();
-      const fileStatus = fileState.get('status');
+      const fileStatus = fileState.get('status', WAITING);
 
       /* eslint-disable react/jsx-no-bind */
       /* TODO: move this to another pure component  */
