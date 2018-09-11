@@ -35,3 +35,11 @@ $i: 0;
 
   $i: $i + 5
 }
+
+.is-fullheight {
+  height: 100vh;
+
+  &.calc-80px {
+    height: calc(100vh - 80px);
+  }
+}
