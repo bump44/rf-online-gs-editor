@@ -23,7 +23,12 @@ class Header extends React.PureComponent {
       currentUser,
       currentProject,
       onClickLogout,
+      projectsImportsProcessingData,
     } = this.props;
+
+    const projectsImportsIsProcessing =
+      projectsImportsProcessingData &&
+      projectsImportsProcessingData.isProcessing;
 
     return (
       <Wrapper>
@@ -53,6 +58,23 @@ class Header extends React.PureComponent {
                       &nbsp;
                       {currentProject.get('title')}
                     </LinkButton>
+                  </p>
+                </div>
+              </div>
+            )}
+            {projectsImportsIsProcessing && (
+              <div className="navbar-item">
+                <div className="field is-grouped">
+                  <p className="control">
+                    <ProjectsImportsProcessingData className="is-info">
+                      <span className="tag is-small percent is-danger">
+                        {projectsImportsProcessingData.percent.toFixed(0)}%
+                      </span>
+                      <span className="tag is-small processes">
+                        {projectsImportsProcessingData.countProcesses}
+                      </span>
+                      <i className="fas fa-angle-down" />
+                    </ProjectsImportsProcessingData>
                   </p>
                 </div>
               </div>
@@ -119,6 +141,13 @@ Header.propTypes = {
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
   onClickLogout: PropTypes.func,
+  projectsImportsProcessingData: PropTypes.shape({
+    isProcessing: PropTypes.bool.isRequired,
+    countTotal: PropTypes.number.isRequired,
+    countCompleted: PropTypes.number.isRequired,
+    countProcesses: PropTypes.number.isRequired,
+    percent: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 Header.defaultProps = {
@@ -181,5 +210,42 @@ const UserControlBlock = styled.div.attrs({ className: 'control' })`
 
   .rolename {
     font-size: 12px;
+  }
+`;
+
+const ProjectsImportsProcessingData = styled.button.attrs({
+  className: 'button',
+})`
+  position: relative;
+  background: transparent;
+
+  .percent {
+    position: absolute;
+    z-index: 999;
+    padding: 3px 0px;
+    line-height: 12px;
+    height: auto;
+    text-align: center;
+    right: -1px;
+    top: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: calc(100% + 2px);
+  }
+
+  .processes {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    font-size: 11px;
+    background: #000;
+    height: auto;
+    bottom: -1px;
+    width: calc(100% + 2px);
+    text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 3px 0px;
+    line-height: 12px;
   }
 `;
