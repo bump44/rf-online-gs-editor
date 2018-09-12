@@ -8,7 +8,7 @@ import {
 import { saveTokenMe } from '../../utils/ls';
 
 // The initial state of the App
-const initialState = fromJS({
+export const initialState = fromJS({
   isLoggedIn: false,
   currentUser: null,
   currentUserToken: '',
