@@ -26,11 +26,9 @@ const defaultOptions = {
   },
   query: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'all',
   },
   mutate: {
     fetchPolicy: 'no-cache',
-    errorPolicy: 'all',
   },
 };
 
