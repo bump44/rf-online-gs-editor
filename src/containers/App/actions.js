@@ -9,11 +9,20 @@ import {
   PROJECTS_IMPORTS_START_FILE_IMPORT,
   PROJECTS_IMPORTS_CANCEL_FILE_IMPORT,
   ANNOUNCE_PROJECT_COUNT_ITEMS,
+  ANNOUNCE_PROJECT_COUNT_STORES,
 } from './constants';
 
 export function announceProjectCountItems({ count, id }) {
   return {
     type: ANNOUNCE_PROJECT_COUNT_ITEMS,
+    count,
+    id,
+  };
+}
+
+export function announceProjectCountStores({ count, id }) {
+  return {
+    type: ANNOUNCE_PROJECT_COUNT_STORES,
     count,
     id,
   };
