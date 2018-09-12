@@ -137,6 +137,7 @@ export class ProjectImportPage extends React.Component {
       const fileState = projectImports.get(key, Map({}));
       const filePath = fileState.get('filePath', '').trim();
       const fileStatus = fileState.get('status', WAITING);
+      const fileErrorMessage = fileState.get('errorMessage', '');
       const countTotal = fileState.get('countTotal', 0);
       const countCompleted = fileState.get('countCompleted', 0);
       const percent = (() => {
@@ -163,7 +164,10 @@ export class ProjectImportPage extends React.Component {
       return (
         <FileRow key={key}>
           <div className="overlay" />
-          <div className="file-actions">
+          <div
+            className="file-actions"
+            title={fileStatus === ERROR ? fileErrorMessage : undefined}
+          >
             <span className="tag is-pulled-right is-small file-status-tag">
               {fileStatus}
             </span>
