@@ -1,17 +1,30 @@
+/* eslint-disable global-require, no-console */
 import { app, BrowserWindow } from 'electron';
 import { enableLiveReload } from 'electron-compile';
+import MenuBuilder from './menu';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line
+if (require('electron-squirrel-startup')) {
+  // eslint-disable-line
   app.quit();
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-const isDevMode = process.execPath.match(/[\\/]electron/);
 
+const isDevMode = process.env.NODE_ENV === 'development';
 if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
+
+const installExtensions = async () => {
+  const installer = require('electron-devtools-installer');
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+
+  return Promise.all(
+    extensions.map(name => installer.default(installer[name], forceDownload)),
+  ).catch(console.log);
+};
 
 const createWindow = () => {
   // Create the browser window.
@@ -33,6 +46,19 @@ const createWindow = () => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
+  // ready-to-show
+  mainWindow.webContents.on('ready-to-show', () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined');
+    }
+    if (process.env.START_MINIMIZED) {
+      mainWindow.minimize();
+    } else {
+      mainWindow.show();
+      mainWindow.focus();
+    }
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -40,12 +66,21 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', async () => {
+  if (isDevMode) {
+    await installExtensions();
+  }
+
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
