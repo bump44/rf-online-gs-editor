@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { Map } from 'immutable';
 import { PROCESSING } from './constants';
 
 const selectRoute = state => state.get('route');
@@ -32,7 +33,7 @@ const makeSelectProjectsImportsIsProcessing = () =>
 const makeSelectProjectsImportsProcessingData = () =>
   createSelector(selectGlobal, globalState => {
     const isProcessing = globalState
-      .get('projectsImports')
+      .get('projectsImports', Map({}))
       .some(fileDataSets =>
         fileDataSets.some(
           fileDataSet => fileDataSet.get('status') === PROCESSING,
