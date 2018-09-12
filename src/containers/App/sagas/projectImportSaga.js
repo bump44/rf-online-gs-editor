@@ -28,10 +28,13 @@ import {
 import { makeSelectProjectsImports } from '../selectors';
 
 import { FILES } from '../../../utils/gameFiles';
+
 import clientItemResolve from './projectImport/clientItemResolve';
+import clientStoreResolve from './projectImport/clientStoreResolve';
 
 const Resolvers = {
   clientItemResolve,
+  clientStoreResolve,
 };
 
 const Workers = {};

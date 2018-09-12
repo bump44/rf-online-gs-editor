@@ -24,7 +24,7 @@ export const FILE_TYPES = {
 export const RESOLVERS = {
   CLIENT_ITEM: 'clientItemResolve',
   CLIENT_ITEM_ND: 'clientItemND',
-  CLIENT_STORE: 'clientStore',
+  CLIENT_STORE: 'clientStoreResolve',
   SERVER_ITEM: 'serverItem',
 };
 
