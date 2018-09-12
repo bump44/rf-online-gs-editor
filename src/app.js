@@ -16,12 +16,14 @@ import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
 import createHistory from 'history/createMemoryHistory';
 import throttle from 'lodash/throttle';
+import pick from 'lodash/pick';
 
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
 import { translationMessages } from './i18n';
 import { loadState, saveState } from './utils/ls';
+import { initialState as appInitialState } from './containers/App/reducer';
 
 // Import CSS reset and Global Styles
 import './global-styles';
@@ -36,10 +38,16 @@ store.subscribe(
   throttle(
     () =>
       saveState({
-        global: store
-          .getState()
-          .get('global')
-          .toJS(),
+        global: {
+          ...appInitialState.toJS(),
+          ...pick(
+            store
+              .getState()
+              .get('global')
+              .toJS(),
+            ['isLoggedIn', 'currentUser', 'currentUserToken'],
+          ),
+        },
       }),
     1000,
   ),
