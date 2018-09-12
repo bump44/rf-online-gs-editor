@@ -41,7 +41,7 @@ export default function* defaultSaga({
 
     let t = 0;
     while (chunks.length > t) {
-      const result = yield call(apolloClient.mutate, {
+      const result = yield apolloClient.mutate({
         mutation: projectItemImportClientMutation,
         variables: {
           projectId,
@@ -50,6 +50,9 @@ export default function* defaultSaga({
           importType,
         },
       });
+
+      // clean mutationStore
+      yield apolloClient.resetStore();
 
       const nextTotal = result.data.projectItemImportClient.total;
       yield put(announceProjectCountItems({ count: nextTotal, id: projectId }));
