@@ -46,9 +46,6 @@ export default function* defaultSaga({
       },
     });
 
-    // clean mutationStore
-    yield apolloClient.resetStore();
-
     const nextTotal = result.data.projectStoreImportClient.total;
     yield put(announceProjectCountStores({ count: nextTotal, id: projectId }));
 

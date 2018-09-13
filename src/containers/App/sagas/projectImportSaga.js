@@ -31,6 +31,7 @@ import { FILES } from '../../../utils/gameFiles';
 
 import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
+import apolloClient from '../../../apollo';
 
 const Resolvers = {
   clientItemResolve,
@@ -117,6 +118,9 @@ export function* worker({ projectId, fileKey }) {
     });
 
     yield call(changeFileStateToFinished, { actions });
+
+    // resetStore after mutations
+    apolloClient.resetStore();
   } catch (error) {
     yield call(changeFileStateToError, { actions, error });
     console.error(error); // eslint-disable-line
