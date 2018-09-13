@@ -28,11 +28,11 @@ export const initialState = fromJS({
     take: 25,
     skip: 0,
     sort: { nIndex: 1 },
-    where: { search: '', type: 'face' },
+    where: { search: '', type: 'upper' },
   },
   result: {
     items: [],
-    total: 0,
+    total: 1, // first-row imitate first-load
   },
 });
 
