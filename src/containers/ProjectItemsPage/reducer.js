@@ -17,6 +17,8 @@ import {
   CONCAT_RESULT_ITEMS_FROM_JS,
   RESET_RESULT,
   CHANGE_RESULT_ITEMS,
+  CHANGE_FILTER_SORT_BY,
+  CHANGE_FILTER_SORT_WAY,
 } from './constants';
 
 export const initialState = fromJS({
@@ -29,7 +31,8 @@ export const initialState = fromJS({
   filter: {
     take: 25,
     skip: 0,
-    sort: { nIndex: 1 },
+    sortBy: 'nIndex',
+    sortWay: 1,
     where: { search: '', type: 'upper' },
   },
   result: {
@@ -55,6 +58,10 @@ function projectItemsPageReducer(state = initialState, action) {
       return state
         .setIn(['filter', 'take'], action.take)
         .setIn(['filter', 'skip'], action.skip);
+    case CHANGE_FILTER_SORT_BY:
+      return state.setIn(['filter', 'sortBy'], action.sortBy);
+    case CHANGE_FILTER_SORT_WAY:
+      return state.setIn(['filter', 'sortWay'], action.sortWay);
     case CHANGE_ID:
       return state
         .set('id', action.id)

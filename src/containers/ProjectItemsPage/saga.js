@@ -1,3 +1,4 @@
+import pick from 'lodash/pick';
 import { delay } from 'redux-saga';
 import {
   take,
@@ -11,7 +12,12 @@ import {
 } from 'redux-saga/effects';
 
 import { fromJS } from 'immutable';
-import { CHANGE_ID, CHANGE_FILTER_TAKE_SKIP } from './constants';
+import {
+  CHANGE_ID,
+  CHANGE_FILTER_TAKE_SKIP,
+  CHANGE_FILTER_SORT_BY,
+  CHANGE_FILTER_SORT_WAY,
+} from './constants';
 import apolloClient from '../../apollo';
 import projectQuery from '../../apollo/queries/project';
 import projectItemsQuery from '../../apollo/queries/project_items';
@@ -29,6 +35,7 @@ import {
   changeProject,
   changeResultTotal,
   changeResultItems,
+  resetResult,
 } from './actions';
 
 // Individual exports for testing
@@ -64,10 +71,13 @@ export function* changeFilter() {
     const result = yield call(apolloClient.query, {
       query: projectItemsQuery,
       variables: {
-        ...filterJS,
+        ...pick(filterJS, ['take', 'skip']),
         where: {
           ...filterJS.where,
           projectId: project.get('id'),
+        },
+        sort: {
+          [filterJS.sortBy]: filterJS.sortWay,
         },
       },
     });
@@ -102,7 +112,20 @@ export function* watchChangeFilter() {
   let task;
 
   while (true) {
-    yield take([CHANGE_FILTER_TAKE_SKIP]);
+    const action = yield take([
+      CHANGE_FILTER_TAKE_SKIP,
+      CHANGE_FILTER_SORT_BY,
+      CHANGE_FILTER_SORT_WAY,
+    ]);
+
+    // reset result state if the order of the elements changes
+    if (
+      [CHANGE_FILTER_SORT_BY, CHANGE_FILTER_SORT_WAY].indexOf(action.type) !==
+      -1
+    ) {
+      yield put(resetResult());
+    }
+
     if (task) {
       yield cancel(task);
       task = undefined;

@@ -14,6 +14,8 @@ import {
   RESET_RESULT,
   CONCAT_RESULT_ITEMS_FROM_JS,
   CHANGE_RESULT_ITEMS,
+  CHANGE_FILTER_SORT_BY,
+  CHANGE_FILTER_SORT_WAY,
 } from './constants';
 
 export function defaultAction() {
@@ -65,6 +67,20 @@ export function changeFilterTakeSkip(take, skip) {
     type: CHANGE_FILTER_TAKE_SKIP,
     take,
     skip,
+  };
+}
+
+export function changeFilterSortBy(sortBy) {
+  return {
+    type: CHANGE_FILTER_SORT_BY,
+    sortBy,
+  };
+}
+
+export function changeFilterSortWay(sortWay) {
+  return {
+    type: CHANGE_FILTER_SORT_WAY,
+    sortWay,
   };
 }
 

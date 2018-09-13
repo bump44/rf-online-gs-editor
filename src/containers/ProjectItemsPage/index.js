@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Promise from 'bluebird';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -19,18 +20,27 @@ import injectReducer from '../../utils/injectReducer';
 import makeSelectProjectItemsPage, {
   makeSelectProject,
   makeSelectResult,
+  makeSelectFilter,
 } from './selectors';
 
 import {
   makeSelectProjectsImportsProcessingData,
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
+  makeSelectProjectsNextValues,
 } from '../App/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { changeId, changeFilterTakeSkip, resetResult } from './actions';
+import { projectsItemsBindActions } from '../App/actions';
+import {
+  changeId,
+  changeFilterTakeSkip,
+  resetResult,
+  changeFilterSortBy,
+  changeFilterSortWay,
+} from './actions';
 
 import Header from '../../components/Header';
 import ProjectMenu from '../../components/ProjectMenu';
@@ -38,6 +48,7 @@ import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import InfiniteAutoSizeList from '../../components/InfiniteAutoSizeList';
 import ProjectItemVirtualizedRow from '../../components/ProjectItemVirtualizedRow';
+import ProjectItemsFilters from '../../components/ProjectItemsFilters';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemsPage extends React.PureComponent {
@@ -88,12 +99,20 @@ export class ProjectItemsPage extends React.PureComponent {
   }
 
   rowRenderer({ key, ...props }) {
-    const { result } = this.props;
+    const {
+      result,
+      fnProjectItemsActions,
+      currentProject,
+      projectsNextValues,
+    } = this.props;
+
     return (
       <ProjectItemVirtualizedRow
         {...props}
         key={key}
         items={result.get('items')}
+        nextValues={projectsNextValues.get(currentProject.get('id'), Map({}))}
+        actions={fnProjectItemsActions}
       />
     );
   }
@@ -112,6 +131,9 @@ export class ProjectItemsPage extends React.PureComponent {
       projectItemsPage,
       projectsImportsProcessingData,
       result,
+      filter,
+      fnChangeFilterSortBy,
+      fnChangeFilterSortWay,
     } = this.props;
 
     const {
@@ -172,6 +194,13 @@ export class ProjectItemsPage extends React.PureComponent {
                   />
                 </p>
 
+                <ProjectItemsFilters
+                  sortBy={filter.get('sortBy')}
+                  sortWay={filter.get('sortWay')}
+                  onChangeSortBy={fnChangeFilterSortBy}
+                  onChangeSortWay={fnChangeFilterSortWay}
+                />
+
                 <div className="card" style={styles.card}>
                   <InfiniteAutoSizeList
                     isRowLoaded={this.isRowLoaded}
@@ -204,16 +233,24 @@ const mapStateToProps = createStructuredSelector({
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectsNextValues: makeSelectProjectsNextValues(),
   result: makeSelectResult(),
+  filter: makeSelectFilter(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, props) {
   return {
     dispatch,
     fnChangeId: id => dispatch(changeId(id)),
     fnResetResult: () => dispatch(resetResult()),
     fnChangeFilterTakeSkip: (take, skip) =>
       dispatch(changeFilterTakeSkip(take, skip)),
+    fnChangeFilterSortBy: sortBy => dispatch(changeFilterSortBy(sortBy)),
+    fnChangeFilterSortWay: sortWay => dispatch(changeFilterSortWay(sortWay)),
+    fnProjectItemsActions: projectsItemsBindActions({
+      dispatch,
+      projectId: props.match.params.id,
+    }),
   };
 }
 
