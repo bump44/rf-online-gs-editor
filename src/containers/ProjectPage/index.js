@@ -30,21 +30,21 @@ import ProjectMenu from '../../components/ProjectMenu';
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectPage extends React.PureComponent {
   componentWillMount() {
-    this.loadProjectIfIdChanged(this.props);
+    this.loadProjectIfIdChanged(this.props, { isMount: true });
   }
 
   componentWillReceiveProps(nextProps) {
     this.loadProjectIfIdChanged(nextProps);
   }
 
-  loadProjectIfIdChanged(props) {
+  loadProjectIfIdChanged(props, { isMount } = {}) {
     const { id } = props.projectPage;
     const { match } = props;
     const { params } = match;
 
     const nextId = params.id;
 
-    if (id !== nextId) {
+    if (id !== nextId || isMount) {
       props.fnChangeId(nextId);
     }
   }
@@ -59,7 +59,7 @@ export class ProjectPage extends React.PureComponent {
       isLoading,
       id,
     } = projectPage;
-
+    console.log(this);
     return (
       <div>
         <Helmet>
