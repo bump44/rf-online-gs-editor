@@ -10,7 +10,17 @@ import {
   PROJECTS_IMPORTS_CANCEL_FILE_IMPORT,
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   ANNOUNCE_PROJECT_COUNT_STORES,
+  PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
+  PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
+  PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
 } from './constants';
+
+/**
+ * Announces Actions
+ */
 
 export function announceProjectCountItems({ count, id }) {
   return {
@@ -27,6 +37,10 @@ export function announceProjectCountStores({ count, id }) {
     id,
   };
 }
+
+/**
+ * Current User Actions
+ */
 
 export function changeCurrentUser(user) {
   return {
@@ -47,6 +61,10 @@ export function logoutCurrentUser() {
     type: LOGOUT_CURRENT_USER,
   };
 }
+
+/**
+ * ProjectsImports Actions
+ */
 
 export function projectsImportsStartFileImport({ projectId, fileKey }) {
   return {
@@ -124,6 +142,112 @@ export const projectsImportsBindActionsWithFileKey = ({
     const actionFn = projectsImports[actionKey];
     nextFns[actionKey] = propValue =>
       dispatch(actionFn({ projectId, fileKey, propValue }));
+  });
+  return nextFns;
+};
+
+/**
+ * ProjectsNextValues Actions
+ */
+export function projectsNextValuesChangePropValue({
+  projectId,
+  item,
+  propKey,
+  propValue,
+}) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
+    projectId,
+    item,
+    propKey,
+    propValue,
+  };
+}
+
+export function projectsNextValuesChangeIsSaving(
+  { projectId, keyId },
+  isSaving,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING,
+    projectId,
+    keyId,
+    isSaving,
+  };
+}
+
+export function projectsNextValuesChangeIsSaved({ projectId, keyId }, isSaved) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
+    projectId,
+    keyId,
+    isSaved,
+  };
+}
+
+export function projectsNextValuesChangeIsError({ projectId, keyId }, isError) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
+    projectId,
+    keyId,
+    isError,
+  };
+}
+
+export function projectsNextValuesChangeErrorMessage(
+  { projectId, keyId },
+  errorMessage,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
+    projectId,
+    keyId,
+    errorMessage,
+  };
+}
+
+export function projectsNextValuesChangeNextValue(
+  { projectId, keyId },
+  nextValue,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
+    projectId,
+    keyId,
+    nextValue,
+  };
+}
+
+/**
+ * ProjectsItems Actions
+ */
+export const projectsItems = {
+  // generated actions eq. changeName, changeItemGrade
+  ...(() => {
+    const propKeys = ['name'];
+    const fns = {};
+    propKeys.forEach(propKey => {
+      fns[`change${upperFirst(propKey)}`] = args =>
+        projectsNextValuesChangePropValue({
+          ...args,
+          propKey,
+        });
+    });
+    return fns;
+  })(),
+};
+
+export const projectsItemsActionNames = Object.keys(projectsItems);
+
+export const projectsItemsBindActions = ({
+  projectId,
+  dispatch = args => args,
+}) => {
+  const nextFns = {};
+  projectsItemsActionNames.forEach(actionKey => {
+    const actionFn = projectsItems[actionKey];
+    nextFns[actionKey] = (item, propValue) =>
+      dispatch(actionFn({ projectId, item, propValue }));
   });
   return nextFns;
 };

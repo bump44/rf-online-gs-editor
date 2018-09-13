@@ -1,9 +1,15 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import {
   CHANGE_CURRENT_USER,
   CHANGE_CURRENT_USER_TOKEN,
   LOGOUT_CURRENT_USER,
   PROJECTS_IMPORTS_CHANGE_PROP_VALUE,
+  PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
+  PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
+  PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
 } from './constants';
 import { saveTokenMe } from '../../utils/ls';
 
@@ -30,10 +36,93 @@ export const initialState = fromJS({
    *  }
    */
   projectsImports: {},
+
+  /**
+   * Projects Next Values Operations
+   *
+   * {
+   *  [project.id]: {
+   *    [id]: {
+   *      keyId: '',
+   *      isSaved: false,
+   *      isSaving: false,
+   *      isError: false,
+   *      errorMessage: '',
+   *      nextValue: {},
+   *    }
+   *  }
+   * }
+   */
+  projectsNextValues: {},
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'nextValue'],
+        action.nextValue,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isSaving'],
+        action.isSaving,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isSaved'],
+        action.isSaved,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isError'],
+        action.isError,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'errorMessage'],
+        action.errorMessage,
+      );
+    // change of values in the saga
+    case PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE:
+      return state
+        .setIn(
+          [
+            'projectsNextValues',
+            action.projectId,
+            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            'isSaved',
+          ],
+          false,
+        )
+        .setIn(
+          [
+            'projectsNextValues',
+            action.projectId,
+            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            'keyId',
+          ],
+          action.item instanceof Map ? action.item.get('id') : action.item.id,
+        )
+        .setIn(
+          [
+            'projectsNextValues',
+            action.projectId,
+            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            'nextValue',
+          ],
+          state.getIn(
+            [
+              'projectsNextValues',
+              action.projectId,
+              action.item instanceof Map
+                ? action.item.get('id')
+                : action.item.id,
+              'nextValue',
+            ],
+            Map({}),
+          ),
+        );
     case PROJECTS_IMPORTS_CHANGE_PROP_VALUE:
       return state
         .setIn(

@@ -77,6 +77,11 @@ const makeSelectProjectsImportsProcessingData = () =>
     };
   });
 
+const makeSelectProjectsNextValues = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('projectsNextValues'),
+  );
+
 export {
   makeSelectLocation,
   makeSelectCurrentUser,
@@ -84,4 +89,5 @@ export {
   makeSelectProjectsImports,
   makeSelectProjectsImportsIsProcessing,
   makeSelectProjectsImportsProcessingData,
+  makeSelectProjectsNextValues,
 };
