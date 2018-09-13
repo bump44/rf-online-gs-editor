@@ -60,7 +60,6 @@ export function* changeFilter() {
     const filter = yield select(makeSelectFilter());
     const project = yield select(makeSelectProject());
     const filterJS = filter.toJS();
-    console.log('load', filterJS);
 
     const result = yield call(apolloClient.query, {
       query: projectItemsQuery,
@@ -83,13 +82,11 @@ export function* changeFilter() {
 
     yield put(changeResultItems(nextItems));
     yield put(changeResultTotal(total));
-    // console.log('loaded');
   } catch (error) {
-    // console.error('error', error);
+    console.error('error', error); // eslint-disable-line
   } finally {
     if (yield cancelled()) {
       // ignore
-      // console.log('cancelled');
     }
   }
 }
