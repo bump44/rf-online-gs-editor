@@ -5,6 +5,8 @@
  */
 
 import { fromJS } from 'immutable';
+import { ANNOUNCE_PROJECT_COUNT_ITEMS } from '../App/constants';
+
 import {
   DEFAULT_ACTION,
   CHANGE_ID,
@@ -34,6 +36,13 @@ function projectPageReducer(state = initialState, action) {
       return state.set('project', fromJS(action.project));
     case DEFAULT_ACTION:
       return state;
+    case ANNOUNCE_PROJECT_COUNT_ITEMS:
+      return state.set(
+        'project',
+        state.getIn(['project', 'id']) === action.id
+          ? state.get('project').setIn(['items', 'total'], action.count)
+          : state.get('project'),
+      );
     default:
       return state;
   }

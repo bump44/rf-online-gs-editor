@@ -1,6 +1,5 @@
-import { take, call, put, all, fork, select } from 'redux-saga/effects';
+import { take, call, put, all, fork } from 'redux-saga/effects';
 import { CHANGE_ID } from './constants';
-import { ANNOUNCE_PROJECT_COUNT_ITEMS } from '../App/constants';
 import apolloClient from '../../apollo';
 import projectQuery from '../../apollo/queries/project';
 import {
@@ -9,9 +8,7 @@ import {
   changeIsLoaded,
   changeIsLoading,
   changeProject,
-  changeFieldValue,
 } from './actions';
-import { makeSelectProject } from './selectors';
 
 // Individual exports for testing
 export function* changeId({ id }) {
@@ -43,22 +40,7 @@ export function* watchChangeId() {
   }
 }
 
-export function* watchAnnounceCountItems() {
-  while (true) {
-    const props = yield take(ANNOUNCE_PROJECT_COUNT_ITEMS);
-    const project = yield select(makeSelectProject());
-    if (project && project.get('id') === props.id) {
-      yield put(
-        changeFieldValue(
-          'project',
-          project.setIn(['items', 'total'], props.count),
-        ),
-      );
-    }
-  }
-}
-
 export default function* defaultSaga() {
-  yield all([fork(watchChangeId), fork(watchAnnounceCountItems)]);
+  yield all([fork(watchChangeId)]);
   // See example in containers/HomePage/saga.js
 }
