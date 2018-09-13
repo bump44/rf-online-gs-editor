@@ -37,7 +37,7 @@ export class ProjectPage extends React.PureComponent {
     this.loadProjectIfIdChanged(nextProps);
   }
 
-  loadProjectIfIdChanged(props, { isMount } = {}) {
+  loadProjectIfIdChanged(props, { isMount = false } = {}) {
     const { id } = props.projectPage;
     const { match } = props;
     const { params } = match;
@@ -59,7 +59,7 @@ export class ProjectPage extends React.PureComponent {
       isLoading,
       id,
     } = projectPage;
-    console.log(this);
+
     return (
       <div>
         <Helmet>
