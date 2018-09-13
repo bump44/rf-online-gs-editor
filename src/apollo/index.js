@@ -21,11 +21,11 @@ const authLink = setContext((_, { headers }) => {
 
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'no-cache',
     errorPolicy: 'ignore',
   },
   query: {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   },
   mutate: {
     fetchPolicy: 'no-cache',
