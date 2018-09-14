@@ -17,6 +17,7 @@ import {
   CHANGE_FILTER_SORT_BY,
   CHANGE_FILTER_SORT_WAY,
   CHANGE_FILTER_WHERE_SEARCH,
+  CHANGE_FILTER_WHERE_TYPE,
 } from './constants';
 
 export function defaultAction() {
@@ -89,6 +90,13 @@ export function changeFilterWhereSearch(search) {
   return {
     type: CHANGE_FILTER_WHERE_SEARCH,
     search,
+  };
+}
+
+export function changeFilterWhereType(strType) {
+  return {
+    type: CHANGE_FILTER_WHERE_TYPE,
+    strType,
   };
 }
 

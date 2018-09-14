@@ -41,6 +41,7 @@ import {
   changeFilterSortBy,
   changeFilterSortWay,
   changeFilterWhereSearch,
+  changeFilterWhereType,
 } from './actions';
 
 import Header from '../../components/Header';
@@ -136,6 +137,7 @@ export class ProjectItemsPage extends React.PureComponent {
       fnChangeFilterSortBy,
       fnChangeFilterSortWay,
       fnChangeFilterWhereSearch,
+      fnChangeFilterWhereType,
     } = this.props;
 
     const {
@@ -200,9 +202,11 @@ export class ProjectItemsPage extends React.PureComponent {
                   sortBy={filter.get('sortBy')}
                   sortWay={filter.get('sortWay')}
                   whereSearch={filter.getIn(['where', 'search'])}
+                  whereType={filter.getIn(['where', 'type'])}
                   onChangeSortBy={fnChangeFilterSortBy}
                   onChangeSortWay={fnChangeFilterSortWay}
                   onChangeWhereSearch={fnChangeFilterWhereSearch}
+                  onChangeWhereType={fnChangeFilterWhereType}
                 />
 
                 <div className="card" style={styles.card}>
@@ -253,6 +257,8 @@ function mapDispatchToProps(dispatch, props) {
     fnChangeFilterSortWay: sortWay => dispatch(changeFilterSortWay(sortWay)),
     fnChangeFilterWhereSearch: whereSearch =>
       dispatch(changeFilterWhereSearch(whereSearch)),
+    fnChangeFilterWhereType: whereType =>
+      dispatch(changeFilterWhereType(whereType)),
     fnProjectItemsActions: projectsItemsBindActions({
       dispatch,
       projectId: props.match.params.id,

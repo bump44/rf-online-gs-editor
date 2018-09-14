@@ -20,6 +20,7 @@ import {
   CHANGE_FILTER_SORT_BY,
   CHANGE_FILTER_SORT_WAY,
   CHANGE_FILTER_WHERE_SEARCH,
+  CHANGE_FILTER_WHERE_TYPE,
 } from './constants';
 
 export const initialState = fromJS({
@@ -34,7 +35,7 @@ export const initialState = fromJS({
     skip: 0,
     sortBy: 'nIndex',
     sortWay: 1,
-    where: { search: '', type: 'helmet' },
+    where: { search: '', type: '' },
   },
   result: {
     items: [],
@@ -65,6 +66,8 @@ function projectItemsPageReducer(state = initialState, action) {
       return state.setIn(['filter', 'sortWay'], action.sortWay);
     case CHANGE_FILTER_WHERE_SEARCH:
       return state.setIn(['filter', 'where', 'search'], action.search);
+    case CHANGE_FILTER_WHERE_TYPE:
+      return state.setIn(['filter', 'where', 'type'], action.strType);
     case CHANGE_ID:
       return state
         .set('id', action.id)

@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
+import ProjectItemTypeSelect from '../ProjectItemTypeSelect';
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemsFilters extends React.PureComponent {
   constructor(props) {
@@ -30,10 +32,15 @@ class ProjectItemsFilters extends React.PureComponent {
       const { onChangeWhereSearch } = this.props;
       onChangeWhereSearch(evt.target.value);
     };
+
+    this.changeWhereType = evt => {
+      const { onChangeWhereType } = this.props;
+      onChangeWhereType(evt.target.value);
+    };
   }
 
   render() {
-    const { sortBy, sortWay, whereSearch } = this.props;
+    const { sortBy, sortWay, whereSearch, whereType } = this.props;
 
     return (
       <div className="field is-grouped is-grouped-multiline">
@@ -71,6 +78,15 @@ class ProjectItemsFilters extends React.PureComponent {
         </div>
 
         <div className="control">
+          <ProjectItemTypeSelect
+            onChange={this.changeWhereType}
+            value={whereType}
+            className="is-small"
+            prependBeforeEmpty
+          />
+        </div>
+
+        <div className="control">
           <FormattedMessage {...messages.SearchString}>
             {message => (
               <input
@@ -92,9 +108,11 @@ ProjectItemsFilters.propTypes = {
   sortBy: PropTypes.string.isRequired,
   sortWay: PropTypes.number.isRequired,
   whereSearch: PropTypes.string.isRequired,
+  whereType: PropTypes.string.isRequired,
   onChangeSortBy: PropTypes.func.isRequired,
   onChangeSortWay: PropTypes.func.isRequired,
   onChangeWhereSearch: PropTypes.func.isRequired,
+  onChangeWhereType: PropTypes.func.isRequired,
 };
 
 export default ProjectItemsFilters;
