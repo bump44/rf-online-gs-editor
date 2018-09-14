@@ -56,18 +56,18 @@ class ProjectItemRow extends React.PureComponent {
           'is-warning': isSaving,
         })}
       >
-        {isShowStatus && (
-          <small>
-            <i
-              className={cx('fas', {
-                'fa-pencil-alt': !isSaving && !isSaved && !isError,
-                'fa-spin fa-spinner': isSaving,
-                'fa-times': isError,
-              })}
-            />
-            &nbsp;
-          </small>
-        )}
+        <small>
+          <i
+            className={cx('fas', {
+              'fa-check': !isShowStatus,
+              'fa-pencil-alt':
+                isShowStatus && !isSaving && !isSaved && !isError,
+              'fa-spin fa-spinner': isShowStatus && isSaving,
+              'fa-times': isShowStatus && isError,
+            })}
+          />
+          &nbsp;
+        </small>
         {nIndex}
         &nbsp;
         <ProjectItemTypeLocaleMessage
