@@ -23,4 +23,16 @@ export default defineMessages({
     id: 'app.components.ProjectItemTypeLocaleMessage.lower',
     defaultMessage: 'lower',
   },
+  helmet: {
+    id: 'app.components.ProjectItemTypeLocaleMessage.helmet',
+    defaultMessage: 'helmet',
+  },
+  gauntlet: {
+    id: 'app.components.ProjectItemTypeLocaleMessage.gauntlet',
+    defaultMessage: 'gauntlet',
+  },
+  shoe: {
+    id: 'app.components.ProjectItemTypeLocaleMessage.shoe',
+    defaultMessage: 'shoe',
+  },
 });

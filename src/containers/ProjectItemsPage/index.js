@@ -21,6 +21,7 @@ import makeSelectProjectItemsPage, {
   makeSelectProject,
   makeSelectResult,
   makeSelectFilter,
+  makeSelectProjectMoneyTypes,
 } from './selectors';
 
 import {
@@ -106,6 +107,7 @@ export class ProjectItemsPage extends React.PureComponent {
       fnProjectItemsActions,
       currentProject,
       projectsNextValues,
+      projectMoneyTypes,
     } = this.props;
 
     return (
@@ -115,6 +117,7 @@ export class ProjectItemsPage extends React.PureComponent {
         items={result.get('items')}
         nextValues={projectsNextValues.get(currentProject.get('id'), Map({}))}
         actions={fnProjectItemsActions}
+        moneyTypes={projectMoneyTypes}
       />
     );
   }
@@ -239,6 +242,7 @@ const mapStateToProps = createStructuredSelector({
   projectItemsPage: makeSelectProjectItemsPage(),
   isLoggedIn: makeSelectIsLoggedIn(),
   currentProject: makeSelectProject(),
+  projectMoneyTypes: makeSelectProjectMoneyTypes(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
   projectsNextValues: makeSelectProjectsNextValues(),

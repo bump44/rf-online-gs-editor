@@ -21,7 +21,7 @@ import {
   CHANGE_FILTER_WHERE_TYPE,
 } from './constants';
 import apolloClient from '../../apollo';
-import projectQuery from '../../apollo/queries/project';
+import projectItemsPageQuery from '../../apollo/queries/project_items_page';
 import projectItemsQuery from '../../apollo/queries/project_items';
 import {
   makeSelectFilter,
@@ -49,7 +49,7 @@ export function* changeId({ id }) {
 
   try {
     const result = yield call(apolloClient.query, {
-      query: projectQuery,
+      query: projectItemsPageQuery,
       variables: { id },
     });
 

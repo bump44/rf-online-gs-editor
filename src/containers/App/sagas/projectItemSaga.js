@@ -53,6 +53,34 @@ export const Resolvers = {
     item
       .setIn(['client', 'bStoragePossible'], nextValue)
       .setIn(['server', 'bStoragePossible'], nextValue),
+  money: (item, nextValue) =>
+    item
+      .setIn(['client', 'nMoney'], nextValue)
+      .setIn(['server', 'nMoney'], nextValue),
+  stdPrice: (item, nextValue) =>
+    item
+      .setIn(['client', 'nStdPrice'], nextValue)
+      .setIn(['server', 'nStdPrice'], nextValue),
+  stdPoint: (item, nextValue) =>
+    item
+      .setIn(['client', 'nStdPoint'], nextValue)
+      .setIn(['server', 'nStdPoint'], nextValue),
+  goldPoint: (item, nextValue) =>
+    item
+      .setIn(['client', 'nGoldPoint'], nextValue)
+      .setIn(['server', 'nGoldPoint'], nextValue),
+  procPoint: (item, nextValue) =>
+    item
+      .setIn(['client', 'nProcPoint'], nextValue)
+      .setIn(['server', 'nProcPoint'], nextValue),
+  killPoint: (item, nextValue) =>
+    item
+      .setIn(['client', 'nKillPoint'], nextValue)
+      .setIn(['server', 'nKillPoint'], nextValue),
+  storagePrice: (item, nextValue) =>
+    item
+      .setIn(['client', 'nStoragePrice'], nextValue)
+      .setIn(['server', 'nStoragePrice'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {

@@ -6,12 +6,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map /* , List */ } from 'immutable';
+import { Map, List } from 'immutable';
 import ProjectItemRowInteractingName from '../Interacting/Name';
 import ProjectItemRowInteractingExchange from '../Interacting/Exchange';
 import ProjectItemRowInteractingSell from '../Interacting/Sell';
 import ProjectItemRowInteractingGround from '../Interacting/Ground';
 import ProjectItemRowInteractingStoragePossible from '../Interacting/StoragePossible';
+import ProjectItemRowInteractingMoneyType from '../Interacting/MoneyType';
+import ProjectItemRowInteractingMoneyValue from '../Interacting/MoneyValue';
+import ProjectItemRowInteractingStoragePrice from '../Interacting/StoragePrice';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -20,7 +23,7 @@ import ProjectItemRowInteractingStoragePossible from '../Interacting/StoragePoss
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
   render() {
-    const { item, itemNextValues, actions } = this.props;
+    const { item, itemNextValues, actions, moneyTypes } = this.props;
 
     return (
       <div className="columns">
@@ -61,6 +64,36 @@ class ProjectItemRowRenderFace extends React.PureComponent {
             </div>
           </div>
         </div>
+
+        <div className="column">
+          <ProjectItemRowInteractingMoneyType
+            item={item}
+            itemNextValues={itemNextValues}
+            onChangeValue={actions.changeMoney}
+            types={moneyTypes}
+          />
+          <div className="columns">
+            <div className="column">
+              <ProjectItemRowInteractingMoneyValue
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeStdPrice={actions.changeStdPrice}
+                onChangeStdPoint={actions.changeStdPoint}
+                onChangeGoldPoint={actions.changeGoldPoint}
+                onChangeProcPoint={actions.changeProcPoint}
+                onChangeKillPoint={actions.changeKillPoint}
+                types={moneyTypes}
+              />
+            </div>
+            <div className="column">
+              <ProjectItemRowInteractingStoragePrice
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeStoragePrice}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -69,13 +102,20 @@ class ProjectItemRowRenderFace extends React.PureComponent {
 ProjectItemRowRenderFace.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
-  // items: PropTypes.instanceOf(List).isRequired,
+  moneyTypes: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
     changeSell: PropTypes.func.isRequired,
     changeGround: PropTypes.func.isRequired,
     changeStoragePossible: PropTypes.func.isRequired,
+    changeMoney: PropTypes.func.isRequired,
+    changeStdPrice: PropTypes.func.isRequired,
+    changeStdPoint: PropTypes.func.isRequired,
+    changeGoldPoint: PropTypes.func.isRequired,
+    changeProcPoint: PropTypes.func.isRequired,
+    changeKillPoint: PropTypes.func.isRequired,
+    changeStoragePrice: PropTypes.func.isRequired,
   }).isRequired,
 };
 

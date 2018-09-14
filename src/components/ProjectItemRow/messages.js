@@ -29,6 +29,22 @@ export default defineMessages({
   },
   StoragePossible: {
     id: 'app.components.ProjectItemRow.StoragePossible',
-    defaultMessage: 'StoragePossible',
+    defaultMessage: 'Storage possible',
+  },
+  MoneyType: {
+    id: 'app.components.ProjectItemRow.MoneyType',
+    defaultMessage: 'Money type',
+  },
+  UnknownMoneyType: {
+    id: 'app.components.ProjectItemRow.UnknownMoneyType',
+    defaultMessage: 'Unknown money type',
+  },
+  Val: {
+    id: 'app.components.ProjectItemRow.Val',
+    defaultMessage: 'Val',
+  },
+  StoragePrice: {
+    id: 'app.components.ProjectItemRow.StoragePrice',
+    defaultMessage: 'Storage price',
   },
 });

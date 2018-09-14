@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
@@ -14,6 +15,11 @@ const selectProjectItemsPageDomain = state =>
 const makeSelectProject = () =>
   createSelector(selectProjectItemsPageDomain, substate =>
     substate.get('project'),
+  );
+
+const makeSelectProjectMoneyTypes = () =>
+  createSelector(selectProjectItemsPageDomain, substate =>
+    substate.getIn(['project', 'moneyTypes', 'items'], List([])),
   );
 
 const makeSelectResultTotal = () =>
@@ -47,6 +53,7 @@ export default makeSelectProjectItemsPage;
 export {
   selectProjectItemsPageDomain,
   makeSelectProject,
+  makeSelectProjectMoneyTypes,
   makeSelectResult,
   makeSelectResultTotal,
   makeSelectResultItems,

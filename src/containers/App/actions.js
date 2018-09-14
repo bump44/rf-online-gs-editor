@@ -224,7 +224,20 @@ export function projectsNextValuesChangeNextValue(
 export const projectsItems = {
   // generated actions eq. changeName, changeItemGrade
   ...(() => {
-    const propKeys = ['name', 'exchange', 'sell', 'ground', 'storagePossible'];
+    const propKeys = [
+      'name',
+      'exchange',
+      'sell',
+      'ground',
+      'storagePossible',
+      'money',
+      'stdPrice',
+      'stdPoint',
+      'goldPoint',
+      'procPoint',
+      'killPoint',
+      'storagePrice',
+    ];
     const fns = {};
     propKeys.forEach(propKey => {
       fns[`change${upperFirst(propKey)}`] = args =>

@@ -79,13 +79,15 @@ class ProjectItemRow extends React.PureComponent {
   }
 
   render() {
-    const { items, item, itemNextValues, actions } = this.props;
+    const { items, item, itemNextValues, actions, moneyTypes } = this.props;
     const Render = TypeToRowRender[item.get('type')];
 
     return (
       <Row>
         <div className="columns">
-          <div className="column">{this.renderTagIndexWithNextState()}</div>
+          <div className="column is-narrow">
+            {this.renderTagIndexWithNextState()}
+          </div>
           <div className="column">
             {Render && (
               <Render
@@ -93,6 +95,7 @@ class ProjectItemRow extends React.PureComponent {
                 itemNextValues={itemNextValues}
                 items={items}
                 actions={actions}
+                moneyTypes={moneyTypes}
               />
             )}
             {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
@@ -107,6 +110,7 @@ ProjectItemRow.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   items: PropTypes.instanceOf(List).isRequired,
+  moneyTypes: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
   }).isRequired,
