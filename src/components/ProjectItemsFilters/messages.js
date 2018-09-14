@@ -35,4 +35,8 @@ export default defineMessages({
     id: 'app.components.ProjectItemsFilters.Desc',
     defaultMessage: 'Desc',
   },
+  SearchString: {
+    id: 'app.components.ProjectItemsFilters.SearchString',
+    defaultMessage: 'Search string...',
+  },
 });

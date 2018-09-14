@@ -17,6 +17,7 @@ import {
   CHANGE_FILTER_TAKE_SKIP,
   CHANGE_FILTER_SORT_BY,
   CHANGE_FILTER_SORT_WAY,
+  CHANGE_FILTER_WHERE_SEARCH,
 } from './constants';
 import apolloClient from '../../apollo';
 import projectQuery from '../../apollo/queries/project';
@@ -116,12 +117,16 @@ export function* watchChangeFilter() {
       CHANGE_FILTER_TAKE_SKIP,
       CHANGE_FILTER_SORT_BY,
       CHANGE_FILTER_SORT_WAY,
+      CHANGE_FILTER_WHERE_SEARCH,
     ]);
 
     // reset result state if the order of the elements changes
     if (
-      [CHANGE_FILTER_SORT_BY, CHANGE_FILTER_SORT_WAY].indexOf(action.type) !==
-      -1
+      [
+        CHANGE_FILTER_SORT_BY,
+        CHANGE_FILTER_SORT_WAY,
+        CHANGE_FILTER_WHERE_SEARCH,
+      ].indexOf(action.type) !== -1
     ) {
       yield put(resetResult());
     }

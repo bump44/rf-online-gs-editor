@@ -14,6 +14,8 @@ export const CHANGE_FILTER_SORT_BY =
   'app/ProjectItemsPage/CHANGE_FILTER_SORT_BY';
 export const CHANGE_FILTER_SORT_WAY =
   'app/ProjectItemsPage/CHANGE_FILTER_SORT_WAY';
+export const CHANGE_FILTER_WHERE_SEARCH =
+  'app/ProjectItemsPage/CHANGE_FILTER_WHERE_SEARCH';
 export const RESET_RESULT = 'app/ProjectItemsPage/RESET_RESULT';
 export const CHANGE_RESULT_TOTAL = 'app/ProjectItemsPage/CHANGE_RESULT_TOTAL';
 export const CHANGE_RESULT_ITEMS = 'app/ProjectItemsPage/CHANGE_RESULT_ITEMS';

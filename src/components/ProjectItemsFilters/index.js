@@ -16,25 +16,30 @@ class ProjectItemsFilters extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.changeBy = evt => {
+    this.changeSortBy = evt => {
       const { onChangeSortBy } = this.props;
       onChangeSortBy(evt.target.value);
     };
 
-    this.toggleWay = () => {
+    this.toggleSortWay = () => {
       const { sortWay, onChangeSortWay } = this.props;
       onChangeSortWay(sortWay === 1 ? -1 : 1);
+    };
+
+    this.changeWhereSearch = evt => {
+      const { onChangeWhereSearch } = this.props;
+      onChangeWhereSearch(evt.target.value);
     };
   }
 
   render() {
-    const { sortBy, sortWay } = this.props;
+    const { sortBy, sortWay, whereSearch } = this.props;
 
     return (
-      <div className="field">
+      <div className="field is-grouped is-grouped-multiline">
         <div className="control">
           <div className="select is-info is-small">
-            <select value={sortBy} onChange={this.changeBy}>
+            <select value={sortBy} onChange={this.changeSortBy}>
               <FormattedMessage {...messages.ByIndex}>
                 {message => <option value="nIndex">{message}</option>}
               </FormattedMessage>
@@ -49,10 +54,12 @@ class ProjectItemsFilters extends React.PureComponent {
               </FormattedMessage>
             </select>
           </div>
-          &nbsp;
+        </div>
+
+        <div className="control">
           <button
             type="button"
-            onClick={this.toggleWay}
+            onClick={this.toggleSortWay}
             className="button is-small"
           >
             {sortWay === 1 ? (
@@ -62,6 +69,20 @@ class ProjectItemsFilters extends React.PureComponent {
             )}
           </button>
         </div>
+
+        <div className="control">
+          <FormattedMessage {...messages.SearchString}>
+            {message => (
+              <input
+                className="input is-small"
+                type="text"
+                placeholder={message}
+                onChange={this.changeWhereSearch}
+                value={whereSearch}
+              />
+            )}
+          </FormattedMessage>
+        </div>
       </div>
     );
   }
@@ -70,8 +91,10 @@ class ProjectItemsFilters extends React.PureComponent {
 ProjectItemsFilters.propTypes = {
   sortBy: PropTypes.string.isRequired,
   sortWay: PropTypes.number.isRequired,
+  whereSearch: PropTypes.string.isRequired,
   onChangeSortBy: PropTypes.func.isRequired,
   onChangeSortWay: PropTypes.func.isRequired,
+  onChangeWhereSearch: PropTypes.func.isRequired,
 };
 
 export default ProjectItemsFilters;

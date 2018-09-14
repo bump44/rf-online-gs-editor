@@ -19,6 +19,7 @@ import {
   CHANGE_RESULT_ITEMS,
   CHANGE_FILTER_SORT_BY,
   CHANGE_FILTER_SORT_WAY,
+  CHANGE_FILTER_WHERE_SEARCH,
 } from './constants';
 
 export const initialState = fromJS({
@@ -62,6 +63,8 @@ function projectItemsPageReducer(state = initialState, action) {
       return state.setIn(['filter', 'sortBy'], action.sortBy);
     case CHANGE_FILTER_SORT_WAY:
       return state.setIn(['filter', 'sortWay'], action.sortWay);
+    case CHANGE_FILTER_WHERE_SEARCH:
+      return state.setIn(['filter', 'where', 'search'], action.search);
     case CHANGE_ID:
       return state
         .set('id', action.id)

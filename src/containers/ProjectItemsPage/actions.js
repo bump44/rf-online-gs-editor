@@ -16,6 +16,7 @@ import {
   CHANGE_RESULT_ITEMS,
   CHANGE_FILTER_SORT_BY,
   CHANGE_FILTER_SORT_WAY,
+  CHANGE_FILTER_WHERE_SEARCH,
 } from './constants';
 
 export function defaultAction() {
@@ -81,6 +82,13 @@ export function changeFilterSortWay(sortWay) {
   return {
     type: CHANGE_FILTER_SORT_WAY,
     sortWay,
+  };
+}
+
+export function changeFilterWhereSearch(search) {
+  return {
+    type: CHANGE_FILTER_WHERE_SEARCH,
+    search,
   };
 }
 
