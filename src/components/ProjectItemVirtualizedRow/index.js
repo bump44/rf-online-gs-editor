@@ -7,8 +7,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
+import Row from '../ProjectItemRow/styles';
 import ProjectItemRow from '../ProjectItemRow';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -19,22 +20,22 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
 
     return (
       <div style={style}>
-        <Row>
-          {item && (
-            <ProjectItemRow
-              nextValues={nextValues}
-              actions={actions}
-              items={items}
-              item={item}
-              itemNextValues={nextValues.get(item.get('id'), Map({}))}
-            />
-          )}
-          {!item && (
+        {item && (
+          <ProjectItemRow
+            nextValues={nextValues}
+            actions={actions}
+            items={items}
+            item={item}
+            itemNextValues={nextValues.get(item.get('id'), Map({}))}
+          />
+        )}
+        {!item && (
+          <Row>
             <span className="tag is-warning">
               <i className="fas fa-spin fa-spinner" />
             </span>
-          )}
-        </Row>
+          </Row>
+        )}
       </div>
     );
   }
@@ -49,11 +50,3 @@ ProjectItemVirtualizedRow.propTypes = {
 };
 
 export default ProjectItemVirtualizedRow;
-
-const Row = styled.div`
-  padding: 10px;
-
-  &:hover {
-    background: #f1f1f1;
-  }
-`;

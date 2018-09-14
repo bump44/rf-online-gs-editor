@@ -13,6 +13,7 @@ import { Map, List } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
+import Row from './styles';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -88,19 +89,21 @@ class ProjectItemRow extends React.PureComponent {
       );
 
     return (
-      <div className="columns">
-        <div className="column">{this.renderTagIndexWithNextState()}</div>
-        <div className="column">
-          <input
-            type="text"
-            value={strName}
-            onChange={evt => actions.changeName(item, evt.target.value)}
-          />
+      <Row>
+        <div className="columns">
+          <div className="column">{this.renderTagIndexWithNextState()}</div>
+          <div className="column">
+            <input
+              type="text"
+              value={strName}
+              onChange={evt => actions.changeName(item, evt.target.value)}
+            />
+          </div>
+          <div className="column">
+            <FormattedMessage {...messages.header} />
+          </div>
         </div>
-        <div className="column">
-          <FormattedMessage {...messages.header} />
-        </div>
-      </div>
+      </Row>
     );
   }
 }
