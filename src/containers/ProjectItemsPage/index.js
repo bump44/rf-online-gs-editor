@@ -167,7 +167,7 @@ export class ProjectItemsPage extends React.PureComponent {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns is-fullheight calc-60px">
+            <div className="columns is-fullheight calc-50px">
               <div className="column is-2">
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}

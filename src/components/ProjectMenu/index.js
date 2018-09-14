@@ -107,7 +107,7 @@ const Aside = styled.aside.attrs({ className: 'menu' })`
   background: #fff;
   padding: 15px;
   border-radius: 3px;
-  height: calc(100vh - 83.5px);
+  height: calc(100vh - 73.5px);
   overflow-y: auto;
   box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05),
     0 6px 20px 0 rgba(0, 0, 0, 0.02);

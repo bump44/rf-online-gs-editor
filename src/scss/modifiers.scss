@@ -39,6 +39,10 @@ $i: 0;
 .is-fullheight {
   height: 100vh;
 
+  &.calc-50px {
+    height: calc(100vh - 50px);
+  }
+
   &.calc-60px {
     height: calc(100vh - 60px);
   }
