@@ -33,7 +33,7 @@ export const initialState = fromJS({
     skip: 0,
     sortBy: 'nIndex',
     sortWay: 1,
-    where: { search: '', type: 'upper' },
+    where: { search: '', type: 'helmet' },
   },
   result: {
     items: [],

@@ -13,6 +13,8 @@ import { Map, List } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
+import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {
   constructor(props) {
@@ -59,6 +61,11 @@ class ProjectItemRow extends React.PureComponent {
           </small>
         )}
         {nIndex}
+        &nbsp;
+        <ProjectItemTypeLocaleMessage
+          messageKey={item.get('type')}
+          tagName="small"
+        />
       </span>
     );
   }
