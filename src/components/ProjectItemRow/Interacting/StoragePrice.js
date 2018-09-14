@@ -1,11 +1,12 @@
 /**
  *
- * ProjectItemRowInteractingStoragePossible
+ * ProjectItemRowInteractingStoragePrice
  *
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { parseInt } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 // import styled from 'styled-components';
 
@@ -13,13 +14,13 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingStoragePossible extends React.PureComponent {
+class ProjectItemRowInteractingStoragePrice extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.changeValue = evt => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, evt.target.checked);
+      onChangeValue(item, parseInt(evt.target.value.replace(/[^0-9]/g, '')));
     };
   }
 
@@ -29,36 +30,42 @@ class ProjectItemRowInteractingStoragePossible extends React.PureComponent {
     const nextValue = itemNextValues.getIn([
       'nextValue',
       'server',
-      'bStoragePossible',
+      'nStoragePrice',
     ]);
 
     const currValue = item.getIn(
-      [['server', 'bStoragePossible'], ['client', 'bStoragePossible']].find(
+      [['server', 'nStoragePrice'], ['client', 'nStoragePrice']].find(
         fieldSets => !!item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bStoragePossible'],
-      false,
+      ) || ['server', 'nStoragePrice'],
+      0,
     );
 
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = (
+      parseInt(nextValue !== undefined ? nextValue : currValue) || 0
+    ).toLocaleString();
 
     return (
-      <label className="checkbox is-small">
+      <div className="field has-addons">
+        <p className="control">
+          <span className="button is-small">
+            <FormattedMessage {...messages.StoragePrice} />:
+          </span>
+        </p>
         <input
-          type="checkbox"
-          value={1}
-          checked={!!value}
+          className="input is-small"
+          type="text"
+          value={value}
           onChange={this.changeValue}
         />
-        <FormattedMessage {...messages.StoragePossible} />
-      </label>
+      </div>
     );
   }
 }
 
-ProjectItemRowInteractingStoragePossible.propTypes = {
+ProjectItemRowInteractingStoragePrice.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingStoragePossible;
+export default ProjectItemRowInteractingStoragePrice;

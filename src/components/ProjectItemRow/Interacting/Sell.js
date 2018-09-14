@@ -26,7 +26,7 @@ class ProjectItemRowInteractingSell extends React.PureComponent {
   render() {
     const { item, itemNextValues } = this.props;
 
-    const nextValue = itemNextValues.getIn(['nextValue', 'client', 'bSell']);
+    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bSell']);
 
     const currValue = item.getIn(
       [['server', 'bSell'], ['client', 'bSell']].find(

@@ -26,7 +26,7 @@ class ProjectItemRowInteractingGround extends React.PureComponent {
   render() {
     const { item, itemNextValues } = this.props;
 
-    const nextValue = itemNextValues.getIn(['nextValue', 'client', 'bGround']);
+    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bGround']);
 
     const currValue = item.getIn(
       [['server', 'bGround'], ['client', 'bGround']].find(

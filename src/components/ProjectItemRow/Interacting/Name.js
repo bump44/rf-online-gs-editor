@@ -48,12 +48,14 @@ class ProjectItemRowInteractingName extends React.PureComponent {
     const strName = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <input
-        className="input is-small"
-        type="text"
-        value={strName}
-        onChange={this.changeValue}
-      />
+      <div className="field">
+        <input
+          className="input is-small"
+          type="text"
+          value={strName}
+          onChange={this.changeValue}
+        />
+      </div>
     );
   }
 }
