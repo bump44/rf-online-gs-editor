@@ -213,7 +213,7 @@ export class ProjectItemsPage extends React.PureComponent {
                   <InfiniteAutoSizeList
                     isRowLoaded={this.isRowLoaded}
                     loadMoreRows={this.loadMoreRows}
-                    rowHeight={50}
+                    rowHeight={80}
                     rowRenderer={this.rowRenderer}
                     rowCount={result.get('total')}
                     ref={infiniteAutoSizeList => {

@@ -15,6 +15,13 @@ import messages from './messages';
 
 import Row from './styles';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
+import { FACE } from '../../structs/item_types';
+
+import RenderFace from './Render/Face';
+
+const TypeToRowRender = {
+  [FACE]: RenderFace,
+};
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {
@@ -72,35 +79,23 @@ class ProjectItemRow extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, actions } = this.props;
-
-    const strName =
-      itemNextValues.getIn(['nextValue', 'clientNd', 'strName']) ||
-      item.getIn(
-        [
-          ['priorStrName'],
-          ['clientNd', 'strName'],
-          ['serverStr', 'strNameEN'],
-          ['serverStr', 'strNameGLOBAL'],
-          ['client', 'strName'],
-          ['server', 'strName'],
-        ].find(fieldSets => !!item.getIn(fieldSets)) || 'priorStrName',
-        '',
-      );
+    const { items, item, itemNextValues, actions } = this.props;
+    const Render = TypeToRowRender[item.get('type')];
 
     return (
       <Row>
         <div className="columns">
           <div className="column">{this.renderTagIndexWithNextState()}</div>
           <div className="column">
-            <input
-              type="text"
-              value={strName}
-              onChange={evt => actions.changeName(item, evt.target.value)}
-            />
-          </div>
-          <div className="column">
-            <FormattedMessage {...messages.header} />
+            {Render && (
+              <Render
+                item={item}
+                itemNextValues={itemNextValues}
+                items={items}
+                actions={actions}
+              />
+            )}
+            {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
           </div>
         </div>
       </Row>

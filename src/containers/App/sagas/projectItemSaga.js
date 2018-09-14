@@ -37,6 +37,22 @@ export const Resolvers = {
     });
     return nextMap;
   },
+  exchange: (item, nextValue) =>
+    item
+      .setIn(['client', 'bExchange'], nextValue)
+      .setIn(['server', 'bExchange'], nextValue),
+  sell: (item, nextValue) =>
+    item
+      .setIn(['client', 'bSell'], nextValue)
+      .setIn(['server', 'bSell'], nextValue),
+  ground: (item, nextValue) =>
+    item
+      .setIn(['client', 'bGround'], nextValue)
+      .setIn(['server', 'bGround'], nextValue),
+  storagePossible: (item, nextValue) =>
+    item
+      .setIn(['client', 'bStoragePossible'], nextValue)
+      .setIn(['server', 'bStoragePossible'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {
