@@ -29,10 +29,9 @@ function ProjectItemTypeLocaleMessage({
     );
   }
 
-  const fnChild =
-    message && children
-      ? str => children(upperFirst ? _.upperFirst(str) : str)
-      : undefined;
+  const fnChild = children
+    ? str => children(upperFirst ? _.upperFirst(str) : str)
+    : undefined;
 
   return (
     <React.Fragment>
@@ -41,7 +40,8 @@ function ProjectItemTypeLocaleMessage({
           {fnChild}
         </FormattedMessage>
       )}
-      {!message && <TagName>{messageKey}</TagName>}
+      {!message &&
+        (fnChild ? fnChild(messageKey) : <TagName>{messageKey}</TagName>)}
     </React.Fragment>
   );
 }
