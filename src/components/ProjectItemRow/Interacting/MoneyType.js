@@ -32,7 +32,7 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'nMoney'],
       0,
     );

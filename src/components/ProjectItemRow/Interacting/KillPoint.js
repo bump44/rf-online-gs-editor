@@ -35,7 +35,7 @@ class ProjectItemRowInteractingKillPoint extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'nKillPoint'], ['client', 'nKillPoint']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'nKillPoint'],
       0,
     );

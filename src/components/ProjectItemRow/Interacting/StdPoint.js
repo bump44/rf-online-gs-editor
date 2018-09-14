@@ -35,7 +35,7 @@ class ProjectItemRowInteractingStdPoint extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'nStdPoint'], ['client', 'nStdPoint']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'nStdPoint'],
       0,
     );

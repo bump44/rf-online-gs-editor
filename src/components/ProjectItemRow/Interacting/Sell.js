@@ -30,7 +30,7 @@ class ProjectItemRowInteractingSell extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'bSell'], ['client', 'bSell']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'bSell'],
       false,
     );

@@ -34,7 +34,7 @@ class ProjectItemRowInteractingExchange extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'bExchange'], ['client', 'bExchange']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'bExchange'],
       false,
     );

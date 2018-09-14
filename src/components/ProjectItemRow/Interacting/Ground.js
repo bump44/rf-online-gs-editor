@@ -30,7 +30,7 @@ class ProjectItemRowInteractingGround extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'bGround'], ['client', 'bGround']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'bGround'],
       false,
     );

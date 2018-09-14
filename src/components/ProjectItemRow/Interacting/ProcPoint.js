@@ -35,7 +35,7 @@ class ProjectItemRowInteractingProcPoint extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'nProcPoint'], ['client', 'nProcPoint']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'nProcPoint'],
       0,
     );

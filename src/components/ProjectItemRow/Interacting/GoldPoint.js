@@ -35,7 +35,7 @@ class ProjectItemRowInteractingGoldPoint extends React.PureComponent {
 
     const currValue = item.getIn(
       [['server', 'nGoldPoint'], ['client', 'nGoldPoint']].find(
-        fieldSets => !!item.getIn(fieldSets) !== undefined,
+        fieldSets => item.getIn(fieldSets) !== undefined,
       ) || ['server', 'nGoldPoint'],
       0,
     );
