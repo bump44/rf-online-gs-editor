@@ -1,7 +1,6 @@
 /* eslint-disable global-require, no-console */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import { enableLiveReload } from 'electron-compile';
-import MenuBuilder from './menu';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -34,17 +33,27 @@ const createWindow = () => {
     minHeight: 700,
     height: 700,
     frame: false,
-    titleBarStyle: 'hidden-inset',
+    // titleBarStyle: 'hidden-inset',
     center: true,
   });
-
-  // mainWindow.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
+  mainWindow.webContents.on('context-menu', (e, props) => {
+    const { x, y } = props;
+
+    Menu.buildFromTemplate([
+      {
+        label: 'Inspect element',
+        click: () => {
+          mainWindow.inspectElement(x, y);
+        },
+      },
+    ]).popup(mainWindow);
+  });
 
   // ready-to-show
   mainWindow.webContents.on('ready-to-show', () => {
@@ -66,9 +75,6 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 };
 
 // This method will be called when Electron has finished

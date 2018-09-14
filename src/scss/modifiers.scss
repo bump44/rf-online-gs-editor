@@ -39,7 +39,19 @@ $i: 0;
 .is-fullheight {
   height: 100vh;
 
+  &.calc-60px {
+    height: calc(100vh - 60px);
+  }
+
+  &.calc-70px {
+    height: calc(100vh - 70px);
+  }
+
   &.calc-80px {
     height: calc(100vh - 80px);
+  }
+
+  &.calc-90px {
+    height: calc(100vh - 90px);
   }
 }
