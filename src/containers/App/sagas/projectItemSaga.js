@@ -126,7 +126,7 @@ export function* changeProp({ projectId, propKey, propValue, ...props }) {
 }
 
 export function* workerSave({ projectId, keyId }) {
-  yield delay(3000); // delay before start mutation
+  yield delay(1500); // delay before start mutation
   const callAction = (action, value) => action({ projectId, keyId }, value);
 
   try {
@@ -140,6 +140,7 @@ export function* workerSave({ projectId, keyId }) {
 
     yield put(callAction(projectsNextValuesChangeIsSaving, true));
     yield put(callAction(projectsNextValuesChangeIsError, false));
+    yield delay(1500); // delay before mutate
 
     // mutate server state
     yield apolloClient.mutate({
