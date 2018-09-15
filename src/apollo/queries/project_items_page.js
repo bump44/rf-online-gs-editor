@@ -32,6 +32,13 @@ export default gql`
           fieldName
         }
       }
+
+      itemGrades {
+        items {
+          title
+          value
+        }
+      }
     }
   }
 `;
