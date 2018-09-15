@@ -7,6 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
+// import styled from 'styled-components';
+
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
+
 import ProjectItemRowInteractingName from '../Interacting/Name';
 import ProjectItemRowInteractingExchange from '../Interacting/Exchange';
 import ProjectItemRowInteractingSell from '../Interacting/Sell';
@@ -16,10 +21,7 @@ import ProjectItemRowInteractingMoneyType from '../Interacting/MoneyType';
 import ProjectItemRowInteractingMoneyValue from '../Interacting/MoneyValue';
 import ProjectItemRowInteractingStoragePrice from '../Interacting/StoragePrice';
 import ProjectItemRowInteractingItemGrade from '../Interacting/ItemGrade';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import ProjectItemRowInteractingLevelLim from '../Interacting/LevelLim';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
@@ -115,7 +117,22 @@ class ProjectItemRowRenderFace extends React.PureComponent {
           </div>
         </div>
 
-        <div className="column">123</div>
+        <div className="column">
+          <div className="field is-horizontal">
+            <div className="field-label is-small">
+              <label className="label">
+                <FormattedMessage {...messages.Level} />:
+              </label>
+            </div>
+            <div className="field-body">
+              <ProjectItemRowInteractingLevelLim
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeLevelLim}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -140,6 +157,7 @@ ProjectItemRowRenderFace.propTypes = {
     changeKillPoint: PropTypes.func.isRequired,
     changeStoragePrice: PropTypes.func.isRequired,
     changeItemGrade: PropTypes.func.isRequired,
+    changeLevelLim: PropTypes.func.isRequired,
   }).isRequired,
 };
 

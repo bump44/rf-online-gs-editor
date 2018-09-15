@@ -51,4 +51,8 @@ export default defineMessages({
     id: 'app.components.ProjectItemRow.StoragePrice',
     defaultMessage: 'Storage price',
   },
+  Level: {
+    id: 'app.components.ProjectItemRow.Level',
+    defaultMessage: 'Level',
+  },
 });

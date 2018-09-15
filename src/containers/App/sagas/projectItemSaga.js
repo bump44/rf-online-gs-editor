@@ -85,6 +85,10 @@ export const Resolvers = {
     item
       .setIn(['client', 'nItemGrade'], nextValue)
       .setIn(['server', 'nItemGrade'], nextValue),
+  levelLim: (item, nextValue) =>
+    item
+      .setIn(['client', 'nLevelLim'], nextValue)
+      .setIn(['server', 'nLevelLim'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {
