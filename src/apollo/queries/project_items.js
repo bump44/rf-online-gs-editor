@@ -10,6 +10,7 @@ export default gql`
         searchTextValue
         client {
           strName
+          strCode
         }
       }
       total
