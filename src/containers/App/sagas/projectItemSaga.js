@@ -27,6 +27,9 @@ import {
 
 import { makeSelectProjectsNextValues } from '../selectors';
 
+import apolloClient from '../../../apollo';
+import projectItemUpdate from '../../../apollo/mutations/project_item_update';
+
 const WorkersSave = {};
 
 export const Resolvers = {
@@ -137,7 +140,16 @@ export function* workerSave({ projectId, keyId }) {
 
     yield put(callAction(projectsNextValuesChangeIsSaving, true));
     yield put(callAction(projectsNextValuesChangeIsError, false));
-    yield delay(5000); // TODO: mutate
+
+    // mutate server state
+    yield apolloClient.mutate({
+      mutation: projectItemUpdate,
+      variables: {
+        id: keyId,
+        values: state.get('nextValue').toJS(),
+      },
+    });
+
     yield put(callAction(projectsNextValuesChangeIsSaving, false));
     yield put(callAction(projectsNextValuesChangeIsSaved, true));
   } catch (error) {
