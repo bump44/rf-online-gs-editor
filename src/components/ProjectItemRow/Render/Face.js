@@ -15,6 +15,7 @@ import ProjectItemRowInteractingStoragePossible from '../Interacting/StoragePoss
 import ProjectItemRowInteractingMoneyType from '../Interacting/MoneyType';
 import ProjectItemRowInteractingMoneyValue from '../Interacting/MoneyValue';
 import ProjectItemRowInteractingStoragePrice from '../Interacting/StoragePrice';
+import ProjectItemRowInteractingItemGrade from '../Interacting/ItemGrade';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -23,7 +24,13 @@ import ProjectItemRowInteractingStoragePrice from '../Interacting/StoragePrice';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
   render() {
-    const { item, itemNextValues, actions, moneyTypes } = this.props;
+    const {
+      item,
+      itemNextValues,
+      actions,
+      moneyTypes,
+      itemGrades,
+    } = this.props;
 
     return (
       <div className="columns">
@@ -66,12 +73,25 @@ class ProjectItemRowRenderFace extends React.PureComponent {
         </div>
 
         <div className="column">
-          <ProjectItemRowInteractingMoneyType
-            item={item}
-            itemNextValues={itemNextValues}
-            onChangeValue={actions.changeMoney}
-            types={moneyTypes}
-          />
+          <div className="field is-grouped">
+            <div className="control is-expanded">
+              <ProjectItemRowInteractingMoneyType
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeMoney}
+                types={moneyTypes}
+              />
+            </div>
+            <div className="control pr-3">
+              <ProjectItemRowInteractingItemGrade
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeMoney}
+                types={itemGrades}
+              />
+            </div>
+          </div>
+
           <div className="columns">
             <div className="column">
               <ProjectItemRowInteractingMoneyValue
@@ -85,7 +105,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
                 types={moneyTypes}
               />
             </div>
-            <div className="column">
+            <div className="column is-hidden-touch is-hidden-desktop-only is-hidden-widescreen-only">
               <ProjectItemRowInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
@@ -94,6 +114,8 @@ class ProjectItemRowRenderFace extends React.PureComponent {
             </div>
           </div>
         </div>
+
+        <div className="column">123</div>
       </div>
     );
   }
@@ -103,6 +125,7 @@ ProjectItemRowRenderFace.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,

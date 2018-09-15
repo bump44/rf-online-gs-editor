@@ -39,6 +39,10 @@ export default defineMessages({
     id: 'app.components.ProjectItemRow.UnknownMoneyType',
     defaultMessage: 'Unknown money type',
   },
+  UnknownItemGrade: {
+    id: 'app.components.ProjectItemRow.UnknownItemGrade',
+    defaultMessage: 'Unknown item grade',
+  },
   Val: {
     id: 'app.components.ProjectItemRow.Val',
     defaultMessage: 'Val',
