@@ -237,6 +237,7 @@ export const projectsItems = {
       'procPoint',
       'killPoint',
       'storagePrice',
+      'itemGrade',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

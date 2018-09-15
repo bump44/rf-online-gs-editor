@@ -81,6 +81,10 @@ export const Resolvers = {
     item
       .setIn(['client', 'nStoragePrice'], nextValue)
       .setIn(['server', 'nStoragePrice'], nextValue),
+  itemGrade: (item, nextValue) =>
+    item
+      .setIn(['client', 'nItemGrade'], nextValue)
+      .setIn(['server', 'nItemGrade'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {
