@@ -26,7 +26,7 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, types } = this.props;
+    const { item, itemNextValues, types, className } = this.props;
 
     const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
 
@@ -41,7 +41,7 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
     const isUnknown = !types.some(val => val.get('value') === value);
 
     return (
-      <div className="field">
+      <div className={cx('field', className)}>
         <div className="control has-icons-left">
           <div
             className={cx('select is-small is-fullwidth', {
@@ -76,6 +76,11 @@ ProjectItemRowInteractingMoneyType.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   types: PropTypes.instanceOf(List).isRequired,
+  className: PropTypes.string,
+};
+
+ProjectItemRowInteractingMoneyType.defaultProps = {
+  className: '',
 };
 
 export default ProjectItemRowInteractingMoneyType;
