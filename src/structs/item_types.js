@@ -6,3 +6,4 @@ export const SHOE = 'shoe';
 export const HELMET = 'helmet';
 export const WEAPON = 'weapon';
 export const SHIELD = 'shield';
+export const CLOAK = 'cloak';
