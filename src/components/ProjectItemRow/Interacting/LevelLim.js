@@ -16,7 +16,7 @@ class ProjectItemRowInteractingLevelLim extends React.PureComponent {
 
     this.changeValue = evt => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, parseInt(evt.target.value));
+      onChangeValue(item, parseInt(evt.target.value) || 0);
     };
   }
 
