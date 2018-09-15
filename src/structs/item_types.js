@@ -7,3 +7,5 @@ export const HELMET = 'helmet';
 export const WEAPON = 'weapon';
 export const SHIELD = 'shield';
 export const CLOAK = 'cloak';
+export const RING = 'ring';
+export const AMULET = 'amulet';
