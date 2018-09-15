@@ -79,7 +79,15 @@ class ProjectItemRow extends React.PureComponent {
   }
 
   render() {
-    const { items, item, itemNextValues, actions, moneyTypes } = this.props;
+    const {
+      items,
+      item,
+      itemNextValues,
+      actions,
+      moneyTypes,
+      itemGrades,
+    } = this.props;
+
     const Render = TypeToRowRender[item.get('type')];
 
     return (
@@ -96,6 +104,7 @@ class ProjectItemRow extends React.PureComponent {
                 items={items}
                 actions={actions}
                 moneyTypes={moneyTypes}
+                itemGrades={itemGrades}
               />
             )}
             {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
@@ -111,9 +120,8 @@ ProjectItemRow.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
-    changeName: PropTypes.func.isRequired,
-  }).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 export default ProjectItemRow;

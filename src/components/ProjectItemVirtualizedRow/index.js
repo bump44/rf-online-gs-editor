@@ -15,7 +15,16 @@ import ProjectItemRow from '../ProjectItemRow';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemVirtualizedRow extends React.PureComponent {
   render() {
-    const { index, style, items, actions, nextValues, moneyTypes } = this.props;
+    const {
+      index,
+      style,
+      items,
+      actions,
+      nextValues,
+      moneyTypes,
+      itemGrades,
+    } = this.props;
+
     const item = items.get(index);
 
     return (
@@ -28,6 +37,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
             item={item}
             itemNextValues={nextValues.get(item.get('id'), Map({}))}
             moneyTypes={moneyTypes}
+            itemGrades={itemGrades}
           />
         )}
         {!item && (
@@ -47,6 +57,7 @@ ProjectItemVirtualizedRow.propTypes = {
   style: PropTypes.object.isRequired,
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   actions: PropTypes.object.isRequired,
 };
