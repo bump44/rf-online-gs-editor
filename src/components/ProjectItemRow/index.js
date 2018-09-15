@@ -15,12 +15,14 @@ import messages from './messages';
 
 import Row from './styles';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
-import { FACE } from '../../structs/item_types';
+import { FACE, UPPER } from '../../structs/item_types';
 
 import RenderFace from './Render/Face';
+import RenderArmor from './Render/Armor';
 
 const TypeToRowRender = {
   [FACE]: RenderFace,
+  [UPPER]: RenderArmor,
 };
 
 /* eslint-disable react/prefer-stateless-function */
