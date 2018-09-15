@@ -29,7 +29,7 @@ export default defineMessages({
   },
   StoragePossible: {
     id: 'app.components.ProjectItemRow.StoragePossible',
-    defaultMessage: 'Storage possible',
+    defaultMessage: 'Storage',
   },
   MoneyType: {
     id: 'app.components.ProjectItemRow.MoneyType',
@@ -54,5 +54,9 @@ export default defineMessages({
   Level: {
     id: 'app.components.ProjectItemRow.Level',
     defaultMessage: 'Level',
+  },
+  IconIDX: {
+    id: 'app.components.ProjectItemRow.IconIDX',
+    defaultMessage: 'Icon',
   },
 });
