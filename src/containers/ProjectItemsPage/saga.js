@@ -65,7 +65,7 @@ export function* changeId({ id }) {
 
 export function* changeFilter() {
   try {
-    yield delay(150);
+    yield delay(300);
     const filter = yield select(makeSelectFilter());
     const project = yield select(makeSelectProject());
     const filterJS = filter.toJS();
