@@ -4,3 +4,4 @@ export const LOWER = 'lower';
 export const GAUNTLET = 'gauntlet';
 export const SHOE = 'shoe';
 export const HELMET = 'helmet';
+export const WEAPON = 'weapon';
