@@ -86,7 +86,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
               <ProjectItemRowInteractingItemGrade
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeMoney}
+                onChangeValue={actions.changeItemGrade}
                 types={itemGrades}
               />
             </div>
@@ -139,6 +139,7 @@ ProjectItemRowRenderFace.propTypes = {
     changeProcPoint: PropTypes.func.isRequired,
     changeKillPoint: PropTypes.func.isRequired,
     changeStoragePrice: PropTypes.func.isRequired,
+    changeItemGrade: PropTypes.func.isRequired,
   }).isRequired,
 };
 
