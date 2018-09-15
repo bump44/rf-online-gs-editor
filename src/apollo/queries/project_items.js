@@ -9,8 +9,30 @@ export default gql`
         nIndex
         searchTextValue
         client {
-          strName
           strCode
+          strName
+          strModel
+          nIconIDX
+          strCivil1
+          strCivil2
+          nMoney
+          nUnkInt16
+          nStdPrice
+          nStdPoint
+          nGoldPoint
+          nProcPoint
+          nKillPoint
+          nStoragePrice
+          bExchange
+          bSell
+          bGround
+          bStoragePossible
+          nDescription
+          bExist
+          bIsCash
+          bIsTime
+          nUpLevelLim
+          nUnkInt32
         }
       }
       total
