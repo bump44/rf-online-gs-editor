@@ -6,6 +6,7 @@ import {
   SHOE,
   HELMET,
   WEAPON,
+  SHIELD,
 } from '../../item_types';
 
 import defaultHeader from './default_header';
@@ -28,6 +29,11 @@ const readerStruct = [
     type: WEAPON,
     header: defaultHeader,
     block: weaponStruct,
+  },
+  {
+    type: SHIELD,
+    header: defaultHeader,
+    block: armorStruct,
   },
 ];
 
