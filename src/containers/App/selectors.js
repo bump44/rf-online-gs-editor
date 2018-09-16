@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { Map } from 'immutable';
 import { PROCESSING } from './constants';
+import { initialState } from './reducer';
 
 const selectRoute = state => state.get('route');
 const selectGlobal = state => state.get('global');
@@ -17,6 +18,11 @@ const makeSelectIsLoggedIn = () =>
 const makeSelectProjectsImports = () =>
   createSelector(selectGlobal, globalState =>
     globalState.get('projectsImports'),
+  );
+
+const makeSelectLocalSettings = () =>
+  createSelector(selectGlobal, globalState =>
+    initialState.get('localSettings').merge(globalState.get('localSettings')),
   );
 
 const makeSelectProjectsImportsIsProcessing = () =>
@@ -90,4 +96,5 @@ export {
   makeSelectProjectsImportsIsProcessing,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectsNextValues,
+  makeSelectLocalSettings,
 };

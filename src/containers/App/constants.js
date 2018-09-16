@@ -41,6 +41,7 @@ export const PROCESSING = 'processing';
 export const FINISHED = 'finished';
 export const ERROR = 'error';
 export const CANCELLED = 'cancelled';
+export const AUTO_REVERSE_CLIENT_CODES = 'AUTO_REVERSE_CLIENT_CODES';
 
 export const ANNOUNCE_PROJECT_COUNT_ITEMS =
   'ANNOUNCE(s)/ANNOUNCE_PROJECT_COUNT_ITEMS';

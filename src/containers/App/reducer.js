@@ -10,7 +10,9 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
   PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
+  AUTO_REVERSE_CLIENT_CODES,
 } from './constants';
+
 import { saveTokenMe } from '../../utils/ls';
 
 // The initial state of the App
@@ -18,6 +20,9 @@ export const initialState = fromJS({
   isLoggedIn: false,
   currentUser: null,
   currentUserToken: '',
+  localSettings: {
+    [AUTO_REVERSE_CLIENT_CODES]: true,
+  },
 
   /**
    * Projects Imports Operations

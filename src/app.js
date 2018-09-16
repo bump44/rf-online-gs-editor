@@ -45,7 +45,7 @@ store.subscribe(
               .getState()
               .get('global')
               .toJS(),
-            ['isLoggedIn', 'currentUser', 'currentUserToken'],
+            ['isLoggedIn', 'currentUser', 'currentUserToken', 'localSettings'],
           ),
         },
       }),
