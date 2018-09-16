@@ -31,11 +31,13 @@ import { FILES } from '../../../utils/gameFiles';
 
 import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
+import serverItemResolve from './projectImport/serverItemResolve';
 import apolloClient from '../../../apollo';
 
 const Resolvers = {
   clientItemResolve,
   clientStoreResolve,
+  serverItemResolve,
 };
 
 const Workers = {};
