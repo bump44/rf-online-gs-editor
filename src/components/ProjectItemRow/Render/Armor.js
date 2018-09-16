@@ -112,6 +112,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePrice}
+                types={moneyTypes}
               />
             </div>
           </div>

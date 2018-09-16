@@ -59,4 +59,8 @@ export default defineMessages({
     id: 'app.components.ProjectItemRow.IconIDX',
     defaultMessage: 'Icon',
   },
+  CalcStoragePriceMessage: {
+    id: 'app.components.ProjectItemRow.CalcStoragePriceMessage',
+    defaultMessage: 'Calculate storage price by current money value',
+  },
 });
