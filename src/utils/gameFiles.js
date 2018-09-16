@@ -1,4 +1,5 @@
 import pickBy from 'lodash/pickBy';
+import { FACE } from '../structs/item_types';
 
 // Client DataFiles
 export const FILE_TYPE_CLIENT = 'CLIENT';
@@ -25,7 +26,7 @@ export const RESOLVERS = {
   CLIENT_ITEM: 'clientItemResolve',
   CLIENT_ITEM_ND: 'clientItemND',
   CLIENT_STORE: 'clientStoreResolve',
-  SERVER_ITEM: 'serverItem',
+  SERVER_ITEM: 'serverItemResolve',
 };
 
 // All of resolved files
@@ -48,10 +49,11 @@ export const FILES = {
     type: FILE_TYPE_CLIENT_ND,
     extensions: ['dat', 'edf'],
   },
-  'Script/AnimusItem.dat': {
-    path: 'Script/AnimusItem.dat',
+  'Script/FaceItem.dat': {
+    path: 'Script/FaceItem.dat',
     resolve: RESOLVERS.SERVER_ITEM,
     type: FILE_TYPE_SERVER,
+    args: { type: FACE },
     extensions: ['dat'],
   },
 };
