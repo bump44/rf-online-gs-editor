@@ -41,7 +41,7 @@ export default function* defaultSaga({
   yield put(actions.changeCountTotal(total));
   const sections = yield call(fileReader.getBlocks.bind(fileReader));
   const { blocks } = sections[0];
-  const chunks = chunk(blocks, 1);
+  const chunks = chunk(blocks, 50);
 
   let t = 0;
   while (chunks.length > t) {
@@ -55,7 +55,7 @@ export default function* defaultSaga({
       },
     });
 
-    const nextTotal = result.data.projectStoreImportServer.total;
+    const nextTotal = result.data.projectItemImportServer.total;
     yield put(announceProjectCountItems({ count: nextTotal, id: projectId }));
 
     countCompleted += chunks[t].length;
