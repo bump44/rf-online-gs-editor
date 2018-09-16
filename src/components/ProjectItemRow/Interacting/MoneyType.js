@@ -19,10 +19,41 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.getMoneyValue = this.getMoneyValue.bind(this);
     this.changeValue = evt => {
       const { onChangeValue, item } = this.props;
       onChangeValue(item, parseInt(evt.target.value));
     };
+  }
+
+  getMoneyValue(type) {
+    if (!type) {
+      return 0;
+    }
+
+    const { item, itemNextValues } = this.props;
+
+    const nextValue = itemNextValues.getIn([
+      'nextValue',
+      'server',
+      type.get('fieldName'),
+    ]);
+
+    const currValue = item.getIn(
+      [
+        ['server', type.get('fieldName')],
+        ['client', type.get('fieldName')],
+      ].find(fieldSets => item.getIn(fieldSets) !== undefined) || [
+        'server',
+        type.get('fieldName'),
+      ],
+      0,
+    );
+
+    const value =
+      parseInt(nextValue !== undefined ? nextValue : currValue) || 0;
+
+    return value;
   }
 
   render() {
@@ -58,6 +89,8 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
               {types.map(val => (
                 <option value={val.get('value')} key={val.get('value')}>
                   {val.get('title')}
+                  &nbsp;
+                  {this.getMoneyValue(val).toLocaleString()}
                 </option>
               ))}
             </select>
