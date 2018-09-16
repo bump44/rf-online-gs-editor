@@ -34,6 +34,10 @@ export default gql`
           nUpLevelLim
           nUnkInt32
         }
+        server {
+          strName
+          strCode
+        }
       }
       total
     }
