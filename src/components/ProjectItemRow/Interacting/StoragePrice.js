@@ -131,6 +131,12 @@ class ProjectItemRowInteractingStoragePrice extends React.PureComponent {
       return null;
     }
 
+    const value = this.getMoneyValue(type);
+
+    if (value <= 0) {
+      return null;
+    }
+
     return (
       <div className="dropdown-menu">
         <div className="dropdown-content">
@@ -138,7 +144,9 @@ class ProjectItemRowInteractingStoragePrice extends React.PureComponent {
             <DropdownPreMessage>
               <FormattedMessage {...messages.CalcStoragePriceMessage} />:
             </DropdownPreMessage>
-            {PERCENTS.map(percent => (
+            {PERCENTS.filter(
+              percent => this.calcValueByPercent(percent) > 0 || percent === 1,
+            ).map(percent => (
               <DropdownItem
                 key={percent}
                 onClick={this.changeValueAtPercent}
