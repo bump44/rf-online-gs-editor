@@ -17,6 +17,9 @@ const makeSelectProject = () =>
     substate.get('project'),
   );
 
+const makeSelectId = () =>
+  createSelector(selectProjectItemsPageDomain, substate => substate.get('id'));
+
 const makeSelectProjectMoneyTypes = () =>
   createSelector(selectProjectItemsPageDomain, substate =>
     substate.getIn(['project', 'moneyTypes', 'items'], List([])),
@@ -57,6 +60,7 @@ const makeSelectProjectItemsPage = () =>
 export default makeSelectProjectItemsPage;
 export {
   selectProjectItemsPageDomain,
+  makeSelectId,
   makeSelectProject,
   makeSelectProjectMoneyTypes,
   makeSelectProjectItemGrades,

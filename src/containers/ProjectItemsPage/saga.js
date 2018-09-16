@@ -25,8 +25,8 @@ import projectItemsPageQuery from '../../apollo/queries/project_items_page';
 import projectItemsQuery from '../../apollo/queries/project_items';
 import {
   makeSelectFilter,
-  makeSelectProject,
   makeSelectResultItems,
+  makeSelectId,
 } from './selectors';
 
 import {
@@ -67,7 +67,7 @@ export function* changeFilter() {
   try {
     yield delay(300);
     const filter = yield select(makeSelectFilter());
-    const project = yield select(makeSelectProject());
+    const projectId = yield select(makeSelectId());
     const filterJS = filter.toJS();
 
     const result = yield call(apolloClient.query, {
@@ -76,7 +76,7 @@ export function* changeFilter() {
         ...pick(filterJS, ['take', 'skip']),
         where: {
           ...filterJS.where,
-          projectId: project.get('id'),
+          projectId,
         },
         sort: {
           [filterJS.sortBy]: filterJS.sortWay,

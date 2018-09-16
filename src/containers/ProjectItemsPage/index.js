@@ -95,6 +95,7 @@ export class ProjectItemsPage extends React.PureComponent {
 
     if (id !== nextId) {
       props.fnChangeId(nextId);
+      props.fnResetResult(); // clean state
     }
   }
 
