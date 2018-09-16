@@ -91,12 +91,32 @@ class ProjectItemRow extends React.PureComponent {
     } = this.props;
 
     const Render = TypeToRowRender[item.get('type')];
+    const serverStrCode = item.getIn(['server', 'strCode'], '');
+    const clientStrCode = item.getIn(['client', 'strCode'], '');
+    const clientStrCodeReversed = clientStrCode
+      .split(/(.{2})/g)
+      .reverse()
+      .join('');
+
+    const isShowStrCode = !!(serverStrCode || clientStrCodeReversed);
 
     return (
       <Row>
         <div className="columns">
           <div className="column is-narrow">
             {this.renderTagIndexWithNextState()}
+            {isShowStrCode && (
+              <div
+                className="mt-5"
+                title={
+                  serverStrCode && clientStrCodeReversed
+                    ? clientStrCodeReversed
+                    : undefined
+                }
+              >
+                <code>{serverStrCode || clientStrCodeReversed}</code>
+              </div>
+            )}
           </div>
           <div className="column">
             {Render && (
