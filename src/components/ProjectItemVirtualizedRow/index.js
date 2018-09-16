@@ -23,6 +23,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
       nextValues,
       moneyTypes,
       itemGrades,
+      localSettings,
     } = this.props;
 
     const item = items.get(index);
@@ -38,6 +39,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
             itemNextValues={nextValues.get(item.get('id'), Map({}))}
             moneyTypes={moneyTypes}
             itemGrades={itemGrades}
+            localSettings={localSettings}
           />
         )}
         {!item && (
@@ -59,6 +61,7 @@ ProjectItemVirtualizedRow.propTypes = {
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
   actions: PropTypes.object.isRequired,
 };
 

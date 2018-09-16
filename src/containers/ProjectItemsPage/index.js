@@ -30,6 +30,7 @@ import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsNextValues,
+  makeSelectLocalSettings,
 } from '../App/selectors';
 
 import reducer from './reducer';
@@ -110,6 +111,7 @@ export class ProjectItemsPage extends React.PureComponent {
       projectsNextValues,
       projectMoneyTypes,
       projectItemGrades,
+      localSettings,
     } = this.props;
 
     return (
@@ -121,6 +123,7 @@ export class ProjectItemsPage extends React.PureComponent {
         actions={fnProjectItemsActions}
         moneyTypes={projectMoneyTypes}
         itemGrades={projectItemGrades}
+        localSettings={localSettings}
       />
     );
   }
@@ -252,6 +255,7 @@ const mapStateToProps = createStructuredSelector({
   projectsNextValues: makeSelectProjectsNextValues(),
   result: makeSelectResult(),
   filter: makeSelectFilter(),
+  localSettings: makeSelectLocalSettings(),
 });
 
 function mapDispatchToProps(dispatch, props) {

@@ -16,6 +16,7 @@ import messages from './messages';
 import Row from './styles';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
 import { FACE, UPPER } from '../../structs/item_types';
+import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
 
 import RenderFace from './Render/Face';
 import RenderArmor from './Render/Armor';
@@ -88,15 +89,22 @@ class ProjectItemRow extends React.PureComponent {
       actions,
       moneyTypes,
       itemGrades,
+      localSettings,
     } = this.props;
 
+    const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
     const Render = TypeToRowRender[item.get('type')];
     const serverStrCode = item.getIn(['server', 'strCode'], '');
     const clientStrCode = item.getIn(['client', 'strCode'], '');
-    const clientStrCodeReversed = clientStrCode
-      .split(/(.{2})/g)
-      .reverse()
-      .join('');
+
+    /* eslint-disable indent */
+    const clientStrCodeReversed = autoReverseClientCodes
+      ? clientStrCode
+          .split(/(.{2})/g)
+          .reverse()
+          .join('')
+      : clientStrCode;
+    /* eslint-enable indent */
 
     const isShowStrCode = !!(serverStrCode || clientStrCodeReversed);
 
@@ -140,6 +148,7 @@ class ProjectItemRow extends React.PureComponent {
 ProjectItemRow.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
