@@ -44,3 +44,4 @@ export const MAUBACK = 'mauback';
 export const MAUBULLET = 'maubullet';
 export const MAKEDATA = 'makedata';
 export const COMBINEDATA = 'combinedata';
+export const UNK3 = 'unk3';
