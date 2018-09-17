@@ -28,7 +28,7 @@ export default new Struct().fromSchema1([
   { child: { type: Number, name: 'nUpLevelLim', len: 32 } },
   { child: { type: String, name: 'strMapCode', len: 32 } },
   { child: { type: String, name: 'strDummyName', len: 32 } },
-  { child: { type: Number, name: 'nLevelLim', len: 8 } },
+  { child: { type: Number, name: 'nLevelLim', len: 32 } },
   { child: { type: Number, name: 'nUnkInt32_1', len: 32 } },
   { child: { type: Number, name: 'nUnkInt32_2', len: 32 } },
 ]);
