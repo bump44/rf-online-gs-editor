@@ -63,6 +63,17 @@ export default class FileReader {
         throw new Error(`Header count value: ${header[COUNT]}`);
       }
 
+      if (struct.block.getWeight() !== header[BLOCK_SIZE]) {
+        console.warn( // eslint-disable-line
+          `The structure '${struct.type}' probably contains an error!`,
+          'Header block size not equal fields weight.',
+          {
+            blockSize: header[BLOCK_SIZE],
+            fieldsWeight: struct.block.getWeight(),
+          },
+        );
+      }
+
       const getBlocks = () => {
         if (struct.skipBlocks) {
           return [];
@@ -71,15 +82,34 @@ export default class FileReader {
         return map(Array.from(Array(header[COUNT])), (empty, arrayIndex) => {
           const baseOffset = header[OFFSET] + headerWeight;
           const blockOffset = arrayIndex * header[BLOCK_SIZE];
-          const blockReader = this.reader.getBlock(
-            baseOffset + blockOffset,
-            header[BLOCK_SIZE],
-          );
-          const values = {};
+          let blockReader;
 
+          try {
+            blockReader = this.reader.getBlock(
+              baseOffset + blockOffset,
+              header[BLOCK_SIZE],
+            );
+          } catch (err) {
+            throw new Error(
+              `Could not read block ${
+                struct.type
+              }, offset: ${blockOffset}, message: ${err.message}`,
+            );
+          }
+
+          const values = {};
           blockReader.cleanOffset();
+
           forEach(struct.block.getFields(), field => {
-            values[field.getName()] = blockReader.getByField(field);
+            try {
+              values[field.getName()] = blockReader.getByField(field);
+            } catch (err) {
+              throw new Error(
+                `Could not read block value ${
+                  struct.type
+                }, fieldName: ${field.getName()}, message: ${err.message}`,
+              );
+            }
           });
 
           values.arrayIndex = arrayIndex;
