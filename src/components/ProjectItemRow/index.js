@@ -94,8 +94,8 @@ class ProjectItemRow extends React.PureComponent {
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
     const Render = TypeToRowRender[item.get('type')];
-    const serverStrCode = item.getIn(['server', 'strCode'], '');
-    const clientStrCode = item.getIn(['client', 'strCode'], '');
+    const serverStrCode = item.getIn(['server', 'strCode']) || '';
+    const clientStrCode = item.getIn(['client', 'strCode']) || '';
 
     /* eslint-disable indent */
     const clientStrCodeReversed = autoReverseClientCodes
