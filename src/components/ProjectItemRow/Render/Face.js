@@ -12,16 +12,16 @@ import { Map, List } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
-import ProjectItemRowInteractingName from '../Interacting/Name';
-import ProjectItemRowInteractingExchange from '../Interacting/Exchange';
-import ProjectItemRowInteractingSell from '../Interacting/Sell';
-import ProjectItemRowInteractingGround from '../Interacting/Ground';
-import ProjectItemRowInteractingStoragePossible from '../Interacting/StoragePossible';
-import ProjectItemRowInteractingMoneyType from '../Interacting/MoneyType';
-import ProjectItemRowInteractingMoneyValue from '../Interacting/MoneyValue';
-import ProjectItemRowInteractingStoragePrice from '../Interacting/StoragePrice';
-import ProjectItemRowInteractingItemGrade from '../Interacting/ItemGrade';
-import ProjectItemRowInteractingLevelLim from '../Interacting/LevelLim';
+import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
+import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
+import ProjectItemInteractingSell from '../../ProjectItem/Interacting/Sell';
+import ProjectItemInteractingGround from '../../ProjectItem/Interacting/Ground';
+import ProjectItemInteractingStoragePossible from '../../ProjectItem/Interacting/StoragePossible';
+import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/MoneyType';
+import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
+import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
+import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
+import ProjectItemInteractingLevelLim from '../../ProjectItem/Interacting/LevelLim';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
@@ -37,35 +37,35 @@ class ProjectItemRowRenderFace extends React.PureComponent {
     return (
       <div className="columns">
         <div className="column">
-          <ProjectItemRowInteractingName
+          <ProjectItemInteractingName
             item={item}
             itemNextValues={itemNextValues}
             onChangeValue={actions.changeName}
           />
           <div className="field is-grouped">
             <div className="control">
-              <ProjectItemRowInteractingExchange
+              <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeExchange}
               />
             </div>
             <div className="control">
-              <ProjectItemRowInteractingSell
+              <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeSell}
               />
             </div>
             <div className="control">
-              <ProjectItemRowInteractingGround
+              <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeGround}
               />
             </div>
             <div className="control">
-              <ProjectItemRowInteractingStoragePossible
+              <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePossible}
@@ -77,7 +77,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
         <div className="column">
           <div className="field is-grouped">
             <div className="control is-expanded">
-              <ProjectItemRowInteractingMoneyType
+              <ProjectItemInteractingMoneyType
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeMoney}
@@ -85,7 +85,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
               />
             </div>
             <div className="control pr-3">
-              <ProjectItemRowInteractingItemGrade
+              <ProjectItemInteractingItemGrade
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeItemGrade}
@@ -96,7 +96,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
 
           <div className="columns">
             <div className="column">
-              <ProjectItemRowInteractingMoneyValue
+              <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeStdPrice={actions.changeStdPrice}
@@ -108,10 +108,11 @@ class ProjectItemRowRenderFace extends React.PureComponent {
               />
             </div>
             <div className="column is-hidden-touch is-hidden-desktop-only is-hidden-widescreen-only">
-              <ProjectItemRowInteractingStoragePrice
+              <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePrice}
+                types={moneyTypes}
               />
             </div>
           </div>
@@ -121,11 +122,11 @@ class ProjectItemRowRenderFace extends React.PureComponent {
           <div className="field is-horizontal">
             <div className="field-label is-small">
               <label className="label">
-                <FormattedMessage {...messages.Level} />:
+                <FormattedMessage {...messages.IconIDX} />:
               </label>
             </div>
             <div className="field-body">
-              <ProjectItemRowInteractingLevelLim
+              <ProjectItemInteractingLevelLim
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeLevelLim}
@@ -157,7 +158,6 @@ ProjectItemRowRenderFace.propTypes = {
     changeKillPoint: PropTypes.func.isRequired,
     changeStoragePrice: PropTypes.func.isRequired,
     changeItemGrade: PropTypes.func.isRequired,
-    changeLevelLim: PropTypes.func.isRequired,
   }).isRequired,
 };
 
