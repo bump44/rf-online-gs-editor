@@ -15,16 +15,8 @@ import messages from './messages';
 
 import Row from './styles';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
-import { FACE, UPPER } from '../../structs/item_types';
 import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
-
-import RenderFace from './Render/Face';
-import RenderArmor from './Render/Armor';
-
-const TypeToRowRender = {
-  [FACE]: RenderFace,
-  [UPPER]: RenderArmor,
-};
+import renderResolvers from './renderResolvers';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {
@@ -93,7 +85,7 @@ class ProjectItemRow extends React.PureComponent {
     } = this.props;
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
-    const Render = TypeToRowRender[item.get('type')];
+    const Render = renderResolvers[item.get('type')];
     const serverStrCode = item.getIn(['server', 'strCode']) || '';
     const clientStrCode = item.getIn(['client', 'strCode']) || '';
 
