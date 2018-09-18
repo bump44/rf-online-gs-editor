@@ -75,7 +75,7 @@ class ProjectItemInteractingDefenceFacingPresent extends React.PureComponent {
     return (
       <div className="field">
         <input
-          className="input is-small"
+          className="input is-small is-info"
           type="number"
           value={present}
           onChange={this.changeValue}
