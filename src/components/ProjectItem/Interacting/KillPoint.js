@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingKillPoint
+ * ProjectItemInteractingKillPoint
  *
  */
 
@@ -14,7 +14,7 @@ import { Map /* , List */ } from 'immutable';
 // import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingKillPoint extends React.PureComponent {
+class ProjectItemInteractingKillPoint extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -55,10 +55,10 @@ class ProjectItemRowInteractingKillPoint extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingKillPoint.propTypes = {
+ProjectItemInteractingKillPoint.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingKillPoint;
+export default ProjectItemInteractingKillPoint;

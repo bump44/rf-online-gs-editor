@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingItemGrade
+ * ProjectItemInteractingItemGrade
  *
  */
 
@@ -15,7 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingItemGrade extends React.PureComponent {
+class ProjectItemInteractingItemGrade extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -74,7 +74,7 @@ class ProjectItemRowInteractingItemGrade extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingItemGrade.propTypes = {
+ProjectItemInteractingItemGrade.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
@@ -82,11 +82,11 @@ ProjectItemRowInteractingItemGrade.propTypes = {
   className: PropTypes.string,
 };
 
-ProjectItemRowInteractingItemGrade.defaultProps = {
+ProjectItemInteractingItemGrade.defaultProps = {
   className: '',
 };
 
-export default ProjectItemRowInteractingItemGrade;
+export default ProjectItemInteractingItemGrade;
 
 /* eslint-disable indent */
 const SelectControl = styled.div`

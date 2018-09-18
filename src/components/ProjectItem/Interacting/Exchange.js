@@ -1,22 +1,25 @@
 /**
  *
- * ProjectItemRowInteractingLevelLim
+ * ProjectItemInteractingExchange
  *
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parseInt } from 'lodash';
-import { Map } from 'immutable';
+import { Map /* , List */ } from 'immutable';
+// import styled from 'styled-components';
+
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingLevelLim extends React.PureComponent {
+class ProjectItemInteractingExchange extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.changeValue = evt => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, parseInt(evt.target.value) || 0);
+      onChangeValue(item, evt.target.checked);
     };
   }
 
@@ -26,35 +29,36 @@ class ProjectItemRowInteractingLevelLim extends React.PureComponent {
     const nextValue = itemNextValues.getIn([
       'nextValue',
       'server',
-      'nLevelLim',
+      'bExchange',
     ]);
 
     const currValue = item.getIn(
-      [['server', 'nLevelLim'], ['client', 'nLevelLim']].find(
+      [['server', 'bExchange'], ['client', 'bExchange']].find(
         fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nLevelLim'],
-      0,
+      ) || ['server', 'bExchange'],
+      false,
     );
 
     const value = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <div className="field">
+      <label className="checkbox is-small">
         <input
-          className="input is-small"
-          type="number"
-          value={value}
+          type="checkbox"
+          value={1}
+          checked={!!value}
           onChange={this.changeValue}
         />
-      </div>
+        <FormattedMessage {...messages.Exchange} />
+      </label>
     );
   }
 }
 
-ProjectItemRowInteractingLevelLim.propTypes = {
+ProjectItemInteractingExchange.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingLevelLim;
+export default ProjectItemInteractingExchange;

@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingMoneyValue
+ * ProjectItemInteractingMoneyValue
  *
  */
 
@@ -27,7 +27,7 @@ const InteractingComponents = {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingMoneyValue extends React.PureComponent {
+class ProjectItemInteractingMoneyValue extends React.PureComponent {
   render() {
     const {
       item,
@@ -92,7 +92,7 @@ class ProjectItemRowInteractingMoneyValue extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingMoneyValue.propTypes = {
+ProjectItemInteractingMoneyValue.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeStdPrice: PropTypes.func.isRequired,
@@ -103,4 +103,4 @@ ProjectItemRowInteractingMoneyValue.propTypes = {
   types: PropTypes.instanceOf(List).isRequired,
 };
 
-export default ProjectItemRowInteractingMoneyValue;
+export default ProjectItemInteractingMoneyValue;

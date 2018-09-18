@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingName
+ * ProjectItemInteractingName
  *
  */
 
@@ -13,7 +13,7 @@ import { Map /* , List */ } from 'immutable';
 // import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingName extends React.PureComponent {
+class ProjectItemInteractingName extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -60,10 +60,10 @@ class ProjectItemRowInteractingName extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingName.propTypes = {
+ProjectItemInteractingName.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingName;
+export default ProjectItemInteractingName;

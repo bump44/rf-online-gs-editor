@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingSell
+ * ProjectItemInteractingGround
  *
  */
 
@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingSell extends React.PureComponent {
+class ProjectItemInteractingGround extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -26,12 +26,12 @@ class ProjectItemRowInteractingSell extends React.PureComponent {
   render() {
     const { item, itemNextValues } = this.props;
 
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bSell']);
+    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bGround']);
 
     const currValue = item.getIn(
-      [['server', 'bSell'], ['client', 'bSell']].find(
+      [['server', 'bGround'], ['client', 'bGround']].find(
         fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bSell'],
+      ) || ['server', 'bGround'],
       false,
     );
 
@@ -45,16 +45,16 @@ class ProjectItemRowInteractingSell extends React.PureComponent {
           checked={!!value}
           onChange={this.changeValue}
         />
-        <FormattedMessage {...messages.Sell} />
+        <FormattedMessage {...messages.Ground} />
       </label>
     );
   }
 }
 
-ProjectItemRowInteractingSell.propTypes = {
+ProjectItemInteractingGround.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingSell;
+export default ProjectItemInteractingGround;

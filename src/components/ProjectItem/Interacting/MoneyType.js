@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingMoneyType
+ * ProjectItemInteractingMoneyType
  *
  */
 
@@ -15,7 +15,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingMoneyType extends React.PureComponent {
+class ProjectItemInteractingMoneyType extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -104,7 +104,7 @@ class ProjectItemRowInteractingMoneyType extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingMoneyType.propTypes = {
+ProjectItemInteractingMoneyType.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
@@ -112,8 +112,8 @@ ProjectItemRowInteractingMoneyType.propTypes = {
   className: PropTypes.string,
 };
 
-ProjectItemRowInteractingMoneyType.defaultProps = {
+ProjectItemInteractingMoneyType.defaultProps = {
   className: '',
 };
 
-export default ProjectItemRowInteractingMoneyType;
+export default ProjectItemInteractingMoneyType;

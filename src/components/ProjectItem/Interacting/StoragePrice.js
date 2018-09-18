@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingStoragePrice
+ * ProjectItemInteractingStoragePrice
  *
  */
 
@@ -17,7 +17,7 @@ import messages from '../messages';
 const PERCENTS = [1, 3, 5, 9, 15, 25, 50, 75];
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingStoragePrice extends React.PureComponent {
+class ProjectItemInteractingStoragePrice extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -199,14 +199,14 @@ class ProjectItemRowInteractingStoragePrice extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingStoragePrice.propTypes = {
+ProjectItemInteractingStoragePrice.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   types: PropTypes.instanceOf(List).isRequired,
 };
 
-export default ProjectItemRowInteractingStoragePrice;
+export default ProjectItemInteractingStoragePrice;
 
 const DropdownItem = styled.button.attrs({
   className: 'button is-small',

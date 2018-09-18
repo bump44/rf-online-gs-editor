@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingGoldPoint
+ * ProjectItemInteractingProcPoint
  *
  */
 
@@ -14,7 +14,7 @@ import { Map /* , List */ } from 'immutable';
 // import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingGoldPoint extends React.PureComponent {
+class ProjectItemInteractingProcPoint extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -30,13 +30,13 @@ class ProjectItemRowInteractingGoldPoint extends React.PureComponent {
     const nextValue = itemNextValues.getIn([
       'nextValue',
       'server',
-      'nGoldPoint',
+      'nProcPoint',
     ]);
 
     const currValue = item.getIn(
-      [['server', 'nGoldPoint'], ['client', 'nGoldPoint']].find(
+      [['server', 'nProcPoint'], ['client', 'nProcPoint']].find(
         fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nGoldPoint'],
+      ) || ['server', 'nProcPoint'],
       0,
     );
 
@@ -55,10 +55,10 @@ class ProjectItemRowInteractingGoldPoint extends React.PureComponent {
   }
 }
 
-ProjectItemRowInteractingGoldPoint.propTypes = {
+ProjectItemInteractingProcPoint.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingGoldPoint;
+export default ProjectItemInteractingProcPoint;

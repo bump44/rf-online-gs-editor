@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowInteractingStoragePossible
+ * ProjectItemInteractingSell
  *
  */
 
@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowInteractingStoragePossible extends React.PureComponent {
+class ProjectItemInteractingSell extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -26,16 +26,12 @@ class ProjectItemRowInteractingStoragePossible extends React.PureComponent {
   render() {
     const { item, itemNextValues } = this.props;
 
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'bStoragePossible',
-    ]);
+    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bSell']);
 
     const currValue = item.getIn(
-      [['server', 'bStoragePossible'], ['client', 'bStoragePossible']].find(
+      [['server', 'bSell'], ['client', 'bSell']].find(
         fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bStoragePossible'],
+      ) || ['server', 'bSell'],
       false,
     );
 
@@ -49,16 +45,16 @@ class ProjectItemRowInteractingStoragePossible extends React.PureComponent {
           checked={!!value}
           onChange={this.changeValue}
         />
-        <FormattedMessage {...messages.StoragePossible} />
+        <FormattedMessage {...messages.Sell} />
       </label>
     );
   }
 }
 
-ProjectItemRowInteractingStoragePossible.propTypes = {
+ProjectItemInteractingSell.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
 };
 
-export default ProjectItemRowInteractingStoragePossible;
+export default ProjectItemInteractingSell;
