@@ -22,6 +22,10 @@ import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/Mone
 import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
 import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
 import ProjectItemInteractingLevelLim from '../../ProjectItem/Interacting/LevelLim';
+import ProjectItemInteractingDefence from '../../ProjectItem/Interacting/Defence';
+import ProjectItemInteractingDefenceGap from '../../ProjectItem/Interacting/DefenceGap';
+import ProjectItemInteractingDefenceFacing from '../../ProjectItem/Interacting/DefenceFacing';
+import ProjectItemInteractingDefenceFacingPresent from '../../ProjectItem/Interacting/DefenceFacingPresent';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderArmor extends React.PureComponent {
@@ -133,6 +137,35 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
               />
             </div>
           </div>
+          <div className="field is-horizontal">
+            <div className="field-label is-small">
+              <label className="label">
+                <FormattedMessage {...messages.DefenceGapFacingFields} />:
+              </label>
+            </div>
+            <div className="field-body">
+              <ProjectItemInteractingDefence
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeDefence}
+              />
+              <ProjectItemInteractingDefenceGap
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeDefenceGap}
+              />
+              <ProjectItemInteractingDefenceFacing
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeDefenceFacing}
+              />
+              <ProjectItemInteractingDefenceFacingPresent
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeDefenceFacing}
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -159,6 +192,9 @@ ProjectItemRowRenderArmor.propTypes = {
     changeStoragePrice: PropTypes.func.isRequired,
     changeItemGrade: PropTypes.func.isRequired,
     changeLevelLim: PropTypes.func.isRequired,
+    changeDefence: PropTypes.func.isRequired,
+    changeDefenceGap: PropTypes.func.isRequired,
+    changeDefenceFacing: PropTypes.func.isRequired,
   }).isRequired,
 };
 
