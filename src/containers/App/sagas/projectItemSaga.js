@@ -92,6 +92,19 @@ export const Resolvers = {
     item
       .setIn(['client', 'nLevelLim'], nextValue)
       .setIn(['server', 'nLevelLim'], nextValue),
+  defence: (item, nextValue) =>
+    item
+      .setIn(['server', 'nDefFc'], nextValue)
+      .setIn(['server', 'fDefFc'], nextValue)
+      .setIn(['client', 'nDefFc'], nextValue),
+  defenceGap: (item, nextValue) =>
+    item
+      .setIn(['server', 'fDefGap'], nextValue)
+      .setIn(['client', 'fDefGap'], nextValue),
+  defenceFacing: (item, nextValue) =>
+    item
+      .setIn(['server', 'fDefFacing'], nextValue)
+      .setIn(['client', 'fDefFacing'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {

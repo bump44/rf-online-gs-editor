@@ -239,6 +239,9 @@ export const projectsItems = {
       'storagePrice',
       'itemGrade',
       'levelLim',
+      'defence',
+      'defenceGap',
+      'defenceFacing',
     ];
     const fns = {};
     propKeys.forEach(propKey => {
