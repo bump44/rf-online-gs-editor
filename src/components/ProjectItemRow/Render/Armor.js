@@ -26,6 +26,7 @@ import ProjectItemInteractingDefence from '../../ProjectItem/Interacting/Defence
 import ProjectItemInteractingDefenceGap from '../../ProjectItem/Interacting/DefenceGap';
 import ProjectItemInteractingDefenceFacing from '../../ProjectItem/Interacting/DefenceFacing';
 import ProjectItemInteractingDefenceFacingPresent from '../../ProjectItem/Interacting/DefenceFacingPresent';
+import ProjectItemInteractingUpLevelLim from '../../ProjectItem/Interacting/UpLevelLim';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderArmor extends React.PureComponent {
@@ -135,6 +136,11 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeLevelLim}
               />
+              <ProjectItemInteractingUpLevelLim
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeUpLevelLim}
+              />
             </div>
           </div>
           <div className="field is-horizontal">
@@ -192,6 +198,7 @@ ProjectItemRowRenderArmor.propTypes = {
     changeStoragePrice: PropTypes.func.isRequired,
     changeItemGrade: PropTypes.func.isRequired,
     changeLevelLim: PropTypes.func.isRequired,
+    changeUpLevelLim: PropTypes.func.isRequired,
     changeDefence: PropTypes.func.isRequired,
     changeDefenceGap: PropTypes.func.isRequired,
     changeDefenceFacing: PropTypes.func.isRequired,
