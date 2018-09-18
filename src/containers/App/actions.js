@@ -239,6 +239,7 @@ export const projectsItems = {
       'storagePrice',
       'itemGrade',
       'levelLim',
+      'upLevelLim',
       'defence',
       'defenceGap',
       'defenceFacing',

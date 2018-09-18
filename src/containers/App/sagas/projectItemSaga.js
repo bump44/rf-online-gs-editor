@@ -92,6 +92,10 @@ export const Resolvers = {
     item
       .setIn(['client', 'nLevelLim'], nextValue)
       .setIn(['server', 'nLevelLim'], nextValue),
+  upLevelLim: (item, nextValue) =>
+    item
+      .setIn(['client', 'nUpLevelLim'], nextValue)
+      .setIn(['server', 'nUpLevelLim'], nextValue),
   defence: (item, nextValue) =>
     item
       .setIn(['server', 'nDefFc'], nextValue)
