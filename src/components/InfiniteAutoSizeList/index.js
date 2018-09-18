@@ -38,7 +38,7 @@ class InfiniteAutoSizeList extends React.PureComponent {
               <List
                 ref={list => {
                   this.list = list;
-                  return registerChild;
+                  return registerChild(this.list);
                 }}
                 width={width}
                 height={height}
