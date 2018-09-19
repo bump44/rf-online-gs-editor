@@ -140,7 +140,7 @@ Header.propTypes = {
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
-  onClickLogout: PropTypes.func,
+  onClickLogout: PropTypes.func.isRequired,
   projectsImportsProcessingData: PropTypes.shape({
     isProcessing: PropTypes.bool.isRequired,
     countTotal: PropTypes.number.isRequired,
@@ -154,7 +154,6 @@ Header.defaultProps = {
   isLoggedIn: false,
   currentUser: null,
   currentProject: null,
-  onClickLogout: null,
 };
 
 export default Header;
