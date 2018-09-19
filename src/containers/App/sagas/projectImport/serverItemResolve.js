@@ -1,15 +1,17 @@
 import chunk from 'lodash/chunk';
 import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { COUNT } from '../../../../classes/constants';
-import ServerItemFaceReader from '../../../../structs/server/item/face_reader';
+import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
 import apolloClient from '../../../../apollo';
 import projectItemImportServerMutation from '../../../../apollo/mutations/project_item_import_server';
 import { announceProjectCountItems } from '../../actions';
-import { FACE } from '../../../../structs/item_types';
+import { FACE, UPPER } from '../../../../structs/item_types';
+import ServerItemFaceReader from '../../../../structs/server/item/face_reader';
+import ServerItemUpperReader from '../../../../structs/server/item/upper_reader';
 
 const TypeToReader = {
   [FACE]: ServerItemFaceReader,
+  [UPPER]: ServerItemUpperReader,
 };
 
 /**
@@ -40,8 +42,11 @@ export default function* defaultSaga({
 
   yield put(actions.changeCountTotal(total));
   const sections = yield call(fileReader.getBlocks.bind(fileReader));
+  const { header } = headers[0];
   const { blocks } = sections[0];
-  const chunks = chunk(blocks, 50);
+  const nBlockSize = header[BLOCK_SIZE];
+  const nChunkSize = Math.round((260 / nBlockSize) * 50);
+  const chunks = chunk(blocks, nChunkSize > 0 ? nChunkSize : 1);
 
   let t = 0;
   while (chunks.length > t) {
