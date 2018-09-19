@@ -38,6 +38,7 @@ export default gql`
           bIsTime
           nUpLevelLim
           nUnkInt32
+          nItemGrade
         }
         server {
           strName
