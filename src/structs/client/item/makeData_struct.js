@@ -15,7 +15,7 @@ export default new Struct().fromSchema1([
   { child: { type: Number, name: 'nUnkInt8_2', len: 8 } },
   { child: { type: Number, name: 'nMaterialIndex', len: 32 }, repeat: 5 },
   {
-    child: { type: String, name: 'nMaterialCode', len: 32, as: 'hex' },
+    child: { type: String, name: 'strMaterialCode', len: 32, as: 'hex' },
     repeat: 5,
   },
   { child: { type: Number, name: 'nMaterialCount', len: 32 }, repeat: 5 },
