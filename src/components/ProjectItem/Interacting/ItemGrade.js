@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { parseInt } from 'lodash';
+import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
 import styled from 'styled-components';
 
@@ -57,8 +57,12 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
                 <FormattedMessage {...messages.UnknownItemGrade}>
                   {message => (
                     <option value={value}>
-                      {value}
-                      :&nbsp;
+                      {isNumber(value) && (
+                        <React.Fragment>
+                          {value}
+                          :&nbsp;
+                        </React.Fragment>
+                      )}
                       {message}
                     </option>
                   )}
