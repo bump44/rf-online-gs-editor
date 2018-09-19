@@ -245,6 +245,11 @@ export const projectsItems = {
       'defenceFacing',
       'wpType',
       'subType',
+      'civilBM',
+      'civilBF',
+      'civilCM',
+      'civilCF',
+      'civilA',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

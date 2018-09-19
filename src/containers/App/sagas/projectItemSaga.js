@@ -117,6 +117,26 @@ export const Resolvers = {
     item
       .setIn(['server', 'nSubType'], nextValue)
       .setIn(['client', 'nSubType'], nextValue),
+  civilBM: (item, nextValue) =>
+    item
+      .setIn(['server', 'civil_bm'], nextValue)
+      .setIn(['client', 'civil_bm'], nextValue),
+  civilBF: (item, nextValue) =>
+    item
+      .setIn(['server', 'civil_bf'], nextValue)
+      .setIn(['client', 'civil_bf'], nextValue),
+  civilCM: (item, nextValue) =>
+    item
+      .setIn(['server', 'civil_cm'], nextValue)
+      .setIn(['client', 'civil_cm'], nextValue),
+  civilCF: (item, nextValue) =>
+    item
+      .setIn(['server', 'civil_cf'], nextValue)
+      .setIn(['client', 'civil_cf'], nextValue),
+  civilA: (item, nextValue) =>
+    item
+      .setIn(['server', 'civil_a'], nextValue)
+      .setIn(['client', 'civil_a'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {
