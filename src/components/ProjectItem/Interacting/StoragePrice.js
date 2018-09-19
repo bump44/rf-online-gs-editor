@@ -44,10 +44,15 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
 
   calcValueByPercent(percent) {
     const type = this.getMoneyType();
+
     if (!type) {
       return 0;
     }
-    const value = this.getMoneyValue(type);
+
+    // increase the value if the difference value is specified
+    const increaseValue = type.get('valuation') || 1;
+    const value = this.getMoneyValue(type) * increaseValue;
+
     return parseInt((value * percent) / 100);
   }
 
