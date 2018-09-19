@@ -153,7 +153,6 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     }
 
     const value = this.getMoneyValue(type);
-    const storagePrice = this.getStoragePrice();
 
     if (value <= 0) {
       return null;
@@ -180,10 +179,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
                 key={percent}
                 onClick={this.changeValueAtPercent}
                 data-percent={percent}
-                isActive={
-                  currPercent === percent ||
-                  this.calcValueByPercent(percent) === storagePrice
-                }
+                isActive={currPercent === percent}
               >
                 {percent}%
               </DropdownItem>
