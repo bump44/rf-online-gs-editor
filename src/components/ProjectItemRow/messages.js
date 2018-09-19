@@ -23,6 +23,10 @@ export default defineMessages({
     id: 'app.components.ProjectItemRow.Level',
     defaultMessage: 'Level',
   },
+  Type: {
+    id: 'app.components.ProjectItemRow.Type',
+    defaultMessage: 'Type',
+  },
   DefenceGapFacingFields: {
     id: 'app.components.ProjectItemRow.DefenceGapFacingFields',
     defaultMessage: 'Defence',
