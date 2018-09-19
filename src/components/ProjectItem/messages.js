@@ -39,6 +39,10 @@ export default defineMessages({
     id: 'app.components.ProjectItem.UnknownItemGrade',
     defaultMessage: 'Unknown item grade',
   },
+  UnknownWeaponType: {
+    id: 'app.components.ProjectItem.UnknownWeaponType',
+    defaultMessage: 'Unknown weapon type',
+  },
   Val: {
     id: 'app.components.ProjectItem.Val',
     defaultMessage: 'Val',
