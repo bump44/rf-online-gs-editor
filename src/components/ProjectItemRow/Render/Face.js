@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+// import { FormattedMessage } from 'react-intl';
+// import messages from '../messages';
 
 import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
 import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
@@ -21,7 +21,11 @@ import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/Money
 import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
 import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
 import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
-import ProjectItemInteractingLevelLim from '../../ProjectItem/Interacting/LevelLim';
+import ProjectItemInteractingCivilBM from '../../ProjectItem/Interacting/CivilBM';
+import ProjectItemInteractingCivilBF from '../../ProjectItem/Interacting/CivilBF';
+import ProjectItemInteractingCivilCM from '../../ProjectItem/Interacting/CivilCM';
+import ProjectItemInteractingCivilCF from '../../ProjectItem/Interacting/CivilCF';
+import ProjectItemInteractingCivilA from '../../ProjectItem/Interacting/CivilA';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
@@ -119,17 +123,40 @@ class ProjectItemRowRenderFace extends React.PureComponent {
         </div>
 
         <div className="column">
-          <div className="field is-horizontal">
-            <div className="field-label is-small">
-              <label className="label">
-                <FormattedMessage {...messages.IconIDX} />:
-              </label>
-            </div>
-            <div className="field-body">
-              <ProjectItemInteractingLevelLim
+          <div className="field is-grouped is-grouped-multiline">
+            <div className="control mb-0">
+              <ProjectItemInteractingCivilBM
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeLevelLim}
+                onChangeValue={actions.changeCivilBM}
+              />
+            </div>
+            <div className="control mb-0">
+              <ProjectItemInteractingCivilBF
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilBF}
+              />
+            </div>
+            <div className="control mb-0">
+              <ProjectItemInteractingCivilCM
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilCM}
+              />
+            </div>
+            <div className="control mb-0">
+              <ProjectItemInteractingCivilCF
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilCF}
+              />
+            </div>
+            <div className="control mb-0">
+              <ProjectItemInteractingCivilA
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilA}
               />
             </div>
           </div>
@@ -158,6 +185,11 @@ ProjectItemRowRenderFace.propTypes = {
     changeKillPoint: PropTypes.func.isRequired,
     changeStoragePrice: PropTypes.func.isRequired,
     changeItemGrade: PropTypes.func.isRequired,
+    changeCivilBM: PropTypes.func.isRequired,
+    changeCivilBF: PropTypes.func.isRequired,
+    changeCivilCM: PropTypes.func.isRequired,
+    changeCivilCF: PropTypes.func.isRequired,
+    changeCivilA: PropTypes.func.isRequired,
   }).isRequired,
 };
 
