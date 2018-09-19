@@ -145,6 +145,18 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     return types.find(val => val.get('value') === value);
   }
 
+  renderPercentNumber(percent) {
+    const match = percent.toString().match(/^\d+\.(0+)\d+/);
+    const countZeroDigits = !match ? 0 : match[1].length;
+    const isInteger = (percent ^ 0) === percent;
+
+    if (isInteger) {
+      return percent;
+    }
+
+    return percent.toString().substring(0, countZeroDigits + 4);
+  }
+
   renderDropdownMenu() {
     const type = this.getMoneyType();
 
@@ -167,11 +179,6 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
       : concat([], PERCENTS, [currPercent]).sort((a, b) => a - b)
     ).filter(percent => this.calcValueByPercent(percent) > 0 || percent === 1);
 
-    const getCountZeroDigits = val => {
-      const match = val.toString().match(/^\d+\.(0+)\d+/);
-      return !match ? 0 : match[1].length;
-    };
-
     return (
       <div className="dropdown-menu">
         <div className="dropdown-content">
@@ -187,10 +194,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
                 isActive={percent === currPercent}
                 title={percent}
               >
-                {(percent ^ 0) === percent
-                  ? percent
-                  : percent.toFixed(getCountZeroDigits(percent) + 1)}
-                %
+                {this.renderPercentNumber(percent)}%
               </DropdownItem>
             ))}
           </div>
