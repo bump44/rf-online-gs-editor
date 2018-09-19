@@ -81,6 +81,7 @@ class ProjectItemRow extends React.PureComponent {
       actions,
       moneyTypes,
       itemGrades,
+      weaponTypes,
       localSettings,
     } = this.props;
 
@@ -127,6 +128,7 @@ class ProjectItemRow extends React.PureComponent {
                 actions={actions}
                 moneyTypes={moneyTypes}
                 itemGrades={itemGrades}
+                weaponTypes={weaponTypes}
               />
             )}
             {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
@@ -144,6 +146,7 @@ ProjectItemRow.propTypes = {
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
+  weaponTypes: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.object.isRequired,
 };
 
