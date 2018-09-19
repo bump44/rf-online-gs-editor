@@ -7,6 +7,7 @@ import {
   HELMET,
   SHIELD,
   WEAPON,
+  CLOAK,
 } from '../../structs/item_types';
 
 import RenderFace from './Render/Face';
@@ -22,4 +23,5 @@ export default {
   [HELMET]: RenderArmor,
   [WEAPON]: RenderWeapon,
   [SHIELD]: RenderArmor,
+  [CLOAK]: RenderArmor,
 };
