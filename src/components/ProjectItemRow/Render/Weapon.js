@@ -152,7 +152,7 @@ class ProjectItemRowRenderWeapon extends React.PureComponent {
               <ProjectItemInteractingWPType
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeWPType}
+                onChangeValue={actions.changeWpType}
                 types={weaponTypes}
               />
               <ProjectItemInteractingSubType
@@ -190,7 +190,7 @@ ProjectItemRowRenderWeapon.propTypes = {
     changeItemGrade: PropTypes.func.isRequired,
     changeLevelLim: PropTypes.func.isRequired,
     changeUpLevelLim: PropTypes.func.isRequired,
-    changeWPType: PropTypes.func.isRequired,
+    changeWpType: PropTypes.func.isRequired,
     changeSubType: PropTypes.func.isRequired,
   }).isRequired,
 };
