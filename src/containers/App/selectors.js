@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { Map } from 'immutable';
-import { PROCESSING } from './constants';
+import { PROCESSING, FINISHED } from './constants';
 import { initialState } from './reducer';
 
 const selectRoute = state => state.get('route');
@@ -62,9 +62,12 @@ const makeSelectProjectsImportsProcessingData = () =>
 
     globalState.get('projectsImports').forEach(fileDataSets =>
       fileDataSets.forEach(fileDataSet => {
-        if (fileDataSet.get('status') === PROCESSING) {
+        if ([PROCESSING, FINISHED].includes(fileDataSet.get('status'))) {
           countTotal += fileDataSet.get('countTotal', 0);
           countCompleted += fileDataSet.get('countCompleted', 0);
+        }
+
+        if (fileDataSet.get('status') === PROCESSING) {
           countProcesses += 1;
         }
       }),
