@@ -15,6 +15,11 @@ export default gql`
           nIconIDX
           strCivil1
           strCivil2
+          civil_bm
+          civil_bf
+          civil_cm
+          civil_cf
+          civil_a
           nMoney
           nUnkInt16
           nStdPrice
