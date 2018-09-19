@@ -106,12 +106,9 @@ export default class FileWriter {
       const writer = new Writer({
         buffer: Buffer.from(
           Array.from(
-            Array(
-              // eslint-disable-line
-              data.headerWeight + data.footerWeight + data.blocksWeight,
-            ),
+            Array(data.headerWeight + data.footerWeight + data.blocksWeight),
           ),
-        ), // eslint-disable-line
+        ),
       });
 
       data.struct.header.forEach(headerField => {
