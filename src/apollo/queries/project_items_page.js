@@ -39,6 +39,13 @@ export default gql`
           value
         }
       }
+
+      weaponTypes {
+        items {
+          title
+          value
+        }
+      }
     }
   }
 `;
