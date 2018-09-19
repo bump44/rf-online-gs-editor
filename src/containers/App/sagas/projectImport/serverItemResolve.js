@@ -5,15 +5,17 @@ import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
 import apolloClient from '../../../../apollo';
 import projectItemImportServerMutation from '../../../../apollo/mutations/project_item_import_server';
 import { announceProjectCountItems } from '../../actions';
-import { FACE, UPPER, LOWER } from '../../../../structs/item_types';
+import { FACE, UPPER, LOWER, GAUNTLET } from '../../../../structs/item_types';
 import ServerItemFaceReader from '../../../../structs/server/item/face_reader';
 import ServerItemUpperReader from '../../../../structs/server/item/upper_reader';
 import ServerItemLowerReader from '../../../../structs/server/item/lower_reader';
+import ServerItemGauntletReader from '../../../../structs/server/item/gauntlet_reader';
 
 const TypeToReader = {
   [FACE]: ServerItemFaceReader,
   [UPPER]: ServerItemUpperReader,
   [LOWER]: ServerItemLowerReader,
+  [GAUNTLET]: ServerItemGauntletReader,
 };
 
 /**
