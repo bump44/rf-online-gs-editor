@@ -52,7 +52,10 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
           isUnknown={isUnknown}
         >
           <div className={cx('select is-small is-fullwidth')}>
-            <select value={value} onChange={this.changeValue}>
+            <select
+              value={isNumber(value) ? value : undefined}
+              onChange={this.changeValue}
+            >
               {isUnknown && (
                 <FormattedMessage {...messages.UnknownItemGrade}>
                   {message => (

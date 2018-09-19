@@ -80,7 +80,10 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
               'is-info': !isUnknown,
             })}
           >
-            <select value={value} onChange={this.changeValue}>
+            <select
+              value={isNumber(value) ? value : undefined}
+              onChange={this.changeValue}
+            >
               {isUnknown && (
                 <FormattedMessage {...messages.UnknownMoneyType}>
                   {message => (
