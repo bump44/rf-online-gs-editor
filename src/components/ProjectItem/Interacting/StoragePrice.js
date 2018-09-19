@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parseInt } from 'lodash';
+import { parseInt, assign } from 'lodash';
 import { Map, List } from 'immutable';
 import cx from 'classnames';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     this.getMoneyType = this.getMoneyType.bind(this);
     this.getMoneyValue = this.getMoneyValue.bind(this);
     this.getStoragePrice = this.getStoragePrice.bind(this);
+    this.getCurrentPercent = this.getCurrentPercent.bind(this);
     this.renderDropdownMenu = this.renderDropdownMenu.bind(this);
     this.onMouseEnterDropdown = this.onMouseEnterDropdown.bind(this);
     this.calcValueByPercent = this.calcValueByPercent.bind(this);
@@ -54,6 +55,21 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     const value = this.getMoneyValue(type) * increaseValue;
 
     return parseInt((value * percent) / 100);
+  }
+
+  getCurrentPercent() {
+    const moneyType = this.getMoneyType();
+    const moneyValue = this.getMoneyValue(moneyType);
+    const storagePrice = this.getStoragePrice();
+
+    if (moneyValue <= 0 || storagePrice <= 0) {
+      return 0;
+    }
+
+    const increaseValue = moneyType.get('valuation') || 1;
+    const storagePriceNext = storagePrice / increaseValue;
+
+    return parseFloat(((storagePriceNext / moneyValue) * 100).toFixed(1));
   }
 
   onMouseEnterDropdown(evt) {
@@ -137,10 +153,20 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     }
 
     const value = this.getMoneyValue(type);
+    const storagePrice = this.getStoragePrice();
 
     if (value <= 0) {
       return null;
     }
+
+    const currPercent = this.getCurrentPercent();
+    const currPercentIsPreset = PERCENTS.indexOf(currPercent) !== -1;
+    const showCurrPercent = !currPercentIsPreset && currPercent > 0;
+
+    const percents = (!showCurrPercent
+      ? PERCENTS
+      : assign([], PERCENTS, [currPercent]).sort((a, b) => a - b)
+    ).filter(percent => this.calcValueByPercent(percent) > 0 || percent === 1);
 
     return (
       <div className="dropdown-menu">
@@ -149,15 +175,14 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
             <DropdownPreMessage>
               <FormattedMessage {...messages.CalcStoragePriceMessage} />:
             </DropdownPreMessage>
-            {PERCENTS.filter(
-              percent => this.calcValueByPercent(percent) > 0 || percent === 1,
-            ).map(percent => (
+            {percents.map(percent => (
               <DropdownItem
                 key={percent}
                 onClick={this.changeValueAtPercent}
                 data-percent={percent}
                 isActive={
-                  this.calcValueByPercent(percent) === this.getStoragePrice()
+                  currPercent === percent ||
+                  this.calcValueByPercent(percent) === storagePrice
                 }
               >
                 {percent}%
