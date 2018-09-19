@@ -35,7 +35,7 @@ export default new Struct().fromSchema1([
   { child: { type: Number, name: 'nItemNum', len: 8 } },
   { child: { type: Number, name: 'nItemType', len: 8 }, repeat: 3 },
   {
-    child: { type: Number, name: 'strItemCode', len: 32, as: 'hex' },
+    child: { type: String, name: 'strItemCode', len: 32, as: 'hex' },
     repeat: 3,
   },
   {
