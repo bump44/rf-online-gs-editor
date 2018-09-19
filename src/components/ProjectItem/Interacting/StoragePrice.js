@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parseInt, assign } from 'lodash';
+import { parseInt, concat } from 'lodash';
 import { Map, List } from 'immutable';
 import cx from 'classnames';
 import styled from 'styled-components';
@@ -165,7 +165,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
 
     const percents = (!showCurrPercent
       ? PERCENTS
-      : assign([], PERCENTS, [currPercent]).sort((a, b) => a - b)
+      : concat([], PERCENTS, [currPercent]).sort((a, b) => a - b)
     ).filter(percent => this.calcValueByPercent(percent) > 0 || percent === 1);
 
     return (
