@@ -6,10 +6,12 @@ import {
   SHOE,
   HELMET,
   SHIELD,
+  WEAPON,
 } from '../../structs/item_types';
 
 import RenderFace from './Render/Face';
 import RenderArmor from './Render/Armor';
+import RenderWeapon from './Render/Weapon';
 
 export default {
   [FACE]: RenderFace,
@@ -18,6 +20,6 @@ export default {
   [GAUNTLET]: RenderArmor,
   [SHOE]: RenderArmor,
   [HELMET]: RenderArmor,
-
+  [WEAPON]: RenderWeapon,
   [SHIELD]: RenderArmor,
 };
