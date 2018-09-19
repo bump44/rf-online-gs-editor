@@ -23,6 +23,7 @@ import makeSelectProjectItemsPage, {
   makeSelectFilter,
   makeSelectProjectMoneyTypes,
   makeSelectProjectItemGrades,
+  makeSelectProjectWeaponTypes,
 } from './selectors';
 
 import {
@@ -112,6 +113,7 @@ export class ProjectItemsPage extends React.PureComponent {
       projectsNextValues,
       projectMoneyTypes,
       projectItemGrades,
+      projectWeaponTypes,
       localSettings,
     } = this.props;
 
@@ -124,6 +126,7 @@ export class ProjectItemsPage extends React.PureComponent {
         actions={fnProjectItemsActions}
         moneyTypes={projectMoneyTypes}
         itemGrades={projectItemGrades}
+        weaponTypes={projectWeaponTypes}
         localSettings={localSettings}
       />
     );
@@ -251,6 +254,7 @@ const mapStateToProps = createStructuredSelector({
   currentProject: makeSelectProject(),
   projectMoneyTypes: makeSelectProjectMoneyTypes(),
   projectItemGrades: makeSelectProjectItemGrades(),
+  projectWeaponTypes: makeSelectProjectWeaponTypes(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
   projectsNextValues: makeSelectProjectsNextValues(),
