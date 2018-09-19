@@ -30,6 +30,7 @@ export default gql`
           title
           value
           fieldName
+          valuation
         }
       }
 
