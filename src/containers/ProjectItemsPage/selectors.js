@@ -30,6 +30,11 @@ const makeSelectProjectItemGrades = () =>
     substate.getIn(['project', 'itemGrades', 'items'], List([])),
   );
 
+const makeSelectProjectWeaponTypes = () =>
+  createSelector(selectProjectItemsPageDomain, substate =>
+    substate.getIn(['project', 'weaponTypes', 'items'], List([])),
+  );
+
 const makeSelectResultTotal = () =>
   createSelector(selectProjectItemsPageDomain, substate =>
     substate.getIn(['result', 'total']),
@@ -64,6 +69,7 @@ export {
   makeSelectProject,
   makeSelectProjectMoneyTypes,
   makeSelectProjectItemGrades,
+  makeSelectProjectWeaponTypes,
   makeSelectResult,
   makeSelectResultTotal,
   makeSelectResultItems,
