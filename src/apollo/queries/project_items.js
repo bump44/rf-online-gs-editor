@@ -300,11 +300,11 @@ export default gql`
           nMaterialIndex__3
           nMaterialIndex__4
           nMaterialIndex__5
-          nMaterialCode__1
-          nMaterialCode__2
-          nMaterialCode__3
-          nMaterialCode__4
-          nMaterialCode__5
+          strMaterialCode__1
+          strMaterialCode__2
+          strMaterialCode__3
+          strMaterialCode__4
+          strMaterialCode__5
           nMaterialCount__1
           nMaterialCount__2
           nMaterialCount__3
