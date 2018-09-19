@@ -63,4 +63,24 @@ export default defineMessages({
     id: 'app.components.ProjectItem.CalcStoragePriceMessage',
     defaultMessage: 'Calculate storage price by current money value',
   },
+  CivilBM: {
+    id: 'app.components.ProjectItem.CivilBM',
+    defaultMessage: 'Bellato Male',
+  },
+  CivilBF: {
+    id: 'app.components.ProjectItem.CivilBF',
+    defaultMessage: 'Bellato Female',
+  },
+  CivilCM: {
+    id: 'app.components.ProjectItem.CivilCM',
+    defaultMessage: 'Cora Male',
+  },
+  CivilCF: {
+    id: 'app.components.ProjectItem.CivilCF',
+    defaultMessage: 'Cora Female',
+  },
+  CivilA: {
+    id: 'app.components.ProjectItem.CivilA',
+    defaultMessage: 'Accretia',
+  },
 });
