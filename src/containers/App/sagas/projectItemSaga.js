@@ -109,6 +109,14 @@ export const Resolvers = {
     item
       .setIn(['server', 'fDefFacing'], nextValue)
       .setIn(['client', 'fDefFacing'], nextValue),
+  wpType: (item, nextValue) =>
+    item
+      .setIn(['server', 'nWPType'], nextValue)
+      .setIn(['client', 'nWPType'], nextValue),
+  subType: (item, nextValue) =>
+    item
+      .setIn(['server', 'nSubType'], nextValue)
+      .setIn(['client', 'nSubType'], nextValue),
 };
 
 export function* changeProp({ projectId, propKey, propValue, ...props }) {

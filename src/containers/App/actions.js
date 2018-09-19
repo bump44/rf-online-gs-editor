@@ -243,6 +243,8 @@ export const projectsItems = {
       'defence',
       'defenceGap',
       'defenceFacing',
+      'wpType',
+      'subType',
     ];
     const fns = {};
     propKeys.forEach(propKey => {
