@@ -16,7 +16,7 @@ import messages from '../messages';
 
 const PERCENTS = [1, 3, 5, 9, 15, 25, 50, 75];
 
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless-function, no-bitwise */
 class ProjectItemInteractingStoragePrice extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     const increaseValue = type.get('valuation') || 1;
     const value = this.getMoneyValue(type) * increaseValue;
 
-    return parseInt((value * percent) / 100);
+    return Math.ceil((value * percent) / 100);
   }
 
   getCurrentPercent() {
@@ -69,7 +69,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     const increaseValue = moneyType.get('valuation') || 1;
     const storagePriceNext = storagePrice / increaseValue;
 
-    return parseFloat(((storagePriceNext / moneyValue) * 100).toFixed(1));
+    return (storagePriceNext / moneyValue) * 100;
   }
 
   onMouseEnterDropdown(evt) {
@@ -159,13 +159,18 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     }
 
     const currPercent = this.getCurrentPercent();
-    const currPercentIsPreset = PERCENTS.indexOf(currPercent) !== -1;
+    const currPercentIsPreset = PERCENTS.includes(currPercent);
     const showCurrPercent = !currPercentIsPreset && currPercent > 0;
 
     const percents = (!showCurrPercent
       ? PERCENTS
       : concat([], PERCENTS, [currPercent]).sort((a, b) => a - b)
     ).filter(percent => this.calcValueByPercent(percent) > 0 || percent === 1);
+
+    const getCountZeroDigits = val => {
+      const match = val.toString().match(/^\d+\.(0+)\d+/);
+      return !match ? 0 : match[1].length;
+    };
 
     return (
       <div className="dropdown-menu">
@@ -179,9 +184,13 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
                 key={percent}
                 onClick={this.changeValueAtPercent}
                 data-percent={percent}
-                isActive={currPercent === percent}
+                isActive={percent === currPercent}
+                title={percent}
               >
-                {percent}%
+                {(percent ^ 0) === percent
+                  ? percent
+                  : percent.toFixed(getCountZeroDigits(percent) + 1)}
+                %
               </DropdownItem>
             ))}
           </div>
