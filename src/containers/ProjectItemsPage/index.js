@@ -66,7 +66,7 @@ export class ProjectItemsPage extends React.PureComponent {
   }
 
   componentWillMount() {
-    this.loadProjectIfIdChanged(this.props);
+    this.loadProjectIfIdChanged(this.props, { isMount: true });
     this.loadMoreRows({ startIndex: 0, stopIndex: 25 });
   }
 
@@ -87,14 +87,14 @@ export class ProjectItemsPage extends React.PureComponent {
     fnResetResult(); // clean state
   }
 
-  loadProjectIfIdChanged(props) {
+  loadProjectIfIdChanged(props, { isMount = false } = {}) {
     const { id } = props.projectItemsPage;
     const { match } = props;
     const { params } = match;
 
     const nextId = params.id;
 
-    if (id !== nextId) {
+    if (id !== nextId || isMount) {
       props.fnChangeId(nextId);
       props.fnResetResult(); // clean state
     }

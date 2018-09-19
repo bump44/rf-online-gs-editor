@@ -11,6 +11,8 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
   AUTO_REVERSE_CLIENT_CODES,
+  DISABLE_RENDER_ITEMS_IS_SCROLLING,
+  DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
 } from './constants';
 
 import { saveTokenMe } from '../../utils/ls';
@@ -22,6 +24,8 @@ export const initialState = fromJS({
   currentUserToken: '',
   localSettings: {
     [AUTO_REVERSE_CLIENT_CODES]: true,
+    [DISABLE_RENDER_ITEMS_IS_SCROLLING]: true,
+    [DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE]: true,
   },
 
   /**

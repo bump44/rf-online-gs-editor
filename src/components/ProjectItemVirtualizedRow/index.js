@@ -11,13 +11,21 @@ import { List, Map } from 'immutable';
 
 import Row from '../ProjectItemRow/styles';
 import ProjectItemRow from '../ProjectItemRow';
+import {
+  DISABLE_RENDER_ITEMS_IS_SCROLLING,
+  DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
+} from '../../containers/App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemVirtualizedRow extends React.PureComponent {
-  render() {
+  constructor(props) {
+    super(props);
+    this.renderRow = this.renderRow.bind(this);
+  }
+
+  renderRow() {
     const {
       index,
-      style,
       items,
       actions,
       nextValues,
@@ -25,39 +33,61 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
       itemGrades,
       weaponTypes,
       localSettings,
+      isScrolling,
+      isVisible,
     } = this.props;
+
+    const disableRenderItemsIsScrolling = localSettings.get(
+      DISABLE_RENDER_ITEMS_IS_SCROLLING,
+    );
+
+    const disableRenderItemsIsNotVisible = localSettings.get(
+      DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
+    );
+
+    if (disableRenderItemsIsNotVisible && !isVisible) {
+      return null;
+    }
 
     const item = items.get(index);
 
+    if (item && !(disableRenderItemsIsScrolling && isScrolling)) {
+      const itemNextValues = nextValues.get(item.get('id'), Map({}));
+
+      return (
+        <ProjectItemRow
+          nextValues={nextValues}
+          actions={actions}
+          items={items}
+          item={item}
+          itemNextValues={itemNextValues}
+          moneyTypes={moneyTypes}
+          itemGrades={itemGrades}
+          weaponTypes={weaponTypes}
+          localSettings={localSettings}
+        />
+      );
+    }
+
     return (
-      <div style={style}>
-        {item && (
-          <ProjectItemRow
-            nextValues={nextValues}
-            actions={actions}
-            items={items}
-            item={item}
-            itemNextValues={nextValues.get(item.get('id'), Map({}))}
-            moneyTypes={moneyTypes}
-            itemGrades={itemGrades}
-            weaponTypes={weaponTypes}
-            localSettings={localSettings}
-          />
-        )}
-        {!item && (
-          <Row>
-            <span className="tag is-warning">
-              <i className="fas fa-spin fa-spinner" />
-            </span>
-          </Row>
-        )}
-      </div>
+      <Row>
+        <span className="tag is-warning">
+          <i className="fas fa-spin fa-spinner" />
+        </span>
+      </Row>
     );
+  }
+
+  render() {
+    const { style } = this.props;
+    return <div style={style}>{this.renderRow()}</div>;
   }
 }
 
 ProjectItemVirtualizedRow.propTypes = {
   index: PropTypes.number.isRequired,
+  isScrolling: PropTypes.bool.isRequired,
+  isVisible: PropTypes.bool.isRequired,
   style: PropTypes.object.isRequired,
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
