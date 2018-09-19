@@ -54,6 +54,7 @@ import RenderWeapon from './Render/Weapon';
 import RenderJewelry from './Render/Jewelry';
 import RenderBullet from './Render/Bullet';
 
+// want help in writing specific components ;)
 export default {
   [FACE]: RenderTool,
   [UPPER]: RenderArmor,
