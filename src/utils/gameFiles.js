@@ -1,5 +1,5 @@
 import pickBy from 'lodash/pickBy';
-import { FACE, UPPER } from '../structs/item_types';
+import { FACE, UPPER, LOWER } from '../structs/item_types';
 
 // Client DataFiles
 export const FILE_TYPE_CLIENT = 'CLIENT';
@@ -61,6 +61,13 @@ export const FILES = {
     resolve: RESOLVERS.SERVER_ITEM,
     type: FILE_TYPE_SERVER,
     args: { type: UPPER },
+    extensions: ['dat'],
+  },
+  'Script/LowerItem.dat': {
+    path: 'Script/LowerItem.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: LOWER },
     extensions: ['dat'],
   },
 };
