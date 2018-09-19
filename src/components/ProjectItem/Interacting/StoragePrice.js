@@ -177,7 +177,14 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     const percents = (!showCurrPercent
       ? PERCENTS
       : concat([], PERCENTS, [currPercent]).sort((a, b) => a - b)
-    ).filter(percent => this.calcValueByPercent(percent) > 0 || percent === 1);
+    ).filter(percent => this.calcValueByPercent(percent) > 1);
+
+    if (
+      percents.length <= 0 ||
+      (percents.length === 1 && !PERCENTS.includes(percents[0]))
+    ) {
+      return null;
+    }
 
     return (
       <div className="dropdown-menu">
