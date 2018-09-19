@@ -1,6 +1,6 @@
 /**
  *
- * ProjectItemRowRenderFace
+ * ProjectItemRowRenderTool
  *
  */
 
@@ -27,7 +27,7 @@ import ProjectItemInteractingCivilCF from '../../ProjectItem/Interacting/CivilCF
 import ProjectItemInteractingCivilA from '../../ProjectItem/Interacting/CivilA';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemRowRenderFace extends React.PureComponent {
+class ProjectItemRowRenderTool extends React.PureComponent {
   render() {
     const { item, itemNextValues, actions, moneyTypes } = this.props;
 
@@ -147,7 +147,7 @@ class ProjectItemRowRenderFace extends React.PureComponent {
   }
 }
 
-ProjectItemRowRenderFace.propTypes = {
+ProjectItemRowRenderTool.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
@@ -172,4 +172,4 @@ ProjectItemRowRenderFace.propTypes = {
   }).isRequired,
 };
 
-export default ProjectItemRowRenderFace;
+export default ProjectItemRowRenderTool;
