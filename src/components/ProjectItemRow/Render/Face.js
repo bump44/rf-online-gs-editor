@@ -20,7 +20,6 @@ import ProjectItemInteractingStoragePossible from '../../ProjectItem/Interacting
 import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/MoneyType';
 import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
 import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
-import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
 import ProjectItemInteractingCivilBM from '../../ProjectItem/Interacting/CivilBM';
 import ProjectItemInteractingCivilBF from '../../ProjectItem/Interacting/CivilBF';
 import ProjectItemInteractingCivilCM from '../../ProjectItem/Interacting/CivilCM';
@@ -30,13 +29,7 @@ import ProjectItemInteractingCivilA from '../../ProjectItem/Interacting/CivilA';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderFace extends React.PureComponent {
   render() {
-    const {
-      item,
-      itemNextValues,
-      actions,
-      moneyTypes,
-      itemGrades,
-    } = this.props;
+    const { item, itemNextValues, actions, moneyTypes } = this.props;
 
     return (
       <div className="columns">
@@ -79,24 +72,12 @@ class ProjectItemRowRenderFace extends React.PureComponent {
         </div>
 
         <div className="column">
-          <div className="field is-grouped">
-            <div className="control is-expanded">
-              <ProjectItemInteractingMoneyType
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeMoney}
-                types={moneyTypes}
-              />
-            </div>
-            <div className="control pr-3">
-              <ProjectItemInteractingItemGrade
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeItemGrade}
-                types={itemGrades}
-              />
-            </div>
-          </div>
+          <ProjectItemInteractingMoneyType
+            item={item}
+            itemNextValues={itemNextValues}
+            onChangeValue={actions.changeMoney}
+            types={moneyTypes}
+          />
 
           <div className="columns">
             <div className="column">
@@ -170,7 +151,6 @@ ProjectItemRowRenderFace.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
@@ -184,7 +164,6 @@ ProjectItemRowRenderFace.propTypes = {
     changeProcPoint: PropTypes.func.isRequired,
     changeKillPoint: PropTypes.func.isRequired,
     changeStoragePrice: PropTypes.func.isRequired,
-    changeItemGrade: PropTypes.func.isRequired,
     changeCivilBM: PropTypes.func.isRequired,
     changeCivilBF: PropTypes.func.isRequired,
     changeCivilCM: PropTypes.func.isRequired,
