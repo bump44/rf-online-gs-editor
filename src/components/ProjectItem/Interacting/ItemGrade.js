@@ -55,11 +55,19 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
             <select value={value} onChange={this.changeValue}>
               {isUnknown && (
                 <FormattedMessage {...messages.UnknownItemGrade}>
-                  {message => <option value={value}>{message}</option>}
+                  {message => (
+                    <option value={value}>
+                      {value}
+                      :&nbsp;
+                      {message}
+                    </option>
+                  )}
                 </FormattedMessage>
               )}
               {types.map(val => (
                 <option value={val.get('value')} key={val.get('value')}>
+                  {val.get('value')}
+                  :&nbsp;
                   {val.get('title')}
                 </option>
               ))}

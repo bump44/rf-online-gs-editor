@@ -83,14 +83,19 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
             <select value={value} onChange={this.changeValue}>
               {isUnknown && (
                 <FormattedMessage {...messages.UnknownMoneyType}>
-                  {message => <option value={value}>{message}</option>}
+                  {message => (
+                    <option value={value}>
+                      {value}: {message}
+                    </option>
+                  )}
                 </FormattedMessage>
               )}
               {types.map(val => (
                 <option value={val.get('value')} key={val.get('value')}>
+                  {val.get('value')}
+                  :&nbsp;
                   {val.get('title')}
-                  &nbsp;
-                  {this.getMoneyValue(val).toLocaleString()}
+                  &nbsp; ({this.getMoneyValue(val).toLocaleString()})
                 </option>
               ))}
             </select>
