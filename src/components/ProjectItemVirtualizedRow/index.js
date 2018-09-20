@@ -17,10 +17,37 @@ import {
 } from '../../containers/App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemVirtualizedRow extends React.PureComponent {
+class ProjectItemVirtualizedRow extends React.Component {
   constructor(props) {
     super(props);
     this.renderRow = this.renderRow.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { index, items, nextValues } = this.props;
+    const item = items.get(index);
+    const nextItem = nextProps.items.get(index);
+
+    if (!item && nextItem) {
+      return true;
+    }
+
+    if (item && nextItem && !item.equals(nextItem)) {
+      return true;
+    }
+
+    if (item) {
+      const itemNextValues = nextValues.get(item.get('id'), Map({}));
+      if (
+        !itemNextValues.equals(
+          nextProps.nextValues.get(item.get('id'), Map({})),
+        )
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   renderRow() {
