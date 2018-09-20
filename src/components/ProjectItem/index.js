@@ -24,6 +24,7 @@ function ProjectItem({
   localSettings,
 }) {
   const Render = renderResolvers[item.get('type')];
+
   return (
     <div style={style}>
       <Render
