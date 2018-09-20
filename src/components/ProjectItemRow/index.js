@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
 // import styled from 'styled-components';
 
@@ -42,7 +43,8 @@ class ProjectItemRow extends React.PureComponent {
       (!isSaving && !isSaved && !isError) || isSaving || isError;
 
     return (
-      <span
+      <Link
+        to={`/project/${item.getIn(['project', 'id'])}/items/${item.get('id')}`}
         title={isError ? errorMessage : undefined}
         className={cx('tag', {
           'is-danger': isError,
@@ -69,7 +71,7 @@ class ProjectItemRow extends React.PureComponent {
           messageKey={item.get('type')}
           tagName="small"
         />
-      </span>
+      </Link>
     );
   }
 
