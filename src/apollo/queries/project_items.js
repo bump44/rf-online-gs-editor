@@ -9,6 +9,11 @@ export default gql`
         nIndex
         searchTextValue
         client {
+          civil_bm
+          civil_bf
+          civil_cm
+          civil_cf
+          civil_a
           strCode
           strName
           strModel
