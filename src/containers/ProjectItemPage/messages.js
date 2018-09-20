@@ -9,6 +9,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.ProjectItemPage.header',
-    defaultMessage: 'This is ProjectItemPage container !',
+    defaultMessage: '{title}: {itemName}',
   },
 });
