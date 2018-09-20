@@ -88,12 +88,7 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
                 <FormattedMessage {...messages.UnknownMoneyType}>
                   {message => (
                     <option value={value}>
-                      {isNumber(value) && (
-                        <React.Fragment>
-                          {value}
-                          :&nbsp;
-                        </React.Fragment>
-                      )}
+                      {isNumber(value) && `${value}: `}
                       {message}
                     </option>
                   )}

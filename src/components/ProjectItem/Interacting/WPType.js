@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { parseInt } from 'lodash';
+import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
 // import styled from 'styled-components';
 
@@ -49,14 +49,24 @@ class ProjectItemInteractingWPType extends React.PureComponent {
               'is-info': !isUnknown,
             })}
           >
-            <select value={value} onChange={this.changeValue}>
+            <select
+              value={isNumber(value) ? value : undefined}
+              onChange={this.changeValue}
+            >
               {isUnknown && (
                 <FormattedMessage {...messages.UnknownWeaponType}>
-                  {message => <option value={value}>{message}</option>}
+                  {message => (
+                    <option value={value}>
+                      {isNumber(value) && `${value}: `}
+                      {message}
+                    </option>
+                  )}
                 </FormattedMessage>
               )}
               {types.map(val => (
                 <option value={val.get('value')} key={val.get('value')}>
+                  {val.get('value')}
+                  :&nbsp;
                   {val.get('title')}
                 </option>
               ))}

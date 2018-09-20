@@ -60,12 +60,7 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
                 <FormattedMessage {...messages.UnknownItemGrade}>
                   {message => (
                     <option value={value}>
-                      {isNumber(value) && (
-                        <React.Fragment>
-                          {value}
-                          :&nbsp;
-                        </React.Fragment>
-                      )}
+                      {isNumber(value) && `${value}: `}
                       {message}
                     </option>
                   )}
