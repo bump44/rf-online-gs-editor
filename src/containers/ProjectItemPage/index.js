@@ -108,10 +108,26 @@ export class ProjectItemPage extends React.PureComponent {
       currentProjectItem,
       projectsNextValues,
       localSettings,
-      fnProjectItemsActions,
+      match,
+      dispatch,
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectItemPage;
+
+    // very bad
+    const fnProjectItemsActions = projectsItemsBindActions({
+      dispatch,
+      projectId: match.params.id,
+      /* eslint-disable indent */
+      additionalData: currentProject
+        ? {
+            moneyTypes: currentProject.getIn(['moneyTypes', 'items']),
+            itemGrades: currentProject.getIn(['itemGrades', 'items']),
+            weaponTypes: currentProject.getIn(['weaponTypes', 'items']),
+          }
+        : {},
+      /* eslint-enable indent */
+    });
 
     return (
       <div>
@@ -159,8 +175,8 @@ export class ProjectItemPage extends React.PureComponent {
 
                 <ProjectItem
                   item={currentProjectItem}
-                  itemNextValues={projectsNextValues.get(
-                    currentProject.get('id'),
+                  itemNextValues={projectsNextValues.getIn(
+                    [currentProject.get('id'), currentProjectItem.get('id')],
                     Map({}),
                   )}
                   localSettings={localSettings}
@@ -193,14 +209,10 @@ const mapStateToProps = createStructuredSelector({
   localSettings: makeSelectLocalSettings(),
 });
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fnChangeId: (id, itemId) => dispatch(changeId(id, itemId)),
-    fnProjectItemsActions: projectsItemsBindActions({
-      dispatch,
-      projectId: props.match.params.id,
-    }),
   };
 }
 
@@ -227,5 +239,6 @@ const styles = {
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100vh',
+    paddingRight: 15,
   },
 };

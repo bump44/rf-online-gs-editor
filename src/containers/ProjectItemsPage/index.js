@@ -108,14 +108,29 @@ export class ProjectItemsPage extends React.PureComponent {
   rowRenderer({ key, ...props }) {
     const {
       result,
-      fnProjectItemsActions,
       currentProject,
       projectsNextValues,
       projectMoneyTypes,
       projectItemGrades,
       projectWeaponTypes,
       localSettings,
+      match,
+      dispatch,
     } = this.props;
+
+    const fnProjectItemsActions = projectsItemsBindActions({
+      dispatch,
+      projectId: match.params.id,
+      /* eslint-disable indent */
+      additionalData: currentProject
+        ? {
+            moneyTypes: projectMoneyTypes,
+            itemGrades: projectItemGrades,
+            weaponTypes: projectWeaponTypes,
+          }
+        : {},
+      /* eslint-enable indent */
+    });
 
     return (
       <ProjectItemVirtualizedRow
@@ -263,7 +278,7 @@ const mapStateToProps = createStructuredSelector({
   localSettings: makeSelectLocalSettings(),
 });
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fnChangeId: id => dispatch(changeId(id)),
@@ -276,10 +291,6 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(changeFilterWhereSearch(whereSearch)),
     fnChangeFilterWhereType: whereType =>
       dispatch(changeFilterWhereType(whereType)),
-    fnProjectItemsActions: projectsItemsBindActions({
-      dispatch,
-      projectId: props.match.params.id,
-    }),
   };
 }
 
