@@ -15,6 +15,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
   PROJECT_ITEM_NAME_FIELDS,
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
+  AUTO_RECALC_STORAGE_PRICE_IF_MONEY_VALUE_CHANGED,
 } from '../constants';
 
 import {
@@ -25,12 +26,57 @@ import {
   projectsNextValuesChangeErrorMessage,
 } from '../actions';
 
-import { makeSelectProjectsNextValues } from '../selectors';
+import {
+  makeSelectProjectsNextValues,
+  makeSelectLocalSettings,
+} from '../selectors';
 
 import apolloClient from '../../../apollo';
 import projectItemUpdate from '../../../apollo/mutations/project_item_update';
 
+import {
+  getMoneyType,
+  getStoragePricePercent,
+  getMoneyValueByPercent,
+} from '../getters/projectItem';
+
 const WorkersSave = {};
+
+const calcStoragePrice = (
+  nextValues,
+  { item, moneyTypes, localSettings, ...props },
+) => {
+  if (!localSettings.get(AUTO_RECALC_STORAGE_PRICE_IF_MONEY_VALUE_CHANGED)) {
+    return newValues => newValues;
+  }
+
+  const moneyType = getMoneyType(nextValues, {
+    item,
+    moneyTypes,
+    localSettings,
+  });
+
+  if (!moneyType) {
+    return newValues => newValues;
+  }
+
+  const currentPercent = getStoragePricePercent(nextValues, {
+    item,
+    moneyTypes,
+    localSettings,
+  });
+
+  return newValues =>
+    Resolvers.storagePrice(
+      newValues,
+      getMoneyValueByPercent(
+        newValues,
+        { item, moneyTypes, localSettings, ...props },
+        { percent: currentPercent },
+      ),
+      { item, moneyTypes, localSettings, ...props },
+    );
+};
 
 export const Resolvers = {
   name: (item, nextValue) => {
@@ -60,26 +106,36 @@ export const Resolvers = {
     item
       .setIn(['client', 'nMoney'], nextValue)
       .setIn(['server', 'nMoney'], nextValue),
-  stdPrice: (item, nextValue) =>
-    item
-      .setIn(['client', 'nStdPrice'], nextValue)
-      .setIn(['server', 'nStdPrice'], nextValue),
-  stdPoint: (item, nextValue) =>
-    item
-      .setIn(['client', 'nStdPoint'], nextValue)
-      .setIn(['server', 'nStdPoint'], nextValue),
-  goldPoint: (item, nextValue) =>
-    item
-      .setIn(['client', 'nGoldPoint'], nextValue)
-      .setIn(['server', 'nGoldPoint'], nextValue),
-  procPoint: (item, nextValue) =>
-    item
-      .setIn(['client', 'nProcPoint'], nextValue)
-      .setIn(['server', 'nProcPoint'], nextValue),
-  killPoint: (item, nextValue) =>
-    item
-      .setIn(['client', 'nKillPoint'], nextValue)
-      .setIn(['server', 'nKillPoint'], nextValue),
+  stdPrice: (nextValues, payload, props) =>
+    calcStoragePrice(nextValues, props)(
+      nextValues
+        .setIn(['client', 'nStdPrice'], payload)
+        .setIn(['server', 'nStdPrice'], payload),
+    ),
+  stdPoint: (nextValues, payload, props) =>
+    calcStoragePrice(nextValues, props)(
+      nextValues
+        .setIn(['client', 'nStdPoint'], payload)
+        .setIn(['server', 'nStdPoint'], payload),
+    ),
+  goldPoint: (nextValues, payload, props) =>
+    calcStoragePrice(nextValues, props)(
+      nextValues
+        .setIn(['client', 'nGoldPoint'], payload)
+        .setIn(['server', 'nGoldPoint'], payload),
+    ),
+  procPoint: (nextValues, payload, props) =>
+    calcStoragePrice(nextValues, props)(
+      nextValues
+        .setIn(['client', 'nProcPoint'], payload)
+        .setIn(['server', 'nProcPoint'], payload),
+    ),
+  killPoint: (nextValues, payload, props) =>
+    calcStoragePrice(nextValues, props)(
+      nextValues
+        .setIn(['client', 'nKillPoint'], payload)
+        .setIn(['server', 'nKillPoint'], payload),
+    ),
   storagePrice: (item, nextValue) =>
     item
       .setIn(['client', 'nStoragePrice'], nextValue)
@@ -142,12 +198,17 @@ export const Resolvers = {
 export function* changeProp({ projectId, propKey, propValue, ...props }) {
   const item = props.item instanceof Map ? props.item : Map(props.item);
   const projectsNextValues = yield select(makeSelectProjectsNextValues());
+  const localSettings = yield select(makeSelectLocalSettings());
   const projectNextValue = projectsNextValues
     .getIn([projectId, item.get('id')])
     .get('nextValue');
 
   const resolver = Resolvers[propKey] || (() => projectNextValue);
-  const nextMap = resolver(projectNextValue, propValue);
+  const nextMap = resolver(projectNextValue, propValue, {
+    localSettings,
+    item,
+    ...props.additionalData,
+  });
 
   yield put(
     projectsNextValuesChangeIsError(
