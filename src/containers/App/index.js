@@ -24,6 +24,7 @@ import ProjectPage from '../ProjectPage';
 import ProjectContributorsPage from '../ProjectContributorsPage';
 import ProjectImportPage from '../ProjectImportPage';
 import ProjectItemsPage from '../ProjectItemsPage';
+import ProjectItemPage from '../ProjectItemPage';
 import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
@@ -44,6 +45,11 @@ export default function App() {
         />
         <Route exact path="/project/:id/import" component={ProjectImportPage} />
         <Route exact path="/project/:id/items" component={ProjectItemsPage} />
+        <Route
+          exact
+          path="/project/:id/items/:id"
+          component={ProjectItemPage}
+        />
 
         <Route component={NotFoundPage} />
       </Switch>
