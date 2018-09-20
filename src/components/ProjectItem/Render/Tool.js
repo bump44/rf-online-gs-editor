@@ -25,6 +25,11 @@ import ProjectItemInteractingCivilBF from '../Interacting/CivilBF';
 import ProjectItemInteractingCivilCM from '../Interacting/CivilCM';
 import ProjectItemInteractingCivilCF from '../Interacting/CivilCF';
 import ProjectItemInteractingCivilA from '../Interacting/CivilA';
+import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
+import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
+import ProjectItemInteractingGoldPoint from '../Interacting/GoldPoint';
+import ProjectItemInteractingProcPoint from '../Interacting/ProcPoint';
+import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRenderTool extends React.PureComponent {
@@ -32,113 +37,287 @@ class ProjectItemRenderTool extends React.PureComponent {
     const { item, itemNextValues, actions, moneyTypes } = this.props;
 
     return (
-      <div className="columns">
-        <div className="column">
-          <ProjectItemInteractingName
-            item={item}
-            itemNextValues={itemNextValues}
-            onChangeValue={actions.changeName}
-          />
-          <div className="field is-grouped">
-            <div className="control">
-              <ProjectItemInteractingExchange
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeExchange}
-              />
-            </div>
-            <div className="control">
-              <ProjectItemInteractingSell
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeSell}
-              />
-            </div>
-            <div className="control">
-              <ProjectItemInteractingGround
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeGround}
-              />
-            </div>
-            <div className="control">
-              <ProjectItemInteractingStoragePossible
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePossible}
-              />
+      <div>
+        <div className="field is-horizontal">
+          <div className="field-label is-small">
+            <label className="label">Name</label>
+          </div>
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <ProjectItemInteractingName
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeName}
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="column">
-          <ProjectItemInteractingMoneyType
-            item={item}
-            itemNextValues={itemNextValues}
-            onChangeValue={actions.changeMoney}
-            types={moneyTypes}
-          />
-
-          <div className="columns">
-            <div className="column">
-              <ProjectItemInteractingMoneyValue
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeStdPrice={actions.changeStdPrice}
-                onChangeStdPoint={actions.changeStdPoint}
-                onChangeGoldPoint={actions.changeGoldPoint}
-                onChangeProcPoint={actions.changeProcPoint}
-                onChangeKillPoint={actions.changeKillPoint}
-                types={moneyTypes}
-              />
-            </div>
-            <div className="column is-hidden-touch is-hidden-desktop-only is-hidden-widescreen-only">
-              <ProjectItemInteractingStoragePrice
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePrice}
-                types={moneyTypes}
-              />
+        <div className="field is-horizontal">
+          <div className="field-label is-small">
+            <label className="label">Transfer permissions</label>
+          </div>
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-grouped">
+                  <div className="control">
+                    <ProjectItemInteractingExchange
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeExchange}
+                    />
+                  </div>
+                  <div className="control">
+                    <ProjectItemInteractingSell
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeSell}
+                    />
+                  </div>
+                  <div className="control">
+                    <ProjectItemInteractingGround
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeGround}
+                    />
+                  </div>
+                  <div className="control">
+                    <ProjectItemInteractingStoragePossible
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeStoragePossible}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="column">
-          <div className="field is-grouped is-grouped-multiline">
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilBM
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilBM}
-              />
+        <div className="field is-horizontal">
+          <div className="field-label is-small">
+            <label className="label">Current money</label>
+          </div>
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <ProjectItemInteractingMoneyType
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeMoney}
+                  types={moneyTypes}
+                />
+              </div>
             </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilBF
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilBF}
-              />
+            <div className="field">
+              <div className="control">
+                <ProjectItemInteractingMoneyValue
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeStdPrice={actions.changeStdPrice}
+                  onChangeStdPoint={actions.changeStdPoint}
+                  onChangeGoldPoint={actions.changeGoldPoint}
+                  onChangeProcPoint={actions.changeProcPoint}
+                  onChangeKillPoint={actions.changeKillPoint}
+                  types={moneyTypes}
+                />
+              </div>
             </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilCM
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilCM}
-              />
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small" />
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-horizontal">
+                  <div className="field-label is-small">
+                    <label className="label">StdPrice</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <ProjectItemInteractingStdPrice
+                          item={item}
+                          itemNextValues={itemNextValues}
+                          onChangeValue={actions.changeStdPrice}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilCF
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilCF}
-              />
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small" />
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-horizontal">
+                  <div className="field-label is-small">
+                    <label className="label">StdPoint</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <ProjectItemInteractingStdPoint
+                          item={item}
+                          itemNextValues={itemNextValues}
+                          onChangeValue={actions.changeStdPoint}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilA
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilA}
-              />
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small" />
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-horizontal">
+                  <div className="field-label is-small">
+                    <label className="label">GoldPoint</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <ProjectItemInteractingGoldPoint
+                          item={item}
+                          itemNextValues={itemNextValues}
+                          onChangeValue={actions.changeGoldPoint}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small" />
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-horizontal">
+                  <div className="field-label is-small">
+                    <label className="label">ProcPoint</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <ProjectItemInteractingProcPoint
+                          item={item}
+                          itemNextValues={itemNextValues}
+                          onChangeValue={actions.changeProcPoint}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small" />
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <div className="field is-horizontal">
+                  <div className="field-label is-small">
+                    <label className="label">KillPoint</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="control">
+                        <ProjectItemInteractingKillPoint
+                          item={item}
+                          itemNextValues={itemNextValues}
+                          onChangeValue={actions.changeKillPoint}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small">
+            <label className="label">Storage Price</label>
+          </div>
+          <div className="field-body">
+            <div className="field">
+              <div className="control">
+                <ProjectItemInteractingStoragePrice
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeStoragePrice}
+                  types={moneyTypes}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="field is-horizontal">
+          <div className="field-label is-small">
+            <label className="label">Civils</label>
+          </div>
+          <div className="field-body">
+            <div className="field is-grouped is-grouped-multiline">
+              <div className="control mb-0">
+                <ProjectItemInteractingCivilBM
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeCivilBM}
+                />
+              </div>
+              <div className="control mb-0">
+                <ProjectItemInteractingCivilBF
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeCivilBF}
+                />
+              </div>
+              <div className="control mb-0">
+                <ProjectItemInteractingCivilCM
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeCivilCM}
+                />
+              </div>
+              <div className="control mb-0">
+                <ProjectItemInteractingCivilCF
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeCivilCF}
+                />
+              </div>
+              <div className="control mb-0">
+                <ProjectItemInteractingCivilA
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  onChangeValue={actions.changeCivilA}
+                />
+              </div>
             </div>
           </div>
         </div>
