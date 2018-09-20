@@ -75,7 +75,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
   onMouseEnterDropdown(evt) {
     const y = evt.clientY;
     const inner = window.innerHeight;
-    const ymax = y + 100;
+    const ymax = y + 150;
     this.setState({ isUpDropdown: ymax > inner });
   }
 
