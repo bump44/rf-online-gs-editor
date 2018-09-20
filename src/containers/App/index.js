@@ -47,7 +47,7 @@ export default function App() {
         <Route exact path="/project/:id/items" component={ProjectItemsPage} />
         <Route
           exact
-          path="/project/:id/items/:id"
+          path="/project/:id/items/:itemId"
           component={ProjectItemPage}
         />
 
