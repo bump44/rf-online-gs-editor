@@ -154,6 +154,7 @@ export function projectsNextValuesChangePropValue({
   item,
   propKey,
   propValue,
+  additionalData = {},
 }) {
   return {
     type: PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
@@ -161,6 +162,7 @@ export function projectsNextValuesChangePropValue({
     item,
     propKey,
     propValue,
+    additionalData,
   };
 }
 
@@ -267,13 +269,24 @@ export const projectsItemsActionNames = Object.keys(projectsItems);
 
 export const projectsItemsBindActions = ({
   projectId,
+  additionalData = {},
   dispatch = args => args,
 }) => {
   const nextFns = {};
   projectsItemsActionNames.forEach(actionKey => {
     const actionFn = projectsItems[actionKey];
-    nextFns[actionKey] = (item, propValue) =>
-      dispatch(actionFn({ projectId, item, propValue }));
+    nextFns[actionKey] = (item, propValue, someAdditionalData = {}) =>
+      dispatch(
+        actionFn({
+          projectId,
+          item,
+          propValue,
+          additionalData: {
+            ...additionalData,
+            ...someAdditionalData,
+          },
+        }),
+      );
   });
   return nextFns;
 };
