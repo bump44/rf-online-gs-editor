@@ -20,10 +20,28 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
     super(props);
 
     this.getMoneyValue = this.getMoneyValue.bind(this);
+    this.getMoneyType = this.getMoneyType.bind(this);
     this.changeValue = evt => {
       const { onChangeValue, item } = this.props;
       onChangeValue(item, parseInt(evt.target.value));
     };
+  }
+
+  getMoneyType() {
+    const { item, itemNextValues } = this.props;
+
+    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
+
+    const currValue = item.getIn(
+      [['server', 'nMoney'], ['client', 'nMoney']].find(
+        fieldSets => item.getIn(fieldSets) !== undefined,
+      ) || ['server', 'nMoney'],
+      0,
+    );
+
+    const value = nextValue !== undefined ? nextValue : currValue;
+
+    return value;
   }
 
   getMoneyValue(type) {
@@ -57,18 +75,9 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, types, className } = this.props;
+    const { types, className } = this.props;
 
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
-
-    const currValue = item.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nMoney'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = this.getMoneyType();
     const isUnknown = !types.some(val => val.get('value') === value);
 
     return (
