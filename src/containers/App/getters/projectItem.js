@@ -1,3 +1,4 @@
+import max from 'lodash/max';
 import { DEFAULT_STORAGE_PRICE_PERCENT } from '../constants';
 
 export const getMoneyType = (nextValues, { item, moneyTypes }) => {
@@ -87,14 +88,14 @@ export const getStoragePricePercent = (
   const moneyType = getMoneyType(nextValues, { item, moneyTypes });
   const moneyValue = getMoneyValue(nextValues, { item, moneyTypes });
   const storagePrice = getStoragePrice(nextValues, { item });
+  const valuation = (moneyType ? moneyType.get('valuation') : 1) || 1;
+  const min = max([100 / valuation, 5]);
 
-  if (moneyValue < 100 || storagePrice <= 0) {
+  if (moneyValue < min || storagePrice <= 0) {
     const def = localSettings.get(DEFAULT_STORAGE_PRICE_PERCENT);
     return def >= 0 && def <= 100 ? def : 0;
   }
 
-  const increaseValue = moneyType.get('valuation') || 1;
-  const storagePriceNext = storagePrice / increaseValue;
-
+  const storagePriceNext = storagePrice / valuation;
   return (storagePriceNext / moneyValue) * 100;
 };
