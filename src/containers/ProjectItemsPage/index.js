@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Grid, Header as PageHeader, Segment, Label } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -49,6 +50,7 @@ import {
 } from './actions';
 
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import ProjectMenu from '../../components/ProjectMenu';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -191,25 +193,23 @@ export class ProjectItemsPage extends React.PureComponent {
           projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
-        <div className="container is-fluid p-10">
-          {isError && (
-            <Notification className="is-danger">{errorMessage}</Notification>
-          )}
+        <Container>
+          {isError && <Notification type="danger">{errorMessage}</Notification>}
 
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns is-fullheight calc-50px">
-              <div className="column is-2">
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
                 />
-              </div>
-              <div className="column" style={styles.column}>
-                <p className="title is-4">
+              </Grid.Column>
+              <Grid.Column largeScreen={13} widescreen={14}>
+                <PageHeader>
                   <FormattedMessage
                     {...messages.header}
                     values={{
@@ -217,14 +217,10 @@ export class ProjectItemsPage extends React.PureComponent {
                         'title',
                         currentProject.get('name'),
                       ),
-                      total: (
-                        <small className="tag is-small is-info">
-                          {result.get('total')}
-                        </small>
-                      ),
+                      total: <Label circular>{result.get('total')}</Label>,
                     }}
                   />
-                </p>
+                </PageHeader>
 
                 <ProjectItemsFilters
                   sortBy={filter.get('sortBy')}
@@ -250,10 +246,10 @@ export class ProjectItemsPage extends React.PureComponent {
                     }}
                   />
                 </div>
-              </div>
-            </div>
+              </Grid.Column>
+            </Grid>
           )}
-        </div>
+        </Container>
       </div>
     );
   }
