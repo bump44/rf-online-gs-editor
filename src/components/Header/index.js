@@ -38,7 +38,7 @@ class Header extends React.PureComponent {
 
     return (
       <Menu inverted color="violet">
-        <Menu.Item as={BrandLink} to="/">
+        <Menu.Item as={BrandLink} to="/" exact>
           <BrandContent>
             <FormattedMessage {...messages.brand} />
             <BrandVersion>v{packagejson.version}</BrandVersion>
