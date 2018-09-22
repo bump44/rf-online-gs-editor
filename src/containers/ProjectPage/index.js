@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Grid, Header as PageHeader } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -22,8 +23,9 @@ import messages from './messages';
 import { changeId } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import Notification from '../../components/Notification';
-import ProjectMedia from '../../components/ProjectMedia';
+import ProjectsMediaItems from '../../components/ProjectsMediaItems';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
 
@@ -73,7 +75,7 @@ export class ProjectPage extends React.PureComponent {
           currentProject={currentProject}
         />
 
-        <div className="container is-fluid p-10">
+        <Container>
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
           )}
@@ -81,24 +83,27 @@ export class ProjectPage extends React.PureComponent {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns">
-              <div className="column is-2">
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
                 />
-              </div>
-              <div className="column">
-                <p className="title is-4">
+              </Grid.Column>
+              <Grid.Column largeScreen={13} widescreen={14}>
+                <PageHeader>
                   <FormattedMessage {...messages.header} />
-                </p>
-                <ProjectMedia currentUser={currentUser} project={project} />
-              </div>
-            </div>
+                </PageHeader>
+                <ProjectsMediaItems
+                  items={[project]}
+                  currentUser={currentUser}
+                />
+              </Grid.Column>
+            </Grid>
           )}
-        </div>
+        </Container>
       </div>
     );
   }

@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Header as PageHeader, Grid } from 'semantic-ui-react';
+import { Header as PageHeader, Grid, Label } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -69,6 +69,9 @@ export class ProjectsPage extends React.PureComponent {
               <Grid.Column>
                 <PageHeader>
                   <FormattedMessage {...messages.titleMyProjects} />
+                  <Label circular color="grey">
+                    {projectsMy.total}
+                  </Label>
                 </PageHeader>
                 <ProjectsMediaItems
                   items={projectsMy.items}
@@ -81,10 +84,12 @@ export class ProjectsPage extends React.PureComponent {
             <Grid.Column>
               <PageHeader>
                 <FormattedMessage {...messages.titleNewProjects} />
+                <Label circular color="grey">
+                  {projectsNew.total}
+                </Label>
               </PageHeader>
               <ProjectsMediaItems
                 items={projectsNew.items}
-                total={projectsNew.total}
                 currentUser={currentUser}
               />
             </Grid.Column>
