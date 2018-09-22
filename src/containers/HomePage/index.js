@@ -19,10 +19,12 @@ import makeSelectHomePage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import Header from '../../components/Header';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
 import { makeSelectProject } from '../ProjectPage/selectors';
+
+import Header from '../../components/Header';
+import Container from '../../components/Container';
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
@@ -48,9 +50,9 @@ export class HomePage extends React.PureComponent {
           isLoggedIn={isLoggedIn}
         />
 
-        <div className="container is-fluid p-10">
+        <Container>
           <FormattedMessage {...messages.header} />
-        </div>
+        </Container>
       </div>
     );
   }
