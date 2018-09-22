@@ -13,6 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'react-router-redux';
+import { Header as PageHeader, Grid, Card } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -25,8 +26,9 @@ import * as actions from './actions';
 import { makeSelectProject } from '../ProjectPage/selectors';
 
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import Notification from '../../components/Notification';
-import Button from '../../components/Button';
+import ProjectCreateForm from '../../components/ProjectCreateForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectCreatePage extends React.PureComponent {
@@ -41,34 +43,6 @@ export class ProjectCreatePage extends React.PureComponent {
   redirectToMainPageIfNotIsLoggedIn(props) {
     const { isLoggedIn, changeLocation } = props;
     if (!isLoggedIn) changeLocation('/');
-  }
-
-  renderField({
-    label,
-    icon,
-    value,
-    type = 'text',
-    onChange,
-    disabled = false,
-  }) {
-    return (
-      <div className="field">
-        <label className="label">{label}</label>
-
-        <div className="control has-icons-left">
-          <input
-            className="input"
-            type={type}
-            value={value}
-            onChange={onChange}
-            disabled={disabled}
-          />
-          <span className="icon is-small is-left">
-            <i className={`fas fa-${icon}`} />
-          </span>
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -104,55 +78,36 @@ export class ProjectCreatePage extends React.PureComponent {
           currentProject={currentProject}
           currentUser={currentUser}
         />
-        <div className="container is-fluid p-10">
-          <p className="title is-6 mb-5">
-            <FormattedMessage {...messages.header} />
-          </p>
-          <div className="card">
-            <div className="card-content">
-              {isError && (
-                <Notification className="is-danger">
-                  {errorMessage}
-                </Notification>
-              )}
+        <Container>
+          <Grid centered columns={3}>
+            <Grid.Column>
+              <PageHeader>
+                <FormattedMessage {...messages.header} />
+              </PageHeader>
 
-              {this.renderField({
-                label: <FormattedMessage {...messages.Title} />,
-                icon: 'external-link-square-alt',
-                value: title,
-                onChange: changeTitle,
-              })}
+              <Card fluid>
+                <Card.Content>
+                  {isError && (
+                    <Notification type="danger">{errorMessage}</Notification>
+                  )}
 
-              {this.renderField({
-                label: <FormattedMessage {...messages.Description} />,
-                icon: 'file-alt',
-                value: description,
-                onChange: changeDescription,
-              })}
-
-              <div className="field">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={isPublic}
-                    onChange={changeIsPublic}
-                    value={1}
+                  <ProjectCreateForm
+                    loading={isLoading}
+                    values={{
+                      title,
+                      description,
+                      isPublic,
+                    }}
+                    onChangeTitle={changeTitle}
+                    onChangeDescription={changeDescription}
+                    onChangeIsPublic={changeIsPublic}
+                    onSubmit={submit}
                   />
-                  <FormattedMessage {...messages.IsPublicProject} />
-                </label>
-              </div>
-
-              <Button
-                onClick={submit}
-                loading={isLoading}
-                className="is-primary"
-                icon="plus"
-              >
-                <FormattedMessage {...messages.Submit} />
-              </Button>
-            </div>
-          </div>
-        </div>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid>
+        </Container>
       </div>
     );
   }
@@ -189,7 +144,8 @@ function mapDispatchToProps(dispatch) {
     changeTitle: evt => dispatch(actions.changeTitle(evt.target.value)),
     changeDescription: evt =>
       dispatch(actions.changeDescription(evt.target.value)),
-    changeIsPublic: evt => dispatch(actions.changeIsPublic(evt.target.checked)),
+    changeIsPublic: (evt, props) =>
+      dispatch(actions.changeIsPublic(props.checked)),
     submit: () => dispatch(actions.submit()),
   };
 }
