@@ -19,6 +19,7 @@ import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { makeSelectProject } from '../ProjectPage/selectors';
 
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -44,11 +45,12 @@ export class NotFoundPage extends React.PureComponent {
           isLoggedIn={isLoggedIn}
           onClickLogout={fnLogoutCurrentUser}
         />
-        <div className="container is-fluid p-10">
-          <Notification className="is-danger">
+
+        <Container>
+          <Notification type="danger">
             <FormattedMessage {...messages.message} />
           </Notification>
-        </div>
+        </Container>
       </div>
     );
   }
