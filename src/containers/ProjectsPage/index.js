@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Header as PageHeader, Grid } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -19,42 +20,21 @@ import makeSelectProjectsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+
 import { loadingStart } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
 import { makeSelectProject } from '../ProjectPage/selectors';
+
 import Header from '../../components/Header';
-import ProjectMedia from '../../components/ProjectMedia';
-import ProjectsTabs from '../../components/ProjectsTabs';
+import Container from '../../components/Container';
+import ProjectsMediaItems from '../../components/ProjectsMediaItems';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectsPage extends React.PureComponent {
   componentWillMount() {
     const { fnLoadingStart } = this.props;
     fnLoadingStart(); // loading projects
-  }
-
-  renderCardWithItems({ items, total }, { title = {} }) {
-    const { currentUser } = this.props;
-
-    return (
-      <div className="card">
-        <div className="card-content p-0">
-          <p className="title is-6 p-10 m-0">
-            <FormattedMessage {...title} />{' '}
-            <small className="tag">{total}</small>
-          </p>
-
-          {items.map(item => (
-            <ProjectMedia
-              project={item}
-              key={item.id}
-              currentUser={currentUser}
-            />
-          ))}
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -65,6 +45,7 @@ export class ProjectsPage extends React.PureComponent {
       projectsPage,
       fnLogoutCurrentUser,
     } = this.props;
+
     const { result } = projectsPage;
     const { projectsMy, projectsNew } = result;
 
@@ -82,24 +63,33 @@ export class ProjectsPage extends React.PureComponent {
           currentProject={currentProject}
         />
 
-        <div className="container is-fluid p-10">
-          <ProjectsTabs isLoggedIn={isLoggedIn} />
-
-          <div className="columns">
+        <Container>
+          <Grid columns={isLoggedIn ? 2 : 1}>
             {isLoggedIn && (
-              <div className="column">
-                {this.renderCardWithItems(projectsMy, {
-                  title: messages.titleMyProjects,
-                })}
-              </div>
+              <Grid.Column>
+                <PageHeader>
+                  <FormattedMessage {...messages.titleMyProjects} />
+                </PageHeader>
+                <ProjectsMediaItems
+                  items={projectsMy.items}
+                  total={projectsMy.total}
+                  currentUser={currentUser}
+                />
+              </Grid.Column>
             )}
-            <div className="column">
-              {this.renderCardWithItems(projectsNew, {
-                title: messages.titleNewProjects,
-              })}
-            </div>
-          </div>
-        </div>
+
+            <Grid.Column>
+              <PageHeader>
+                <FormattedMessage {...messages.titleNewProjects} />
+              </PageHeader>
+              <ProjectsMediaItems
+                items={projectsNew.items}
+                total={projectsNew.total}
+                currentUser={currentUser}
+              />
+            </Grid.Column>
+          </Grid>
+        </Container>
       </div>
     );
   }
