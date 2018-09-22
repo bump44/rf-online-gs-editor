@@ -13,6 +13,6 @@ export default defineMessages({
   },
   Owner: {
     id: 'app.containers.ProjectContributorsPage.Owner',
-    defaultMessage: 'Owner:',
+    defaultMessage: 'Owner',
   },
 });

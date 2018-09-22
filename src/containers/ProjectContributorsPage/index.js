@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Grid, Header as PageHeader, Segment, Label } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -25,29 +26,29 @@ import { changeId } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
-import Button from '../../components/Button';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectContributorsPage extends React.PureComponent {
   componentWillMount() {
-    this.loadProjectIfIdChanged(this.props);
+    this.loadProjectIfIdChanged(this.props, { isMount: true });
   }
 
   componentWillReceiveProps(nextProps) {
     this.loadProjectIfIdChanged(nextProps);
   }
 
-  loadProjectIfIdChanged(props) {
+  loadProjectIfIdChanged(props, { isMount = false } = {}) {
     const { id } = props.projectContributorsPage;
     const { match } = props;
     const { params } = match;
 
     const nextId = params.id;
 
-    if (id !== nextId) {
+    if (id !== nextId || isMount) {
       props.fnChangeId(nextId);
     }
   }
@@ -87,7 +88,7 @@ export class ProjectContributorsPage extends React.PureComponent {
           onClickLogout={fnLogoutCurrentUser}
         />
 
-        <div className="container is-fluid p-10">
+        <Container>
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
           )}
@@ -95,44 +96,34 @@ export class ProjectContributorsPage extends React.PureComponent {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns">
-              <div className="column is-2">
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
                 />
-              </div>
-              <div className="column">
-                <p className="title is-4">
+              </Grid.Column>
+              <Grid.Column largeScreen={13} widescreen={14}>
+                <PageHeader>
                   <FormattedMessage
                     {...messages.header}
                     values={{ title: project.title }}
                   />
-                </p>
-                <div className="card">
-                  <div className="card-content">
-                    <div>
-                      <i className="fas fa-user" />
-                      &nbsp;
+                </PageHeader>
+                <Segment>
+                  <Label color="red">
+                    {project.owner.login}
+                    <Label.Detail>
                       <FormattedMessage {...messages.Owner} />
-                      &nbsp; &nbsp;
-                      <span className="tag is-danger">
-                        @{project.owner.login}
-                      </span>
-                    </div>
-                    <hr />
-                    <Button className="is-primary is-small">
-                      Add Contributor&nbsp;
-                      <small>#todo</small>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    </Label.Detail>
+                  </Label>
+                </Segment>
+              </Grid.Column>
+            </Grid>
           )}
-        </div>
+        </Container>
       </div>
     );
   }
