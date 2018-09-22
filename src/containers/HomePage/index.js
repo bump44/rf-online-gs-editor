@@ -47,6 +47,7 @@ export class HomePage extends React.PureComponent {
           currentProject={currentProject}
           isLoggedIn={isLoggedIn}
         />
+
         <div className="container is-fluid p-10">
           <FormattedMessage {...messages.header} />
         </div>
