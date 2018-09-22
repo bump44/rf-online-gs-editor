@@ -12,13 +12,12 @@ import { Item } from 'semantic-ui-react';
 
 import ProjectsMediaItem from '../ProjectsMediaItem';
 
-function ProjectsMediaItems({ items, total, currentUser }) {
+function ProjectsMediaItems({ items, currentUser }) {
   return (
     <Item.Group divided>
       {items.map(item => (
         <ProjectsMediaItem
           key={item.id}
-          total={total}
           item={item}
           currentUser={currentUser}
         />
@@ -29,14 +28,12 @@ function ProjectsMediaItems({ items, total, currentUser }) {
 
 ProjectsMediaItems.propTypes = {
   items: PropTypes.array,
-  total: PropTypes.number,
   currentUser: PropTypes.instanceOf(Map),
 };
 
 ProjectsMediaItems.defaultProps = {
   currentUser: null,
   items: [],
-  total: 0,
 };
 
 export default ProjectsMediaItems;
