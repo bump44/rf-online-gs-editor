@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import { Dropdown, Button, Input, Grid } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -18,9 +19,9 @@ class ProjectItemsFilters extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.changeSortBy = evt => {
+    this.changeSortBy = (evt, sel) => {
       const { onChangeSortBy } = this.props;
-      onChangeSortBy(evt.target.value);
+      onChangeSortBy(sel.value);
     };
 
     this.toggleSortWay = () => {
@@ -33,9 +34,9 @@ class ProjectItemsFilters extends React.PureComponent {
       onChangeWhereSearch(evt.target.value);
     };
 
-    this.changeWhereType = evt => {
+    this.changeWhereType = (evt, sel) => {
       const { onChangeWhereType } = this.props;
-      onChangeWhereType(evt.target.value);
+      onChangeWhereType(sel.value);
     };
   }
 
@@ -43,63 +44,45 @@ class ProjectItemsFilters extends React.PureComponent {
     const { sortBy, sortWay, whereSearch, whereType } = this.props;
 
     return (
-      <div className="field is-grouped is-grouped-multiline">
-        <div className="control">
-          <div className="select is-info is-small">
-            <select value={sortBy} onChange={this.changeSortBy}>
-              <FormattedMessage {...messages.ByIndex}>
-                {message => <option value="nIndex">{message}</option>}
-              </FormattedMessage>
-              <FormattedMessage {...messages.ByCreatedAt}>
-                {message => <option value="createdAt">{message}</option>}
-              </FormattedMessage>
-              <FormattedMessage {...messages.ByUpdatedAt}>
-                {message => <option value="updatedAt">{message}</option>}
-              </FormattedMessage>
-              <FormattedMessage {...messages.ByTitle}>
-                {message => <option value="priorStrName">{message}</option>}
-              </FormattedMessage>
-            </select>
-          </div>
-        </div>
-
-        <div className="control">
-          <button
-            type="button"
-            onClick={this.toggleSortWay}
-            className="button is-small"
-          >
+      <Grid columns="equal">
+        <Grid.Column>
+          <ProjectItemTypeSelect
+            onChange={this.changeWhereType}
+            value={whereType}
+            prependBeforeEmpty
+          />
+        </Grid.Column>
+        <Grid.Column>
+          <Dropdown
+            selection
+            scrolling
+            onChange={this.changeSortBy}
+            value={sortBy}
+            options={sortByOptions}
+          />
+        </Grid.Column>
+        <Grid.Column>
+          <Button onClick={this.toggleSortWay}>
             {sortWay === 1 ? (
               <FormattedMessage {...messages.Asc} />
             ) : (
               <FormattedMessage {...messages.Desc} />
             )}
-          </button>
-        </div>
-
-        <div className="control">
-          <ProjectItemTypeSelect
-            onChange={this.changeWhereType}
-            value={whereType}
-            className="is-small"
-            prependBeforeEmpty
-          />
-        </div>
-
-        <div className="control">
+          </Button>
+        </Grid.Column>
+        <Grid.Column>
           <FormattedMessage {...messages.SearchString}>
             {message => (
-              <input
-                className="input is-small"
-                type="text"
-                placeholder={message}
-                onChange={this.changeWhereSearch}
+              <Input
                 value={whereSearch}
+                onChange={this.changeWhereSearch}
+                icon="search"
+                placeholder={message}
               />
             )}
           </FormattedMessage>
-        </div>
-      </div>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
@@ -116,3 +99,26 @@ ProjectItemsFilters.propTypes = {
 };
 
 export default ProjectItemsFilters;
+
+const sortByOptions = [
+  {
+    key: 'nIndex',
+    value: 'nIndex',
+    text: <FormattedMessage {...messages.ByIndex} />,
+  },
+  {
+    key: 'createdAt',
+    value: 'createdAt',
+    text: <FormattedMessage {...messages.ByCreatedAt} />,
+  },
+  {
+    key: 'updatedAt',
+    value: 'updatedAt',
+    text: <FormattedMessage {...messages.ByUpdatedAt} />,
+  },
+  {
+    key: 'priorStrName',
+    value: 'priorStrName',
+    text: <FormattedMessage {...messages.ByTitle} />,
+  },
+];
