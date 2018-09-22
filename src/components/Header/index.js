@@ -79,7 +79,7 @@ class Header extends React.PureComponent {
                 inverted
                 trigger={
                   <Menu.Item as={NavLink} to="/project/create">
-                    <Icon name="plus" />
+                    <Icon name="plus" fitted />
                   </Menu.Item>
                 }
                 content="Create new project"
