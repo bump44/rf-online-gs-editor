@@ -6,9 +6,9 @@
 
 import map from 'lodash/map';
 import React from 'react';
-import cx from 'classnames';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
+import { Dropdown } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -16,57 +16,43 @@ import messages from './messages';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
 import * as itemTypes from '../../structs/item_types';
 
+const options = map(itemTypes, (type, key) => ({
+  key,
+  value: type,
+  text: <ProjectItemTypeLocaleMessage messageKey={type} upperFirst />,
+}));
+
+options.unshift({
+  key: '___',
+  value: '0',
+  text: <FormattedMessage {...messages.ItemType} />,
+});
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemTypeSelect extends React.PureComponent {
   render() {
-    const {
-      className,
-      onChange,
-      value,
-      prependBeforeEmpty,
-      prependBeforeEmptyValue,
-      prependBeforeEmptyMessageKey,
-    } = this.props;
+    const { onChange, value } = this.props;
 
     return (
-      <select
-        value={value}
-        className={cx('select', className)}
+      <Dropdown
+        selection
+        scrolling
         onChange={onChange}
-      >
-        {prependBeforeEmpty && (
-          <FormattedMessage {...messages[prependBeforeEmptyMessageKey]}>
-            {message => (
-              <option value={prependBeforeEmptyValue}>{message}</option>
-            )}
-          </FormattedMessage>
-        )}
-
-        {map(itemTypes, (type, key) => (
-          <ProjectItemTypeLocaleMessage key={key} messageKey={type} upperFirst>
-            {message => <option value={type}>{message}</option>}
-          </ProjectItemTypeLocaleMessage>
-        ))}
-      </select>
+        value={value}
+        options={options}
+      />
     );
   }
 }
 
 ProjectItemTypeSelect.propTypes = {
-  className: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  prependBeforeEmpty: PropTypes.bool,
-  prependBeforeEmptyValue: PropTypes.string,
-  prependBeforeEmptyMessageKey: PropTypes.oneOf(['All', 'Empty']),
 };
 
 ProjectItemTypeSelect.defaultProps = {
   onChange: undefined,
   value: '',
-  prependBeforeEmpty: false,
-  prependBeforeEmptyValue: '',
-  prependBeforeEmptyMessageKey: 'All',
 };
 
 export default ProjectItemTypeSelect;

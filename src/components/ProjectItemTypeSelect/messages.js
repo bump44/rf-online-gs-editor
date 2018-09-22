@@ -11,12 +11,8 @@ export default defineMessages({
     id: 'app.components.ProjectItemTypeSelect.header',
     defaultMessage: 'This is the ProjectItemTypeSelect component !',
   },
-  Empty: {
-    id: 'app.components.ProjectItemTypeSelect.Empty',
-    defaultMessage: 'Empty',
-  },
-  All: {
-    id: 'app.components.ProjectItemTypeSelect.All',
-    defaultMessage: 'All',
+  ItemType: {
+    id: 'app.components.ProjectItemTypeSelect.ItemType',
+    defaultMessage: 'Item type',
   },
 });
