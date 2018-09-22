@@ -31,7 +31,7 @@ function ProjectItemTypeLocaleMessage({
 
   const fnChild = children
     ? str => children(upperFirst ? _.upperFirst(str) : str)
-    : undefined;
+    : str => (upperFirst ? _.upperFirst(str) : str);
 
   return (
     <React.Fragment>
