@@ -44,6 +44,7 @@ const NotificationStyled = styled.div`
   padding: 10px;
   line-height: 16px;
   font-size: 14px;
+  margin-bottom: 15px;
 
   ${({ type }) =>
     type === 'danger' &&
