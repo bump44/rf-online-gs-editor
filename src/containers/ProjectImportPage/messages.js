@@ -31,6 +31,10 @@ export default defineMessages({
     id: 'app.containers.ProjectImportPage.RewriteItems',
     defaultMessage: 'Rewrite items if they already exist',
   },
+  SkipItems: {
+    id: 'app.containers.ProjectImportPage.RewriteItems',
+    defaultMessage: 'Skip items if they already exist',
+  },
   SelectFile: {
     id: 'app.containers.ProjectImportPage.SelectFile',
     defaultMessage: 'Select file',
