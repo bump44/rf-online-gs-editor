@@ -44,7 +44,7 @@ class ProjectItemsFilters extends React.PureComponent {
     const { sortBy, sortWay, whereSearch, whereType } = this.props;
 
     return (
-      <Grid columns="equal">
+      <Grid verticalAlign="middle" columns="equal" stretched>
         <Grid.Column>
           <ProjectItemTypeSelect
             onChange={this.changeWhereType}
