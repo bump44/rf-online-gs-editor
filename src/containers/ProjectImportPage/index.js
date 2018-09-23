@@ -16,6 +16,15 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import {
+  Grid,
+  Header as PageHeader,
+  Segment,
+  Label,
+  Comment,
+  Progress,
+  Icon,
+} from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -51,6 +60,7 @@ import {
 } from '../App/constants';
 
 import Header from '../../components/Header';
+import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
@@ -162,6 +172,69 @@ export class ProjectImportPage extends React.Component {
       const onClickSelectFilePath = this.onClickSelectFilePath.bind(null, key);
 
       return (
+        <Comment key={key}>
+          <Comment.Content>
+            <Comment.Author>
+              <Label
+                horizontal
+                color={cx({
+                  teal: fileStatus === WAITING,
+                  purple: fileStatus === PROCESSING,
+                  green: fileStatus === FINISHED,
+                  red: fileStatus === ERROR,
+                  yellow: fileStatus === CANCELLED,
+                })}
+              >
+                {fileStatus}
+              </Label>
+              {file.title || file.path}
+            </Comment.Author>
+
+            <Comment.Text>
+              <code>
+                {filePath.substring(
+                  filePath.length > 64 ? filePath.length - 64 : 0,
+                  filePath.length,
+                ) || <FormattedMessage {...messages.nothingSelected} />}
+              </code>
+            </Comment.Text>
+            {fileStatus === ERROR && (
+              <Comment.Text>
+                <Notification type="danger">{fileErrorMessage}</Notification>
+              </Comment.Text>
+            )}
+            {fileStatus === PROCESSING && (
+              <Progress percent={percent} progress success />
+            )}
+            <Comment.Actions>
+              <Comment.Action onClick={onClickSelectFilePath}>
+                <Icon name="hand pointer" />
+                <FormattedMessage {...messages.SelectFile} />
+              </Comment.Action>
+              {filePath && (
+                <Comment.Action onClick={() => fileActions.changeFilePath('')}>
+                  <Icon name="times" />
+                </Comment.Action>
+              )}
+              <Comment.Action
+                onClick={() =>
+                  fileActions.changeImportType(
+                    fileState.get('importType') === REPLACE ? SKIP : REPLACE,
+                  )
+                }
+              >
+                {fileState.get('importType') === REPLACE ? (
+                  <FormattedMessage {...messages.RewriteItems} />
+                ) : (
+                  <FormattedMessage {...messages.SkipItems} />
+                )}
+              </Comment.Action>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
+      );
+
+      return (
         <FileRow key={key}>
           <div className="overlay" />
           <div
@@ -237,6 +310,7 @@ export class ProjectImportPage extends React.Component {
               )}
             </div>
           </div>
+
           <div className="file-type">
             <span
               className={cx('tag', 'is-small', {
@@ -250,7 +324,9 @@ export class ProjectImportPage extends React.Component {
               {fileStatus}
             </span>
           </div>
+
           <div className="file-title">{file.title || file.path}</div>
+
           <div className="is-clearfix" />
           <div className="file-selected">
             {fileStatus === PROCESSING && (
@@ -310,7 +386,7 @@ export class ProjectImportPage extends React.Component {
           projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
-        <div className="container is-fluid p-10">
+        <Container>
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
           )}
@@ -318,50 +394,53 @@ export class ProjectImportPage extends React.Component {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns">
-              <div className="column is-2">
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
                 />
-              </div>
-              <div className="column">
-                <p className="title is-4">
+              </Grid.Column>
+              <Grid.Column largeScreen={13} widescreen={14}>
+                <PageHeader>
                   <FormattedMessage
                     {...messages.header}
                     values={{ title: project.title }}
                   />
-                </p>
+                </PageHeader>
 
-                <div className="columns">
-                  <div className="column">
-                    <p className="title is-6">
+                <Grid columns={2}>
+                  <Grid.Column>
+                    <PageHeader>
                       <FormattedMessage {...messages.ClientFiles} />
-                    </p>
+                    </PageHeader>
 
-                    <div className="card">
-                      {this.renderFiles(CLIENT_FILES)}
-                      <pre>
-                        <span className="has-text-link">
-                          <FormattedMessage {...messages.clientHelpMessage} />
-                        </span>
-                      </pre>
-                    </div>
-                  </div>
-                  <div className="column">
-                    <p className="title is-6">
+                    <Segment>
+                      <Comment.Group>
+                        {this.renderFiles(CLIENT_FILES)}
+                      </Comment.Group>
+                    </Segment>
+                    <Segment>
+                      <FormattedMessage {...messages.clientHelpMessage} />
+                    </Segment>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <PageHeader>
                       <FormattedMessage {...messages.ServerFiles} />
-                    </p>
-
-                    <div className="card">{this.renderFiles(SERVER_FILES)}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    </PageHeader>
+                    <Segment>
+                      <Comment.Group>
+                        {this.renderFiles(SERVER_FILES)}
+                      </Comment.Group>
+                    </Segment>
+                  </Grid.Column>
+                </Grid>
+              </Grid.Column>
+            </Grid>
           )}
-        </div>
+        </Container>
       </div>
     );
   }
