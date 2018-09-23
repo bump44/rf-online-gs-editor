@@ -64,7 +64,6 @@ import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
-import Button from '../../components/Button';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectImportPage extends React.Component {
@@ -204,7 +203,11 @@ export class ProjectImportPage extends React.Component {
               </Comment.Text>
             )}
             {fileStatus === PROCESSING && (
-              <Progress percent={percent} progress success />
+              <Comment.Text>
+                <Progress size="tiny" percent={percent} indicating>
+                  {percent}%
+                </Progress>
+              </Comment.Text>
             )}
             <Comment.Actions>
               <Comment.Action onClick={onClickSelectFilePath}>
@@ -229,125 +232,27 @@ export class ProjectImportPage extends React.Component {
                   <FormattedMessage {...messages.SkipItems} />
                 )}
               </Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-      );
-
-      return (
-        <FileRow key={key}>
-          <div className="overlay" />
-          <div
-            className="file-actions"
-            title={fileStatus === ERROR ? fileErrorMessage : undefined}
-          >
-            <span className="tag is-pulled-right is-small file-status-tag">
-              {fileStatus}
-            </span>
-
-            <div className="import-type">
-              <div className="field">
-                <label className="checkbox">
-                  <input
-                    type="checkbox"
-                    checked={fileState.get('importType') === REPLACE}
-                    onChange={evt =>
-                      fileActions.changeImportType(
-                        evt.target.checked ? REPLACE : SKIP,
-                      )
-                    }
-                    value={1}
-                  />
-                  <FormattedMessage {...messages.RewriteItems} />
-                </label>
-              </div>
-            </div>
-
-            <Button
-              className="is-small is-primary"
-              onClick={onClickSelectFilePath}
-            >
-              <i className="fas fa-hand-pointer" />
-              &nbsp;
-              <FormattedMessage {...messages.SelectFile} />
-            </Button>
-
-            {filePath && (
-              <React.Fragment>
-                &nbsp;
-                <Button
-                  className="is-small"
-                  onClick={() => fileActions.changeFilePath('')}
-                >
-                  <i className="fas fa-times" />
-                </Button>
-              </React.Fragment>
-            )}
-
-            <div className="is-pulled-right">
               {filePath && (
-                <Button
-                  className={cx('is-small', {
-                    'is-primary': fileStatus === WAITING,
-                    'is-warning': fileStatus === PROCESSING,
-                  })}
-                  onClick={onClickStart}
-                >
-                  <i
-                    className={cx('fas', {
-                      'fa-play': fileStatus === WAITING,
-                      'fa-times': fileStatus === PROCESSING,
+                <Comment.Action onClick={onClickStart}>
+                  <Icon
+                    name={cx({
+                      play: [WAITING, FINISHED, CANCELLED, ERROR].includes(
+                        fileStatus,
+                      ),
+                      times: fileStatus === PROCESSING,
                     })}
                   />
-                  &nbsp;
                   {fileStatus !== PROCESSING && (
                     <FormattedMessage {...messages.Start} />
                   )}
                   {fileStatus === PROCESSING && (
                     <FormattedMessage {...messages.Cancel} />
                   )}
-                </Button>
+                </Comment.Action>
               )}
-            </div>
-          </div>
-
-          <div className="file-type">
-            <span
-              className={cx('tag', 'is-small', {
-                'is-info': fileStatus === WAITING,
-                'is-primary': fileStatus === PROCESSING,
-                'is-success': fileStatus === FINISHED,
-                'is-danger': fileStatus === ERROR,
-                'is-warning': fileStatus === CANCELLED,
-              })}
-            >
-              {fileStatus}
-            </span>
-          </div>
-
-          <div className="file-title">{file.title || file.path}</div>
-
-          <div className="is-clearfix" />
-          <div className="file-selected">
-            {fileStatus === PROCESSING && (
-              <React.Fragment>
-                <div className="message">{percent}%</div>
-                <progress
-                  className="progress is-small is-info"
-                  value={percent}
-                  max="100"
-                />
-              </React.Fragment>
-            )}
-
-            <code>
-              {filePath.substring(
-                filePath.length > 64 ? filePath.length - 64 : 0,
-                filePath.length,
-              ) || <FormattedMessage {...messages.nothingSelected} />}
-            </code>
-          </div>
-        </FileRow>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
       );
     });
   }
@@ -417,11 +322,11 @@ export class ProjectImportPage extends React.Component {
                       <FormattedMessage {...messages.ClientFiles} />
                     </PageHeader>
 
-                    <Segment>
+                    <SegmentComments>
                       <Comment.Group>
                         {this.renderFiles(CLIENT_FILES)}
                       </Comment.Group>
-                    </Segment>
+                    </SegmentComments>
                     <Segment>
                       <FormattedMessage {...messages.clientHelpMessage} />
                     </Segment>
@@ -430,11 +335,11 @@ export class ProjectImportPage extends React.Component {
                     <PageHeader>
                       <FormattedMessage {...messages.ServerFiles} />
                     </PageHeader>
-                    <Segment>
+                    <SegmentComments>
                       <Comment.Group>
                         {this.renderFiles(SERVER_FILES)}
                       </Comment.Group>
-                    </Segment>
+                    </SegmentComments>
                   </Grid.Column>
                 </Grid>
               </Grid.Column>
@@ -507,94 +412,32 @@ export default compose(
   withConnect,
 )(ProjectImportPage);
 
-const FileRow = styled.div`
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
+const SegmentComments = styled(Segment)`
+  &.ui.segment {
+    padding: 0;
 
-  .file-actions,
-  .overlay {
-    visible: hidden;
-    background: rgba(0, 0, 0, 0.9);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 3;
-    opacity: 0;
-    transition: all 0.1s ease;
-  }
-
-  .file-actions {
-    background: transparent;
-    color: #fff;
-    padding: 10px;
-    .checkbox:hover {
-      color: #f1f1f1;
-    }
-    .field {
-      margin-bottom: 5px;
-    }
-    .file-status-tag {
-      font-size: 11px;
-      line-height: 11px;
-      height: auto;
-    }
-  }
-
-  &:hover {
-    background: #ddd;
-    .overlay {
-      visible: normal;
-      opacity: 1;
-    }
-    .file-actions {
-      visible: normal;
-      opacity: 1;
-    }
-  }
-
-  .file-type,
-  .file-title,
-  .file-selected {
-    float: left;
-    margin-right: 5px;
-  }
-
-  .file-title {
-    position: relative;
-    top: 2px;
-  }
-
-  .file-selected {
-    margin-right: 0;
-    float: none;
-    margin-top: 5px;
-    position: relative;
-    code {
-      font-size: 11px;
-      display: block;
+    .comments {
+      max-width: 100%;
     }
 
-    .progress {
-      margin: 0;
-      position: absolute;
-      min-height: 21px;
-      border-radius: 0;
-      left: 0;
-      top: 0;
-      opacity: 0.9;
-      z-index: 1;
-    }
+    .comment {
+      padding: 9px;
+      &:hover {
+        background: #f9f9f9;
+      }
 
-    .message {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      color: black;
-      z-index: 2;
-      background: transparent;
+      .content {
+        .text {
+          code {
+            color: #e03997;
+            font-size: 12px;
+            background: #f3f3f3;
+            display: block;
+            padding: 3px;
+            line-height: 12px;
+          }
+        }
+      }
     }
   }
 `;
