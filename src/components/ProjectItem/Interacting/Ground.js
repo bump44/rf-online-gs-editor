@@ -25,7 +25,7 @@ class ProjectItemInteractingGround extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, className } = this.props;
 
     const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bGround']);
 
@@ -46,6 +46,7 @@ class ProjectItemInteractingGround extends React.PureComponent {
             value={1}
             checked={!!value}
             onChange={this.changeValue}
+            className={className}
           />
         )}
       </FormattedMessage>
@@ -57,6 +58,11 @@ ProjectItemInteractingGround.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingGround.defaultProps = {
+  className: '',
 };
 
 export default ProjectItemInteractingGround;
