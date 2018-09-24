@@ -116,76 +116,88 @@ export default ProjectItemInteractingItemGrade;
 /* eslint-disable indent */
 const Dropdown = styled(DropdownUI)`
   &.ui.dropdown {
-    >.text {
-      &.unknown {
-        border-color: #ce0830;
-        background-color: #ce0830;
-      }
+    padding: 0 7px;
+    line-height: 14px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 3px;
 
-      ${({ value }) =>
-        value === 1 &&
-        `
-      border-color: #e4e436;
-      background: #e4e436;
+    &:hover {
       color: #000;
-      `};
-
-      ${({ value }) =>
-        value === 2 &&
-        `
-      border-color: #e436a6;
-      background: #e436a6;
-      color: #fff;
-      `}
-
-      ${({ value }) =>
-        value === 3 &&
-        `
-      border-color: #e47636;
-      background: #e47636;
-      color: #fff;
-      `}
-
-      ${({ value }) =>
-        value === 4 &&
-        `
-      border-color: #367ce4;
-      background: #367ce4;
-      color: #fff;
-      `}
-
-      ${({ value }) =>
-        value === 5 &&
-        `
-      border-color: #ff89d5;
-      background: #ff89d5;
-      color: #000;
-      `}
-
-      ${({ value }) =>
-        value === 6 &&
-        `
-      border-color: #ff2a2a;
-      background: #ff2a2a;
-      color: #fff;
-      `}
-
-      ${({ value }) =>
-        value === 7 &&
-        `
-      border-color: #3acc74;
-      background: #3acc74;
-      color: #000;
-      `}
-
-      ${({ value }) =>
-        value === 8 &&
-        `
-      border-color: #a4eac0;
-      background: #a4eac0;
-      color: #000;
-      `}
     }
+
+    &.unknown {
+      border-color: #ce0830;
+      background-color: #ce0830;
+      color: #fff;
+    }
+
+    ${({ value }) =>
+      value === 1 &&
+      `
+    border-color: #e4e436;
+    background: #e4e436;
+    color: #000;
+    `};
+
+    ${({ value }) =>
+      value === 2 &&
+      `
+    border-color: #e436a6;
+    background: #e436a6;
+    color: #fff;
+    `}
+
+    ${({ value }) =>
+      value === 3 &&
+      `
+    border-color: #e47636;
+    background: #e47636;
+    color: #fff;
+    `}
+
+    ${({ value }) =>
+      value === 4 &&
+      `
+    border-color: #367ce4;
+    background: #367ce4;
+    color: #fff;
+    `}
+
+    ${({ value }) =>
+      value === 5 &&
+      `
+    border-color: #ff89d5;
+    background: #ff89d5;
+    color: #000;
+    `}
+
+    ${({ value }) =>
+      value === 6 &&
+      `
+    border-color: #ff2a2a;
+    background: #ff2a2a;
+    color: #fff;
+    `}
+
+    ${({ value }) =>
+      value === 7 &&
+      `
+    border-color: #3acc74;
+    background: #3acc74;
+    color: #000;
+    `}
+
+    ${({ value }) =>
+      value === 8 &&
+      `
+    border-color: #a4eac0;
+    background: #a4eac0;
+    color: #000;
+    `}
 
     .menu>.item {
       &.selected {
