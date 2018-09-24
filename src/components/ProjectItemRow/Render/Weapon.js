@@ -155,7 +155,7 @@ class ProjectItemRowRenderWeapon extends React.PureComponent {
             <Grid.Column width={10}>
               <Popup
                 trigger={
-                  <div className="pt-5 pb-10">
+                  <div>
                     <ProjectItemInteractingWPType
                       item={item}
                       itemNextValues={itemNextValues}
