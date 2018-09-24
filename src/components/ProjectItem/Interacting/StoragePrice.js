@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt, concat } from 'lodash';
 import { Map, List } from 'immutable';
 import styled from 'styled-components';
-import { Input, Button, Popup } from 'semantic-ui-react';
+import { Input, Button, Popup, Label } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -206,7 +206,11 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
 
   render() {
     const { size, className } = this.props;
-    const value = this.getStoragePrice().toLocaleString();
+    const moneyType = this.getMoneyType();
+    const moneyValue = this.getMoneyValue(moneyType);
+
+    const value = this.getStoragePrice();
+    const localeValue = value.toLocaleString();
 
     return (
       <Popup
@@ -214,12 +218,24 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
         trigger={
           <Input
             fluid
+            error={value > moneyValue}
             size={size}
             className={className}
-            value={value}
+            value={localeValue}
             onChange={this.changeValue}
-            label={`${this.renderPercentNumber(this.getCurrentPercent())}%`}
-          />
+            labelPosition="right"
+            type="text"
+          >
+            <input />
+            <Label
+              basic
+              color={
+                this.getCurrentPercent() < 50 || value <= 5 ? 'green' : 'yellow'
+              }
+            >
+              {this.renderPercentNumber(this.getCurrentPercent())}%
+            </Label>
+          </Input>
         }
         flowing
         hoverable
