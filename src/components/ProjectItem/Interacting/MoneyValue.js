@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+// import { FormattedMessage } from 'react-intl';
+// import messages from '../messages';
 
 import StdPrice from './StdPrice';
 import StdPoint from './StdPoint';
@@ -74,20 +74,14 @@ class ProjectItemInteractingMoneyValue extends React.PureComponent {
     }
 
     return (
-      <div className="field has-addons">
-        <p className="control">
-          <span className="button is-small" title={type.get('title')}>
-            <FormattedMessage {...messages.Val} />:
-          </span>
-        </p>
-        <InteractingComponent
-          item={item}
-          itemNextValues={itemNextValues}
-          types={itemNextValues}
-          type={type}
-          onChangeValue={onChangeCallbacks[type.get('fieldName')]}
-        />
-      </div>
+      <InteractingComponent
+        title={type.get('title')}
+        item={item}
+        itemNextValues={itemNextValues}
+        types={itemNextValues}
+        type={type}
+        onChangeValue={onChangeCallbacks[type.get('fieldName')]}
+      />
     );
   }
 }
