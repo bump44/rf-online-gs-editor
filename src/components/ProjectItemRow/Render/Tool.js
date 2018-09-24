@@ -7,10 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { Grid } from 'semantic-ui-react';
 
 import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
 import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
@@ -32,55 +29,57 @@ class ProjectItemRowRenderTool extends React.PureComponent {
     const { item, itemNextValues, actions, moneyTypes } = this.props;
 
     return (
-      <div className="columns">
-        <div className="column">
+      <Grid columns={3}>
+        <Grid.Column largeScreen={4} widescreen={5}>
           <ProjectItemInteractingName
             item={item}
             itemNextValues={itemNextValues}
             onChangeValue={actions.changeName}
+            className="pb-10"
           />
-          <div className="field is-grouped">
-            <div className="control">
+          <Grid columns="equal">
+            <Grid.Column>
               <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeExchange}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column>
               <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeSell}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column only="widescreen">
               <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeGround}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column only="widescreen">
               <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePossible}
               />
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
 
-        <div className="column">
+        <Grid.Column largeScreen={6} widescreen={7}>
           <ProjectItemInteractingMoneyType
             item={item}
             itemNextValues={itemNextValues}
             onChangeValue={actions.changeMoney}
             types={moneyTypes}
+            className="pt-5 pb-10"
           />
 
-          <div className="columns">
-            <div className="column">
+          <Grid columns={2}>
+            <Grid.Column>
               <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
@@ -91,58 +90,53 @@ class ProjectItemRowRenderTool extends React.PureComponent {
                 onChangeKillPoint={actions.changeKillPoint}
                 types={moneyTypes}
               />
-            </div>
-            <div className="column is-hidden-touch is-hidden-desktop-only is-hidden-widescreen-only">
+            </Grid.Column>
+            <Grid.Column>
               <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePrice}
                 types={moneyTypes}
               />
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
 
-        <div className="column">
-          <div className="field is-grouped is-grouped-multiline">
-            <div className="control mb-0">
+        <Grid.Column largeScreen={6} widescreen={4}>
+          <Grid columns={2}>
+            <Grid.Column>
               <ProjectItemInteractingCivilBM
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeCivilBM}
               />
-            </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilBF
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilBF}
-              />
-            </div>
-            <div className="control mb-0">
               <ProjectItemInteractingCivilCM
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeCivilCM}
               />
-            </div>
-            <div className="control mb-0">
-              <ProjectItemInteractingCivilCF
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilCF}
-              />
-            </div>
-            <div className="control mb-0">
               <ProjectItemInteractingCivilA
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeCivilA}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid.Column>
+            <Grid.Column>
+              <ProjectItemInteractingCivilBF
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilBF}
+              />
+
+              <ProjectItemInteractingCivilCF
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeCivilCF}
+              />
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
