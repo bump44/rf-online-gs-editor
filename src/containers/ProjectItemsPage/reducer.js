@@ -35,7 +35,7 @@ export const initialState = fromJS({
     skip: 0,
     sortBy: 'nIndex',
     sortWay: 1,
-    where: { search: '', type: '0' },
+    where: { search: '', type: '' },
   },
   result: {
     items: [],
