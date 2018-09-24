@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Grid, Header as PageHeader } from 'semantic-ui-react';
 
 import {
   makeSelectCurrentUser,
@@ -34,6 +35,11 @@ import messages from './messages';
 import { changeId } from './actions';
 
 import Header from '../../components/Header';
+import Container from '../../components/Container';
+import FullheightColumn, {
+  FullheightThis,
+  FullheightAutoSizer,
+} from '../../components/FullheightColumn';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
@@ -142,7 +148,7 @@ export class ProjectItemPage extends React.PureComponent {
           isLoggedIn={isLoggedIn}
         />
 
-        <div className="container is-fluid p-10">
+        <Container>
           {isError && (
             <Notification className="is-danger">{errorMessage}</Notification>
           )}
@@ -150,17 +156,17 @@ export class ProjectItemPage extends React.PureComponent {
           {isLoading && <LoadingIndicator />}
 
           {isLoaded && (
-            <div className="columns is-fullheight calc-50px">
-              <div className="column is-2">
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
                 <ProjectMenu
                   isLoggedIn={isLoggedIn}
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
                 />
-              </div>
-              <div className="column" style={styles.column}>
-                <p className="title is-4">
+              </Grid.Column>
+              <FullheightColumn largeScreen={13} widescreen={14}>
+                <PageHeader>
                   <FormattedMessage
                     {...messages.header}
                     values={{
@@ -171,25 +177,33 @@ export class ProjectItemPage extends React.PureComponent {
                       itemName: this.getName(),
                     }}
                   />
-                </p>
-
-                <ProjectItem
-                  item={currentProjectItem}
-                  itemNextValues={projectsNextValues.getIn(
-                    [currentProject.get('id'), currentProjectItem.get('id')],
-                    Map({}),
-                  )}
-                  localSettings={localSettings}
-                  moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
-                  itemGrades={currentProject.getIn(['itemGrades', 'items'])}
-                  weaponTypes={currentProject.getIn(['weaponTypes', 'items'])}
-                  actions={fnProjectItemsActions}
-                  style={styles.card}
-                />
-              </div>
-            </div>
+                </PageHeader>
+                <FullheightThis>
+                  <FullheightAutoSizer>
+                    <ProjectItem
+                      item={currentProjectItem}
+                      itemNextValues={projectsNextValues.getIn(
+                        [
+                          currentProject.get('id'),
+                          currentProjectItem.get('id'),
+                        ],
+                        Map({}),
+                      )}
+                      localSettings={localSettings}
+                      moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
+                      itemGrades={currentProject.getIn(['itemGrades', 'items'])}
+                      weaponTypes={currentProject.getIn([
+                        'weaponTypes',
+                        'items',
+                      ])}
+                      actions={fnProjectItemsActions}
+                    />
+                  </FullheightAutoSizer>
+                </FullheightThis>
+              </FullheightColumn>
+            </Grid>
           )}
-        </div>
+        </Container>
       </div>
     );
   }
@@ -229,16 +243,3 @@ export default compose(
   withSaga,
   withConnect,
 )(ProjectItemPage);
-
-const styles = {
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  card: {
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    height: '100vh',
-    paddingRight: 15,
-  },
-};
