@@ -35,4 +35,20 @@ export default defineMessages({
     id: 'app.components.Header.signUp',
     defaultMessage: 'Sign-up',
   },
+  Options: {
+    id: 'app.components.Header.Options',
+    defaultMessage: 'Options',
+  },
+  Language: {
+    id: 'app.components.Header.Language',
+    defaultMessage: 'Language',
+  },
+  Customs: {
+    id: 'app.components.Header.Customs',
+    defaultMessage: 'Customs',
+  },
+  LocalSettings: {
+    id: 'app.components.Header.LocalSettings',
+    defaultMessage: 'Local Settings',
+  },
 });

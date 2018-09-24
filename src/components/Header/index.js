@@ -8,11 +8,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
-import { Icon, Popup, Button } from 'semantic-ui-react';
+import { Icon, Popup, Button, Dropdown, Flag } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+
+import i18n from '../../i18n';
 import packagejson from '../../../package.json';
+
 import Menu, {
   BrandLink,
   BrandContent,
@@ -20,6 +23,8 @@ import Menu, {
   UserUserName,
   UserLink,
 } from './styles';
+
+const localeFlags = { en: 'us' };
 
 /* eslint-disable react/prefer-stateless-function */
 class Header extends React.PureComponent {
@@ -59,6 +64,34 @@ class Header extends React.PureComponent {
           </Menu.Item>
         )}
         <Menu.Menu position="right">
+          <FormattedMessage {...messages.Options}>
+            {message => (
+              <Dropdown text={message} pointing item position="left">
+                <Dropdown.Menu>
+                  <Dropdown.Header>
+                    <FormattedMessage {...messages.Customs} />
+                  </Dropdown.Header>
+                  <React.Fragment>
+                    <Dropdown.Item as={NavLink} to="/">
+                      <Icon name="cog" />
+                      <FormattedMessage {...messages.LocalSettings} />
+                    </Dropdown.Item>
+                  </React.Fragment>
+                  <Dropdown.Divider />
+                  <Dropdown.Header>
+                    <FormattedMessage {...messages.Language} />
+                  </Dropdown.Header>
+                  {i18n.appLocales.map(locale => (
+                    <Dropdown.Item key={locale}>
+                      <Flag name={localeFlags[locale] || locale} />
+                      {locale}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </FormattedMessage>
+
           {isLoggedIn && (
             <React.Fragment>
               <Popup
