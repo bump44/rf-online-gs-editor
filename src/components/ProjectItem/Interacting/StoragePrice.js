@@ -205,8 +205,9 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
   }
 
   render() {
-    const { size, className } = this.props;
+    const { size, className, label } = this.props;
     const moneyType = this.getMoneyType();
+    const valuation = moneyType ? moneyType.get('valuation') || 1 : 1;
     const moneyValue = this.getMoneyValue(moneyType);
 
     const value = this.getStoragePrice();
@@ -218,7 +219,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
         trigger={
           <Input
             fluid
-            error={value > moneyValue}
+            error={value > moneyValue * valuation}
             size={size}
             className={className}
             value={localeValue}
@@ -226,6 +227,7 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
             labelPosition="right"
             type="text"
           >
+            {label && <Label>{label}</Label>}
             <input />
             <Label
               basic
@@ -253,11 +255,17 @@ ProjectItemInteractingStoragePrice.propTypes = {
   types: PropTypes.instanceOf(List).isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingStoragePrice.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingStoragePrice;
