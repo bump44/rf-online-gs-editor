@@ -6,10 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
-import { Grid, Label, Icon } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
@@ -17,9 +15,9 @@ import messages from './messages';
 
 import Row from './styles';
 import Code from '../Code';
-import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
 import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
 import renderResolvers from './renderResolvers';
+import ProjectItemLabelDetail from '../ProjectItemLabelDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {
@@ -32,53 +30,13 @@ class ProjectItemRow extends React.PureComponent {
 
   renderTagIndexWithNextState() {
     const { item, itemNextValues } = this.props;
-    const isSaved = itemNextValues.getIn(['isSaved'], true);
-    const isSaving = itemNextValues.getIn(['isSaving'], false);
-    const isError = itemNextValues.getIn(['isError'], false);
-    const errorMessage = itemNextValues.getIn(['errorMessage'], '');
-    const nIndex = itemNextValues.getIn(
-      ['nextValue', 'nIndex'],
-      item.get('nIndex'),
-    );
-
-    const isShowStatus =
-      (!isSaving && !isSaved && !isError) || isSaving || isError;
 
     return (
-      <Label
-        title={isError ? errorMessage : undefined}
-        as={Link}
-        to={`/project/${item.getIn(['project', 'id'])}/items/${item.get('id')}`}
-        color={cx({
-          teal:
-            !isError &&
-            !(itemNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
-            !isSaving &&
-            !(isShowStatus && !isSaving && !isSaved && !isError),
-          red: isError,
-          green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
-          yellow: isSaving,
-          pink: isShowStatus && !isSaving && !isSaved && !isError,
-        })}
-        image
-      >
-        <Icon
-          loading={isShowStatus && isSaving}
-          name={cx({
-            check: !isShowStatus,
-            pencil: isShowStatus && !isSaving && !isSaved && !isError,
-            times: isShowStatus && isError,
-            spinner: isShowStatus && isSaving,
-          })}
-        />
-        {nIndex}
-        <Label.Detail>
-          <ProjectItemTypeLocaleMessage
-            messageKey={item.get('type')}
-            tagName="small"
-          />
-        </Label.Detail>
-      </Label>
+      <ProjectItemLabelDetail
+        item={item}
+        itemNextValues={itemNextValues}
+        link
+      />
     );
   }
 
