@@ -8,8 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
-import { Dropdown } from 'semantic-ui-react';
-// import styled from 'styled-components';
+import { Dropdown as DropdownUI } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -105,3 +105,20 @@ ProjectItemInteractingWPType.defaultProps = {
 };
 
 export default ProjectItemInteractingWPType;
+
+const Dropdown = styled(DropdownUI)`
+  &.ui.dropdown {
+    padding: 0 7px;
+    line-height: 14px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 3px;
+
+    &:hover {
+      color: #000;
+    }
+  }
+`;
