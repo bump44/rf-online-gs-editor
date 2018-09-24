@@ -8,8 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt, concat } from 'lodash';
 import { Map, List } from 'immutable';
-import cx from 'classnames';
 import styled from 'styled-components';
+import { Input, Button, Popup } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -21,14 +21,11 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { isUpDropdown: false };
-
     this.getMoneyType = this.getMoneyType.bind(this);
     this.getMoneyValue = this.getMoneyValue.bind(this);
     this.getStoragePrice = this.getStoragePrice.bind(this);
     this.getCurrentPercent = this.getCurrentPercent.bind(this);
-    this.renderDropdownMenu = this.renderDropdownMenu.bind(this);
-    this.onMouseEnterDropdown = this.onMouseEnterDropdown.bind(this);
+    this.renderPopup = this.renderPopup.bind(this);
     this.calcValueByPercent = this.calcValueByPercent.bind(this);
 
     this.changeValue = evt => {
@@ -70,13 +67,6 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     const storagePriceNext = storagePrice / increaseValue;
 
     return (storagePriceNext / moneyValue) * 100;
-  }
-
-  onMouseEnterDropdown(evt) {
-    const y = evt.clientY;
-    const inner = window.innerHeight;
-    const ymax = y + 150;
-    this.setState({ isUpDropdown: ymax > inner });
   }
 
   getStoragePrice() {
@@ -157,17 +147,21 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
     return percent.toString().substring(0, countZeroDigits + 4);
   }
 
-  renderDropdownMenu() {
+  renderPopup() {
     const type = this.getMoneyType();
 
     if (!type) {
-      return null;
+      return (
+        <FormattedMessage {...messages.NotAvailableStoragePriceByPercents} />
+      );
     }
 
     const value = this.getMoneyValue(type);
 
     if (value <= 0) {
-      return null;
+      return (
+        <FormattedMessage {...messages.NotAvailableStoragePriceByPercents} />
+      );
     }
 
     const currPercent = this.getCurrentPercent();
@@ -183,64 +177,55 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
       percents.length <= 0 ||
       (percents.length === 1 && !PERCENTS.includes(percents[0]))
     ) {
-      return null;
+      return (
+        <FormattedMessage {...messages.NotAvailableStoragePriceByPercents} />
+      );
     }
 
     return (
-      <div className="dropdown-menu">
-        <div className="dropdown-content">
-          <div className="dropdown-item">
-            <DropdownPreMessage>
-              <FormattedMessage {...messages.CalcStoragePriceMessage} />:
-            </DropdownPreMessage>
-            {percents.map(percent => (
-              <DropdownItem
-                key={percent}
-                onClick={this.changeValueAtPercent}
-                data-percent={percent}
-                isActive={percent === currPercent}
-                title={percent}
-              >
-                {this.renderPercentNumber(percent)}%
-              </DropdownItem>
-            ))}
-          </div>
-        </div>
-      </div>
+      <React.Fragment>
+        <PercentPreMessage>
+          <FormattedMessage {...messages.CalcStoragePriceMessage} />:
+        </PercentPreMessage>
+
+        {percents.map(percent => (
+          <Button
+            key={percent}
+            onClick={this.changeValueAtPercent}
+            data-percent={percent}
+            title={percent}
+            size="mini"
+            color={percent === currPercent ? 'green' : undefined}
+          >
+            {this.renderPercentNumber(percent)}%
+          </Button>
+        ))}
+      </React.Fragment>
     );
   }
 
   render() {
-    const { isUpDropdown } = this.state;
+    const { size, className } = this.props;
     const value = this.getStoragePrice().toLocaleString();
 
     return (
-      <div className="field has-addons">
-        <div className="control">
-          <div
-            className={cx('dropdown is-hoverable', { 'is-up': isUpDropdown })}
-            onMouseEnter={this.onMouseEnterDropdown}
-          >
-            <div className="dropdown-trigger">
-              <button className="button is-small" type="button">
-                <span>
-                  <FormattedMessage {...messages.StoragePrice} />:
-                </span>
-                <span className="icon is-small">
-                  <i className="fas fa-angle-down" aria-hidden="true" />
-                </span>
-              </button>
-            </div>
-            {this.renderDropdownMenu()}
-          </div>
-        </div>
-        <input
-          className="input is-small"
-          type="text"
-          value={value}
-          onChange={this.changeValue}
-        />
-      </div>
+      <Popup
+        on="click"
+        trigger={
+          <Input
+            fluid
+            size={size}
+            className={className}
+            value={value}
+            onChange={this.changeValue}
+            label={`${this.renderPercentNumber(this.getCurrentPercent())}%`}
+          />
+        }
+        flowing
+        hoverable
+      >
+        {this.renderPopup()}
+      </Popup>
     );
   }
 }
@@ -250,34 +235,20 @@ ProjectItemInteractingStoragePrice.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   types: PropTypes.instanceOf(List).isRequired,
+  size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingStoragePrice.defaultProps = {
+  size: 'mini',
+  className: '',
 };
 
 export default ProjectItemInteractingStoragePrice;
 
-const DropdownItem = styled.button.attrs({
-  className: 'button is-small',
-})`
-  margin-right: 3px;
-  margin-bottom: 3px;
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    background-color: #23d160;
-    border-color: transparent;
-    color: #fff;
-    &:active,
-    &:focus,
-    &:hover {
-      background-color: #20bc56;
-      border-color: transparent;
-      color: #fff;
-    }
-  `};
-`;
-
-const DropdownPreMessage = styled.pre`
+const PercentPreMessage = styled.pre`
   margin-bottom: 10px;
+  margin-top: 0;
   font-weight: bold;
   padding: 0;
   background: transparent;
