@@ -23,9 +23,37 @@ export default defineMessages({
     id: 'app.components.ProjectItemRow.Level',
     defaultMessage: 'Level',
   },
+  UpLevelLim: {
+    id: 'app.components.ProjectItemRow.UpLevelLim',
+    defaultMessage: 'Up Level Limit',
+  },
+  Defence: {
+    id: 'app.components.ProjectItemRow.Defence',
+    defaultMessage: 'Defence',
+  },
+  DefenceGap: {
+    id: 'app.components.ProjectItemRow.DefenceGap',
+    defaultMessage: 'Defence Gap',
+  },
+  DefenceFacingPresent: {
+    id: 'app.components.ProjectItemRow.DefenceFacingPresent',
+    defaultMessage: 'Defence Facing Game Present',
+  },
+  DefenceFacing: {
+    id: 'app.components.ProjectItemRow.DefenceFacingPresent',
+    defaultMessage: 'Defence Facing',
+  },
   Type: {
     id: 'app.components.ProjectItemRow.Type',
     defaultMessage: 'Type',
+  },
+  WPType: {
+    id: 'app.components.ProjectItemRow.WPType',
+    defaultMessage: 'Weapon Type',
+  },
+  WPSubType: {
+    id: 'app.components.ProjectItemRow.WPSubType',
+    defaultMessage: 'Weapon Sub Type',
   },
   DefenceGapFacingFields: {
     id: 'app.components.ProjectItemRow.DefenceGapFacingFields',

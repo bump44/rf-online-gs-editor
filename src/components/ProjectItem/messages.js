@@ -83,4 +83,9 @@ export default defineMessages({
     id: 'app.components.ProjectItem.CivilA',
     defaultMessage: 'Accretia',
   },
+  NotAvailableStoragePriceByPercents: {
+    id: 'app.components.ProjectItem.NotAvailableStoragePriceByPercents',
+    defaultMessage:
+      'Change the price base of the item to display the available methods of calculating the value of the sale',
+  },
 });

@@ -15,4 +15,12 @@ export default defineMessages({
     id: 'app.components.ProjectItemTypeSelect.ItemType',
     defaultMessage: 'Item type',
   },
+  All: {
+    id: 'app.components.ProjectItemTypeSelect.All',
+    defaultMessage: 'All',
+  },
+  AllItemTypes: {
+    id: 'app.components.ProjectItemTypeSelect.AllItemTypes',
+    defaultMessage: 'All types',
+  },
 });
