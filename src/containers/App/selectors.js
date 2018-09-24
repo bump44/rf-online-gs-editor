@@ -36,6 +36,50 @@ const makeSelectProjectsImportsIsProcessing = () =>
       ),
   );
 
+const makeSelectProjectImportsProcessingData = projectId =>
+  createSelector(selectGlobal, globalState => {
+    const isProcessing = globalState
+      .getIn(['projectsImports', projectId], Map({}))
+      .some(fileDataSet => fileDataSet.get('status') === PROCESSING);
+
+    let countTotal = 0;
+    let countCompleted = 0;
+    let countProcesses = 0;
+
+    if (!isProcessing) {
+      return {
+        isProcessing,
+        countTotal,
+        countCompleted,
+        countProcesses,
+        percent: 0,
+      };
+    }
+
+    globalState.getIn(['projectsImports', projectId]).forEach(fileDataSet => {
+      if ([PROCESSING, FINISHED].includes(fileDataSet.get('status'))) {
+        countTotal += fileDataSet.get('countTotal', 0);
+        countCompleted += fileDataSet.get('countCompleted', 0);
+      }
+
+      if (fileDataSet.get('status') === PROCESSING) {
+        countProcesses += 1;
+      }
+    });
+
+    return {
+      isProcessing,
+      countTotal,
+      countCompleted,
+      countProcesses,
+      percent: (() => {
+        if (countTotal <= 0) return 0;
+        if (countCompleted >= countTotal) return 100;
+        return (countCompleted / countTotal) * 100;
+      })(),
+    };
+  });
+
 const makeSelectProjectsImportsProcessingData = () =>
   createSelector(selectGlobal, globalState => {
     const isProcessing = globalState
@@ -98,6 +142,7 @@ export {
   makeSelectProjectsImports,
   makeSelectProjectsImportsIsProcessing,
   makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
 };
