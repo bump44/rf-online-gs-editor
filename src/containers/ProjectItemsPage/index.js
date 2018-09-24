@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Grid, Header as PageHeader, Segment, Label } from 'semantic-ui-react';
+import { Grid, Header as PageHeader, Label } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -51,6 +51,9 @@ import {
 
 import Header from '../../components/Header';
 import Container from '../../components/Container';
+import FullheightColumn, {
+  FullheightThis,
+} from '../../components/FullheightColumn';
 import ProjectMenu from '../../components/ProjectMenu';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -208,7 +211,7 @@ export class ProjectItemsPage extends React.PureComponent {
                   currentUser={currentUser}
                 />
               </Grid.Column>
-              <Grid.Column largeScreen={13} widescreen={14}>
+              <FullheightColumn largeScreen={13} widescreen={14}>
                 <PageHeader>
                   <FormattedMessage
                     {...messages.header}
@@ -233,7 +236,7 @@ export class ProjectItemsPage extends React.PureComponent {
                   onChangeWhereType={fnChangeFilterWhereType}
                 />
 
-                <div className="card" style={styles.card}>
+                <FullheightThis>
                   <InfiniteAutoSizeList
                     isRowLoaded={this.isRowLoaded}
                     loadMoreRows={this.loadMoreRows}
@@ -245,8 +248,8 @@ export class ProjectItemsPage extends React.PureComponent {
                       return this.infiniteAutoSizeList;
                     }}
                   />
-                </div>
-              </Grid.Column>
+                </FullheightThis>
+              </FullheightColumn>
             </Grid>
           )}
         </Container>
@@ -303,15 +306,3 @@ export default compose(
   withSaga,
   withConnect,
 )(ProjectItemsPage);
-
-const styles = {
-  column: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  card: {
-    display: 'flex',
-    flex: '1 100%',
-    flexDirection: 'row',
-  },
-};
