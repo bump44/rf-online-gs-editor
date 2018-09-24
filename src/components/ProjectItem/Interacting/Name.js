@@ -25,7 +25,7 @@ class ProjectItemInteractingName extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, size, className } = this.props;
+    const { item, itemNextValues, size, className, label } = this.props;
 
     const nextValue = itemNextValues.getIn([
       'nextValue',
@@ -56,6 +56,7 @@ class ProjectItemInteractingName extends React.PureComponent {
         value={strName}
         onChange={this.changeValue}
         className={className}
+        label={label}
       />
     );
   }
@@ -67,11 +68,17 @@ ProjectItemInteractingName.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingName.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingName;
