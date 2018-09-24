@@ -38,7 +38,7 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { projectsItemsBindActions } from '../App/actions';
+import { projectsItemsBindActions, logoutCurrentUser } from '../App/actions';
 import {
   changeId,
   changeFilterTakeSkip,
@@ -171,6 +171,7 @@ export class ProjectItemsPage extends React.PureComponent {
       fnChangeFilterSortWay,
       fnChangeFilterWhereSearch,
       fnChangeFilterWhereType,
+      fnLogoutCurrentUser,
     } = this.props;
 
     const {
@@ -194,6 +195,7 @@ export class ProjectItemsPage extends React.PureComponent {
           currentUser={currentUser}
           isLoggedIn={isLoggedIn}
           projectsImportsProcessingData={projectsImportsProcessingData}
+          onClickLogout={fnLogoutCurrentUser}
         />
 
         <Container>
@@ -280,6 +282,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
     fnChangeId: id => dispatch(changeId(id)),
     fnResetResult: () => dispatch(resetResult()),
     fnChangeFilterTakeSkip: (take, skip) =>

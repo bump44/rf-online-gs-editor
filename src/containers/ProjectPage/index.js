@@ -21,13 +21,18 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
+import {
+  makeSelectIsLoggedIn,
+  makeSelectCurrentUser,
+  makeSelectProjectsImportsProcessingData,
+} from '../App/selectors';
 import Header from '../../components/Header';
 import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 import ProjectsMediaItems from '../../components/ProjectsMediaItems';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
+import { logoutCurrentUser } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectPage extends React.PureComponent {
@@ -52,7 +57,15 @@ export class ProjectPage extends React.PureComponent {
   }
 
   render() {
-    const { isLoggedIn, currentUser, currentProject, projectPage } = this.props;
+    const {
+      isLoggedIn,
+      currentUser,
+      currentProject,
+      projectPage,
+      projectsImportsProcessingData,
+      fnLogoutCurrentUser,
+    } = this.props;
+
     const {
       project,
       isLoaded,
@@ -71,8 +84,10 @@ export class ProjectPage extends React.PureComponent {
 
         <Header
           isLoggedIn={isLoggedIn}
+          onClickLogout={fnLogoutCurrentUser}
           currentUser={currentUser}
           currentProject={currentProject}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <Container>
@@ -130,11 +145,13 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: makeSelectIsLoggedIn(),
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
     fnChangeId: id => dispatch(changeId(id)),
   };
 }
