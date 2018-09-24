@@ -53,7 +53,8 @@ class ProjectItemRow extends React.PureComponent {
           teal:
             !isError &&
             !(itemNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
-            !isSaving,
+            !isSaving &&
+            !(isShowStatus && !isSaving && !isSaved && !isError),
           red: isError,
           green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
           yellow: isSaving,
