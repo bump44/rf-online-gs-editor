@@ -9,12 +9,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
-import { Menu, Label } from 'semantic-ui-react';
+import { Menu, Label, Progress } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function ProjectMenuIsOwnerItems({ projectId, project }) {
+function ProjectMenuIsOwnerItems({
+  projectId,
+  project,
+  projectImportsProcessingData,
+}) {
+  const projectImportsProcessingDataIs =
+    projectImportsProcessingData && projectImportsProcessingData.isProcessing;
+
   return (
     <React.Fragment>
       <Menu.Item header>
@@ -24,6 +31,12 @@ function ProjectMenuIsOwnerItems({ projectId, project }) {
         <FormattedMessage {...messages.Items} />
         <Label circular color="green">
           {project.getIn(['items', 'total'], 0)}
+        </Label>
+      </Menu.Item>
+      <Menu.Item as={NavLink} to={`/project/${projectId}/stores`} exact>
+        <FormattedMessage {...messages.Stores} />
+        <Label circular color="green">
+          {project.getIn(['stores', 'total'], 0)}
         </Label>
       </Menu.Item>
       <Menu.Item header>
@@ -41,6 +54,22 @@ function ProjectMenuIsOwnerItems({ projectId, project }) {
       <Menu.Item as={NavLink} to={`/project/${projectId}/import`} exact>
         <FormattedMessage {...messages.ImportFiles} />
       </Menu.Item>
+
+      {projectImportsProcessingDataIs && (
+        <Menu.Header className="p-15">
+          <Progress
+            size="tiny"
+            percent={projectImportsProcessingData.percent}
+            indicating
+          >
+            {projectImportsProcessingData.countProcesses} /{' '}
+            {projectImportsProcessingData.countTotal} /{' '}
+            {projectImportsProcessingData.countCompleted}:{' '}
+            {projectImportsProcessingData.percent.toFixed(0)}%
+          </Progress>
+        </Menu.Header>
+      )}
+
       <Menu.Item as={NavLink} to={`/project/${projectId}/export`} exact>
         <FormattedMessage {...messages.ExportFiles} />
       </Menu.Item>
@@ -48,7 +77,12 @@ function ProjectMenuIsOwnerItems({ projectId, project }) {
   );
 }
 
-function ProjectMenu({ projectId, project, currentUser }) {
+function ProjectMenu({
+  projectId,
+  project,
+  currentUser,
+  projectImportsProcessingData,
+}) {
   const isCurrentIsOwner =
     project &&
     currentUser &&
@@ -70,6 +104,7 @@ function ProjectMenu({ projectId, project, currentUser }) {
           projectId={projectId}
           project={project}
           currentUser={currentUser}
+          projectImportsProcessingData={projectImportsProcessingData}
         />
       )}
     </Aside>
@@ -81,6 +116,13 @@ ProjectMenu.propTypes = {
   projectId: PropTypes.string.isRequired,
   project: PropTypes.instanceOf(Map),
   currentUser: PropTypes.instanceOf(Map),
+  projectImportsProcessingData: PropTypes.shape({
+    isProcessing: PropTypes.bool.isRequired,
+    countTotal: PropTypes.number.isRequired,
+    countCompleted: PropTypes.number.isRequired,
+    countProcesses: PropTypes.number.isRequired,
+    percent: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 ProjectMenu.defaultProps = {

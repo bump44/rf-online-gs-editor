@@ -35,6 +35,10 @@ export default defineMessages({
     id: 'app.components.ProjectMenu.Items',
     defaultMessage: 'Items',
   },
+  Stores: {
+    id: 'app.components.ProjectMenu.Stores',
+    defaultMessage: 'Stores',
+  },
   UpdateDetails: {
     id: 'app.components.ProjectMenu.UpdateDetails',
     defaultMessage: 'Update Details',
