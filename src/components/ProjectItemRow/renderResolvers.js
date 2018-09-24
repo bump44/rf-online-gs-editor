@@ -52,7 +52,6 @@ import RenderTool from './Render/Tool';
 import RenderArmor from './Render/Armor';
 import RenderWeapon from './Render/Weapon';
 import RenderJewelry from './Render/Jewelry';
-import RenderBullet from './Render/Bullet';
 
 // want help in writing specific components ;)
 export default {
@@ -67,7 +66,7 @@ export default {
   [CLOAK]: RenderArmor,
   [RING]: RenderJewelry,
   [AMULET]: RenderJewelry,
-  [BULLET]: RenderBullet,
+  [BULLET]: RenderTool,
   [MAKETOOL]: RenderTool,
   [POTION]: RenderTool,
   [BAG]: RenderTool,
