@@ -38,6 +38,9 @@ class ProjectItemInteractingMoneyValue extends React.PureComponent {
       onChangeGoldPoint,
       onChangeProcPoint,
       onChangeKillPoint,
+      className,
+      label,
+      labelled,
     } = this.props;
 
     const onChangeCallbacks = {
@@ -81,6 +84,8 @@ class ProjectItemInteractingMoneyValue extends React.PureComponent {
         types={itemNextValues}
         type={type}
         onChangeValue={onChangeCallbacks[type.get('fieldName')]}
+        className={className}
+        label={labelled ? type.get('title') : label}
       />
     );
   }
@@ -95,6 +100,19 @@ ProjectItemInteractingMoneyValue.propTypes = {
   onChangeProcPoint: PropTypes.func.isRequired,
   onChangeKillPoint: PropTypes.func.isRequired,
   types: PropTypes.instanceOf(List).isRequired,
+  className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
+  labelled: PropTypes.bool,
+};
+
+ProjectItemInteractingMoneyValue.defaultProps = {
+  className: '',
+  label: null,
+  labelled: false,
 };
 
 export default ProjectItemInteractingMoneyValue;
