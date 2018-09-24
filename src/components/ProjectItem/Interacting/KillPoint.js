@@ -26,7 +26,7 @@ class ProjectItemInteractingKillPoint extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, size, className } = this.props;
+    const { item, itemNextValues, size, className, label } = this.props;
 
     const nextValue = itemNextValues.getIn([
       'nextValue',
@@ -52,6 +52,7 @@ class ProjectItemInteractingKillPoint extends React.PureComponent {
         className={className}
         value={value}
         onChange={this.changeValue}
+        label={label}
       />
     );
   }
@@ -63,11 +64,17 @@ ProjectItemInteractingKillPoint.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingKillPoint.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingKillPoint;
