@@ -5,7 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import { ANNOUNCE_PROJECT_COUNT_ITEMS } from '../App/constants';
+import { ANNOUNCE_PROJECT_COUNT_ITEMS, SKIP } from '../App/constants';
 
 import {
   DEFAULT_ACTION,
@@ -21,6 +21,7 @@ export const initialState = fromJS({
   isLoaded: false,
   isError: false,
   errorMessage: '',
+  importType: SKIP,
 });
 
 function projectImportPageReducer(state = initialState, action) {

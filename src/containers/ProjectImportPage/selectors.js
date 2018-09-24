@@ -16,6 +16,11 @@ const makeSelectProject = () =>
     substate.get('project'),
   );
 
+const makeSelectImportType = () =>
+  createSelector(selectProjectImportPageDomain, substate =>
+    substate.get('importType'),
+  );
+
 /**
  * Default selector used by ProjectImportPage
  */
@@ -24,4 +29,8 @@ const makeSelectProjectImportPage = () =>
   createSelector(selectProjectImportPageDomain, substate => substate.toJS());
 
 export default makeSelectProjectImportPage;
-export { selectProjectImportPageDomain, makeSelectProject };
+export {
+  selectProjectImportPageDomain,
+  makeSelectProject,
+  makeSelectImportType,
+};

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import map from 'lodash/map';
+import { map, forEach, some } from 'lodash';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { remote } from 'electron';
@@ -24,15 +24,22 @@ import {
   Comment,
   Progress,
   Icon,
+  Button,
+  Select,
 } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import makeSelectProjectImportPage, { makeSelectProject } from './selectors';
+
+import makeSelectProjectImportPage, {
+  makeSelectProject,
+  makeSelectImportType,
+} from './selectors';
+
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { changeId } from './actions';
+import { changeId, changeImportType } from './actions';
 import { CLIENT_FILES, FILES, SERVER_FILES } from '../../utils/gameFiles';
 
 import {
@@ -71,6 +78,10 @@ export class ProjectImportPage extends React.Component {
     super(props);
     this.renderFiles = this.renderFiles.bind(this);
     this.onClickSelectFilePath = this.onClickSelectFilePath.bind(this);
+    this.onClickStartAll = this.onClickStartAll.bind(this);
+    this.onClickCancelAll = this.onClickCancelAll.bind(this);
+    this.isSomeStarted = this.isSomeStarted.bind(this);
+    this.isSomeReadyToStart = this.isSomeReadyToStart.bind(this);
   }
 
   componentWillMount() {
@@ -124,11 +135,86 @@ export class ProjectImportPage extends React.Component {
     );
   }
 
+  isSomeStarted() {
+    const { projectsImports, projectImportPage } = this.props;
+    const { project } = projectImportPage;
+    const projectImports = projectsImports.get(project.id, Map({}));
+
+    return some(FILES, (file, key) => {
+      const fileState = projectImports.get(key, Map({}));
+      const fileStatus = fileState.get('status', WAITING);
+      return fileStatus === PROCESSING;
+    });
+  }
+
+  isSomeReadyToStart() {
+    const { projectsImports, projectImportPage } = this.props;
+    const { project } = projectImportPage;
+    const projectImports = projectsImports.get(project.id, Map({}));
+
+    return some(FILES, (file, key) => {
+      const fileState = projectImports.get(key, Map({}));
+      const fileStatus = fileState.get('status', WAITING);
+      const filePath = fileState.get('filePath', '').trim();
+      return fileStatus !== PROCESSING && filePath;
+    });
+  }
+
+  onClickStartAll() {
+    const {
+      projectsImports,
+      fnProjectsImportsStartFileImport,
+      projectImportPage,
+      importType,
+    } = this.props;
+
+    const { project } = projectImportPage;
+    const projectImports = projectsImports.get(project.id, Map({}));
+
+    forEach(FILES, (file, key) => {
+      const fileState = projectImports.get(key, Map({}));
+      const fileStatus = fileState.get('status', WAITING);
+      const filePath = fileState.get('filePath', '').trim();
+
+      if (fileStatus !== PROCESSING && filePath) {
+        fnProjectsImportsStartFileImport({
+          projectId: project.id,
+          fileKey: key,
+          importType,
+        });
+      }
+    });
+  }
+
+  onClickCancelAll() {
+    const {
+      projectsImports,
+      fnProjectsImportsCancelFileImport,
+      projectImportPage,
+    } = this.props;
+
+    const { project } = projectImportPage;
+    const projectImports = projectsImports.get(project.id, Map({}));
+
+    forEach(FILES, (file, key) => {
+      const fileState = projectImports.get(key, Map({}));
+      const fileStatus = fileState.get('status', WAITING);
+
+      if (fileStatus === PROCESSING) {
+        fnProjectsImportsCancelFileImport({
+          projectId: project.id,
+          fileKey: key,
+        });
+      }
+    });
+  }
+
   renderFiles(files = {}) {
     const {
       fnProjectsImportsChangeFilePropValue,
       projectsImports,
       projectImportPage,
+      importType,
       fnProjectsImportsStartFileImport,
       fnProjectsImportsCancelFileImport,
     } = this.props;
@@ -164,6 +250,7 @@ export class ProjectImportPage extends React.Component {
         startActions[onClickStartAction]({
           projectId: project.id,
           fileKey: key,
+          importType,
         });
 
       /* eslint-disable react/jsx-no-bind */
@@ -222,11 +309,13 @@ export class ProjectImportPage extends React.Component {
               <Comment.Action
                 onClick={() =>
                   fileActions.changeImportType(
-                    fileState.get('importType') === REPLACE ? SKIP : REPLACE,
+                    fileState.get('importType', importType) === REPLACE
+                      ? SKIP
+                      : REPLACE,
                   )
                 }
               >
-                {fileState.get('importType') === REPLACE ? (
+                {fileState.get('importType', importType) === REPLACE ? (
                   <FormattedMessage {...messages.RewriteItems} />
                 ) : (
                   <FormattedMessage {...messages.SkipItems} />
@@ -265,6 +354,8 @@ export class ProjectImportPage extends React.Component {
       projectImportPage,
       fnLogoutCurrentUser,
       projectsImportsProcessingData,
+      importType,
+      fnChangeImportType,
     } = this.props;
 
     const {
@@ -330,6 +421,41 @@ export class ProjectImportPage extends React.Component {
                     <Segment>
                       <FormattedMessage {...messages.clientHelpMessage} />
                     </Segment>
+
+                    <Button
+                      primary
+                      onClick={this.onClickStartAll}
+                      disabled={!this.isSomeReadyToStart()}
+                    >
+                      <Icon name="play" />
+                      <FormattedMessage {...messages.Start} />
+                    </Button>
+
+                    <Button
+                      secondary
+                      onClick={this.onClickCancelAll}
+                      disabled={!this.isSomeStarted()}
+                    >
+                      <Icon name="stop" />
+                      <FormattedMessage {...messages.Cancel} />
+                    </Button>
+
+                    <Select
+                      value={importType}
+                      onChange={fnChangeImportType}
+                      options={[
+                        {
+                          key: SKIP,
+                          value: SKIP,
+                          text: <FormattedMessage {...messages.SkipItems} />,
+                        },
+                        {
+                          key: REPLACE,
+                          value: REPLACE,
+                          text: <FormattedMessage {...messages.RewriteItems} />,
+                        },
+                      ]}
+                    />
                   </Grid.Column>
                   <Grid.Column>
                     <PageHeader>
@@ -361,6 +487,7 @@ ProjectImportPage.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   currentProject: PropTypes.instanceOf(Map),
   currentUser: PropTypes.instanceOf(Map),
+  importType: PropTypes.oneOf([SKIP, REPLACE]).isRequired,
 };
 
 ProjectImportPage.defaultProps = {
@@ -373,6 +500,7 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: makeSelectIsLoggedIn(),
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
+  importType: makeSelectImportType(),
   projectsImports: makeSelectProjectsImports(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
 });
@@ -395,6 +523,7 @@ function mapDispatchToProps(dispatch, props) {
     fnProjectsImportsCancelFileImport: args =>
       dispatch(projectsImportsCancelFileImport(args)),
     fnProjectsImportsChangeFilePropValue,
+    fnChangeImportType: (evt, owns) => dispatch(changeImportType(owns.value)),
   };
 }
 

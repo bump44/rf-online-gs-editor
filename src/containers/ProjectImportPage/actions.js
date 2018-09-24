@@ -41,6 +41,10 @@ export function changeErrorMessage(value) {
   return changeFieldValue('errorMessage', value);
 }
 
+export function changeImportType(value) {
+  return changeFieldValue('importType', value);
+}
+
 export function changeId(id) {
   return {
     type: CHANGE_ID,
