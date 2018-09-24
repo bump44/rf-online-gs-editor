@@ -6,9 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
+import { Dropdown } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
@@ -19,9 +19,9 @@ class ProjectItemInteractingWPType extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.changeValue = evt => {
+    this.changeValue = (evt, owns) => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, parseInt(evt.target.value) || 0);
+      onChangeValue(item, parseInt(owns.value) || 0);
     };
   }
 
@@ -38,45 +38,56 @@ class ProjectItemInteractingWPType extends React.PureComponent {
     );
 
     const value = nextValue !== undefined ? nextValue : currValue;
-    const isUnknown = !types.some(val => val.get('value') === value);
+    const type = types.find(val => val.get('value') === value);
+    const isUnknown = !type;
 
     return (
-      <div className={cx('field', className)}>
-        <div className="control has-icons-left">
-          <div
-            className={cx('select is-small is-fullwidth', {
-              'is-danger': isUnknown,
-              'is-info': !isUnknown,
-            })}
-          >
-            <select
-              value={isNumber(value) ? value : undefined}
-              onChange={this.changeValue}
-            >
-              {isUnknown && (
-                <FormattedMessage {...messages.UnknownWeaponType}>
-                  {message => (
-                    <option value={value}>
-                      {isNumber(value) && `${value}: `}
-                      {message}
-                    </option>
-                  )}
-                </FormattedMessage>
-              )}
-              {types.map(val => (
-                <option value={val.get('value')} key={val.get('value')}>
-                  {val.get('value')}
-                  :&nbsp;
-                  {val.get('title')}
-                </option>
-              ))}
-            </select>
-          </div>
-          <span className="icon is-small is-left">
-            <i className="fas fa-bolt" />
-          </span>
-        </div>
-      </div>
+      <Dropdown
+        text={
+          isUnknown ? (
+            <span>
+              {isNumber(value) && `${value}: `}
+              <FormattedMessage {...messages.UnknownWeaponType} />
+            </span>
+          ) : (
+            `${type.get('value')}: ${type.get('title')}`
+          )
+        }
+        inline
+        labeled
+        scrolling
+        item
+        icon="bolt"
+        className={className}
+      >
+        <Dropdown.Menu>
+          {isUnknown && (
+            <Dropdown.Item
+              selected
+              text={
+                <span>
+                  {isNumber(value) && `${value}: `}
+                  <FormattedMessage {...messages.UnknownWeaponType} />
+                </span>
+              }
+            />
+          )}
+
+          {types.map(val => (
+            <Dropdown.Item
+              onClick={this.changeValue}
+              selected={val.get('value') === value}
+              key={val.get('value')}
+              value={val.get('value')}
+              text={
+                <span>
+                  {val.get('value')}: {val.get('title')}
+                </span>
+              }
+            />
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 }
