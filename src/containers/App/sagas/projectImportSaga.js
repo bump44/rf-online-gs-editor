@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import {
   take,
   call,
@@ -95,9 +96,12 @@ export function* changeFileStateToFinished({ projectId, fileKey, actions }) {
   yield put(fns.changeStatus(FINISHED));
 }
 
-export function* worker({ projectId, fileKey }) {
+export function* worker({ projectId, fileKey, importType }) {
   const projectsImportsState = yield select(makeSelectProjectsImports());
-  const projectImportState = projectsImportsState.getIn([projectId, fileKey]);
+  const projectImportState = projectsImportsState.getIn(
+    [projectId, fileKey],
+    Map({}),
+  );
 
   const actions = projectsImportsBindActionsWithFileKey({
     projectId,
@@ -110,13 +114,23 @@ export function* worker({ projectId, fileKey }) {
     yield call(changeFileStateToProcessing, { actions });
     const resolver = Resolvers[fileData.resolve];
 
+    if (!projectImportState.get('filePath')) {
+      throw new Error('File path is required');
+    }
+
+    // use fallback import type
+    const nextProjectImportState = projectImportState.set(
+      'importType',
+      projectImportState.get('importType', importType),
+    );
+
     // call resolver
     yield call(resolver, {
       fileData,
       projectId,
       fileKey,
       actions,
-      projectImportState,
+      projectImportState: nextProjectImportState,
     });
 
     yield call(changeFileStateToFinished, { actions });
