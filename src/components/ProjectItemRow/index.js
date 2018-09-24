@@ -50,9 +50,14 @@ class ProjectItemRow extends React.PureComponent {
         as={Link}
         to={`/project/${item.getIn(['project', 'id'])}/items/${item.get('id')}`}
         color={cx({
+          teal:
+            !isError &&
+            !(itemNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
+            !isSaving,
           red: isError,
           green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
           yellow: isSaving,
+          pink: isShowStatus && !isSaving && !isSaved && !isError,
         })}
         image
       >
@@ -60,7 +65,7 @@ class ProjectItemRow extends React.PureComponent {
           loading={isShowStatus && isSaving}
           name={cx({
             check: !isShowStatus,
-            'pencil alt': isShowStatus && !isSaving && !isSaved && !isError,
+            pencil: isShowStatus && !isSaving && !isSaved && !isError,
             times: isShowStatus && isError,
             spinner: isShowStatus && isSaving,
           })}
@@ -107,7 +112,7 @@ class ProjectItemRow extends React.PureComponent {
     return (
       <Row>
         <Grid columns={2}>
-          <Grid.Column largeScreen={2} widescreen={2}>
+          <Grid.Column largeScreen={3} widescreen={2}>
             {this.renderTagIndexWithNextState()}
             {isShowStrCode && (
               <div className="mt-5">
@@ -123,7 +128,7 @@ class ProjectItemRow extends React.PureComponent {
               </div>
             )}
           </Grid.Column>
-          <Grid.Column largeScreen={14} widescreen={14}>
+          <Grid.Column largeScreen={13} widescreen={14}>
             {Render && (
               <Render
                 item={item}
