@@ -31,7 +31,7 @@ class ProjectItemTypeSelect extends React.PureComponent {
     return (
       <MessageComponent {...MessageComponentProps}>
         {message => (
-          <Dropdown scrolling text={message}>
+          <Dropdown scrolling inline floating text={message}>
             <Dropdown.Menu>
               <Dropdown.Item
                 value=""
