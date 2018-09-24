@@ -6,8 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map /* , List */ } from 'immutable';
-// import styled from 'styled-components';
+import { Map } from 'immutable';
+import { Checkbox } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -17,9 +17,9 @@ class ProjectItemInteractingCivilBF extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.changeValue = evt => {
+    this.changeValue = (evt, owns) => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, evt.target.checked);
+      onChangeValue(item, owns.checked);
     };
   }
 
@@ -38,15 +38,16 @@ class ProjectItemInteractingCivilBF extends React.PureComponent {
     const value = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <label className="checkbox is-small">
-        <input
-          type="checkbox"
-          value={1}
-          checked={!!value}
-          onChange={this.changeValue}
-        />
-        <FormattedMessage {...messages.CivilBF} />
-      </label>
+      <FormattedMessage {...messages.CivilBF}>
+        {message => (
+          <Checkbox
+            label={message}
+            value={1}
+            checked={!!value}
+            onChange={this.changeValue}
+          />
+        )}
+      </FormattedMessage>
     );
   }
 }
