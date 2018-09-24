@@ -29,30 +29,28 @@ import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
   return (
-    <div className="is-fullheight">
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/register" component={RegisterPage} />
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route exact path="/register" component={RegisterPage} />
 
-        {/* Project(s) */}
-        <Route exact path="/projects" component={ProjectsPage} />
-        <Route exact path="/project/create" component={ProjectCreatePage} />
-        <Route exact path="/project/:id" component={ProjectPage} />
-        <Route
-          exact
-          path="/project/:id/contributors"
-          component={ProjectContributorsPage}
-        />
-        <Route exact path="/project/:id/import" component={ProjectImportPage} />
-        <Route exact path="/project/:id/items" component={ProjectItemsPage} />
-        <Route
-          exact
-          path="/project/:id/items/:itemId"
-          component={ProjectItemPage}
-        />
+      {/* Project(s) */}
+      <Route exact path="/projects" component={ProjectsPage} />
+      <Route exact path="/project/create" component={ProjectCreatePage} />
+      <Route exact path="/project/:id" component={ProjectPage} />
+      <Route
+        exact
+        path="/project/:id/contributors"
+        component={ProjectContributorsPage}
+      />
+      <Route exact path="/project/:id/import" component={ProjectImportPage} />
+      <Route exact path="/project/:id/items" component={ProjectItemsPage} />
+      <Route
+        exact
+        path="/project/:id/items/:itemId"
+        component={ProjectItemPage}
+      />
 
-        <Route component={NotFoundPage} />
-      </Switch>
-    </div>
+      <Route component={NotFoundPage} />
+    </Switch>
   );
 }
