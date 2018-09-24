@@ -44,6 +44,7 @@ import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
 import ProjectItem from '../../components/ProjectItem';
+import ProjectItemLabelDetail from '../../components/ProjectItemLabelDetail';
 import { projectsItemsBindActions } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -76,8 +77,8 @@ export class ProjectItemPage extends React.PureComponent {
       projectsNextValues,
     } = this.props;
 
-    const projectNextValues = projectsNextValues.get(
-      currentProject.get('id'),
+    const projectNextValues = projectsNextValues.getIn(
+      [currentProject.get('id'), currentProjectItem.get('id')],
       Map({}),
     );
 
@@ -135,6 +136,15 @@ export class ProjectItemPage extends React.PureComponent {
       /* eslint-enable indent */
     });
 
+    const item = currentProjectItem;
+    const itemNextValues =
+      currentProject &&
+      currentProjectItem &&
+      projectsNextValues.getIn(
+        [currentProject.get('id'), currentProjectItem.get('id')],
+        Map({}),
+      );
+
     return (
       <div>
         <Helmet>
@@ -177,18 +187,16 @@ export class ProjectItemPage extends React.PureComponent {
                       itemName: this.getName(),
                     }}
                   />
+                  <ProjectItemLabelDetail
+                    item={item}
+                    itemNextValues={itemNextValues}
+                  />
                 </PageHeader>
                 <FullheightThis>
                   <FullheightAutoSizer>
                     <ProjectItem
-                      item={currentProjectItem}
-                      itemNextValues={projectsNextValues.getIn(
-                        [
-                          currentProject.get('id'),
-                          currentProjectItem.get('id'),
-                        ],
-                        Map({}),
-                      )}
+                      item={item}
+                      itemNextValues={itemNextValues}
                       localSettings={localSettings}
                       moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
                       itemGrades={currentProject.getIn(['itemGrades', 'items'])}
