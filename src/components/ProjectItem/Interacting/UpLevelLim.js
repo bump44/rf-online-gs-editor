@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt, isFinite } from 'lodash';
 import { Map } from 'immutable';
+import { Input } from 'semantic-ui-react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingUpLevelLim extends React.PureComponent {
@@ -49,16 +50,17 @@ class ProjectItemInteractingUpLevelLim extends React.PureComponent {
 
   render() {
     const value = this.getUpLevelLim();
+    const { className, size } = this.props;
 
     return (
-      <div className="field">
-        <input
-          className="input is-small"
-          type="number"
-          value={value}
-          onChange={this.changeValue}
-        />
-      </div>
+      <Input
+        size={size}
+        fluid
+        type="number"
+        value={value}
+        onChange={this.changeValue}
+        className={className}
+      />
     );
   }
 }
@@ -67,6 +69,13 @@ ProjectItemInteractingUpLevelLim.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingUpLevelLim.defaultProps = {
+  size: 'mini',
+  className: '',
 };
 
 export default ProjectItemInteractingUpLevelLim;
