@@ -24,7 +24,7 @@ class ProjectItemInteractingCivilBM extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, className } = this.props;
 
     const nextValue = itemNextValues.getIn(['nextValue', 'server', 'civil_bm']);
 
@@ -45,6 +45,7 @@ class ProjectItemInteractingCivilBM extends React.PureComponent {
             value={1}
             checked={!!value}
             onChange={this.changeValue}
+            className={className}
           />
         )}
       </FormattedMessage>
@@ -56,6 +57,11 @@ ProjectItemInteractingCivilBM.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingCivilBM.defaultProps = {
+  className: '',
 };
 
 export default ProjectItemInteractingCivilBM;
