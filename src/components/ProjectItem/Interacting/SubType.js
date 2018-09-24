@@ -7,11 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
-import { Map /* , List */ } from 'immutable';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { Map } from 'immutable';
+import { Input } from 'semantic-ui-react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingSubType extends React.PureComponent {
@@ -25,7 +22,7 @@ class ProjectItemInteractingSubType extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, size, className } = this.props;
 
     const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nSubType']);
 
@@ -39,14 +36,13 @@ class ProjectItemInteractingSubType extends React.PureComponent {
     const value = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <div className="field">
-        <input
-          className="input is-small"
-          type="number"
-          value={value}
-          onChange={this.changeValue}
-        />
-      </div>
+      <Input
+        type="number"
+        value={value}
+        onChange={this.changeValue}
+        size={size}
+        className={className}
+      />
     );
   }
 }
@@ -55,6 +51,13 @@ ProjectItemInteractingSubType.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingSubType.defaultProps = {
+  size: 'mini',
+  className: '',
 };
 
 export default ProjectItemInteractingSubType;
