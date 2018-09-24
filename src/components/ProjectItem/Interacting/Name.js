@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
+import { Input } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -24,7 +25,7 @@ class ProjectItemInteractingName extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, size, className } = this.props;
 
     const nextValue = itemNextValues.getIn([
       'nextValue',
@@ -48,14 +49,14 @@ class ProjectItemInteractingName extends React.PureComponent {
     const strName = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <div className="field">
-        <input
-          className="input is-small"
-          type="text"
-          value={strName}
-          onChange={this.changeValue}
-        />
-      </div>
+      <Input
+        size={size}
+        fluid
+        type="text"
+        value={strName}
+        onChange={this.changeValue}
+        className={className}
+      />
     );
   }
 }
@@ -64,6 +65,13 @@ ProjectItemInteractingName.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingName.defaultProps = {
+  size: 'mini',
+  className: '',
 };
 
 export default ProjectItemInteractingName;
