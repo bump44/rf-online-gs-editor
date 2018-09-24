@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-// import styled from 'styled-components';
+import { Grid, Popup } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -40,67 +40,56 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className="columns">
-        <div className="column">
+      <Grid columns={3}>
+        <Grid.Column largeScreen={4} widescreen={5}>
           <ProjectItemInteractingName
             item={item}
             itemNextValues={itemNextValues}
             onChangeValue={actions.changeName}
+            className="pb-10"
           />
-          <div className="field is-grouped">
-            <div className="control">
+          <Grid columns="equal">
+            <Grid.Column>
               <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeExchange}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column>
               <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeSell}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column only="widescreen">
               <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeGround}
               />
-            </div>
-            <div className="control">
+            </Grid.Column>
+            <Grid.Column only="widescreen">
               <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePossible}
               />
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
 
-        <div className="column">
-          <div className="field is-grouped">
-            <div className="control is-expanded">
+        <Grid.Column largeScreen={6} widescreen={7}>
+          <Grid columns={2}>
+            <Grid.Column>
               <ProjectItemInteractingMoneyType
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeMoney}
                 types={moneyTypes}
+                className="pt-5 pb-10"
               />
-            </div>
-            <div className="control pr-3">
-              <ProjectItemInteractingItemGrade
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeItemGrade}
-                types={itemGrades}
-              />
-            </div>
-          </div>
-
-          <div className="columns">
-            <div className="column">
               <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
@@ -111,69 +100,128 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                 onChangeKillPoint={actions.changeKillPoint}
                 types={moneyTypes}
               />
-            </div>
-            <div className="column is-hidden-touch is-hidden-desktop-only is-hidden-widescreen-only">
+            </Grid.Column>
+            <Grid.Column>
+              <ProjectItemInteractingItemGrade
+                item={item}
+                itemNextValues={itemNextValues}
+                onChangeValue={actions.changeItemGrade}
+                types={itemGrades}
+                className="pt-5 pb-10"
+              />
               <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={actions.changeStoragePrice}
                 types={moneyTypes}
               />
-            </div>
-          </div>
-        </div>
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
 
-        <div className="column">
-          <div className="field is-horizontal">
-            <div className="field-label is-small">
-              <label className="label">
-                <FormattedMessage {...messages.Level} />:
-              </label>
-            </div>
-            <div className="field-body">
-              <ProjectItemInteractingLevelLim
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeLevelLim}
+        <Grid.Column largeScreen={6} widescreen={4}>
+          <Grid columns={3}>
+            <Grid.Column width={4}>
+              <Popup
+                trigger={
+                  <div className="pb-4">
+                    <ProjectItemInteractingLevelLim
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeLevelLim}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="top left"
+                content={<FormattedMessage {...messages.Level} />}
               />
-              <ProjectItemInteractingUpLevelLim
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeUpLevelLim}
+              <Popup
+                trigger={
+                  <div>
+                    <ProjectItemInteractingDefenceGap
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeDefenceGap}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="bottom left"
+                content={<FormattedMessage {...messages.DefenceGap} />}
               />
-            </div>
-          </div>
-          <div className="field is-horizontal">
-            <div className="field-label is-small">
-              <label className="label">
-                <FormattedMessage {...messages.DefenceGapFacingFields} />:
-              </label>
-            </div>
-            <div className="field-body">
-              <ProjectItemInteractingDefence
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeDefence}
+            </Grid.Column>
+            <Grid.Column width={5}>
+              <Popup
+                trigger={
+                  <div className="pb-4">
+                    <ProjectItemInteractingUpLevelLim
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeUpLevelLim}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="top left"
+                content={<FormattedMessage {...messages.UpLevelLim} />}
               />
-              <ProjectItemInteractingDefenceGap
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeDefenceGap}
+              <Popup
+                trigger={
+                  <div>
+                    <ProjectItemInteractingDefenceFacingPresent
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeDefenceFacing}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="bottom left"
+                content={
+                  <FormattedMessage {...messages.DefenceFacingPresent} />
+                }
               />
-              <ProjectItemInteractingDefenceFacing
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeDefenceFacing}
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <Popup
+                trigger={
+                  <div className="pb-4">
+                    <ProjectItemInteractingDefence
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeDefence}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="top left"
+                content={<FormattedMessage {...messages.Defence} />}
               />
-              <ProjectItemInteractingDefenceFacingPresent
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeDefenceFacing}
+              <Popup
+                trigger={
+                  <div>
+                    <ProjectItemInteractingDefenceFacing
+                      item={item}
+                      itemNextValues={itemNextValues}
+                      onChangeValue={actions.changeDefenceFacing}
+                    />
+                  </div>
+                }
+                inverted
+                size="mini"
+                position="bottom left"
+                content={<FormattedMessage {...messages.DefenceFacing} />}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid.Column>
+          </Grid>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
