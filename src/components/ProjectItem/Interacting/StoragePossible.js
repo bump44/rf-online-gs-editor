@@ -25,7 +25,7 @@ class ProjectItemInteractingStoragePossible extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, className } = this.props;
 
     const nextValue = itemNextValues.getIn([
       'nextValue',
@@ -50,6 +50,7 @@ class ProjectItemInteractingStoragePossible extends React.PureComponent {
             value={1}
             checked={!!value}
             onChange={this.changeValue}
+            className={className}
           />
         )}
       </FormattedMessage>
@@ -61,6 +62,11 @@ ProjectItemInteractingStoragePossible.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingStoragePossible.defaultProps = {
+  className: '',
 };
 
 export default ProjectItemInteractingStoragePossible;
