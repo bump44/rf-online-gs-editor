@@ -25,7 +25,7 @@ class ProjectItemInteractingSell extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, className } = this.props;
 
     const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bSell']);
 
@@ -46,6 +46,7 @@ class ProjectItemInteractingSell extends React.PureComponent {
             value={1}
             checked={!!value}
             onChange={this.changeValue}
+            className={className}
           />
         )}
       </FormattedMessage>
@@ -57,6 +58,11 @@ ProjectItemInteractingSell.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingSell.defaultProps = {
+  className: '',
 };
 
 export default ProjectItemInteractingSell;
