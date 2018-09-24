@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
 import { Dropdown as DropdownUI } from 'semantic-ui-react';
+import cx from 'classnames';
 import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
@@ -62,9 +63,8 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
         scrolling
         item
         icon="level up"
-        className={className}
+        className={cx(className, { unknown: isUnknown })}
         value={value}
-        isUnknown={isUnknown}
       >
         <Dropdown.Menu>
           {isUnknown && (
@@ -117,12 +117,10 @@ export default ProjectItemInteractingItemGrade;
 const Dropdown = styled(DropdownUI)`
   &.ui.dropdown {
     >.text {
-      ${({ isUnknown }) =>
-        isUnknown &&
-        `
-      border-color: #ce0830;
-      background-color: #ce0830;
-      `};
+      &.unknown {
+        border-color: #ce0830;
+        background-color: #ce0830;
+      }
 
       ${({ value }) =>
         value === 1 &&
