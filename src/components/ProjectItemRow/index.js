@@ -9,12 +9,14 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
+import { Grid, Label, Icon } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import Row from './styles';
+import Code from '../Code';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
 import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
 import renderResolvers from './renderResolvers';
@@ -43,35 +45,34 @@ class ProjectItemRow extends React.PureComponent {
       (!isSaving && !isSaved && !isError) || isSaving || isError;
 
     return (
-      <Link
-        to={`/project/${item.getIn(['project', 'id'])}/items/${item.get('id')}`}
+      <Label
         title={isError ? errorMessage : undefined}
-        className={cx('tag', {
-          'is-danger': isError,
-          'is-success':
-            itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
-          'is-warning': isSaving,
+        as={Link}
+        to={`/project/${item.getIn(['project', 'id'])}/items/${item.get('id')}`}
+        color={cx({
+          red: isError,
+          green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
+          yellow: isSaving,
         })}
+        image
       >
-        <small>
-          <i
-            className={cx('fas', {
-              'fa-check': !isShowStatus,
-              'fa-pencil-alt':
-                isShowStatus && !isSaving && !isSaved && !isError,
-              'fa-spin fa-spinner': isShowStatus && isSaving,
-              'fa-times': isShowStatus && isError,
-            })}
-          />
-          &nbsp;
-        </small>
-        {nIndex}
-        &nbsp;
-        <ProjectItemTypeLocaleMessage
-          messageKey={item.get('type')}
-          tagName="small"
+        <Icon
+          loading={isShowStatus && isSaving}
+          name={cx({
+            check: !isShowStatus,
+            'pencil alt': isShowStatus && !isSaving && !isSaved && !isError,
+            times: isShowStatus && isError,
+            spinner: isShowStatus && isSaving,
+          })}
         />
-      </Link>
+        {nIndex}
+        <Label.Detail>
+          <ProjectItemTypeLocaleMessage
+            messageKey={item.get('type')}
+            tagName="small"
+          />
+        </Label.Detail>
+      </Label>
     );
   }
 
@@ -105,23 +106,24 @@ class ProjectItemRow extends React.PureComponent {
 
     return (
       <Row>
-        <div className="columns">
-          <div className="column is-narrow">
+        <Grid columns={2}>
+          <Grid.Column largeScreen={2} widescreen={2}>
             {this.renderTagIndexWithNextState()}
             {isShowStrCode && (
-              <div
-                className="mt-5"
-                title={
-                  serverStrCode && clientStrCodeReversed
-                    ? clientStrCodeReversed
-                    : undefined
-                }
-              >
-                <code>{serverStrCode || clientStrCodeReversed}</code>
+              <div className="mt-5">
+                <Code
+                  title={
+                    serverStrCode && clientStrCodeReversed
+                      ? clientStrCodeReversed
+                      : undefined
+                  }
+                >
+                  {serverStrCode || clientStrCodeReversed}
+                </Code>
               </div>
             )}
-          </div>
-          <div className="column">
+          </Grid.Column>
+          <Grid.Column largeScreen={14} widescreen={14}>
             {Render && (
               <Render
                 item={item}
@@ -134,8 +136,8 @@ class ProjectItemRow extends React.PureComponent {
               />
             )}
             {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
-          </div>
-        </div>
+          </Grid.Column>
+        </Grid>
       </Row>
     );
   }
