@@ -47,6 +47,7 @@ import {
   makeSelectCurrentUser,
   makeSelectProjectsImports,
   makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
 
 import {
@@ -356,6 +357,7 @@ export class ProjectImportPage extends React.Component {
       projectsImportsProcessingData,
       importType,
       fnChangeImportType,
+      projectImportsProcessingData,
     } = this.props;
 
     const {
@@ -397,6 +399,7 @@ export class ProjectImportPage extends React.Component {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <Grid.Column largeScreen={13} widescreen={14}>
@@ -503,6 +506,14 @@ const mapStateToProps = createStructuredSelector({
   importType: makeSelectImportType(),
   projectsImports: makeSelectProjectsImports(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(dispatch, props) {
