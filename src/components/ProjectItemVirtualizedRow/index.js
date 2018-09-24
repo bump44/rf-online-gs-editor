@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
+import { Dimmer, Loader } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 import Row from '../ProjectItemRow/styles';
@@ -72,9 +73,9 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
 
     return (
       <Row>
-        <span className="tag is-warning">
-          <i className="fas fa-spin fa-spinner" />
-        </span>
+        <Dimmer active inverted>
+          <Loader inverted />
+        </Dimmer>
       </Row>
     );
   }
