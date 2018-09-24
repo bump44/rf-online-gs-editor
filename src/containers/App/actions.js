@@ -16,6 +16,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
   PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
+  SKIP,
 } from './constants';
 
 /**
@@ -66,11 +67,16 @@ export function logoutCurrentUser() {
  * ProjectsImports Actions
  */
 
-export function projectsImportsStartFileImport({ projectId, fileKey }) {
+export function projectsImportsStartFileImport({
+  projectId,
+  fileKey,
+  importType = SKIP,
+}) {
   return {
     type: PROJECTS_IMPORTS_START_FILE_IMPORT,
     projectId,
     fileKey,
+    importType,
   };
 }
 
