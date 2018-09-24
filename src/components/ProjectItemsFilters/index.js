@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import { Dropdown, Button, Input, Grid } from 'semantic-ui-react';
+import { Dropdown, Button, Input, Grid, Icon } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -44,25 +44,26 @@ class ProjectItemsFilters extends React.PureComponent {
     const { sortBy, sortWay, whereSearch, whereType } = this.props;
 
     return (
-      <Grid verticalAlign="middle" columns="equal" stretched>
-        <Grid.Column>
+      <Grid verticalAlign="middle" columns={4}>
+        <Grid.Column largeScreen={2} widescreen={1}>
           <ProjectItemTypeSelect
             onChange={this.changeWhereType}
             value={whereType}
-            prependBeforeEmpty
           />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column largeScreen={3} widescreen={2}>
           <Dropdown
-            selection
             scrolling
+            inline
+            floating
             onChange={this.changeSortBy}
             value={sortBy}
             options={sortByOptions}
           />
         </Grid.Column>
-        <Grid.Column>
-          <Button onClick={this.toggleSortWay}>
+        <Grid.Column largeScreen={3} widescreen={1}>
+          <Button onClick={this.toggleSortWay} size="mini">
+            <Icon name={sortWay === 1 ? 'caret up' : 'caret down'} />
             {sortWay === 1 ? (
               <FormattedMessage {...messages.Asc} />
             ) : (
@@ -70,7 +71,7 @@ class ProjectItemsFilters extends React.PureComponent {
             )}
           </Button>
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column largeScreen={8} widescreen={12}>
           <FormattedMessage {...messages.SearchString}>
             {message => (
               <Input
@@ -78,6 +79,8 @@ class ProjectItemsFilters extends React.PureComponent {
                 onChange={this.changeWhereSearch}
                 icon="search"
                 placeholder={message}
+                size="mini"
+                fluid
               />
             )}
           </FormattedMessage>
