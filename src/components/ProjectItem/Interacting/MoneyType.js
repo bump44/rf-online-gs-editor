@@ -6,10 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
-// import styled from 'styled-components';
+import { Dropdown } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -21,9 +20,9 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
 
     this.getMoneyValue = this.getMoneyValue.bind(this);
     this.getMoneyType = this.getMoneyType.bind(this);
-    this.changeValue = evt => {
+    this.changeValue = (evt, owns) => {
       const { onChangeValue, item } = this.props;
-      onChangeValue(item, parseInt(evt.target.value));
+      onChangeValue(item, parseInt(owns.value) || 0);
     };
   }
 
@@ -78,46 +77,60 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
     const { types, className } = this.props;
 
     const value = this.getMoneyType();
-    const isUnknown = !types.some(val => val.get('value') === value);
+    const type = types.find(val => val.get('value') === value);
+    const isUnknown = !type;
 
     return (
-      <div className={cx('field', className)}>
-        <div className="control has-icons-left">
-          <div
-            className={cx('select is-small is-fullwidth', {
-              'is-danger': isUnknown,
-              'is-info': !isUnknown,
-            })}
-          >
-            <select
-              value={isNumber(value) ? value : undefined}
-              onChange={this.changeValue}
-            >
-              {isUnknown && (
-                <FormattedMessage {...messages.UnknownMoneyType}>
-                  {message => (
-                    <option value={value}>
-                      {isNumber(value) && `${value}: `}
-                      {message}
-                    </option>
-                  )}
-                </FormattedMessage>
-              )}
-              {types.map(val => (
-                <option value={val.get('value')} key={val.get('value')}>
-                  {val.get('value')}
-                  :&nbsp;
-                  {val.get('title')}
-                  &nbsp; ({this.getMoneyValue(val).toLocaleString()})
-                </option>
-              ))}
-            </select>
-          </div>
-          <span className="icon is-small is-left">
-            <i className="fas fa-dollar-sign" />
-          </span>
-        </div>
-      </div>
+      <Dropdown
+        text={
+          isUnknown ? (
+            <span>
+              {isNumber(value) && `${value}: `}
+              <FormattedMessage {...messages.UnknownMoneyType} />
+            </span>
+          ) : (
+            `${type.get('value')}: ${type.get('title')}`
+          )
+        }
+        inline
+        labeled
+        scrolling
+        item
+        icon="dollar"
+        className={className}
+      >
+        <Dropdown.Menu>
+          {isUnknown && (
+            <Dropdown.Item
+              selected
+              text={
+                <span>
+                  {isNumber(value) && `${value}: `}
+                  <FormattedMessage {...messages.UnknownMoneyType} />
+                </span>
+              }
+            />
+          )}
+
+          {types.map(val => (
+            <Dropdown.Item
+              onClick={this.changeValue}
+              selected={val.get('value') === value}
+              key={val.get('value')}
+              value={val.get('value')}
+              text={
+                <span>
+                  {val.get('value')}: {val.get('title')}
+                  &nbsp;
+                  <small className="gray">
+                    {this.getMoneyValue(val).toLocaleString()}
+                  </small>
+                </span>
+              }
+            />
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 }
