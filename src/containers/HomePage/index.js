@@ -23,6 +23,7 @@ import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImportsProcessingData,
+  makeSelectLocalSettings,
 } from '../App/selectors';
 
 import { logoutCurrentUser } from '../App/actions';
@@ -40,6 +41,7 @@ export class HomePage extends React.PureComponent {
       currentProject,
       fnLogoutCurrentUser,
       projectsImportsProcessingData,
+      localSettings,
     } = this.props;
 
     return (
@@ -55,6 +57,7 @@ export class HomePage extends React.PureComponent {
           currentProject={currentProject}
           isLoggedIn={isLoggedIn}
           projectsImportsProcessingData={projectsImportsProcessingData}
+          localSettings={localSettings}
         />
 
         <Container>
@@ -71,6 +74,7 @@ HomePage.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
+  localSettings: PropTypes.instanceOf(Map),
 };
 
 HomePage.defaultProps = {
@@ -84,6 +88,7 @@ const mapStateToProps = createStructuredSelector({
   currentUser: makeSelectCurrentUser(),
   currentProject: makeSelectProject(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  localSettings: makeSelectLocalSettings(),
 });
 
 function mapDispatchToProps(dispatch) {
