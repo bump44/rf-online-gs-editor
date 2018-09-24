@@ -37,10 +37,34 @@ class ProjectItemTypeSelect extends React.PureComponent {
       <Dropdown
         selection
         scrolling
-        onChange={onChange}
-        value={value}
-        options={options}
-      />
+        text={
+          !value ? (
+            <FormattedMessage {...messages.AllItemTypes} />
+          ) : (
+            <ProjectItemTypeLocaleMessage messageKey={value} upperFirst />
+          )
+        }
+      >
+        <Dropdown.Menu>
+          <Dropdown.Item
+            value=""
+            onClick={onChange}
+            selected={!value}
+            text={<FormattedMessage {...messages.All} />}
+          />
+          {map(itemTypes, (type, key) => (
+            <Dropdown.Item
+              value={type}
+              key={key}
+              onClick={onChange}
+              selected={type === value}
+              text={
+                <ProjectItemTypeLocaleMessage messageKey={type} upperFirst />
+              }
+            />
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 }
