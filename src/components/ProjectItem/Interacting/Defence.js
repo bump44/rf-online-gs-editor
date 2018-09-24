@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
 import { Map /* , List */ } from 'immutable';
+import { Input } from 'semantic-ui-react';
 // import styled from 'styled-components';
 
 // import { FormattedMessage } from 'react-intl';
@@ -25,7 +26,7 @@ class ProjectItemInteractingDefence extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, className, size } = this.props;
 
     const nextValue = itemNextValues.getIn(
       [
@@ -48,14 +49,14 @@ class ProjectItemInteractingDefence extends React.PureComponent {
     const value = nextValue !== undefined ? nextValue : currValue;
 
     return (
-      <div className="field">
-        <input
-          className="input is-small"
-          type="number"
-          value={value}
-          onChange={this.changeValue}
-        />
-      </div>
+      <Input
+        size={size}
+        fluid
+        type="number"
+        value={value}
+        onChange={this.changeValue}
+        className={className}
+      />
     );
   }
 }
@@ -64,6 +65,13 @@ ProjectItemInteractingDefence.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
+  className: PropTypes.string,
+};
+
+ProjectItemInteractingDefence.defaultProps = {
+  size: 'mini',
+  className: '',
 };
 
 export default ProjectItemInteractingDefence;
