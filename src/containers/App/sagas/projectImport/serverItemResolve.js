@@ -5,18 +5,20 @@ import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
 import apolloClient from '../../../../apollo';
 import projectItemImportServerMutation from '../../../../apollo/mutations/project_item_import_server';
 import { announceProjectCountItems } from '../../actions';
-import { FACE, UPPER, LOWER, GAUNTLET } from '../../../../structs/item_types';
-import ServerItemFaceReader from '../../../../structs/server/item/face_reader';
-import ServerItemUpperReader from '../../../../structs/server/item/upper_reader';
-import ServerItemLowerReader from '../../../../structs/server/item/lower_reader';
-import ServerItemGauntletReader from '../../../../structs/server/item/gauntlet_reader';
+import * as ITEM_TYPES from '../../../../structs/item_types';
 
-const TypeToReader = {
-  [FACE]: ServerItemFaceReader,
-  [UPPER]: ServerItemUpperReader,
-  [LOWER]: ServerItemLowerReader,
-  [GAUNTLET]: ServerItemGauntletReader,
-};
+const TypeToReader = {};
+
+// generate readers
+Object.values(ITEM_TYPES).forEach(type => {
+  try {
+    TypeToReader[
+      type
+    ] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
+  } catch (err) {
+    console.error(err); // eslint-disable-line
+  }
+});
 
 /**
  * Import Server Items Resolver
