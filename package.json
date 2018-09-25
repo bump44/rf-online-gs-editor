@@ -1,19 +1,19 @@
 {
   "name": "rf-online-gs-editor",
-  "productName": "rf-online-gs-editor",
+  "productName": "RF-GSE",
   "version": "1.0.0",
-  "description": "",
+  "description": "RF-Online Game Server Editor",
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "package": "cross-env NODE_ENV=production electron-forge package --arch=ia32 --platform=win32",
+    "make": "cross-env NODE_ENV=production electron-forge make --arch=ia32 --platform=win32",
+    "publish": "cross-env NODE_ENV=production electron-forge publish --arch=ia32 --platform=win32",
     "lint": "eslint src --color",
     "generate": "plop --plopfile internals/generators/index.js",
     "pretest": "npm run test:clean && npm run lint",
     "test:clean": "rimraf ./coverage",
-    "test": "cross-env NODE_ENV=test jest --coverage",
+    "test": "npm run pretest && cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write"
@@ -60,18 +60,19 @@
     "forge": {
       "make_targets": {
         "win32": [
-          "squirrel"
-        ],
-        "darwin": [
+          "squirrel",
           "zip"
-        ],
-        "linux": [
-          "deb",
-          "rpm"
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "yarn"
+        "packageManager": "yarn",
+        "asar": true,
+        "ignore": [
+          ".vscode",
+          "coverage",
+          "out",
+          "internals"
+        ]
       },
       "electronWinstallerConfig": {
         "name": "rf-online-gs-editor"
@@ -79,11 +80,7 @@
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},
       "github_repository": {
-        "owner": "",
-        "name": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
+        "owner": "Omashu",
         "name": "rf-online-gs-editor"
       }
     }
@@ -94,6 +91,7 @@
     "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "babel-polyfill": "^6.26.0",
+    "bluebird": "^3.5.2",
     "classnames": "^2.2.6",
     "electron-compile": "^6.4.3",
     "electron-squirrel-startup": "^1.0.0",
@@ -133,9 +131,9 @@
     "babel-plugin-dynamic-import-node": "^2.1.0",
     "babel-plugin-styled-components": "^1.6.4",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.15",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",

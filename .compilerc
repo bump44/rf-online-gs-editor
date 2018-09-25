@@ -37,10 +37,11 @@
           "stage-0"
         ],
         "plugins": [
-          "transform-async-to-generator",
+          "transform-react-constant-elements",
+          "transform-react-pure-class-to-function",
           "transform-react-remove-prop-types",
           "transform-react-inline-elements",
-          "transform-react-constant-elements",
+          "transform-async-to-generator",
           "styled-components"
         ],
         "sourceMaps": "none"
