@@ -40,20 +40,23 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-  mainWindow.webContents.on('context-menu', (e, props) => {
-    const { x, y } = props;
+  if (isDevMode) {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
 
-    Menu.buildFromTemplate([
-      {
-        label: 'Inspect element',
-        click: () => {
-          mainWindow.inspectElement(x, y);
+    mainWindow.webContents.on('context-menu', (e, props) => {
+      const { x, y } = props;
+
+      Menu.buildFromTemplate([
+        {
+          label: 'Inspect element',
+          click: () => {
+            mainWindow.inspectElement(x, y);
+          },
         },
-      },
-    ]).popup(mainWindow);
-  });
+      ]).popup(mainWindow);
+    });
+  }
 
   // ready-to-show
   mainWindow.webContents.on('ready-to-show', () => {
