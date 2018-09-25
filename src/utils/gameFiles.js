@@ -1,5 +1,5 @@
-import pickBy from 'lodash/pickBy';
-import { FACE, UPPER, LOWER, GAUNTLET } from '../structs/item_types';
+import { pickBy, upperFirst } from 'lodash';
+import * as ITEM_TYPES from '../structs/item_types';
 
 // Client DataFiles
 export const FILE_TYPE_CLIENT = 'CLIENT';
@@ -49,35 +49,60 @@ export const FILES = {
     type: FILE_TYPE_CLIENT_ND,
     extensions: ['dat', 'edf'],
   },
-  'Script/FaceItem.dat': {
-    path: 'Script/FaceItem.dat',
+  // example
+  'Script/Firecracker.dat': {
+    path: 'Script/Firecracker.dat',
     resolve: RESOLVERS.SERVER_ITEM,
     type: FILE_TYPE_SERVER,
-    args: { type: FACE },
+    args: { type: ITEM_TYPES.FIRECRACKER },
     extensions: ['dat'],
   },
-  'Script/UpperItem.dat': {
-    path: 'Script/UpperItem.dat',
+  'Script/GuardTowerItem.dat': {
+    path: 'Script/GuardTowerItem.dat',
     resolve: RESOLVERS.SERVER_ITEM,
     type: FILE_TYPE_SERVER,
-    args: { type: UPPER },
-    extensions: ['dat'],
-  },
-  'Script/LowerItem.dat': {
-    path: 'Script/LowerItem.dat',
-    resolve: RESOLVERS.SERVER_ITEM,
-    type: FILE_TYPE_SERVER,
-    args: { type: LOWER },
-    extensions: ['dat'],
-  },
-  'Script/GauntletItem.dat': {
-    path: 'Script/GauntletItem.dat',
-    resolve: RESOLVERS.SERVER_ITEM,
-    type: FILE_TYPE_SERVER,
-    args: { type: GAUNTLET },
+    args: { type: ITEM_TYPES.TOWER },
     extensions: ['dat'],
   },
 };
+
+Object.values(ITEM_TYPES)
+  .filter(
+    type =>
+      [
+        ITEM_TYPES.UNK3,
+        ITEM_TYPES.COMBINEDATA,
+        ITEM_TYPES.MAUBULLET,
+        ITEM_TYPES.MAUARM,
+        ITEM_TYPES.MAUBACK,
+        ITEM_TYPES.MAUHEAD,
+        ITEM_TYPES.MAULOWER,
+        ITEM_TYPES.MAUSHOULDER,
+        ITEM_TYPES.MAUUPPER,
+        ITEM_TYPES.MAKEDATA,
+        ITEM_TYPES.PAGER,
+        ITEM_TYPES.CASHMINING,
+        ITEM_TYPES.FIRECRACKER,
+        ITEM_TYPES.DUNGEONKEY,
+        ITEM_TYPES.TOWER,
+      ].indexOf(type) === -1,
+  )
+  .forEach(type => {
+    const path = `Script/${upperFirst(type)}Item.dat`;
+
+    // check the presence, so that you do not accidentally overwrite existing ones with such a filling
+    if (FILES[path] !== undefined) {
+      throw new Error(`File by path ${path} already exists`);
+    }
+
+    FILES[path] = {
+      path,
+      resolve: RESOLVERS.SERVER_ITEM,
+      type: FILE_TYPE_SERVER,
+      args: { type },
+      extensions: ['dat'],
+    };
+  });
 
 // All of resolved client files
 export const CLIENT_FILES = pickBy(
