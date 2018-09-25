@@ -70,7 +70,6 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
           {isUnknown && (
             <DropdownItem
               selected
-              isUnknown
               text={
                 <span>
                   {isNumber(value) && `${value}: `}
