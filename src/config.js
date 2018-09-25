@@ -3,7 +3,7 @@ const DEV = {
 };
 
 const PROD = {
-  GRAPHQL_ENDPOINT: '',
+  GRAPHQL_ENDPOINT: 'http://localhost:3010/graphql',
 };
 
 export default (process.env.NODE_ENV !== 'production' ? DEV : PROD);
