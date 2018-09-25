@@ -19,6 +19,17 @@ export default gql`
         server {
           ...ProjectItemServerNameParts
         }
+        stores {
+          total
+          items {
+            id
+            client {
+              strStoreNPCname
+              strStoreNPClastName
+              strCode
+            }
+          }
+        }
       }
       total
     }
