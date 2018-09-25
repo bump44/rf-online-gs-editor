@@ -72,6 +72,10 @@ import Container from '../../components/Container';
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
+import FullheightColumn, {
+  FullheightThis,
+  FullheightAutoSizer,
+} from '../../components/FullheightColumn';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectImportPage extends React.Component {
@@ -402,7 +406,7 @@ export class ProjectImportPage extends React.Component {
                   projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
-              <Grid.Column largeScreen={13} widescreen={14}>
+              <FullheightColumn largeScreen={13} widescreen={14}>
                 <PageHeader>
                   <FormattedMessage
                     {...messages.header}
@@ -410,68 +414,76 @@ export class ProjectImportPage extends React.Component {
                   />
                 </PageHeader>
 
-                <Grid columns={2}>
-                  <Grid.Column>
-                    <PageHeader>
-                      <FormattedMessage {...messages.ClientFiles} />
-                    </PageHeader>
+                <FullheightThis>
+                  <FullheightAutoSizer>
+                    <Grid columns={2}>
+                      <Grid.Column>
+                        <PageHeader>
+                          <FormattedMessage {...messages.ClientFiles} />
+                        </PageHeader>
 
-                    <SegmentComments>
-                      <Comment.Group>
-                        {this.renderFiles(CLIENT_FILES)}
-                      </Comment.Group>
-                    </SegmentComments>
-                    <Segment>
-                      <FormattedMessage {...messages.clientHelpMessage} />
-                    </Segment>
+                        <SegmentComments>
+                          <Comment.Group>
+                            {this.renderFiles(CLIENT_FILES)}
+                          </Comment.Group>
+                        </SegmentComments>
+                        <Segment>
+                          <FormattedMessage {...messages.clientHelpMessage} />
+                        </Segment>
 
-                    <Button
-                      primary
-                      onClick={this.onClickStartAll}
-                      disabled={!this.isSomeReadyToStart()}
-                    >
-                      <Icon name="play" />
-                      <FormattedMessage {...messages.Start} />
-                    </Button>
+                        <Button
+                          primary
+                          onClick={this.onClickStartAll}
+                          disabled={!this.isSomeReadyToStart()}
+                        >
+                          <Icon name="play" />
+                          <FormattedMessage {...messages.Start} />
+                        </Button>
 
-                    <Button
-                      secondary
-                      onClick={this.onClickCancelAll}
-                      disabled={!this.isSomeStarted()}
-                    >
-                      <Icon name="stop" />
-                      <FormattedMessage {...messages.Cancel} />
-                    </Button>
+                        <Button
+                          secondary
+                          onClick={this.onClickCancelAll}
+                          disabled={!this.isSomeStarted()}
+                        >
+                          <Icon name="stop" />
+                          <FormattedMessage {...messages.Cancel} />
+                        </Button>
 
-                    <Select
-                      value={importType}
-                      onChange={fnChangeImportType}
-                      options={[
-                        {
-                          key: SKIP,
-                          value: SKIP,
-                          text: <FormattedMessage {...messages.SkipItems} />,
-                        },
-                        {
-                          key: REPLACE,
-                          value: REPLACE,
-                          text: <FormattedMessage {...messages.RewriteItems} />,
-                        },
-                      ]}
-                    />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <PageHeader>
-                      <FormattedMessage {...messages.ServerFiles} />
-                    </PageHeader>
-                    <SegmentComments>
-                      <Comment.Group>
-                        {this.renderFiles(SERVER_FILES)}
-                      </Comment.Group>
-                    </SegmentComments>
-                  </Grid.Column>
-                </Grid>
-              </Grid.Column>
+                        <Select
+                          value={importType}
+                          onChange={fnChangeImportType}
+                          options={[
+                            {
+                              key: SKIP,
+                              value: SKIP,
+                              text: (
+                                <FormattedMessage {...messages.SkipItems} />
+                              ),
+                            },
+                            {
+                              key: REPLACE,
+                              value: REPLACE,
+                              text: (
+                                <FormattedMessage {...messages.RewriteItems} />
+                              ),
+                            },
+                          ]}
+                        />
+                      </Grid.Column>
+                      <Grid.Column>
+                        <PageHeader>
+                          <FormattedMessage {...messages.ServerFiles} />
+                        </PageHeader>
+                        <SegmentComments>
+                          <Comment.Group>
+                            {this.renderFiles(SERVER_FILES)}
+                          </Comment.Group>
+                        </SegmentComments>
+                      </Grid.Column>
+                    </Grid>
+                  </FullheightAutoSizer>
+                </FullheightThis>
+              </FullheightColumn>
             </Grid>
           )}
         </Container>
