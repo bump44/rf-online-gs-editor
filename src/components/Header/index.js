@@ -43,12 +43,20 @@ class Header extends React.PureComponent {
 
     return (
       <Menu inverted color="violet">
-        <Menu.Item as={BrandLink} to="/" exact>
-          <BrandContent>
-            <FormattedMessage {...messages.brand} />
-            <BrandVersion>v{packagejson.version}</BrandVersion>
-          </BrandContent>
-        </Menu.Item>
+        <Popup
+          trigger={
+            <Menu.Item as={BrandLink} to="/" exact>
+              <BrandContent>
+                <FormattedMessage {...messages.brand} />
+                <BrandVersion>v{packagejson.version}</BrandVersion>
+              </BrandContent>
+            </Menu.Item>
+          }
+          content={process.env.NODE_ENV}
+          size="mini"
+          inverted
+        />
+
         <Menu.Item as={NavLink} to="/projects">
           <FormattedMessage {...messages.Projects} />
         </Menu.Item>
