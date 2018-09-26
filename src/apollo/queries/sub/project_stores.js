@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import ProjectStoreClientNameParts from '../../fragments/ProjectStoreClientNameParts';
+import ProjectStoreServerNameParts from '../../fragments/ProjectStoreServerNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
@@ -11,6 +12,10 @@ export default gql`
         client {
           ...ProjectStoreClientNameParts
         }
+
+        server {
+          ...ProjectStoreServerNameParts
+        }
       }
       total
     }
@@ -18,4 +23,5 @@ export default gql`
 
   # include fragments
   ${ProjectStoreClientNameParts}
+  ${ProjectStoreServerNameParts}
 `;
