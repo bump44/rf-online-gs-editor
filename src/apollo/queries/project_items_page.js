@@ -25,6 +25,10 @@ export default gql`
         total
       }
 
+      stores {
+        total
+      }
+
       moneyTypes(take: 50) {
         items {
           title

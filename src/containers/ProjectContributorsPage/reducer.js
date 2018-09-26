@@ -5,7 +5,10 @@
  */
 
 import { fromJS } from 'immutable';
-import { ANNOUNCE_PROJECT_COUNT_ITEMS } from '../App/constants';
+import {
+  ANNOUNCE_PROJECT_COUNT_ITEMS,
+  ANNOUNCE_PROJECT_COUNT_STORES,
+} from '../App/constants';
 
 import {
   DEFAULT_ACTION,
@@ -39,6 +42,13 @@ function projectContributorsPageReducer(state = initialState, action) {
         'project',
         state.getIn(['project', 'id']) === action.id
           ? state.get('project').setIn(['items', 'total'], action.count)
+          : state.get('project'),
+      );
+    case ANNOUNCE_PROJECT_COUNT_STORES:
+      return state.set(
+        'project',
+        state.getIn(['project', 'id']) === action.id
+          ? state.get('project').setIn(['stores', 'total'], action.count)
           : state.get('project'),
       );
     case DEFAULT_ACTION:

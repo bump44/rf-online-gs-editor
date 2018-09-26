@@ -7,10 +7,8 @@
 import React from 'react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import renderResolvers from './renderResolvers';
 
 function ProjectItem({
@@ -27,15 +25,18 @@ function ProjectItem({
 
   return (
     <div style={style}>
-      <Render
-        item={item}
-        itemNextValues={itemNextValues}
-        actions={actions}
-        moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
-        weaponTypes={weaponTypes}
-        localSettings={localSettings}
-      />
+      {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
+      {Render && (
+        <Render
+          item={item}
+          itemNextValues={itemNextValues}
+          actions={actions}
+          moneyTypes={moneyTypes}
+          itemGrades={itemGrades}
+          weaponTypes={weaponTypes}
+          localSettings={localSettings}
+        />
+      )}
     </div>
   );
 }

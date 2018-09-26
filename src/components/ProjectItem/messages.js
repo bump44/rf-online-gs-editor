@@ -11,6 +11,10 @@ export default defineMessages({
     id: 'app.components.ProjectItem.header',
     defaultMessage: 'This is the ProjectItem component !',
   },
+  RenderNotDefined: {
+    id: 'app.components.ProjectItem.RenderNotDefined',
+    defaultMessage: 'Render for this element not defined.',
+  },
   Exchange: {
     id: 'app.components.ProjectItem.Exchange',
     defaultMessage: 'Exchange',

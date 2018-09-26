@@ -22,6 +22,9 @@ export default gql`
       items {
         total
       }
+      stores {
+        total
+      }
     }
   }
 `;

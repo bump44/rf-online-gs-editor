@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
-import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
+import ProjectItemClientNameParts from '../../fragments/ProjectItemClientNameParts';
+import ProjectItemServerNameParts from '../../fragments/ProjectItemServerNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {

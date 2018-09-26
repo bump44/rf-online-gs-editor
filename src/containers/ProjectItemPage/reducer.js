@@ -13,7 +13,10 @@ import {
   CHANGE_PROJECT_ITEM,
 } from './constants';
 
-import { ANNOUNCE_PROJECT_COUNT_ITEMS } from '../App/constants';
+import {
+  ANNOUNCE_PROJECT_COUNT_ITEMS,
+  ANNOUNCE_PROJECT_COUNT_STORES,
+} from '../App/constants';
 
 export const initialState = fromJS({
   id: '',
@@ -45,6 +48,13 @@ function projectItemPageReducer(state = initialState, action) {
         'project',
         state.getIn(['project', 'id']) === action.id
           ? state.get('project').setIn(['items', 'total'], action.count)
+          : state.get('project'),
+      );
+    case ANNOUNCE_PROJECT_COUNT_STORES:
+      return state.set(
+        'project',
+        state.getIn(['project', 'id']) === action.id
+          ? state.get('project').setIn(['stores', 'total'], action.count)
           : state.get('project'),
       );
     case DEFAULT_ACTION:

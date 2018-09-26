@@ -14,6 +14,14 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
 
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+
+import * as projectItem from '../App/getters/projectItem';
+import { projectsItemsBindActions } from '../App/actions';
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
@@ -21,18 +29,11 @@ import {
   makeSelectLocalSettings,
 } from '../App/selectors';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-
+import { changeId } from './actions';
 import makeSelectProjectItemPage, {
   makeSelectProject,
   makeSelectProjectItem,
 } from './selectors';
-
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { changeId } from './actions';
 
 import Header from '../../components/Header';
 import Container from '../../components/Container';
@@ -40,12 +41,12 @@ import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
 } from '../../components/FullheightColumn';
+
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
 import ProjectItem from '../../components/ProjectItem';
 import ProjectItemLabelDetail from '../../components/ProjectItemLabelDetail';
-import { projectsItemsBindActions } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemPage extends React.PureComponent {
@@ -82,28 +83,7 @@ export class ProjectItemPage extends React.PureComponent {
       Map({}),
     );
 
-    const nextValue = projectNextValues.getIn([
-      'nextValue',
-      'clientNd',
-      'strName',
-    ]);
-
-    const currValue = currentProjectItem.getIn(
-      [
-        ['priorStrName'],
-        ['clientNd', 'strName'],
-        ['client', 'strName'],
-        ['serverStr', 'strNameEN'],
-        ['serverStr', 'strNameGLOBAL'],
-        ['server', 'strName'],
-      ].find(fieldSets => currentProjectItem.getIn(fieldSets) !== undefined) ||
-        'priorStrName',
-      '',
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-
-    return value;
+    return projectItem.getName(projectNextValues, { item: currentProjectItem });
   }
 
   render() {

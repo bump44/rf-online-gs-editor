@@ -1,17 +1,37 @@
 import max from 'lodash/max';
+import { isNullOrUndefined } from 'util';
 import { DEFAULT_STORAGE_PRICE_PERCENT } from '../constants';
+
+export const getName = (nextValues, { item }) => {
+  const nextValue = nextValues.getIn(['nextValue', 'clientNd', 'strName']);
+
+  const currValue = item.getIn(
+    [
+      ['priorStrName'],
+      ['clientNd', 'strName'],
+      ['client', 'strName'],
+      ['serverStr', 'strNameEN'],
+      ['serverStr', 'strNameGLOBAL'],
+      ['server', 'strName'],
+    ].find(fieldSets => !isNullOrUndefined(item.getIn(fieldSets))) ||
+      'priorStrName',
+    '',
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
 
 export const getMoneyType = (nextValues, { item, moneyTypes }) => {
   const nextValue = nextValues.getIn(['server', 'nMoney']);
 
   const currValue = item.getIn(
     [['server', 'nMoney'], ['client', 'nMoney']].find(
-      fieldSets => item.getIn(fieldSets) !== undefined,
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
     ) || ['server', 'nMoney'],
     0,
   );
 
-  const value = nextValue !== undefined ? nextValue : currValue;
+  const value = !isNullOrUndefined(nextValue) ? nextValue : currValue;
 
   return moneyTypes.find(val => val.get('value') === value);
 };
@@ -29,7 +49,7 @@ export const getMoneyValue = (nextValues, { item, moneyTypes }) => {
     [
       ['server', moneyType.get('fieldName')],
       ['client', moneyType.get('fieldName')],
-    ].find(fieldSets => item.getIn(fieldSets) !== undefined) || [
+    ].find(fieldSets => !isNullOrUndefined(item.getIn(fieldSets))) || [
       'server',
       moneyType.get('fieldName'),
     ],
@@ -37,7 +57,7 @@ export const getMoneyValue = (nextValues, { item, moneyTypes }) => {
   );
 
   const value =
-    parseInt(nextValue !== undefined ? nextValue : currValue, 10) || 0;
+    parseInt(!isNullOrUndefined(nextValue) ? nextValue : currValue, 10) || 0;
 
   return value;
 };
@@ -73,12 +93,14 @@ export const getStoragePrice = (nextValues, { item }) => {
 
   const currValue = item.getIn(
     [['server', 'nStoragePrice'], ['client', 'nStoragePrice']].find(
-      fieldSets => item.getIn(fieldSets) !== undefined,
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
     ) || ['server', 'nStoragePrice'],
     0,
   );
 
-  return parseInt(nextValue !== undefined ? nextValue : currValue, 10) || 0;
+  return (
+    parseInt(!isNullOrUndefined(nextValue) ? nextValue : currValue, 10) || 0
+  );
 };
 
 export const getStoragePricePercent = (

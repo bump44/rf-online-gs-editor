@@ -1,7 +1,7 @@
 import { take, call, put, all, fork } from 'redux-saga/effects';
 import { CHANGE_ID } from './constants';
 import apolloClient from '../../apollo';
-import projectQuery from '../../apollo/queries/project';
+import projectImportPageQuery from '../../apollo/queries/project_import_page';
 import {
   changeErrorMessage,
   changeIsError,
@@ -19,7 +19,7 @@ export function* changeId({ id }) {
 
   try {
     const result = yield call(apolloClient.query, {
-      query: projectQuery,
+      query: projectImportPageQuery,
       variables: { id },
     });
 
