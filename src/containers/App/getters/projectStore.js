@@ -19,4 +19,16 @@ export const getName = (nextValues, { item }) => {
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getLastName = () => '';
+export const getLastName = (nextValues, { item }) => {
+  const nextValue =
+    nextValues && nextValues.getIn(['client', 'strStoreNPClastName']);
+
+  const currValue = item.getIn(
+    [['client', 'strStoreNPClastName']].find(
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+    ) || ['client', 'strStoreNPClastName'],
+    '',
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
