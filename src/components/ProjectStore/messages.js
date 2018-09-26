@@ -11,4 +11,8 @@ export default defineMessages({
     id: 'app.components.ProjectStore.header',
     defaultMessage: 'This is the ProjectStore component !',
   },
+  UseAngle: {
+    id: 'app.components.ProjectStore.UseAngle',
+    defaultMessage: 'Use angle',
+  },
 });
