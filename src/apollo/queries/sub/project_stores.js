@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import ProjectStoreClientNameParts from '../../fragments/ProjectStoreClientNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
@@ -8,10 +9,13 @@ export default gql`
         nIndex
 
         client {
-          strStoreNPCname
+          ...ProjectStoreClientNameParts
         }
       }
       total
     }
   }
+
+  # include fragments
+  ${ProjectStoreClientNameParts}
 `;
