@@ -27,6 +27,7 @@ export const RESOLVERS = {
   CLIENT_ITEM_ND: 'clientItemND',
   CLIENT_STORE: 'clientStoreResolve',
   SERVER_ITEM: 'serverItemResolve',
+  SERVER_STORE: 'serverStoreResolve',
 };
 
 // All of resolved files
@@ -50,6 +51,12 @@ export const FILES = {
     extensions: ['dat', 'edf'],
   },
   // example
+  'Script/StoreList.dat': {
+    path: 'Script/StoreList.dat',
+    resolve: RESOLVERS.SERVER_STORE,
+    type: FILE_TYPE_SERVER,
+    extensions: ['dat'],
+  },
   'Script/Firecracker.dat': {
     path: 'Script/Firecracker.dat',
     resolve: RESOLVERS.SERVER_ITEM,
