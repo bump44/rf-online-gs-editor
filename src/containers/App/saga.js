@@ -1,7 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 import projectImportSaga from './sagas/projectImportSaga';
-import projectItemSaga from './sagas/projectItemSaga';
+import projectNextValueSaga from './sagas/projectNextValueSaga';
 
 export default function* defaultSaga() {
-  yield all([fork(projectImportSaga), fork(projectItemSaga)]);
+  yield all([fork(projectImportSaga), fork(projectNextValueSaga)]);
 }
