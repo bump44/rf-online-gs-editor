@@ -34,6 +34,9 @@ export const PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE =
   'global/PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE';
 
 // constants
+export const ITEM = 'ITEM';
+export const STORE = 'STORE';
+
 export const SKIP = 'skip';
 export const REPLACE = 'replace';
 export const WAITING = 'waiting';

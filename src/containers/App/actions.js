@@ -17,6 +17,8 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE,
   SKIP,
+  ITEM,
+  STORE,
 } from './constants';
 
 /**
@@ -161,6 +163,7 @@ export function projectsNextValuesChangePropValue({
   propKey,
   propValue,
   additionalData = {},
+  subType,
 }) {
   return {
     type: PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
@@ -169,6 +172,7 @@ export function projectsNextValuesChangePropValue({
     propKey,
     propValue,
     additionalData,
+    subType,
   };
 }
 
@@ -215,7 +219,7 @@ export function projectsNextValuesChangeErrorMessage(
 }
 
 export function projectsNextValuesChangeNextValue(
-  { projectId, keyId },
+  { projectId, keyId, subType },
   nextValue,
 ) {
   return {
@@ -223,6 +227,7 @@ export function projectsNextValuesChangeNextValue(
     projectId,
     keyId,
     nextValue,
+    subType,
   };
 }
 
@@ -264,6 +269,7 @@ export const projectsItems = {
       fns[`change${upperFirst(propKey)}`] = args =>
         projectsNextValuesChangePropValue({
           ...args,
+          subType: ITEM,
           propKey,
         });
     });
@@ -281,6 +287,52 @@ export const projectsItemsBindActions = ({
   const nextFns = {};
   projectsItemsActionNames.forEach(actionKey => {
     const actionFn = projectsItems[actionKey];
+    nextFns[actionKey] = (item, propValue, someAdditionalData = {}) =>
+      dispatch(
+        actionFn({
+          projectId,
+          item,
+          propValue,
+          additionalData: {
+            ...additionalData,
+            ...someAdditionalData,
+          },
+        }),
+      );
+  });
+  return nextFns;
+};
+
+/**
+ * ProjectsStores Actions
+ */
+export const projectsStores = {
+  // generated actions eq. changeName, changeItemGrade
+  ...(() => {
+    const propKeys = ['name'];
+    const fns = {};
+    propKeys.forEach(propKey => {
+      fns[`change${upperFirst(propKey)}`] = args =>
+        projectsNextValuesChangePropValue({
+          ...args,
+          subType: STORE,
+          propKey,
+        });
+    });
+    return fns;
+  })(),
+};
+
+export const projectsStoresActionNames = Object.keys(projectsStores);
+
+export const projectsStoresBindActions = ({
+  projectId,
+  additionalData = {},
+  dispatch = args => args,
+}) => {
+  const nextFns = {};
+  projectsStoresActionNames.forEach(actionKey => {
+    const actionFn = projectsStores[actionKey];
     nextFns[actionKey] = (item, propValue, someAdditionalData = {}) =>
       dispatch(
         actionFn({
