@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
-import { Grid, Label } from 'semantic-ui-react';
+import { Grid, Label, Transition } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
@@ -79,18 +79,20 @@ class ProjectItemRowRender extends React.PureComponent {
                 }
               />
 
-              {bUseAngle && (
-                <ProjectStoreInteractingAngle
-                  item={item}
-                  itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeAngle}
-                  label={
-                    <Label>
-                      <FormattedMessage {...messages.Angle} />
-                    </Label>
-                  }
-                />
-              )}
+              <Transition visible={bUseAngle} animation="scale" duration={500}>
+                <div>
+                  <ProjectStoreInteractingAngle
+                    item={item}
+                    itemNextValues={itemNextValues}
+                    onChangeValue={actions.changeAngle}
+                    label={
+                      <Label>
+                        <FormattedMessage {...messages.Angle} />
+                      </Label>
+                    }
+                  />
+                </div>
+              </Transition>
             </Grid.Column>
           </Grid>
         </Grid.Column>
