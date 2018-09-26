@@ -6,11 +6,8 @@ export const getName = (nextValues, { item }) => {
   const currValue = item.getIn(
     [
       ['priorStrName'],
-      ['clientNd', 'strName'],
       ['client', 'strStoreNPCname'],
-      ['serverStr', 'strNameEN'],
-      ['serverStr', 'strNameGLOBAL'],
-      ['server', 'strName'],
+      ['server', 'strStoreNPCname'],
     ].find(fieldSets => !isNullOrUndefined(item.getIn(fieldSets))) ||
       'priorStrName',
     '',
@@ -37,9 +34,9 @@ export const getTrade = (nextValues, { item }) => {
   const nextValue = nextValues && nextValues.getIn(['client', 'nStoreTrade']);
 
   const currValue = item.getIn(
-    [['client', 'nStoreTrade']].find(
+    [['server', 'nStoreTrade'], ['client', 'nStoreTrade']].find(
       fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
-    ) || ['client', 'nStoreTrade'],
+    ) || ['server', 'nStoreTrade'],
     0,
   );
 
