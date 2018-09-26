@@ -8,7 +8,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { Grid } from 'semantic-ui-react';
-// import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
