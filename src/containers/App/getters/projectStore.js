@@ -32,3 +32,56 @@ export const getLastName = (nextValues, { item }) => {
 
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
+
+export const getTrade = (nextValues, { item }) => {
+  const nextValue = nextValues && nextValues.getIn(['client', 'nStoreTrade']);
+
+  const currValue = item.getIn(
+    [['client', 'nStoreTrade']].find(
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+    ) || ['client', 'nStoreTrade'],
+    0,
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getUseAngle = (nextValues, { item }) => {
+  const nextValue = nextValues && nextValues.getIn(['client', 'bSetNPCangle']);
+
+  const currValue = item.getIn(
+    [['client', 'bSetNPCangle']].find(
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+    ) || ['client', 'bSetNPCangle'],
+    false,
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getSize = (nextValues, { item }) => {
+  const nextValue = nextValues && nextValues.getIn(['client', 'fStoreNPCsize']);
+
+  const currValue = item.getIn(
+    [['client', 'fStoreNPCsize']].find(
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+    ) || ['client', 'fStoreNPCsize'],
+    1,
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getAngle = (nextValues, { item }) => {
+  const nextValue =
+    nextValues && nextValues.getIn(['client', 'fStoreNPCangle']);
+
+  const currValue = item.getIn(
+    [['client', 'fStoreNPCangle']].find(
+      fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+    ) || ['client', 'fStoreNPCangle'],
+    0,
+  );
+
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
