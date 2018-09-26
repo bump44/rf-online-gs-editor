@@ -309,7 +309,7 @@ export const projectsItemsBindActions = ({
 export const projectsStores = {
   // generated actions eq. changeName, changeItemGrade
   ...(() => {
-    const propKeys = ['name'];
+    const propKeys = ['name', 'lastName', 'trade', 'useAngle', 'size', 'angle'];
     const fns = {};
     propKeys.forEach(propKey => {
       fns[`change${upperFirst(propKey)}`] = args =>
