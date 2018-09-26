@@ -3,7 +3,7 @@ import { isNullOrUndefined } from 'util';
 import { DEFAULT_STORAGE_PRICE_PERCENT } from '../constants';
 
 export const getName = (nextValues, { item }) => {
-  const nextValue = nextValues.getIn(['nextValue', 'clientNd', 'strName']);
+  const nextValue = nextValues && nextValues.getIn(['clientNd', 'strName']);
 
   const currValue = item.getIn(
     [
@@ -22,7 +22,7 @@ export const getName = (nextValues, { item }) => {
 };
 
 export const getMoneyType = (nextValues, { item, moneyTypes }) => {
-  const nextValue = nextValues.getIn(['server', 'nMoney']);
+  const nextValue = nextValues && nextValues.getIn(['server', 'nMoney']);
 
   const currValue = item.getIn(
     [['server', 'nMoney'], ['client', 'nMoney']].find(
@@ -43,7 +43,8 @@ export const getMoneyValue = (nextValues, { item, moneyTypes }) => {
     return 0;
   }
 
-  const nextValue = nextValues.getIn(['server', moneyType.get('fieldName')]);
+  const nextValue =
+    nextValues && nextValues.getIn(['server', moneyType.get('fieldName')]);
 
   const currValue = item.getIn(
     [
@@ -89,7 +90,7 @@ export const getMoneyValueByPercent = (
 };
 
 export const getStoragePrice = (nextValues, { item }) => {
-  const nextValue = nextValues.getIn(['server', 'nStoragePrice']);
+  const nextValue = nextValues && nextValues.getIn(['server', 'nStoragePrice']);
 
   const currValue = item.getIn(
     [['server', 'nStoragePrice'], ['client', 'nStoragePrice']].find(
