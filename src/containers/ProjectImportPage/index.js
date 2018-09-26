@@ -414,6 +414,49 @@ export class ProjectImportPage extends React.Component {
                   />
                 </PageHeader>
 
+                <div>
+                  <Segment floated="left">
+                    <Button
+                      primary
+                      onClick={this.onClickStartAll}
+                      disabled={!this.isSomeReadyToStart()}
+                    >
+                      <Icon name="play" />
+                      <FormattedMessage {...messages.Start} />
+                    </Button>
+
+                    <Button
+                      secondary
+                      onClick={this.onClickCancelAll}
+                      disabled={!this.isSomeStarted()}
+                    >
+                      <Icon name="stop" />
+                      <FormattedMessage {...messages.Cancel} />
+                    </Button>
+
+                    <Select
+                      value={importType}
+                      onChange={fnChangeImportType}
+                      options={[
+                        {
+                          key: SKIP,
+                          value: SKIP,
+                          text: <FormattedMessage {...messages.SkipItems} />,
+                        },
+                        {
+                          key: REPLACE,
+                          value: REPLACE,
+                          text: <FormattedMessage {...messages.RewriteItems} />,
+                        },
+                      ]}
+                    />
+                  </Segment>
+
+                  <Segment floated="left" inverted>
+                    <FormattedMessage {...messages.clientHelpMessage} />
+                  </Segment>
+                </div>
+
                 <FullheightThis>
                   <FullheightAutoSizer>
                     <Grid columns={2}>
@@ -427,48 +470,6 @@ export class ProjectImportPage extends React.Component {
                             {this.renderFiles(CLIENT_FILES)}
                           </Comment.Group>
                         </SegmentComments>
-                        <Segment>
-                          <FormattedMessage {...messages.clientHelpMessage} />
-                        </Segment>
-
-                        <Button
-                          primary
-                          onClick={this.onClickStartAll}
-                          disabled={!this.isSomeReadyToStart()}
-                        >
-                          <Icon name="play" />
-                          <FormattedMessage {...messages.Start} />
-                        </Button>
-
-                        <Button
-                          secondary
-                          onClick={this.onClickCancelAll}
-                          disabled={!this.isSomeStarted()}
-                        >
-                          <Icon name="stop" />
-                          <FormattedMessage {...messages.Cancel} />
-                        </Button>
-
-                        <Select
-                          value={importType}
-                          onChange={fnChangeImportType}
-                          options={[
-                            {
-                              key: SKIP,
-                              value: SKIP,
-                              text: (
-                                <FormattedMessage {...messages.SkipItems} />
-                              ),
-                            },
-                            {
-                              key: REPLACE,
-                              value: REPLACE,
-                              text: (
-                                <FormattedMessage {...messages.RewriteItems} />
-                              ),
-                            },
-                          ]}
-                        />
                       </Grid.Column>
                       <Grid.Column>
                         <PageHeader>
