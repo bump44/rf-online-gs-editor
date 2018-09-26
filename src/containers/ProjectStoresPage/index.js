@@ -30,7 +30,14 @@ import {
 } from '../App/selectors';
 
 import { logoutCurrentUser, projectsStoresBindActions } from '../App/actions';
-import { changeId, resetResult, changeFilterTakeSkip } from './actions';
+import {
+  changeId,
+  resetResult,
+  changeFilterTakeSkip,
+  changeFilterSortBy,
+  changeFilterSortWay,
+  changeFilterWhereSearch,
+} from './actions';
 
 import makeSelectProjectStoresPage, {
   makeSelectProject,
@@ -51,6 +58,7 @@ import FullheightColumn, {
 } from '../../components/FullheightColumn';
 import InfiniteAutoSizeList from '../../components/InfiniteAutoSizeList';
 import ProjectStoreVirtualizedRow from '../../components/ProjectStoreVirtualizedRow';
+import ProjectStoresFilters from '../../components/ProjectStoresFilters';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStoresPage extends React.Component {
@@ -158,6 +166,10 @@ export class ProjectStoresPage extends React.Component {
       fnLogoutCurrentUser,
       projectStoresPage,
       result,
+      filter,
+      fnChangeFilterSortBy,
+      fnChangeFilterSortWay,
+      fnChangeFilterWhereSearch,
     } = this.props;
 
     const {
@@ -212,6 +224,15 @@ export class ProjectStoresPage extends React.Component {
                   />
                 </PageHeader>
 
+                <ProjectStoresFilters
+                  sortBy={filter.get('sortBy')}
+                  sortWay={filter.get('sortWay')}
+                  whereSearch={filter.getIn(['where', 'search'])}
+                  onChangeSortBy={fnChangeFilterSortBy}
+                  onChangeSortWay={fnChangeFilterSortWay}
+                  onChangeWhereSearch={fnChangeFilterWhereSearch}
+                />
+
                 <FullheightThis>
                   <InfiniteAutoSizeList
                     isRowLoaded={this.isRowLoaded}
@@ -261,6 +282,10 @@ function mapDispatchToProps(dispatch) {
     fnResetResult: () => dispatch(resetResult()),
     fnChangeFilterTakeSkip: (take, skip) =>
       dispatch(changeFilterTakeSkip(take, skip)),
+    fnChangeFilterSortBy: sortBy => dispatch(changeFilterSortBy(sortBy)),
+    fnChangeFilterSortWay: sortWay => dispatch(changeFilterSortWay(sortWay)),
+    fnChangeFilterWhereSearch: whereSearch =>
+      dispatch(changeFilterWhereSearch(whereSearch)),
   };
 }
 
