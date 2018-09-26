@@ -79,7 +79,7 @@ export class ProjectItemPage extends React.PureComponent {
     } = this.props;
 
     const projectNextValues = projectsNextValues.getIn(
-      [currentProject.get('id'), currentProjectItem.get('id')],
+      [currentProject.get('id'), currentProjectItem.get('id'), 'nextValue'],
       Map({}),
     );
 
