@@ -10,6 +10,7 @@ import { Map /* , List */ } from 'immutable';
 import { Grid } from 'semantic-ui-react';
 
 import ProjectStoreInteractingName from '../../ProjectStore/Interacting/Name';
+import ProjectStoreInteractingLastName from '../../ProjectStore/Interacting/LastName';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRender extends React.PureComponent {
@@ -23,7 +24,12 @@ class ProjectItemRowRender extends React.PureComponent {
             item={item}
             itemNextValues={itemNextValues}
             onChangeValue={actions.changeName}
-            className="pb-10"
+            className="pb-5"
+          />
+          <ProjectStoreInteractingLastName
+            item={item}
+            itemNextValues={itemNextValues}
+            onChangeValue={actions.changeName}
           />
         </Grid.Column>
       </Grid>
