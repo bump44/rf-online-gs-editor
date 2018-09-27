@@ -17,8 +17,41 @@ import * as itemTypes from '../../structs/item_types';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemTypeSelect extends React.PureComponent {
-  render() {
+  constructor(props) {
+    super(props);
+    this.renderWithMessage = this.renderWithMessage.bind(this);
+  }
+
+  renderWithMessage(message) {
     const { onChange, value } = this.props;
+
+    return (
+      <Dropdown inline labeled scrolling item floating text={message}>
+        <Dropdown.Menu>
+          <Dropdown.Item
+            value=""
+            onClick={onChange}
+            selected={!value}
+            text={<FormattedMessage {...messages.All} />}
+          />
+          {map(itemTypes, (type, key) => (
+            <Dropdown.Item
+              value={type}
+              key={key}
+              onClick={onChange}
+              selected={type === value}
+              text={
+                <ProjectItemTypeLocaleMessage messageKey={type} upperFirst />
+              }
+            />
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  }
+
+  render() {
+    const { value } = this.props;
 
     const MessageComponent = !value
       ? FormattedMessage
@@ -30,32 +63,7 @@ class ProjectItemTypeSelect extends React.PureComponent {
 
     return (
       <MessageComponent {...MessageComponentProps}>
-        {message => (
-          <Dropdown scrolling inline floating text={message}>
-            <Dropdown.Menu>
-              <Dropdown.Item
-                value=""
-                onClick={onChange}
-                selected={!value}
-                text={<FormattedMessage {...messages.All} />}
-              />
-              {map(itemTypes, (type, key) => (
-                <Dropdown.Item
-                  value={type}
-                  key={key}
-                  onClick={onChange}
-                  selected={type === value}
-                  text={
-                    <ProjectItemTypeLocaleMessage
-                      messageKey={type}
-                      upperFirst
-                    />
-                  }
-                />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
+        {this.renderWithMessage}
       </MessageComponent>
     );
   }
