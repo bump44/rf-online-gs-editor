@@ -9,6 +9,10 @@ export default gql`
         id
         nIndex
 
+        project {
+          id
+        }
+
         client {
           ...ProjectStoreClientNameParts
         }
