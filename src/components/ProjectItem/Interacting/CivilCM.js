@@ -64,5 +64,4 @@ ProjectItemInteractingCivilCM.defaultProps = {
   className: '',
 };
 
-
 export default ProjectItemInteractingCivilCM;
