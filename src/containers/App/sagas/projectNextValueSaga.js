@@ -39,14 +39,14 @@ import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
 
-const WorkersSave = {};
+const Workers = {};
 
-export const Resolvers = {
+const Resolvers = {
   [ITEM]: itemResolvers,
   [STORE]: storeResolvers,
 };
 
-export const MutationUpdateQueries = {
+const MutationUpdateQueries = {
   [ITEM]: projectItemUpdate,
   [STORE]: projectStoreUpdate,
 };
@@ -124,7 +124,7 @@ export function* changeProp({
   }
 }
 
-export function* workerSave({ projectId, keyId, subType }) {
+export function* worker({ projectId, keyId, subType }) {
   yield delay(1500); // delay before start mutation
   const callAction = (action, value) => action({ projectId, keyId }, value);
 
@@ -133,7 +133,7 @@ export function* workerSave({ projectId, keyId, subType }) {
     const state = projectsNextValues.getIn([projectId, keyId]);
 
     // exit if state empty or already saved
-    if (!state || state.get('isSaved')) {
+    if (!state || !state.get('nextValue') || state.get('isSaved')) {
       return;
     }
 
@@ -170,6 +170,9 @@ export function* workerSave({ projectId, keyId, subType }) {
   }
 }
 
+/**
+ * Watch `PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE` action & create fork to change data in nextValue state
+ */
 export function* watchChangeProp() {
   while (true) {
     const props = yield take(PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE);
@@ -177,18 +180,21 @@ export function* watchChangeProp() {
   }
 }
 
+/**
+ * Watch `PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE` action & create fork to save data
+ */
 export function* watchChangeValue() {
   while (true) {
     const props = yield take(PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE);
     const { projectId, keyId } = props;
     const mainKey = `${projectId}:${keyId}`;
 
-    if (WorkersSave[mainKey]) {
-      yield cancel(WorkersSave[mainKey]);
-      WorkersSave[mainKey] = undefined;
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
     }
 
-    WorkersSave[mainKey] = yield fork(workerSave, props);
+    Workers[mainKey] = yield fork(worker, props);
   }
 }
 
