@@ -82,3 +82,36 @@ export const getAngle = (nextValues, { item }) => {
 
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
+
+export const getItemListClientType = (nextValues, { item }, { n = 1 }) => {
+  const nextValue =
+    nextValues && nextValues.getIn(['client', `nItemListType__${n}_1`]);
+  const currValue = item.getIn(['client', `nItemListType__${n}_1`]);
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getItemListClientCode = (nextValues, { item }, { n = 1 }) => {
+  const nextValue =
+    nextValues && nextValues.getIn(['client', `strItemList__${n}_2`]);
+  const currValue = item.getIn(['client', `strItemList__${n}_2`], '');
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getItemListServerCode = (nextValues, { item }, { n = 1 }) => {
+  const nextValue =
+    nextValues && nextValues.getIn(['server', `strItemCode__${n}`]);
+  const currValue = item.getIn(['server', `strItemCode__${n}`], '');
+  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getItemList = (...props) => ({
+  clientType: getItemListClientType(...props),
+  clientCode: getItemListClientCode(...props),
+  serverCode: getItemListServerCode(...props),
+  n: props[2].n,
+});
+
+export const getItemsList = (nextValues, { item }) =>
+  Array.from(Array(200)).map((_, index) =>
+    getItemList(nextValues, { item }, { n: index + 1 }),
+  );
