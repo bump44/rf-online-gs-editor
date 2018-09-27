@@ -15,4 +15,20 @@ export default defineMessages({
     id: 'app.components.ProjectStore.UseAngle',
     defaultMessage: 'Use angle',
   },
+  Trade: {
+    id: 'app.components.ProjectStore.Trade',
+    defaultMessage: 'Vendor trade type',
+  },
+  Size: {
+    id: 'app.components.ProjectStore.Size',
+    defaultMessage: 'Vendor size',
+  },
+  Angle: {
+    id: 'app.components.ProjectStore.Angle',
+    defaultMessage: 'Vendor angle',
+  },
+  Items: {
+    id: 'app.components.ProjectStore.Items',
+    defaultMessage: 'Items',
+  },
 });
