@@ -1,4 +1,4 @@
-import { forEach } from 'lodash';
+import { forEach, findKey } from 'lodash';
 import * as ITEM_TYPES from './item_types';
 
 export const PREFIXES = {
@@ -143,6 +143,9 @@ export const CONV_DECIMALS = {
 };
 
 export const getFiniteByTypeName = type => FINITES[type];
+export const getTypeNameByFinite = finite =>
+  findKey(FINITES, val => val === finite);
+
 export const getPrefixByTypeName = type => PREFIXES[type];
 export const getTypeNamesByPrefix = prefix => {
   const types = [];
