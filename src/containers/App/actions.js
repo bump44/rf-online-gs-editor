@@ -321,6 +321,12 @@ export const projectsStores = {
     });
     return fns;
   })(),
+  itemListRemove: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'itemListRemove',
+    }),
 };
 
 export const projectsStoresActionNames = Object.keys(projectsStores);
