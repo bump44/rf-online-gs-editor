@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Promise from 'bluebird';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -41,9 +40,6 @@ import {
 
 import makeSelectProjectStoresPage, {
   makeSelectProject,
-  makeSelectProjectMoneyTypes,
-  makeSelectProjectItemGrades,
-  makeSelectProjectWeaponTypes,
   makeSelectResult,
   makeSelectFilter,
 } from './selectors';
@@ -59,6 +55,7 @@ import FullheightColumn, {
 import InfiniteAutoSizeList from '../../components/InfiniteAutoSizeList';
 import ProjectStoreVirtualizedRow from '../../components/ProjectStoreVirtualizedRow';
 import ProjectStoresFilters from '../../components/ProjectStoresFilters';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStoresPage extends React.Component {
@@ -67,6 +64,7 @@ export class ProjectStoresPage extends React.Component {
     this.isRowLoaded = this.isRowLoaded.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
     this.loadMoreRows = this.loadMoreRows.bind(this);
+    this.getActionsBindPayload = this.getActionsBindPayload.bind(this);
   }
 
   componentWillMount() {
@@ -104,6 +102,36 @@ export class ProjectStoresPage extends React.Component {
     }
   }
 
+  getActionsBindPayload() {
+    const { dispatch, match, currentProject } = this.props;
+    const additionalData = (() => {
+      if (!currentProject) {
+        return {};
+      }
+
+      return {
+        moneyTypes: currentProject.getIn(
+          ['moneyTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        itemGrades: currentProject.getIn(
+          ['itemGrades', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        weaponTypes: currentProject.getIn(
+          ['weaponTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+      };
+    })();
+
+    return {
+      dispatch,
+      projectId: match.params.id,
+      additionalData,
+    };
+  }
+
   isRowLoaded({ index }) {
     const { result } = this.props;
     return !!result.get('items').get(index);
@@ -114,38 +142,31 @@ export class ProjectStoresPage extends React.Component {
       result,
       currentProject,
       projectsNextValues,
-      projectMoneyTypes,
-      projectItemGrades,
-      projectWeaponTypes,
       localSettings,
-      match,
-      dispatch,
     } = this.props;
 
-    const fnProjectItemsActions = projectsStoresBindActions({
-      dispatch,
-      projectId: match.params.id,
-      /* eslint-disable indent */
-      additionalData: currentProject
-        ? {
-            moneyTypes: projectMoneyTypes,
-            itemGrades: projectItemGrades,
-            weaponTypes: projectWeaponTypes,
-          }
-        : {},
-      /* eslint-enable indent */
-    });
+    const actionsBindPayload = this.getActionsBindPayload();
+    const {
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+    } = actionsBindPayload.additionalData;
+
+    const storeActions = projectsStoresBindActions(actionsBindPayload);
+    const nextValues =
+      currentProject &&
+      projectsNextValues.get(currentProject.get('id'), IMMUTABLE_MAP);
 
     return (
       <ProjectStoreVirtualizedRow
         {...props}
         key={key}
-        items={result.get('items')}
-        nextValues={projectsNextValues.get(currentProject.get('id'), Map({}))}
-        actions={fnProjectItemsActions}
-        moneyTypes={projectMoneyTypes}
-        itemGrades={projectItemGrades}
-        weaponTypes={projectWeaponTypes}
+        stores={result.get('items')}
+        nextValues={nextValues}
+        storeActions={storeActions}
+        moneyTypes={moneyTypes}
+        itemGrades={itemGrades}
+        weaponTypes={weaponTypes}
         localSettings={localSettings}
       />
     );
@@ -266,9 +287,6 @@ const mapStateToProps = createStructuredSelector({
   currentUser: makeSelectCurrentUser(),
   currentProject: makeSelectProject(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
-  projectMoneyTypes: makeSelectProjectMoneyTypes(),
-  projectItemGrades: makeSelectProjectItemGrades(),
-  projectWeaponTypes: makeSelectProjectWeaponTypes(),
   projectsNextValues: makeSelectProjectsNextValues(),
   result: makeSelectResult(),
   filter: makeSelectFilter(),
