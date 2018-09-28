@@ -16,7 +16,7 @@ Object.values(ITEM_TYPES).forEach(type => {
       type
     ] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
   } catch (err) {
-    console.error(err); // eslint-disable-line
+    console.warn(err); // eslint-disable-line
   }
 });
 
