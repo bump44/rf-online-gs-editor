@@ -16,15 +16,23 @@ class ProjectStoreInteractingAngle extends React.PureComponent {
     super(props);
 
     this.changeValue = evt => {
-      const { onChangeValue, item } = this.props;
-      onChangeValue(item, parseFloat(evt.target.value) || 1);
+      const { onChangeValue, store } = this.props;
+      onChangeValue(store, parseFloat(evt.target.value) || 1);
     };
   }
 
   render() {
-    const { item, itemNextValues, size, className, label, fluid } = this.props;
-    const value = projectStore.getAngle(itemNextValues.get('nextValue'), {
-      item,
+    const {
+      store,
+      storeNextValues,
+      size,
+      className,
+      label,
+      fluid,
+    } = this.props;
+
+    const value = projectStore.getAngle(storeNextValues.get('nextValue'), {
+      store,
     });
 
     return (
@@ -42,8 +50,8 @@ class ProjectStoreInteractingAngle extends React.PureComponent {
 }
 
 ProjectStoreInteractingAngle.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,

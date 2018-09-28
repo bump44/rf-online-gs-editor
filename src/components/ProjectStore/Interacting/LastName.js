@@ -16,15 +16,23 @@ class ProjectStoreInteractingLastName extends React.PureComponent {
     super(props);
 
     this.changeValue = evt => {
-      const { onChangeValue, item } = this.props;
-      onChangeValue(item, evt.target.value);
+      const { onChangeValue, store } = this.props;
+      onChangeValue(store, evt.target.value);
     };
   }
 
   render() {
-    const { item, itemNextValues, size, className, label, fluid } = this.props;
-    const value = projectStore.getLastName(itemNextValues.get('nextValue'), {
-      item,
+    const {
+      store,
+      storeNextValues,
+      size,
+      className,
+      label,
+      fluid,
+    } = this.props;
+
+    const value = projectStore.getLastName(storeNextValues.get('nextValue'), {
+      entry: store,
     });
 
     return (
@@ -42,8 +50,8 @@ class ProjectStoreInteractingLastName extends React.PureComponent {
 }
 
 ProjectStoreInteractingLastName.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,

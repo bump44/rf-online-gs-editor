@@ -20,16 +20,16 @@ class ProjectStoreInteractingUseAngle extends React.PureComponent {
     super(props);
 
     this.changeValue = (evt, owns) => {
-      const { onChangeValue, item } = this.props;
-      onChangeValue(item, owns.checked);
+      const { onChangeValue, store } = this.props;
+      onChangeValue(store, owns.checked);
     };
   }
 
   render() {
-    const { item, itemNextValues, className } = this.props;
+    const { store, storeNextValues, className } = this.props;
 
-    const value = projectStore.getUseAngle(itemNextValues.get('nextValue'), {
-      item,
+    const value = projectStore.getUseAngle(storeNextValues.get('nextValue'), {
+      entry: store,
     });
 
     return (
@@ -49,8 +49,8 @@ class ProjectStoreInteractingUseAngle extends React.PureComponent {
 }
 
 ProjectStoreInteractingUseAngle.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
