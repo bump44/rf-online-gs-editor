@@ -25,12 +25,12 @@ class ProjectStoreRow extends React.PureComponent {
   }
 
   renderTagIndexWithNextState() {
-    const { item, itemNextValues } = this.props;
+    const { store, storeNextValues } = this.props;
 
     return (
       <ProjectStoreLabelDetail
-        item={item}
-        itemNextValues={itemNextValues}
+        store={store}
+        storeNextValues={storeNextValues}
         link
       />
     );
@@ -38,10 +38,9 @@ class ProjectStoreRow extends React.PureComponent {
 
   render() {
     const {
-      items,
-      item,
-      itemNextValues,
-      actions,
+      store,
+      storeNextValues,
+      storeActions,
       moneyTypes,
       itemGrades,
       weaponTypes,
@@ -49,8 +48,8 @@ class ProjectStoreRow extends React.PureComponent {
     } = this.props;
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
-    const serverStrCode = item.getIn(['server', 'strCode']) || '';
-    const clientStrCode = item.getIn(['client', 'strCode']) || '';
+    const serverStrCode = store.getIn(['server', 'strCode']) || '';
+    const clientStrCode = store.getIn(['client', 'strCode']) || '';
 
     /* eslint-disable indent */
     const clientStrCodeReversed = autoReverseClientCodes
@@ -86,10 +85,9 @@ class ProjectStoreRow extends React.PureComponent {
           <Grid.Column largeScreen={13} widescreen={14}>
             {Render && (
               <Render
-                item={item}
-                itemNextValues={itemNextValues}
-                items={items}
-                actions={actions}
+                store={store}
+                storeNextValues={storeNextValues}
+                storeActions={storeActions}
                 moneyTypes={moneyTypes}
                 itemGrades={itemGrades}
                 weaponTypes={weaponTypes}
@@ -104,14 +102,13 @@ class ProjectStoreRow extends React.PureComponent {
 }
 
 ProjectStoreRow.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.object.isRequired,
+  storeActions: PropTypes.object.isRequired,
 };
 
 export default ProjectStoreRow;
