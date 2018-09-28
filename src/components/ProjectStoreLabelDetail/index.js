@@ -11,16 +11,22 @@ import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
 import { Label, Icon } from 'semantic-ui-react';
 
+import {
+  getIndex,
+  getProjectId,
+  getId,
+} from '../../containers/App/getters/projectStore';
+
 function ProjectStoreLabelDetail(props) {
-  const { item, itemNextValues, link } = props;
-  const isSaved = itemNextValues.getIn(['isSaved'], true);
-  const isSaving = itemNextValues.getIn(['isSaving'], false);
-  const isError = itemNextValues.getIn(['isError'], false);
-  const errorMessage = itemNextValues.getIn(['errorMessage'], '');
-  const nIndex = itemNextValues.getIn(
-    ['nextValue', 'nIndex'],
-    item.get('nIndex'),
-  );
+  const { store, storeNextValues, link } = props;
+
+  const nextValue = storeNextValues.get('nextValue');
+  const isSaved = storeNextValues.getIn(['isSaved'], true);
+  const isSaving = storeNextValues.getIn(['isSaving'], false);
+  const isError = storeNextValues.getIn(['isError'], false);
+  const errorMessage = storeNextValues.getIn(['errorMessage'], '');
+
+  const nIndex = getIndex(nextValue, { entry: store });
 
   const isShowStatus =
     (!isSaving && !isSaved && !isError) || isSaving || isError;
@@ -30,11 +36,11 @@ function ProjectStoreLabelDetail(props) {
     color: cx({
       teal:
         !isError &&
-        !(itemNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
+        !(storeNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
         !isSaving &&
         !(isShowStatus && !isSaving && !isSaved && !isError),
       red: isError,
-      green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
+      green: storeNextValues.getIn(['isSaved']) !== undefined && isSaved,
       yellow: isSaving,
       pink: isShowStatus && !isSaving && !isSaved && !isError,
     }),
@@ -42,11 +48,11 @@ function ProjectStoreLabelDetail(props) {
   };
 
   if (link) {
+    const id = getId(nextValue, { entry: store });
+    const projectId = getProjectId(nextValue, { entry: store });
+
     componentProps.as = Link;
-    componentProps.to = `/project/${item.getIn([
-      'project',
-      'id',
-    ])}/stores/${item.get('id')}`;
+    componentProps.to = `/project/${projectId}/stores/${id}`;
   }
 
   return (
@@ -66,8 +72,8 @@ function ProjectStoreLabelDetail(props) {
 }
 
 ProjectStoreLabelDetail.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
   link: PropTypes.bool,
 };
 
