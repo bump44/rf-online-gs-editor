@@ -309,7 +309,15 @@ export const projectsItemsBindActions = ({
 export const projectsStores = {
   // generated actions eq. changeName, changeItemGrade
   ...(() => {
-    const propKeys = ['name', 'lastName', 'trade', 'useAngle', 'size', 'angle'];
+    const propKeys = [
+      'name',
+      'lastName',
+      'trade',
+      'useAngle',
+      'size',
+      'angle',
+      'itemsListCount',
+    ];
     const fns = {};
     propKeys.forEach(propKey => {
       fns[`change${upperFirst(propKey)}`] = args =>
@@ -326,6 +334,12 @@ export const projectsStores = {
       ...args,
       subType: STORE,
       propKey: 'itemListRemove',
+    }),
+  itemsListReshuffle: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'itemsListReshuffle',
     }),
 };
 
