@@ -1,8 +1,11 @@
 import max from 'lodash/max';
 import { isNullOrUndefined } from 'util';
-import { DEFAULT_STORAGE_PRICE_PERCENT } from '../constants';
+import { DEFAULT_STORAGE_PRICE_PERCENT, IMMUTABLE_MAP } from '../constants';
 
-export const getName = (nextValues, { item }) => {
+export const getName = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) => {
   const nextValue = nextValues && nextValues.getIn(['clientNd', 'strName']);
 
   const currValue = item.getIn(
@@ -21,8 +24,11 @@ export const getName = (nextValues, { item }) => {
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getMoneyType = (nextValues, { item, moneyTypes }) => {
-  const nextValue = nextValues && nextValues.getIn(['server', 'nMoney']);
+export const getMoneyType = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP, moneyTypes },
+) => {
+  const nextValue = nextValues.getIn(['server', 'nMoney']);
 
   const currValue = item.getIn(
     [['server', 'nMoney'], ['client', 'nMoney']].find(
@@ -122,3 +128,22 @@ export const getStoragePricePercent = (
   const storagePriceNext = storagePrice / valuation;
   return (storagePriceNext / moneyValue) * 100;
 };
+
+export const getId = (nextValues = IMMUTABLE_MAP, { item = IMMUTABLE_MAP }) =>
+  nextValues.get('id') || item.get('id') || undefined;
+
+export const getType = (nextValues = IMMUTABLE_MAP, { item = IMMUTABLE_MAP }) =>
+  nextValues.get('type') || item.get('type') || undefined;
+
+export const getIndex = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) => nextValues.get('nIndex') || item.get('nIndex') || undefined;
+
+export const getProjectId = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) =>
+  nextValues.getIn(['project', 'id']) ||
+  item.getIn(['project', 'id']) ||
+  undefined;
