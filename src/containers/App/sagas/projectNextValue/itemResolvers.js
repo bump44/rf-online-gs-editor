@@ -10,15 +10,15 @@ import {
 } from '../../getters/projectItem';
 
 const calcStoragePrice = (
-  nextValues,
-  { item, moneyTypes, localSettings, ...props },
+  nextValue,
+  { entry, moneyTypes, localSettings, ...props },
 ) => {
   if (!localSettings.get(AUTO_RECALC_STORAGE_PRICE_IF_MONEY_VALUE_CHANGED)) {
     return newValues => newValues;
   }
 
-  const moneyType = getMoneyType(nextValues, {
-    item,
+  const moneyType = getMoneyType(nextValue, {
+    entry,
     moneyTypes,
     localSettings,
   });
@@ -27,8 +27,8 @@ const calcStoragePrice = (
     return newValues => newValues;
   }
 
-  const currentPercent = getStoragePricePercent(nextValues, {
-    item,
+  const currentPercent = getStoragePricePercent(nextValue, {
+    entry,
     moneyTypes,
     localSettings,
   });
@@ -38,128 +38,124 @@ const calcStoragePrice = (
       newValues,
       getMoneyValueByPercent(
         newValues,
-        { item, moneyTypes, localSettings, ...props },
+        { entry, moneyTypes, localSettings, ...props },
         { percent: currentPercent },
       ),
-      { item, moneyTypes, localSettings, ...props },
+      { entry, moneyTypes, localSettings, ...props },
     );
 };
 
 const Resolvers = {
-  name: (item, nextValue) => {
-    let nextMap = item;
+  name: (item, value) => {
+    let nextItem = item;
     PROJECT_ITEM_NAME_FIELDS.forEach(nameField => {
-      nextMap = nextMap.setIn(nameField, nextValue);
+      nextItem = nextItem.setIn(nameField, value);
     });
-    return nextMap;
+    return nextItem;
   },
-  exchange: (item, nextValue) =>
+  exchange: (item, value) =>
     item
-      .setIn(['client', 'bExchange'], nextValue)
-      .setIn(['server', 'bExchange'], nextValue),
-  sell: (item, nextValue) =>
+      .setIn(['client', 'bExchange'], value)
+      .setIn(['server', 'bExchange'], value),
+  sell: (item, value) =>
+    item.setIn(['client', 'bSell'], value).setIn(['server', 'bSell'], value),
+  ground: (item, value) =>
     item
-      .setIn(['client', 'bSell'], nextValue)
-      .setIn(['server', 'bSell'], nextValue),
-  ground: (item, nextValue) =>
+      .setIn(['client', 'bGround'], value)
+      .setIn(['server', 'bGround'], value),
+  storagePossible: (item, value) =>
     item
-      .setIn(['client', 'bGround'], nextValue)
-      .setIn(['server', 'bGround'], nextValue),
-  storagePossible: (item, nextValue) =>
-    item
-      .setIn(['client', 'bStoragePossible'], nextValue)
-      .setIn(['server', 'bStoragePossible'], nextValue),
-  money: (item, nextValue) =>
-    item
-      .setIn(['client', 'nMoney'], nextValue)
-      .setIn(['server', 'nMoney'], nextValue),
-  stdPrice: (nextValues, payload, props) =>
-    calcStoragePrice(nextValues, props)(
-      nextValues
-        .setIn(['client', 'nStdPrice'], payload)
-        .setIn(['server', 'nStdPrice'], payload),
+      .setIn(['client', 'bStoragePossible'], value)
+      .setIn(['server', 'bStoragePossible'], value),
+  money: (item, value) =>
+    item.setIn(['client', 'nMoney'], value).setIn(['server', 'nMoney'], value),
+  stdPrice: (item, value, props) =>
+    calcStoragePrice(item, props)(
+      item
+        .setIn(['client', 'nStdPrice'], value)
+        .setIn(['server', 'nStdPrice'], value),
     ),
-  stdPoint: (nextValues, payload, props) =>
-    calcStoragePrice(nextValues, props)(
-      nextValues
-        .setIn(['client', 'nStdPoint'], payload)
-        .setIn(['server', 'nStdPoint'], payload),
+  stdPoint: (item, value, props) =>
+    calcStoragePrice(item, props)(
+      item
+        .setIn(['client', 'nStdPoint'], value)
+        .setIn(['server', 'nStdPoint'], value),
     ),
-  goldPoint: (nextValues, payload, props) =>
-    calcStoragePrice(nextValues, props)(
-      nextValues
-        .setIn(['client', 'nGoldPoint'], payload)
-        .setIn(['server', 'nGoldPoint'], payload),
+  goldPoint: (item, value, props) =>
+    calcStoragePrice(item, props)(
+      item
+        .setIn(['client', 'nGoldPoint'], value)
+        .setIn(['server', 'nGoldPoint'], value),
     ),
-  procPoint: (nextValues, payload, props) =>
-    calcStoragePrice(nextValues, props)(
-      nextValues
-        .setIn(['client', 'nProcPoint'], payload)
-        .setIn(['server', 'nProcPoint'], payload),
+  procPoint: (item, value, props) =>
+    calcStoragePrice(item, props)(
+      item
+        .setIn(['client', 'nProcPoint'], value)
+        .setIn(['server', 'nProcPoint'], value),
     ),
-  killPoint: (nextValues, payload, props) =>
-    calcStoragePrice(nextValues, props)(
-      nextValues
-        .setIn(['client', 'nKillPoint'], payload)
-        .setIn(['server', 'nKillPoint'], payload),
+  killPoint: (item, value, props) =>
+    calcStoragePrice(item, props)(
+      item
+        .setIn(['client', 'nKillPoint'], value)
+        .setIn(['server', 'nKillPoint'], value),
     ),
-  storagePrice: (item, nextValue) =>
+  storagePrice: (item, value) =>
     item
-      .setIn(['client', 'nStoragePrice'], nextValue)
-      .setIn(['server', 'nStoragePrice'], nextValue),
-  itemGrade: (item, nextValue) =>
+      .setIn(['client', 'nStoragePrice'], value)
+      .setIn(['server', 'nStoragePrice'], value),
+  itemGrade: (item, value) =>
     item
-      .setIn(['client', 'nItemGrade'], nextValue)
-      .setIn(['server', 'nItemGrade'], nextValue),
-  levelLim: (item, nextValue) =>
+      .setIn(['client', 'nItemGrade'], value)
+      .setIn(['server', 'nItemGrade'], value),
+  levelLim: (item, value) =>
     item
-      .setIn(['client', 'nLevelLim'], nextValue)
-      .setIn(['server', 'nLevelLim'], nextValue),
-  upLevelLim: (item, nextValue) =>
+      .setIn(['client', 'nLevelLim'], value)
+      .setIn(['server', 'nLevelLim'], value),
+  upLevelLim: (item, value) =>
     item
-      .setIn(['client', 'nUpLevelLim'], nextValue)
-      .setIn(['server', 'nUpLevelLim'], nextValue),
-  defence: (item, nextValue) =>
+      .setIn(['client', 'nUpLevelLim'], value)
+      .setIn(['server', 'nUpLevelLim'], value),
+  defence: (item, value) =>
     item
-      .setIn(['server', 'nDefFc'], nextValue)
-      .setIn(['server', 'fDefFc'], nextValue)
-      .setIn(['client', 'nDefFc'], nextValue),
-  defenceGap: (item, nextValue) =>
+      .setIn(['server', 'nDefFc'], value)
+      .setIn(['server', 'fDefFc'], value)
+      .setIn(['client', 'nDefFc'], value),
+  defenceGap: (item, value) =>
     item
-      .setIn(['server', 'fDefGap'], nextValue)
-      .setIn(['client', 'fDefGap'], nextValue),
-  defenceFacing: (item, nextValue) =>
+      .setIn(['server', 'fDefGap'], value)
+      .setIn(['client', 'fDefGap'], value),
+  defenceFacing: (item, value) =>
     item
-      .setIn(['server', 'fDefFacing'], nextValue)
-      .setIn(['client', 'fDefFacing'], nextValue),
-  wpType: (item, nextValue) =>
+      .setIn(['server', 'fDefFacing'], value)
+      .setIn(['client', 'fDefFacing'], value),
+  wpType: (item, value) =>
     item
-      .setIn(['server', 'nWPType'], nextValue)
-      .setIn(['client', 'nWPType'], nextValue),
-  subType: (item, nextValue) =>
+      .setIn(['server', 'nWPType'], value)
+      .setIn(['client', 'nWPType'], value),
+  subType: (item, value) =>
     item
-      .setIn(['server', 'nSubType'], nextValue)
-      .setIn(['client', 'nSubType'], nextValue),
-  civilBM: (item, nextValue) =>
+      .setIn(['server', 'nSubType'], value)
+      .setIn(['client', 'nSubType'], value),
+  civilBM: (item, value) =>
     item
-      .setIn(['server', 'civil_bm'], nextValue)
-      .setIn(['client', 'civil_bm'], nextValue),
-  civilBF: (item, nextValue) =>
+      .setIn(['server', 'civil_bm'], value)
+      .setIn(['client', 'civil_bm'], value),
+  civilBF: (item, value) =>
     item
-      .setIn(['server', 'civil_bf'], nextValue)
-      .setIn(['client', 'civil_bf'], nextValue),
-  civilCM: (item, nextValue) =>
+      .setIn(['server', 'civil_bf'], value)
+      .setIn(['client', 'civil_bf'], value),
+  civilCM: (item, value) =>
     item
-      .setIn(['server', 'civil_cm'], nextValue)
-      .setIn(['client', 'civil_cm'], nextValue),
-  civilCF: (item, nextValue) =>
+      .setIn(['server', 'civil_cm'], value)
+      .setIn(['client', 'civil_cm'], value),
+  civilCF: (item, value) =>
     item
-      .setIn(['server', 'civil_cf'], nextValue)
-      .setIn(['client', 'civil_cf'], nextValue),
-  civilA: (item, nextValue) =>
+      .setIn(['server', 'civil_cf'], value)
+      .setIn(['client', 'civil_cf'], value),
+  civilA: (item, value) =>
     item
-      .setIn(['server', 'civil_a'], nextValue)
-      .setIn(['client', 'civil_a'], nextValue),
+      .setIn(['server', 'civil_a'], value)
+      .setIn(['client', 'civil_a'], value),
 };
 
 export default Resolvers;

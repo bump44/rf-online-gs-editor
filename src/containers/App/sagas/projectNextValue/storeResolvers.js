@@ -1,52 +1,42 @@
 import { getItemList } from '../../getters/projectStore';
 
 const Resolvers = {
-  name: (item, nextValue) =>
-    item
-      .setIn(['priorStrName'], nextValue)
-      .setIn(['client', 'strStoreNPCname'], nextValue)
-      .setIn(['server', 'strStoreNPCname'], nextValue),
-
-  lastName: (item, nextValue) =>
-    item.setIn(['client', 'strStoreNPClastName'], nextValue),
-
-  trade: (item, nextValue) =>
-    item
-      .setIn(['server', 'nStoreTrade'], nextValue)
-      .setIn(['client', 'nStoreTrade'], nextValue),
-
-  useAngle: (item, nextValue) =>
-    item.setIn(['client', 'bSetNPCangle'], !!nextValue),
-
-  size: (item, nextValue) => item.setIn(['client', 'fStoreNPCsize'], nextValue),
-
-  angle: (item, nextValue) =>
-    item.setIn(['client', 'fStoreNPCangle'], nextValue),
-
-  itemListRemove: (item, n) =>
-    item
+  name: (store, value) =>
+    store
+      .setIn(['priorStrName'], value)
+      .setIn(['client', 'strStoreNPCname'], value)
+      .setIn(['server', 'strStoreNPCname'], value),
+  lastName: (store, value) =>
+    store.setIn(['client', 'strStoreNPClastName'], value),
+  trade: (store, value) =>
+    store
+      .setIn(['server', 'nStoreTrade'], value)
+      .setIn(['client', 'nStoreTrade'], value),
+  useAngle: (store, value) => store.setIn(['client', 'bSetNPCangle'], !!value),
+  size: (store, value) => store.setIn(['client', 'fStoreNPCsize'], value),
+  angle: (store, value) => store.setIn(['client', 'fStoreNPCangle'], value),
+  itemListRemove: (store, n) =>
+    store
       .setIn(['server', `strItemCode__${n}`], '')
       .setIn(['client', `strItemList__${n}_2`], '')
       .setIn(['client', `nItemListType__${n}_1`], 0)
       .setIn(['client', `itemList__${n}`], null)
       .setIn(['server', `itemList__${n}`], null),
-
   itemListUpdate: (
-    item,
+    store,
     { n, clientCode = '', clientType = 0, serverCode = '', itemList } = {},
   ) =>
-    item
+    store
       .setIn(['server', `strItemCode__${n}`], serverCode)
       .setIn(['client', `strItemList__${n}_2`], clientCode)
       .setIn(['client', `nItemListType__${n}_1`], clientType)
       .setIn(['client', `itemList__${n}`], itemList)
       .setIn(['server', `itemList__${n}`], itemList),
-
-  itemsListReshuffle: (nextValue, value, { item }) => {
+  itemsListReshuffle: (store, value, { entry }) => {
     const itemsList = [];
 
     let setToN = 1;
-    let nextItemValues = nextValue;
+    let nextStore = store;
 
     Array.from(Array(200)).forEach((_, index) => {
       const n = index + 1;
@@ -56,12 +46,12 @@ const Resolvers = {
         clientType,
         client,
         server,
-      } = getItemList(nextItemValues, { item }, { n });
+      } = getItemList(nextStore, { entry }, { n });
 
       if (serverCode && serverCode.length > 1) {
         itemsList.push({ serverCode, clientCode, clientType });
 
-        nextItemValues = Resolvers.itemListUpdate(nextItemValues, {
+        nextStore = Resolvers.itemListUpdate(nextStore, {
           n: setToN,
           serverCode,
           clientCode,
@@ -75,27 +65,27 @@ const Resolvers = {
 
     Array.from(Array(200 - setToN - 1)).forEach((_, index) => {
       const n = index + setToN;
-      nextItemValues = Resolvers.itemListRemove(nextItemValues, n);
+      nextStore = Resolvers.itemListRemove(nextStore, n);
     });
 
-    return nextItemValues;
+    return nextStore;
   },
 
-  itemsListCount: (item, listCount) =>
-    item
-      .setIn(['server', `nStoreListCount`], listCount)
-      .setIn(['client', `nStoreLISTcount`], listCount),
+  itemsListCount: (store, value) =>
+    store
+      .setIn(['server', `nStoreListCount`], value)
+      .setIn(['client', `nStoreLISTcount`], value),
 
-  itemsListResort: (nextValue, nextIndexes, { item }) => {
-    let nextItemValues = nextValue;
+  itemsListResort: (store, nextIndexes, { entry }) => {
+    let nextStore = store;
 
     nextIndexes.forEach((nextIndex, index) => {
       if (nextIndex + 1 === index + 1) {
         return;
       }
 
-      const itemList = getItemList(nextValue, { item }, { n: nextIndex + 1 });
-      nextItemValues = Resolvers.itemListUpdate(nextItemValues, {
+      const itemList = getItemList(store, { entry }, { n: nextIndex + 1 });
+      nextStore = Resolvers.itemListUpdate(nextStore, {
         n: index + 1,
         clientCode: itemList.clientCode,
         clientType: itemList.clientType,
@@ -104,7 +94,7 @@ const Resolvers = {
       });
     });
 
-    return nextItemValues;
+    return nextStore;
   },
 };
 
