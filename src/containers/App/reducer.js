@@ -15,6 +15,20 @@ import {
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
   AUTO_RECALC_STORAGE_PRICE_IF_MONEY_VALUE_CHANGED,
   DEFAULT_STORAGE_PRICE_PERCENT,
+  PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE,
+  PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH,
+  PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_BY,
+  PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_WAY,
+  PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_TAKE_SKIP,
+  PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_ITEMS,
+  PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_TOTAL,
+  PROJECTS_ENTRIES_FINDER_RESET_RESULT,
+  PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS,
+  ITEM,
+  PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADING,
+  PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE,
+  PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR,
+  PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED,
 } from './constants';
 
 import { saveTokenMe } from '../../utils/ls';
@@ -67,10 +81,157 @@ export const initialState = fromJS({
    * }
    */
   projectsNextValues: {},
+
+  /**
+   * Projects Entries Find State
+   *
+   * {
+   *  [project.id]: {
+   *    [subType:[STORE, ITEM]]: {
+   *      subType: '',
+   *      isLoading: false,
+   *      isLoaded: false,
+   *      isError: false,
+   *      errorMessage: '',
+   *      filter: {}, // subType filter
+   *      result: { total: 0, items: [] },
+   *    }
+   *  }
+   * }
+   */
+  projectsEntriesFinder: {},
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    // PROJECTS_ENTRIES_FINDER
+    case PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADING:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'isLoading',
+        ],
+        action.isLoading,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED:
+      return state.setIn(
+        ['projectsEntriesFinder', action.projectId, action.subType, 'isLoaded'],
+        action.isLoaded,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR:
+      return state.setIn(
+        ['projectsEntriesFinder', action.projectId, action.subType, 'isError'],
+        action.isError,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'errorMessage',
+        ],
+        action.errorMessage,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_ITEMS:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'result',
+          'items',
+        ],
+        action.items,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_TOTAL:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'result',
+          'total',
+        ],
+        action.total,
+      );
+    case PROJECTS_ENTRIES_FINDER_RESET_RESULT:
+      return state.setIn(
+        ['projectsEntriesFinder', action.projectId, action.subType, 'result'],
+        PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS[ITEM].get('result'),
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'filter',
+          'where',
+          'search',
+        ],
+        action.whereSearch,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'filter',
+          'where',
+          'type',
+        ],
+        action.whereType,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_BY:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'filter',
+          'sortBy',
+        ],
+        action.sortBy,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_WAY:
+      return state.setIn(
+        [
+          'projectsEntriesFinder',
+          action.projectId,
+          action.subType,
+          'filter',
+          'sortWay',
+        ],
+        action.sortWay,
+      );
+    case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_TAKE_SKIP:
+      return state
+        .setIn(
+          [
+            'projectsEntriesFinder',
+            action.projectId,
+            action.subType,
+            'filter',
+            'take',
+          ],
+          action.take,
+        )
+        .setIn(
+          [
+            'projectsEntriesFinder',
+            action.projectId,
+            action.subType,
+            'filter',
+            'skip',
+          ],
+          action.skip,
+        );
+
+    // PROJECTS_NEXT_VALUES
     case PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE:
       return state.setIn(
         ['projectsNextValues', action.projectId, action.keyId, 'nextValue'],
@@ -103,7 +264,7 @@ function appReducer(state = initialState, action) {
           [
             'projectsNextValues',
             action.projectId,
-            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            action.entry.get('id'),
             'isSaved',
           ],
           false,
@@ -112,25 +273,23 @@ function appReducer(state = initialState, action) {
           [
             'projectsNextValues',
             action.projectId,
-            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            action.entry.get('id'),
             'keyId',
           ],
-          action.item instanceof Map ? action.item.get('id') : action.item.id,
+          action.entry.get('id'),
         )
         .setIn(
           [
             'projectsNextValues',
             action.projectId,
-            action.item instanceof Map ? action.item.get('id') : action.item.id,
+            action.entry.get('id'),
             'nextValue',
           ],
           state.getIn(
             [
               'projectsNextValues',
               action.projectId,
-              action.item instanceof Map
-                ? action.item.get('id')
-                : action.item.id,
+              action.entry.get('id'),
               'nextValue',
             ],
             Map({}),
