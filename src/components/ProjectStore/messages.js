@@ -31,4 +31,28 @@ export default defineMessages({
     id: 'app.components.ProjectStore.Items',
     defaultMessage: 'Items',
   },
+  ItemRowIsDisabled: {
+    id: 'app.components.ProjectStore.ItemRowIsDisabled',
+    defaultMessage: 'This item is disabled',
+  },
+  Enable: {
+    id: 'app.components.ProjectStore.Enable',
+    defaultMessage: 'Enable',
+  },
+  Disable: {
+    id: 'app.components.ProjectStore.Disable',
+    defaultMessage: 'Disable',
+  },
+  Remove: {
+    id: 'app.components.ProjectStore.Remove',
+    defaultMessage: 'Remove',
+  },
+  Reshuffle: {
+    id: 'app.components.ProjectStore.Reshuffle',
+    defaultMessage: 'Reshuffle',
+  },
+  SelectItem: {
+    id: 'app.components.ProjectStore.SelectItem',
+    defaultMessage: 'Select item',
+  },
 });
