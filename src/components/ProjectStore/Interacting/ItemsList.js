@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { max, min } from 'lodash';
 import { Map, List } from 'immutable';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import {
@@ -19,6 +20,7 @@ import SortableAutoSizeList, {
 } from '../../SortableAutoSizeList';
 
 import ProjectStoreInteractingItemList from './ItemList';
+import { getItemsListCount } from '../../../containers/App/getters/projectStore';
 
 const DragHandle = CreateDragHangle(DragHangleDefault);
 
@@ -42,16 +44,18 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
 
     if (
       this.sortableAutoSizeList &&
-      nextProps.projectNextValues &&
-      !nextProps.projectNextValues.equals(props.projectNextValues)
+      ((nextProps.nextValues &&
+        !nextProps.nextValues.equals(props.nextValues)) ||
+        (nextProps.entriesFinderItems &&
+          !nextProps.entriesFinderItems.equals(props.entriesFinderItems)))
     ) {
       this.sortableAutoSizeList.forceUpdateGrid();
     }
   }
 
   onSortEnd(nextIndexes) {
-    const { actions, item } = this.props;
-    actions.itemsListResort(item, nextIndexes);
+    const { storeActions, store } = this.props;
+    storeActions.itemsListResort(store, nextIndexes);
   }
 
   renderItemList(
@@ -61,14 +65,17 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
     },
   ) {
     const {
-      item,
-      itemNextValues,
-      projectNextValues,
+      store,
+      storeNextValues,
+      storeActions,
+      nextValues,
       itemActions,
       localSettings,
       moneyTypes,
       itemGrades,
-      actions,
+      weaponTypes,
+      entriesFinderItems,
+      entriesFinderItemsActions,
     } = this.props;
 
     const disableRenderItemsIsScrolling = localSettings.get(
@@ -86,16 +93,19 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
     if (!(disableRenderItemsIsScrolling && isScrolling)) {
       return (
         <ProjectStoreInteractingItemList
-          item={item}
-          itemNextValues={itemNextValues}
+          store={store}
+          storeNextValues={storeNextValues}
+          storeActions={storeActions}
           index={index}
           dragHandle={<DragHandle />}
-          projectNextValues={projectNextValues}
-          actions={actions}
+          nextValues={nextValues}
           itemActions={itemActions}
           localSettings={localSettings}
           moneyTypes={moneyTypes}
           itemGrades={itemGrades}
+          weaponTypes={weaponTypes}
+          entriesFinderItems={entriesFinderItems}
+          entriesFinderItemsActions={entriesFinderItemsActions}
         />
       );
     }
@@ -108,11 +118,15 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
   }
 
   render() {
+    const { store, storeNextValues } = this.props;
+    const nextValue = storeNextValues.get('nextValue');
+    const listCount = getItemsListCount(nextValue, { entry: store }) + 1;
+
     return (
       <SortableAutoSizeList
         ref={this.createRef}
         rowHeight={75}
-        rowCount={200}
+        rowCount={min([200, max([1, listCount])])}
         rowRenderer={this.renderItemList}
         useDragHandle
         onSortEnd={this.onSortEnd}
@@ -122,14 +136,17 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
 }
 
 ProjectStoreInteractingItemsList.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
+  storeActions: PropTypes.object.isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  projectNextValues: PropTypes.instanceOf(Map).isRequired,
-  actions: PropTypes.object.isRequired,
+  nextValues: PropTypes.instanceOf(Map).isRequired,
   itemActions: PropTypes.object.isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
+  weaponTypes: PropTypes.instanceOf(List).isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
 };
 
 ProjectStoreInteractingItemsList.defaultProps = {};

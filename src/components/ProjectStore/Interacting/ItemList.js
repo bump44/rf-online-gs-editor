@@ -32,9 +32,14 @@ import { getClientCode } from '../../../utils/converters';
 import * as projectStore from '../../../containers/App/getters/projectStore';
 import * as projectItem from '../../../containers/App/getters/projectItem';
 
+import ProjectItemsFinder from '../../ProjectItemsFinder';
 import ProjectItemLabelDetail from '../../ProjectItemLabelDetail';
 import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
-import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
+
+const modalSelectItemStyle = {
+  main: { height: 'calc(100% - 60px)', left: 'initial !important' },
+  content: { height: 'calc(100% - 90px)' },
+};
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingItemList extends React.PureComponent {
@@ -44,30 +49,62 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
     this.renderContent = this.renderContent.bind(this);
     this.renderDimmer = this.renderDimmer.bind(this);
 
+    this.itemListSelected = this.itemListSelected.bind(this);
+
     this.itemListRemove = this.itemListRemove.bind(this);
     this.itemsListReshuffle = this.itemsListReshuffle.bind(this);
     this.itemsListCountNextN = this.itemsListCountNextN.bind(this);
     this.itemsListCountNextIndex = this.itemsListCountNextIndex.bind(this);
+    this.toggleSelectItemModal = () =>
+      this.setState(prevState => ({
+        selectItemModalOpen: !prevState.selectItemModalOpen,
+      }));
+
+    this.state = { selectItemModalOpen: false };
+  }
+
+  itemListSelected(item, itemNextValues) {
+    this.setState({ selectItemModalOpen: false });
+    const itemNextValue = itemNextValues.get('nextValue');
+    const { store, storeActions, index } = this.props;
+    const serverCode = projectItem.getServerCode(itemNextValue, {
+      entry: item,
+    });
+    const clientCode =
+      projectItem.getClientCode(itemNextValue, {
+        entry: item,
+      }) || this.getConvClientCode(serverCode);
+    const clientType = projectItem.getClientTypeFinite(itemNextValue, {
+      entry: item,
+    });
+
+    storeActions.itemListUpdate(store, {
+      n: index + 1,
+      clientCode,
+      clientType,
+      serverCode,
+      itemList: item,
+    });
   }
 
   itemListRemove() {
-    const { item, actions, index } = this.props;
-    actions.itemListRemove(item, index + 1);
+    const { store, storeActions, index } = this.props;
+    storeActions.itemListRemove(store, index + 1);
   }
 
   itemsListReshuffle() {
-    const { item, actions } = this.props;
-    actions.itemsListReshuffle(item);
+    const { store, storeActions } = this.props;
+    storeActions.itemsListReshuffle(store);
   }
 
   itemsListCountNextN() {
-    const { item, index, actions } = this.props;
-    actions.changeItemsListCount(item, index + 1);
+    const { store, index, storeActions } = this.props;
+    storeActions.changeItemsListCount(store, index + 1);
   }
 
   itemsListCountNextIndex() {
-    const { item, index, actions } = this.props;
-    actions.changeItemsListCount(item, index);
+    const { store, index, storeActions } = this.props;
+    storeActions.changeItemsListCount(store, index);
   }
 
   getConvClientCode(code) {
@@ -95,18 +132,27 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
   renderContent() {
     const {
-      item,
-      itemNextValues,
+      store,
+      storeNextValues,
+      nextValues,
       index,
       dragHandle,
+      itemActions,
+      itemGrades,
+      weaponTypes,
       localSettings,
+      moneyTypes,
+      entriesFinderItems,
+      entriesFinderItemsActions,
     } = this.props;
 
+    const { selectItemModalOpen } = this.state;
+
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
-    const nextValue = itemNextValues.get('nextValue');
+    const nextValue = storeNextValues.get('nextValue');
     const itemList = projectStore.getItemList(
       nextValue,
-      { item },
+      { entry: store },
       { n: index + 1 },
     );
 
@@ -158,9 +204,35 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
           </Comment.Text>
 
           <Comment.Actions>
-            <Comment.Action>
-              <FormattedMessage {...messages.SelectItem} />
-            </Comment.Action>
+            <Modal
+              trigger={
+                <Comment.Action onClick={this.toggleSelectItemModal}>
+                  <FormattedMessage {...messages.SelectItem} />
+                </Comment.Action>
+              }
+              size="fullscreen"
+              style={modalSelectItemStyle.main}
+              onClose={this.toggleSelectItemModal}
+              open={selectItemModalOpen}
+            >
+              <Modal.Header>
+                <FormattedMessage {...messages.SelectItem} />
+              </Modal.Header>
+              <Modal.Content style={modalSelectItemStyle.content}>
+                <ProjectItemsFinder
+                  state={entriesFinderItems}
+                  actions={entriesFinderItemsActions}
+                  nextValues={nextValues}
+                  itemActions={itemActions}
+                  itemGrades={itemGrades}
+                  weaponTypes={weaponTypes}
+                  localSettings={localSettings}
+                  moneyTypes={moneyTypes}
+                  selectable
+                  onClickSelect={this.itemListSelected}
+                />
+              </Modal.Content>
+            </Modal>
             <Comment.Action onClick={this.itemListRemove}>
               <FormattedMessage {...messages.Remove} />
             </Comment.Action>
@@ -181,10 +253,10 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       return null;
     }
 
-    const { projectNextValues, itemActions, itemGrades } = this.props;
+    const { nextValues, itemActions } = this.props;
     const id = projectItem.getId(undefined, { item });
-    const nextValues = projectNextValues.get(id, IMMUTABLE_MAP);
-    const nextValue = nextValues.get('nextValue');
+    const itemNextValues = nextValues.get(id, IMMUTABLE_MAP);
+    const itemNextValue = itemNextValues.get('nextValue');
 
     return (
       <React.Fragment>
@@ -193,17 +265,10 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
           itemNextValues={nextValues}
           size="mini"
         />
-        <ProjectItemInteractingItemGrade
-          item={item}
-          itemNextValues={nextValues}
-          onChangeValue={itemActions.changeItemGrade}
-          className="item-grade"
-          types={itemGrades}
-        />
         <Modal
           trigger={
             <Label size="mini" color="blue" as={Button}>
-              {projectItem.getName(nextValue, { item })}
+              {projectItem.getName(itemNextValue, { entry: item })}
             </Label>
           }
           size="large"
@@ -225,10 +290,15 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, index } = this.props;
-    const nextValue = itemNextValues.get('nextValue');
+    const { store, storeNextValues, index } = this.props;
     const n = index + 1;
-    const listCount = projectStore.getItemsListCount(nextValue, { item });
+
+    const listCount = projectStore.getItemsListCount(
+      storeNextValues.get('nextValue'),
+      {
+        entry: store,
+      },
+    );
 
     return (
       <CommentGroup>
@@ -241,16 +311,19 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 }
 
 ProjectStoreInteractingItemList.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
-  actions: PropTypes.object.isRequired,
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
+  storeActions: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   dragHandle: PropTypes.node,
-  projectNextValues: PropTypes.instanceOf(Map).isRequired,
+  nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  // moneyTypes: PropTypes.instanceOf(Map).isRequired,
+  moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
+  weaponTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
 };
 
 ProjectStoreInteractingItemList.defaultProps = {
