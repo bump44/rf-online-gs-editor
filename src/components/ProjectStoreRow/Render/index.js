@@ -24,35 +24,35 @@ import ProjectStoreInteractingAngle from '../../ProjectStore/Interacting/Angle';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRender extends React.PureComponent {
   render() {
-    const { item, itemNextValues, actions } = this.props;
+    const { store, storeNextValues, storeActions } = this.props;
 
     const bUseAngle = projectStore.getUseAngle(
-      itemNextValues.get('nextValue'),
-      { item },
+      storeNextValues.get('nextValue'),
+      { entry: store },
     );
 
     return (
       <Grid columns={3}>
         <Grid.Column largeScreen={4} widescreen={5}>
           <ProjectStoreInteractingName
-            item={item}
-            itemNextValues={itemNextValues}
-            onChangeValue={actions.changeName}
+            store={store}
+            storeNextValues={storeNextValues}
+            onChangeValue={storeActions.changeName}
             className="pb-5"
           />
           <ProjectStoreInteractingLastName
-            item={item}
-            itemNextValues={itemNextValues}
-            onChangeValue={actions.changeLastName}
+            store={store}
+            storeNextValues={storeNextValues}
+            onChangeValue={storeActions.changeLastName}
           />
         </Grid.Column>
         <Grid.Column largeScreen={12} widescreen={11}>
           <Grid columns={2}>
             <Grid.Column>
               <ProjectStoreInteractingTrade
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeTrade}
+                store={store}
+                storeNextValues={storeNextValues}
+                onChangeValue={storeActions.changeTrade}
                 className="pb-10"
                 label={
                   <Label>
@@ -61,16 +61,16 @@ class ProjectItemRowRender extends React.PureComponent {
                 }
               />
               <ProjectStoreInteractingUseAngle
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeUseAngle}
+                store={store}
+                storeNextValues={storeNextValues}
+                onChangeValue={storeActions.changeUseAngle}
               />
             </Grid.Column>
             <Grid.Column>
               <ProjectStoreInteractingSize
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeSize}
+                store={store}
+                storeNextValues={storeNextValues}
+                onChangeValue={storeActions.changeSize}
                 className="pb-5"
                 label={
                   <Label>
@@ -82,9 +82,9 @@ class ProjectItemRowRender extends React.PureComponent {
               <Transition visible={bUseAngle} animation="scale" duration={500}>
                 <div>
                   <ProjectStoreInteractingAngle
-                    item={item}
-                    itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeAngle}
+                    store={store}
+                    storeNextValues={storeNextValues}
+                    onChangeValue={storeActions.changeAngle}
                     label={
                       <Label>
                         <FormattedMessage {...messages.Angle} />
@@ -102,10 +102,9 @@ class ProjectItemRowRender extends React.PureComponent {
 }
 
 ProjectItemRowRender.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
-  // moneyTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
+  storeActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeLastName: PropTypes.func.isRequired,
     changeTrade: PropTypes.func.isRequired,
