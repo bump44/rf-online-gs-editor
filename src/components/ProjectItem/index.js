@@ -15,7 +15,7 @@ function ProjectItem({
   item,
   style,
   itemNextValues,
-  actions,
+  itemActions,
   moneyTypes,
   itemGrades,
   weaponTypes,
@@ -30,7 +30,7 @@ function ProjectItem({
         <Render
           item={item}
           itemNextValues={itemNextValues}
-          actions={actions}
+          itemActions={itemActions}
           moneyTypes={moneyTypes}
           itemGrades={itemGrades}
           weaponTypes={weaponTypes}
@@ -48,7 +48,7 @@ ProjectItem.propTypes = {
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.object.isRequired,
+  itemActions: PropTypes.object.isRequired,
   style: PropTypes.object,
 };
 
