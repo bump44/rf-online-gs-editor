@@ -20,20 +20,24 @@ import saga from './saga';
 import messages from './messages';
 
 import * as projectStore from '../App/getters/projectStore';
-import { IMMUTABLE_MAP } from '../App/constants';
+import { IMMUTABLE_MAP, ITEM, IMMUTABLE_LIST } from '../App/constants';
 
 import {
   projectsStoresBindActions,
   projectsItemsBindActions,
+  projectsEntriesFinderItemsBindActions,
 } from '../App/actions';
+
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
+  makeSelectProjectsEntriesFinder,
 } from '../App/selectors';
 
 import { changeId } from './actions';
+
 import makeSelectProjectStorePage, {
   makeSelectProject,
   makeSelectProjectStore,
@@ -54,6 +58,11 @@ import ProjectStoreLabelDetail from '../../components/ProjectStoreLabelDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStorePage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.getActionsBindPayload = this.getActionsBindPayload.bind(this);
+  }
+
   componentWillMount() {
     this.loadProjectIfIdChanged(this.props, { isMount: true });
   }
@@ -82,21 +91,46 @@ export class ProjectStorePage extends React.PureComponent {
       projectsNextValues,
     } = this.props;
 
-    const projectNextValues = projectsNextValues.get(
-      currentProject.get('id'),
-      IMMUTABLE_MAP,
+    return projectStore.getName(
+      projectsNextValues.getIn([
+        currentProject.get('id'),
+        currentProjectStore.get('id'),
+        'nextValue',
+      ]),
+      {
+        item: currentProjectStore,
+      },
     );
+  }
 
-    const itemNextValues = projectNextValues.get(
-      currentProjectStore.get('id'),
-      IMMUTABLE_MAP,
-    );
+  getActionsBindPayload() {
+    const { dispatch, match, currentProject } = this.props;
+    const additionalData = (() => {
+      if (!currentProject) {
+        return {};
+      }
 
-    const itemNextValue = itemNextValues.get('nextValue', IMMUTABLE_MAP);
+      return {
+        moneyTypes: currentProject.getIn(
+          ['moneyTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        itemGrades: currentProject.getIn(
+          ['itemGrades', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        weaponTypes: currentProject.getIn(
+          ['weaponTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+      };
+    })();
 
-    return projectStore.getName(itemNextValue, {
-      item: currentProjectStore,
-    });
+    return {
+      dispatch,
+      projectId: match.params.id,
+      additionalData,
+    };
   }
 
   render() {
@@ -107,43 +141,44 @@ export class ProjectStorePage extends React.PureComponent {
       currentProject,
       currentProjectStore,
       projectsNextValues,
+      projectsEntriesFinder,
       localSettings,
-      match,
-      dispatch,
+      entriesFinderItemsActions,
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectStorePage;
-    const actionsBindPayload = {
-      dispatch,
-      projectId: match.params.id,
-      /* eslint-disable indent */
-      additionalData: currentProject
-        ? {
-            moneyTypes: currentProject.getIn(['moneyTypes', 'items']),
-            itemGrades: currentProject.getIn(['itemGrades', 'items']),
-            weaponTypes: currentProject.getIn(['weaponTypes', 'items']),
-          }
-        : {},
-      /* eslint-enable indent */
-    };
 
-    // very bad
+    const actionsBindPayload = this.getActionsBindPayload();
+    const {
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+    } = actionsBindPayload.additionalData;
+
+    const fnProjectItemsActions = projectsItemsBindActions(actionsBindPayload);
     const fnProjectStoresActions = projectsStoresBindActions(
       actionsBindPayload,
     );
 
-    const fnProjectItemsActions = projectsItemsBindActions(actionsBindPayload);
+    const store = currentProjectStore;
 
-    const item = currentProjectStore;
-
-    const projectNextValues =
+    // global
+    const nextValues =
       currentProject &&
       projectsNextValues.get(currentProject.get('id'), IMMUTABLE_MAP);
 
-    const itemNextValues =
-      projectNextValues &&
+    // store nextValues
+    const storeNextValues =
+      nextValues &&
       currentProjectStore &&
-      projectNextValues.get(currentProjectStore.get('id'), IMMUTABLE_MAP);
+      nextValues.get(currentProjectStore.get('id'), IMMUTABLE_MAP);
+
+    const entriesFinderItems =
+      currentProject &&
+      projectsEntriesFinder.getIn(
+        [currentProject.get('id'), ITEM],
+        IMMUTABLE_MAP,
+      );
 
     return (
       <div>
@@ -188,25 +223,24 @@ export class ProjectStorePage extends React.PureComponent {
                     }}
                   />
                   <ProjectStoreLabelDetail
-                    item={item}
-                    itemNextValues={itemNextValues}
+                    store={store}
+                    storeNextValues={storeNextValues}
                   />
                 </PageHeader>
                 <FullheightThis>
                   <FullheightAutoSizer>
                     <ProjectStore
-                      item={item}
-                      itemNextValues={itemNextValues}
-                      projectNextValues={projectNextValues}
-                      localSettings={localSettings}
-                      moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
-                      itemGrades={currentProject.getIn(['itemGrades', 'items'])}
-                      weaponTypes={currentProject.getIn([
-                        'weaponTypes',
-                        'items',
-                      ])}
-                      actions={fnProjectStoresActions}
+                      store={store}
+                      storeNextValues={storeNextValues}
+                      storeActions={fnProjectStoresActions}
                       itemActions={fnProjectItemsActions}
+                      entriesFinderItemsActions={entriesFinderItemsActions}
+                      localSettings={localSettings}
+                      moneyTypes={moneyTypes}
+                      itemGrades={itemGrades}
+                      weaponTypes={weaponTypes}
+                      entriesFinderItems={entriesFinderItems}
+                      nextValues={nextValues}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>
@@ -228,15 +262,28 @@ const mapStateToProps = createStructuredSelector({
   currentUser: makeSelectCurrentUser(),
   currentProject: makeSelectProject(),
   currentProjectStore: makeSelectProjectStore(),
+
   isLoggedIn: makeSelectIsLoggedIn(),
-  projectsNextValues: makeSelectProjectsNextValues(),
   localSettings: makeSelectLocalSettings(),
+  projectsNextValues: makeSelectProjectsNextValues(),
+  projectsEntriesFinder: makeSelectProjectsEntriesFinder(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(
+  dispatch,
+  {
+    match: {
+      params: { id },
+    },
+  },
+) {
   return {
     dispatch,
-    fnChangeId: (id, storeId) => dispatch(changeId(id, storeId)),
+    fnChangeId: (payloadID, storeId) => dispatch(changeId(payloadID, storeId)),
+    entriesFinderItemsActions: projectsEntriesFinderItemsBindActions({
+      projectId: id,
+      dispatch,
+    }),
   };
 }
 
