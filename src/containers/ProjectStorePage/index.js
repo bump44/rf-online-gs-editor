@@ -6,7 +6,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -21,7 +20,12 @@ import saga from './saga';
 import messages from './messages';
 
 import * as projectStore from '../App/getters/projectStore';
-import { projectsStoresBindActions } from '../App/actions';
+import { IMMUTABLE_MAP } from '../App/constants';
+
+import {
+  projectsStoresBindActions,
+  projectsItemsBindActions,
+} from '../App/actions';
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
@@ -78,12 +82,19 @@ export class ProjectStorePage extends React.PureComponent {
       projectsNextValues,
     } = this.props;
 
-    const projectNextValues = projectsNextValues.getIn(
-      [currentProject.get('id'), currentProjectStore.get('id'), 'nextValue'],
-      Map({}),
+    const projectNextValues = projectsNextValues.get(
+      currentProject.get('id'),
+      IMMUTABLE_MAP,
     );
 
-    return projectStore.getName(projectNextValues, {
+    const itemNextValues = projectNextValues.get(
+      currentProjectStore.get('id'),
+      IMMUTABLE_MAP,
+    );
+
+    const itemNextValue = itemNextValues.get('nextValue', IMMUTABLE_MAP);
+
+    return projectStore.getName(itemNextValue, {
       item: currentProjectStore,
     });
   }
@@ -102,9 +113,7 @@ export class ProjectStorePage extends React.PureComponent {
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectStorePage;
-
-    // very bad
-    const fnProjectStoresActions = projectsStoresBindActions({
+    const actionsBindPayload = {
       dispatch,
       projectId: match.params.id,
       /* eslint-disable indent */
@@ -116,16 +125,25 @@ export class ProjectStorePage extends React.PureComponent {
           }
         : {},
       /* eslint-enable indent */
-    });
+    };
+
+    // very bad
+    const fnProjectStoresActions = projectsStoresBindActions(
+      actionsBindPayload,
+    );
+
+    const fnProjectItemsActions = projectsItemsBindActions(actionsBindPayload);
 
     const item = currentProjectStore;
-    const itemNextValues =
+
+    const projectNextValues =
       currentProject &&
+      projectsNextValues.get(currentProject.get('id'), IMMUTABLE_MAP);
+
+    const itemNextValues =
+      projectNextValues &&
       currentProjectStore &&
-      projectsNextValues.getIn(
-        [currentProject.get('id'), currentProjectStore.get('id')],
-        Map({}),
-      );
+      projectNextValues.get(currentProjectStore.get('id'), IMMUTABLE_MAP);
 
     return (
       <div>
@@ -179,6 +197,7 @@ export class ProjectStorePage extends React.PureComponent {
                     <ProjectStore
                       item={item}
                       itemNextValues={itemNextValues}
+                      projectNextValues={projectNextValues}
                       localSettings={localSettings}
                       moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
                       itemGrades={currentProject.getIn(['itemGrades', 'items'])}
@@ -187,6 +206,7 @@ export class ProjectStorePage extends React.PureComponent {
                         'items',
                       ])}
                       actions={fnProjectStoresActions}
+                      itemActions={fnProjectItemsActions}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>
