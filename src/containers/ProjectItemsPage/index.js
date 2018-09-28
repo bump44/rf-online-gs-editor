@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Promise from 'bluebird';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -60,6 +59,7 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import InfiniteAutoSizeList from '../../components/InfiniteAutoSizeList';
 import ProjectItemVirtualizedRow from '../../components/ProjectItemVirtualizedRow';
 import ProjectItemsFilters from '../../components/ProjectItemsFilters';
+import { IMMUTABLE_LIST, IMMUTABLE_MAP } from '../App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemsPage extends React.PureComponent {
@@ -68,6 +68,7 @@ export class ProjectItemsPage extends React.PureComponent {
     this.isRowLoaded = this.isRowLoaded.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
     this.loadMoreRows = this.loadMoreRows.bind(this);
+    this.getActionsBindPayload = this.getActionsBindPayload.bind(this);
   }
 
   componentWillMount() {
@@ -105,6 +106,36 @@ export class ProjectItemsPage extends React.PureComponent {
     }
   }
 
+  getActionsBindPayload() {
+    const { dispatch, match, currentProject } = this.props;
+    const additionalData = (() => {
+      if (!currentProject) {
+        return {};
+      }
+
+      return {
+        moneyTypes: currentProject.getIn(
+          ['moneyTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        itemGrades: currentProject.getIn(
+          ['itemGrades', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        weaponTypes: currentProject.getIn(
+          ['weaponTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+      };
+    })();
+
+    return {
+      dispatch,
+      projectId: match.params.id,
+      additionalData,
+    };
+  }
+
   isRowLoaded({ index }) {
     const { result } = this.props;
     return !!result.get('items').get(index);
@@ -115,38 +146,31 @@ export class ProjectItemsPage extends React.PureComponent {
       result,
       currentProject,
       projectsNextValues,
-      projectMoneyTypes,
-      projectItemGrades,
-      projectWeaponTypes,
       localSettings,
-      match,
-      dispatch,
     } = this.props;
 
-    const fnProjectItemsActions = projectsItemsBindActions({
-      dispatch,
-      projectId: match.params.id,
-      /* eslint-disable indent */
-      additionalData: currentProject
-        ? {
-            moneyTypes: projectMoneyTypes,
-            itemGrades: projectItemGrades,
-            weaponTypes: projectWeaponTypes,
-          }
-        : {},
-      /* eslint-enable indent */
-    });
+    const actionsBindPayload = this.getActionsBindPayload();
+    const {
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+    } = actionsBindPayload.additionalData;
+
+    const itemActions = projectsItemsBindActions(actionsBindPayload);
+    const nextValues =
+      currentProject &&
+      projectsNextValues.get(currentProject.get('id'), IMMUTABLE_MAP);
 
     return (
       <ProjectItemVirtualizedRow
         {...props}
         key={key}
         items={result.get('items')}
-        nextValues={projectsNextValues.get(currentProject.get('id'), Map({}))}
-        actions={fnProjectItemsActions}
-        moneyTypes={projectMoneyTypes}
-        itemGrades={projectItemGrades}
-        weaponTypes={projectWeaponTypes}
+        nextValues={nextValues}
+        itemActions={itemActions}
+        moneyTypes={moneyTypes}
+        itemGrades={itemGrades}
+        weaponTypes={weaponTypes}
         localSettings={localSettings}
       />
     );
