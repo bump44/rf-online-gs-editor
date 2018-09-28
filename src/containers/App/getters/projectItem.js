@@ -167,7 +167,7 @@ export const getStoragePricePercent = (
     moneyTypes = IMMUTABLE_LIST,
     localSettings = IMMUTABLE_MAP,
   },
-  { valuation = true },
+  { valuation = true } = {},
 ) => {
   const moneyType = getMoneyType(nextValue, { entry, moneyTypes });
   const moneyValue = getMoneyValue(nextValue, { entry, moneyTypes });
