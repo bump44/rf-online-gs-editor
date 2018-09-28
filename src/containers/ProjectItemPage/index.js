@@ -21,6 +21,7 @@ import saga from './saga';
 import messages from './messages';
 
 import * as projectItem from '../App/getters/projectItem';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../App/constants';
 import { projectsItemsBindActions } from '../App/actions';
 import {
   makeSelectCurrentUser,
@@ -50,6 +51,11 @@ import ProjectItemLabelDetail from '../../components/ProjectItemLabelDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.getActionsBindPayload = this.getActionsBindPayload.bind(this);
+  }
+
   componentWillMount() {
     this.loadProjectIfIdChanged(this.props, { isMount: true });
   }
@@ -69,6 +75,36 @@ export class ProjectItemPage extends React.PureComponent {
     if (id !== nextId || itemId !== nextItemId || isMount) {
       props.fnChangeId(nextId, nextItemId);
     }
+  }
+
+  getActionsBindPayload() {
+    const { dispatch, match, currentProject } = this.props;
+    const additionalData = (() => {
+      if (!currentProject) {
+        return {};
+      }
+
+      return {
+        moneyTypes: currentProject.getIn(
+          ['moneyTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        itemGrades: currentProject.getIn(
+          ['itemGrades', 'items'],
+          IMMUTABLE_LIST,
+        ),
+        weaponTypes: currentProject.getIn(
+          ['weaponTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
+      };
+    })();
+
+    return {
+      dispatch,
+      projectId: match.params.id,
+      additionalData,
+    };
   }
 
   getName() {
@@ -95,35 +131,29 @@ export class ProjectItemPage extends React.PureComponent {
       currentProjectItem,
       projectsNextValues,
       localSettings,
-      match,
-      dispatch,
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectItemPage;
 
-    // very bad
-    const fnProjectItemsActions = projectsItemsBindActions({
-      dispatch,
-      projectId: match.params.id,
-      /* eslint-disable indent */
-      additionalData: currentProject
-        ? {
-            moneyTypes: currentProject.getIn(['moneyTypes', 'items']),
-            itemGrades: currentProject.getIn(['itemGrades', 'items']),
-            weaponTypes: currentProject.getIn(['weaponTypes', 'items']),
-          }
-        : {},
-      /* eslint-enable indent */
-    });
+    const actionsBindPayload = this.getActionsBindPayload();
+    const {
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+    } = actionsBindPayload.additionalData;
+
+    const itemActions = projectsItemsBindActions(actionsBindPayload);
+
+    const nextValues =
+      currentProject &&
+      projectsNextValues.get(currentProject.get('id'), IMMUTABLE_MAP);
 
     const item = currentProjectItem;
+
     const itemNextValues =
       currentProject &&
       currentProjectItem &&
-      projectsNextValues.getIn(
-        [currentProject.get('id'), currentProjectItem.get('id')],
-        Map({}),
-      );
+      nextValues.get(currentProjectItem.get('id'), IMMUTABLE_MAP);
 
     return (
       <div>
@@ -177,14 +207,12 @@ export class ProjectItemPage extends React.PureComponent {
                     <ProjectItem
                       item={item}
                       itemNextValues={itemNextValues}
+                      nextValues={nextValues}
                       localSettings={localSettings}
-                      moneyTypes={currentProject.getIn(['moneyTypes', 'items'])}
-                      itemGrades={currentProject.getIn(['itemGrades', 'items'])}
-                      weaponTypes={currentProject.getIn([
-                        'weaponTypes',
-                        'items',
-                      ])}
-                      actions={fnProjectItemsActions}
+                      moneyTypes={moneyTypes}
+                      itemGrades={itemGrades}
+                      weaponTypes={weaponTypes}
+                      itemActions={itemActions}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>
