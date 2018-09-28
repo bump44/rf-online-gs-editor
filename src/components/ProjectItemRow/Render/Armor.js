@@ -34,7 +34,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
     const {
       item,
       itemNextValues,
-      actions,
+      itemActions,
       moneyTypes,
       itemGrades,
     } = this.props;
@@ -45,7 +45,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
           <ProjectItemInteractingName
             item={item}
             itemNextValues={itemNextValues}
-            onChangeValue={actions.changeName}
+            onChangeValue={itemActions.changeName}
             className="pb-10"
           />
           <Grid columns="equal">
@@ -53,28 +53,28 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
               <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeExchange}
+                onChangeValue={itemActions.changeExchange}
               />
             </Grid.Column>
             <Grid.Column>
               <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeSell}
+                onChangeValue={itemActions.changeSell}
               />
             </Grid.Column>
             <Grid.Column only="widescreen">
               <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeGround}
+                onChangeValue={itemActions.changeGround}
               />
             </Grid.Column>
             <Grid.Column only="widescreen">
               <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePossible}
+                onChangeValue={itemActions.changeStoragePossible}
               />
             </Grid.Column>
           </Grid>
@@ -86,18 +86,18 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
               <ProjectItemInteractingMoneyType
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeMoney}
+                onChangeValue={itemActions.changeMoney}
                 types={moneyTypes}
                 className="pt-5 pb-10"
               />
               <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeStdPrice={actions.changeStdPrice}
-                onChangeStdPoint={actions.changeStdPoint}
-                onChangeGoldPoint={actions.changeGoldPoint}
-                onChangeProcPoint={actions.changeProcPoint}
-                onChangeKillPoint={actions.changeKillPoint}
+                onChangeStdPrice={itemActions.changeStdPrice}
+                onChangeStdPoint={itemActions.changeStdPoint}
+                onChangeGoldPoint={itemActions.changeGoldPoint}
+                onChangeProcPoint={itemActions.changeProcPoint}
+                onChangeKillPoint={itemActions.changeKillPoint}
                 types={moneyTypes}
               />
             </Grid.Column>
@@ -105,14 +105,14 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
               <ProjectItemInteractingItemGrade
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeItemGrade}
+                onChangeValue={itemActions.changeItemGrade}
                 types={itemGrades}
                 className="pt-5 pb-10"
               />
               <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePrice}
+                onChangeValue={itemActions.changeStoragePrice}
                 types={moneyTypes}
               />
             </Grid.Column>
@@ -128,7 +128,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingLevelLim
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeLevelLim}
+                      onChangeValue={itemActions.changeLevelLim}
                     />
                   </div>
                 }
@@ -143,7 +143,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingDefenceGap
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeDefenceGap}
+                      onChangeValue={itemActions.changeDefenceGap}
                     />
                   </div>
                 }
@@ -160,7 +160,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingUpLevelLim
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeUpLevelLim}
+                      onChangeValue={itemActions.changeUpLevelLim}
                     />
                   </div>
                 }
@@ -175,7 +175,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingDefenceFacingPresent
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeDefenceFacing}
+                      onChangeValue={itemActions.changeDefenceFacing}
                     />
                   </div>
                 }
@@ -194,7 +194,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingDefence
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeDefence}
+                      onChangeValue={itemActions.changeDefence}
                     />
                   </div>
                 }
@@ -209,7 +209,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                     <ProjectItemInteractingDefenceFacing
                       item={item}
                       itemNextValues={itemNextValues}
-                      onChangeValue={actions.changeDefenceFacing}
+                      onChangeValue={itemActions.changeDefenceFacing}
                     />
                   </div>
                 }
@@ -231,7 +231,7 @@ ProjectItemRowRenderArmor.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
+  itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
     changeSell: PropTypes.func.isRequired,
