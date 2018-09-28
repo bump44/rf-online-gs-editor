@@ -12,6 +12,7 @@ import {
   SortableContainer,
   SortableElement,
   SortableHandle,
+  arrayMove,
 } from 'react-sortable-hoc';
 
 import { Icon } from 'semantic-ui-react';
@@ -73,6 +74,7 @@ class SortableAutoSizeList extends React.PureComponent {
     };
 
     this.rowRenderer = undefined;
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
 
   componentWillMount() {
@@ -88,6 +90,17 @@ class SortableAutoSizeList extends React.PureComponent {
         : this.rowRenderer;
   }
 
+  onSortEnd({ oldIndex, newIndex }) {
+    const { rowCount, onSortEnd } = this.props;
+    if (!onSortEnd) {
+      return;
+    }
+
+    const curr = Array.from(Array(rowCount)).map((_, index) => index);
+    const next = arrayMove(curr, oldIndex, newIndex);
+    onSortEnd(next);
+  }
+
   render() {
     const { rowCount, rowHeight, useDragHandle } = this.props;
 
@@ -98,6 +111,7 @@ class SortableAutoSizeList extends React.PureComponent {
         rowRenderer={this.rowRenderer}
         registerChild={this.registerChild}
         useDragHandle={useDragHandle}
+        onSortEnd={this.onSortEnd}
       />
     );
   }
@@ -108,10 +122,12 @@ SortableAutoSizeList.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   rowRenderer: PropTypes.func.isRequired,
   useDragHandle: PropTypes.bool,
+  onSortEnd: PropTypes.func,
 };
 
 SortableAutoSizeList.defaultProps = {
   useDragHandle: false,
+  onSortEnd: undefined,
 };
 
 export default SortableAutoSizeList;

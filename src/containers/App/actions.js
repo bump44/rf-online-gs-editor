@@ -329,11 +329,23 @@ export const projectsStores = {
     });
     return fns;
   })(),
+  itemListUpdate: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'itemListUpdate',
+    }),
   itemListRemove: args =>
     projectsNextValuesChangePropValue({
       ...args,
       subType: STORE,
       propKey: 'itemListRemove',
+    }),
+  itemsListResort: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'itemsListResort',
     }),
   itemsListReshuffle: args =>
     projectsNextValuesChangePropValue({

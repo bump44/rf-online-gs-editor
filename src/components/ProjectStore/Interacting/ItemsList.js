@@ -26,6 +26,8 @@ const DragHandle = CreateDragHangle(DragHangleDefault);
 class ProjectStoreInteractingItemsList extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.onSortEnd = this.onSortEnd.bind(this);
     this.renderItemList = this.renderItemList.bind(this);
     this.sortableAutoSizeList = undefined;
 
@@ -45,6 +47,11 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
     ) {
       this.sortableAutoSizeList.forceUpdateGrid();
     }
+  }
+
+  onSortEnd(nextIndexes) {
+    const { actions, item } = this.props;
+    actions.itemsListResort(item, nextIndexes);
   }
 
   renderItemList(
@@ -108,6 +115,7 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
         rowCount={200}
         rowRenderer={this.renderItemList}
         useDragHandle
+        onSortEnd={this.onSortEnd}
       />
     );
   }
