@@ -58,13 +58,13 @@ export function* changeProp({
   subType,
   ...props
 }) {
-  const item = props.item instanceof Map ? props.item : Map(props.item);
+  const entry = props.entry instanceof Map ? props.entry : Map(props.entry);
   const projectsNextValues = yield select(makeSelectProjectsNextValues());
   const localSettings = yield select(makeSelectLocalSettings());
 
   try {
     const projectNextValue = projectsNextValues
-      .getIn([projectId, item.get('id')])
+      .getIn([projectId, entry.get('id')])
       .get('nextValue');
 
     const typeResolvers = Resolvers[subType];
@@ -76,7 +76,7 @@ export function* changeProp({
     const resolver = typeResolvers[propKey] || (() => projectNextValue);
     const nextMap = resolver(projectNextValue, propValue, {
       localSettings,
-      item,
+      entry,
       ...props.additionalData,
     });
 
@@ -84,7 +84,7 @@ export function* changeProp({
       projectsNextValuesChangeIsError(
         {
           projectId,
-          keyId: item.get('id'),
+          keyId: entry.get('id'),
         },
         false,
       ),
@@ -94,7 +94,7 @@ export function* changeProp({
       projectsNextValuesChangeNextValue(
         {
           projectId,
-          keyId: item.get('id'),
+          keyId: entry.get('id'),
           subType,
         },
         nextMap,
@@ -106,7 +106,7 @@ export function* changeProp({
       projectsNextValuesChangeIsError(
         {
           projectId,
-          keyId: item.get('id'),
+          keyId: entry.get('id'),
         },
         true,
       ),
@@ -116,7 +116,7 @@ export function* changeProp({
       projectsNextValuesChangeErrorMessage(
         {
           projectId,
-          keyId: item.get('id'),
+          keyId: entry.get('id'),
         },
         err.message,
       ),
