@@ -8,7 +8,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map, List } from 'immutable';
-import { Comment, Input, Icon, Label, Button, Modal } from 'semantic-ui-react';
+import {
+  Comment,
+  Input,
+  Icon,
+  Label,
+  Button,
+  Modal,
+  Dimmer,
+  Header,
+} from 'semantic-ui-react';
+
+import { FormattedMessage } from 'react-intl';
+import messages from '../messages';
 
 import {
   IMMUTABLE_MAP,
@@ -29,15 +41,33 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.renderLabels = this.renderLabels.bind(this);
-    this.itemListRemoveAndReshuffle = this.itemListRemoveAndReshuffle.bind(
-      this,
-    );
+    this.renderContent = this.renderContent.bind(this);
+    this.renderDimmer = this.renderDimmer.bind(this);
+
+    this.itemListRemove = this.itemListRemove.bind(this);
+    this.itemsListReshuffle = this.itemsListReshuffle.bind(this);
+    this.itemsListCountNextN = this.itemsListCountNextN.bind(this);
+    this.itemsListCountNextIndex = this.itemsListCountNextIndex.bind(this);
   }
 
-  itemListRemoveAndReshuffle() {
+  itemListRemove() {
     const { item, actions, index } = this.props;
     actions.itemListRemove(item, index + 1);
-    // actions.itemsListReshuffle(item);
+  }
+
+  itemsListReshuffle() {
+    const { item, actions } = this.props;
+    actions.itemsListReshuffle(item);
+  }
+
+  itemsListCountNextN() {
+    const { item, index, actions } = this.props;
+    actions.changeItemsListCount(item, index + 1);
+  }
+
+  itemsListCountNextIndex() {
+    const { item, index, actions } = this.props;
+    actions.changeItemsListCount(item, index);
   }
 
   getConvClientCode(code) {
@@ -47,6 +77,103 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       // ignore
       return undefined;
     }
+  }
+
+  renderDimmer() {
+    return (
+      <Dimmer active>
+        <Header sub inverted>
+          <FormattedMessage {...messages.ItemRowIsDisabled} />
+        </Header>
+        <Button primary size="mini" onClick={this.itemsListCountNextN}>
+          <Icon name="check circle" />
+          <FormattedMessage {...messages.Enable} />
+        </Button>
+      </Dimmer>
+    );
+  }
+
+  renderContent() {
+    const {
+      item,
+      itemNextValues,
+      index,
+      dragHandle,
+      localSettings,
+    } = this.props;
+
+    const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
+    const nextValue = itemNextValues.get('nextValue');
+    const itemList = projectStore.getItemList(
+      nextValue,
+      { item },
+      { n: index + 1 },
+    );
+
+    /* eslint-disable indent */
+    const clientCode =
+      autoReverseClientCodes && itemList.clientCode
+        ? itemList.clientCode
+            .split(/(.{2})/g)
+            .reverse()
+            .join('')
+        : itemList.clientCode;
+    /* eslint-enable indent */
+
+    const convClientCode = this.getConvClientCode(itemList.serverCode);
+    const itemReal = itemList.server || itemList.client;
+    const n = index + 1;
+
+    return (
+      <React.Fragment>
+        {dragHandle && dragHandle}
+
+        <Comment.Content>
+          <Comment.Author>
+            <Label size="mini">№{n}</Label>
+            {itemReal && this.renderLabels(itemReal)}
+          </Comment.Author>
+
+          <Comment.Text>
+            <Label size="mini">{itemList.clientType}</Label>
+            <Input
+              className="ml-5 mr-10"
+              size="mini"
+              value={clientCode}
+              error={convClientCode !== itemList.clientCode}
+              disabled
+            />
+            <Icon
+              name={
+                convClientCode !== itemList.clientCode ? 'unlink' : 'linkify'
+              }
+            />
+            <Input
+              className="ml-5"
+              size="mini"
+              value={itemList.serverCode}
+              error={convClientCode !== itemList.clientCode}
+              disabled
+            />
+          </Comment.Text>
+
+          <Comment.Actions>
+            <Comment.Action>
+              <FormattedMessage {...messages.SelectItem} />
+            </Comment.Action>
+            <Comment.Action onClick={this.itemListRemove}>
+              <FormattedMessage {...messages.Remove} />
+            </Comment.Action>
+            <Comment.Action onClick={this.itemsListReshuffle}>
+              <FormattedMessage {...messages.Reshuffle} />
+            </Comment.Action>
+            <Comment.Action onClick={this.itemsListCountNextIndex}>
+              <FormattedMessage {...messages.Disable} />
+            </Comment.Action>
+          </Comment.Actions>
+        </Comment.Content>
+      </React.Fragment>
+    );
   }
 
   renderLabels(item) {
@@ -98,76 +225,15 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
   }
 
   render() {
-    const {
-      item,
-      itemNextValues,
-      index,
-      dragHandle,
-      localSettings,
-    } = this.props;
-
-    const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
+    const { item, itemNextValues, index } = this.props;
     const nextValue = itemNextValues.get('nextValue');
-    const itemList = projectStore.getItemList(
-      nextValue,
-      { item },
-      { n: index + 1 },
-    );
-
-    /* eslint-disable indent */
-    const clientCode =
-      autoReverseClientCodes && itemList.clientCode
-        ? itemList.clientCode
-            .split(/(.{2})/g)
-            .reverse()
-            .join('')
-        : itemList.clientCode;
-    /* eslint-enable indent */
-
-    const convClientCode = this.getConvClientCode(itemList.serverCode);
-    const itemReal = itemList.server || itemList.client;
+    const n = index + 1;
+    const listCount = projectStore.getItemsListCount(nextValue, { item });
 
     return (
       <CommentGroup>
         <Comment>
-          {dragHandle && dragHandle}
-
-          <Comment.Content>
-            <Comment.Author>
-              <Label size="mini">№{index + 1}</Label>
-              {itemReal && this.renderLabels(itemReal)}
-            </Comment.Author>
-
-            <Comment.Text>
-              <Label size="mini">{itemList.clientType}</Label>
-              <Input
-                className="ml-5 mr-10"
-                size="mini"
-                value={clientCode}
-                error={convClientCode !== itemList.clientCode}
-                disabled
-              />
-              <Icon
-                name={
-                  convClientCode !== itemList.clientCode ? 'unlink' : 'linkify'
-                }
-              />
-              <Input
-                className="ml-5"
-                size="mini"
-                value={itemList.serverCode}
-                error={convClientCode !== itemList.clientCode}
-                disabled
-              />
-            </Comment.Text>
-
-            <Comment.Actions>
-              <Comment.Action>Select item</Comment.Action>
-              <Comment.Action onClick={this.itemListRemoveAndReshuffle}>
-                Remove & Reshuffle
-              </Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
+          {n > listCount ? this.renderDimmer() : this.renderContent()}
         </Comment>
       </CommentGroup>
     );
