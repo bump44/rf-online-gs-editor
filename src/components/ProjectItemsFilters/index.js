@@ -41,7 +41,7 @@ class ProjectItemsFilters extends React.PureComponent {
   }
 
   render() {
-    const { sortBy, sortWay, whereSearch, whereType } = this.props;
+    const { sortBy, sortWay, whereSearch, whereType, loading } = this.props;
 
     return (
       <Grid verticalAlign="middle" columns={4}>
@@ -81,6 +81,7 @@ class ProjectItemsFilters extends React.PureComponent {
                 placeholder={message}
                 size="mini"
                 fluid
+                loading={loading}
               />
             )}
           </FormattedMessage>
@@ -99,6 +100,11 @@ ProjectItemsFilters.propTypes = {
   onChangeSortWay: PropTypes.func.isRequired,
   onChangeWhereSearch: PropTypes.func.isRequired,
   onChangeWhereType: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+};
+
+ProjectItemsFilters.defaultProps = {
+  loading: false,
 };
 
 export default ProjectItemsFilters;
