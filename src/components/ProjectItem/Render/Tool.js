@@ -39,7 +39,7 @@ class ProjectItemRenderTool extends React.PureComponent {
     const {
       item,
       itemNextValues,
-      actions,
+      itemActions,
       moneyTypes,
       itemGrades,
     } = this.props;
@@ -56,13 +56,13 @@ class ProjectItemRenderTool extends React.PureComponent {
               <ProjectItemInteractingName
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeName}
+                onChangeValue={itemActions.changeName}
                 className="mb-15"
                 label={
                   <ProjectItemInteractingItemGrade
                     item={item}
                     itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeItemGrade}
+                    onChangeValue={itemActions.changeItemGrade}
                     className="mr-15 mb-5"
                     types={itemGrades}
                   />
@@ -71,56 +71,56 @@ class ProjectItemRenderTool extends React.PureComponent {
               <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeExchange}
+                onChangeValue={itemActions.changeExchange}
                 className="mr-15 mb-5"
               />
               <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeSell}
+                onChangeValue={itemActions.changeSell}
                 className="mr-15 mb-5"
               />
               <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeGround}
+                onChangeValue={itemActions.changeGround}
                 className="mr-15 mb-5"
               />
               <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePossible}
+                onChangeValue={itemActions.changeStoragePossible}
                 className="mr-15 mb-5"
               />
               <div>
                 <ProjectItemInteractingCivilBM
                   item={item}
                   itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeCivilBM}
+                  onChangeValue={itemActions.changeCivilBM}
                   className="mr-15 mb-5"
                 />
                 <ProjectItemInteractingCivilBF
                   item={item}
                   itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeCivilBF}
+                  onChangeValue={itemActions.changeCivilBF}
                   className="mr-15 mb-5"
                 />
                 <ProjectItemInteractingCivilCM
                   item={item}
                   itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeCivilCM}
+                  onChangeValue={itemActions.changeCivilCM}
                   className="mr-15 mb-5"
                 />
                 <ProjectItemInteractingCivilCF
                   item={item}
                   itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeCivilCF}
+                  onChangeValue={itemActions.changeCivilCF}
                   className="mr-15 mb-5"
                 />
                 <ProjectItemInteractingCivilA
                   item={item}
                   itemNextValues={itemNextValues}
-                  onChangeValue={actions.changeCivilA}
+                  onChangeValue={itemActions.changeCivilA}
                   className="mr-15 mb-5"
                 />
               </div>
@@ -129,18 +129,18 @@ class ProjectItemRenderTool extends React.PureComponent {
               <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeStdPrice={actions.changeStdPrice}
-                onChangeStdPoint={actions.changeStdPoint}
-                onChangeGoldPoint={actions.changeGoldPoint}
-                onChangeProcPoint={actions.changeProcPoint}
-                onChangeKillPoint={actions.changeKillPoint}
+                onChangeStdPrice={itemActions.changeStdPrice}
+                onChangeStdPoint={itemActions.changeStdPoint}
+                onChangeGoldPoint={itemActions.changeGoldPoint}
+                onChangeProcPoint={itemActions.changeProcPoint}
+                onChangeKillPoint={itemActions.changeKillPoint}
                 types={moneyTypes}
                 className="mb-5"
                 label={
                   <ProjectItemInteractingMoneyType
                     item={item}
                     itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeMoney}
+                    onChangeValue={itemActions.changeMoney}
                     types={moneyTypes}
                   />
                 }
@@ -148,42 +148,42 @@ class ProjectItemRenderTool extends React.PureComponent {
               <ProjectItemInteractingStdPrice
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStdPrice}
+                onChangeValue={itemActions.changeStdPrice}
                 label="StdPrice"
                 className="mb-5"
               />
               <ProjectItemInteractingStdPoint
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStdPoint}
+                onChangeValue={itemActions.changeStdPoint}
                 label="StdPoint"
                 className="mb-5"
               />
               <ProjectItemInteractingGoldPoint
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeGoldPoint}
+                onChangeValue={itemActions.changeGoldPoint}
                 label="GoldPoint"
                 className="mb-5"
               />
               <ProjectItemInteractingProcPoint
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeProcPoint}
+                onChangeValue={itemActions.changeProcPoint}
                 label="ProcPoint"
                 className="mb-5"
               />
               <ProjectItemInteractingKillPoint
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeKillPoint}
+                onChangeValue={itemActions.changeKillPoint}
                 label="KillPoint"
                 className="mb-5"
               />
               <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePrice}
+                onChangeValue={itemActions.changeStoragePrice}
                 types={moneyTypes}
                 label="Storage price"
               />
@@ -200,7 +200,7 @@ ProjectItemRenderTool.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
+  itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
     changeSell: PropTypes.func.isRequired,
