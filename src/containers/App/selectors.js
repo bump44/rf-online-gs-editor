@@ -135,6 +135,11 @@ const makeSelectProjectsNextValues = () =>
     globalState.get('projectsNextValues'),
   );
 
+const makeSelectProjectsEntriesFinder = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('projectsEntriesFinder'),
+  );
+
 export {
   makeSelectLocation,
   makeSelectCurrentUser,
@@ -145,4 +150,5 @@ export {
   makeSelectProjectImportsProcessingData,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
+  makeSelectProjectsEntriesFinder,
 };
