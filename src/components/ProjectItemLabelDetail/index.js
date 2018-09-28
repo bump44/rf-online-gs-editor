@@ -11,18 +11,24 @@ import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
 import { Label, Icon } from 'semantic-ui-react';
 import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
-// import styled from 'styled-components';
+
+import {
+  getIndex,
+  getId,
+  getProjectId,
+  getType,
+} from '../../containers/App/getters/projectItem';
 
 function ProjectItemLabelDetail(props) {
-  const { item, itemNextValues, link } = props;
+  const { item, itemNextValues, link, size } = props;
+
+  const nextValue = itemNextValues.get('nextValue');
+
   const isSaved = itemNextValues.getIn(['isSaved'], true);
   const isSaving = itemNextValues.getIn(['isSaving'], false);
   const isError = itemNextValues.getIn(['isError'], false);
   const errorMessage = itemNextValues.getIn(['errorMessage'], '');
-  const nIndex = itemNextValues.getIn(
-    ['nextValue', 'nIndex'],
-    item.get('nIndex'),
-  );
+  const nIndex = getIndex(nextValue, { item });
 
   const isShowStatus =
     (!isSaving && !isSaved && !isError) || isSaving || isError;
@@ -44,15 +50,17 @@ function ProjectItemLabelDetail(props) {
   };
 
   if (link) {
+    const id = getId(nextValue, { item });
+    const projectId = getProjectId(nextValue, { item });
+
     componentProps.as = Link;
-    componentProps.to = `/project/${item.getIn([
-      'project',
-      'id',
-    ])}/items/${item.get('id')}`;
+    componentProps.to = `/project/${projectId}/items/${id}`;
   }
 
+  const type = getType(nextValue, { item });
+
   return (
-    <Label {...componentProps}>
+    <Label {...componentProps} size={size}>
       <Icon
         loading={isShowStatus && isSaving}
         name={cx({
@@ -64,10 +72,7 @@ function ProjectItemLabelDetail(props) {
       />
       {nIndex}
       <Label.Detail>
-        <ProjectItemTypeLocaleMessage
-          messageKey={item.get('type')}
-          tagName="small"
-        />
+        <ProjectItemTypeLocaleMessage messageKey={type} tagName="small" />
       </Label.Detail>
     </Label>
   );
@@ -77,10 +82,12 @@ ProjectItemLabelDetail.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   link: PropTypes.bool,
+  size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'huge']),
 };
 
 ProjectItemLabelDetail.defaultProps = {
   link: false,
+  size: 'small',
 };
 
 export default ProjectItemLabelDetail;
