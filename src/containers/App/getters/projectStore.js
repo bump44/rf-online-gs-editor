@@ -220,3 +220,23 @@ export const getItemsList = (
   Array.from(Array(200)).map((_, index) =>
     getItemList(nextValues, { item }, { n: index + 1 }),
   );
+
+/**
+ * Return vendor list items count
+ * @param {Object} nextValues next item values
+ * @param {Object} props item: the first thing we got from the server
+ *
+ * @returns Number
+ */
+export const getItemsListCount = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) =>
+  nextValues.getIn(
+    ['server', 'nStoreListCount'],
+    item.getIn(
+      [['server', 'nStoreListCount'], ['client', 'nStoreLISTcount']].find(
+        fieldSets => !isNullOrUndefined(item.getIn(fieldSets)),
+      ) || ['server', 'nStoreListCount'],
+    ),
+  ) || 0;
