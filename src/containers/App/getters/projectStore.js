@@ -1,7 +1,11 @@
-import { isNullOrUndefined } from 'util';
+import { isUndefined, isNullOrUndefined } from 'util';
+import { IMMUTABLE_MAP } from '../constants';
 
-export const getName = (nextValues, { item }) => {
-  const nextValue = nextValues && nextValues.get('priorStrName');
+export const getName = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) => {
+  const nextValue = nextValues.get('priorStrName');
 
   const currValue = item.getIn(
     [
@@ -16,9 +20,11 @@ export const getName = (nextValues, { item }) => {
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getLastName = (nextValues, { item }) => {
-  const nextValue =
-    nextValues && nextValues.getIn(['client', 'strStoreNPClastName']);
+export const getLastName = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+) => {
+  const nextValue = nextValues.getIn(['client', 'strStoreNPClastName']);
 
   const currValue = item.getIn(
     [['client', 'strStoreNPClastName']].find(
@@ -83,28 +89,48 @@ export const getAngle = (nextValues, { item }) => {
   return !isNullOrUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getItemListClientType = (nextValues, { item }, { n = 1 }) => {
-  const nextValue =
-    nextValues && nextValues.getIn(['client', `nItemListType__${n}_1`]);
+export const getItemListClientType = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const nextValue = nextValues.getIn(['client', `nItemListType__${n}_1`]);
   const currValue = item.getIn(['client', `nItemListType__${n}_1`]);
-  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+  return !isUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getItemListClientCode = (nextValues, { item }, { n = 1 }) => {
-  const nextValue =
-    nextValues && nextValues.getIn(['client', `strItemList__${n}_2`]);
+export const getItemListClientCode = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const nextValue = nextValues.getIn(['client', `strItemList__${n}_2`]);
   const currValue = item.getIn(['client', `strItemList__${n}_2`], '');
-  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+  return !isUndefined(nextValue) ? nextValue : currValue;
 };
 
-export const getItemListServerCode = (nextValues, { item }, { n = 1 }) => {
-  const nextValue =
-    nextValues && nextValues.getIn(['server', `strItemCode__${n}`]);
+export const getItemListClient = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const nextValue = nextValues.getIn(['client', `itemList__${n}`]);
+  const currValue = item.getIn(['client', `itemList__${n}`]) || undefined;
+  return !isUndefined(nextValue) ? nextValue : currValue;
+};
+
+export const getItemListServerCode = (
+  nextValues = IMMUTABLE_MAP,
+  { item = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const nextValue = nextValues.getIn(['server', `strItemCode__${n}`]);
   const currValue = item.getIn(['server', `strItemCode__${n}`], '');
-  return !isNullOrUndefined(nextValue) ? nextValue : currValue;
+  return !isUndefined(nextValue) ? nextValue : currValue;
 };
 
 export const getItemList = (...props) => ({
+  client: getItemListClient(...props),
   clientType: getItemListClientType(...props),
   clientCode: getItemListClientCode(...props),
   serverCode: getItemListServerCode(...props),
