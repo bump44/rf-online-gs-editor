@@ -26,7 +26,7 @@ import ProjectItemInteractingCivilA from '../../ProjectItem/Interacting/CivilA';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderTool extends React.PureComponent {
   render() {
-    const { item, itemNextValues, actions, moneyTypes } = this.props;
+    const { item, itemNextValues, itemActions, moneyTypes } = this.props;
 
     return (
       <Grid columns={3}>
@@ -34,7 +34,7 @@ class ProjectItemRowRenderTool extends React.PureComponent {
           <ProjectItemInteractingName
             item={item}
             itemNextValues={itemNextValues}
-            onChangeValue={actions.changeName}
+            onChangeValue={itemActions.changeName}
             className="pb-10"
           />
           <Grid columns="equal">
@@ -42,28 +42,28 @@ class ProjectItemRowRenderTool extends React.PureComponent {
               <ProjectItemInteractingExchange
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeExchange}
+                onChangeValue={itemActions.changeExchange}
               />
             </Grid.Column>
             <Grid.Column>
               <ProjectItemInteractingSell
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeSell}
+                onChangeValue={itemActions.changeSell}
               />
             </Grid.Column>
             <Grid.Column only="widescreen">
               <ProjectItemInteractingGround
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeGround}
+                onChangeValue={itemActions.changeGround}
               />
             </Grid.Column>
             <Grid.Column only="widescreen">
               <ProjectItemInteractingStoragePossible
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePossible}
+                onChangeValue={itemActions.changeStoragePossible}
               />
             </Grid.Column>
           </Grid>
@@ -73,7 +73,7 @@ class ProjectItemRowRenderTool extends React.PureComponent {
           <ProjectItemInteractingMoneyType
             item={item}
             itemNextValues={itemNextValues}
-            onChangeValue={actions.changeMoney}
+            onChangeValue={itemActions.changeMoney}
             types={moneyTypes}
             className="pt-5 pb-10"
           />
@@ -83,11 +83,11 @@ class ProjectItemRowRenderTool extends React.PureComponent {
               <ProjectItemInteractingMoneyValue
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeStdPrice={actions.changeStdPrice}
-                onChangeStdPoint={actions.changeStdPoint}
-                onChangeGoldPoint={actions.changeGoldPoint}
-                onChangeProcPoint={actions.changeProcPoint}
-                onChangeKillPoint={actions.changeKillPoint}
+                onChangeStdPrice={itemActions.changeStdPrice}
+                onChangeStdPoint={itemActions.changeStdPoint}
+                onChangeGoldPoint={itemActions.changeGoldPoint}
+                onChangeProcPoint={itemActions.changeProcPoint}
+                onChangeKillPoint={itemActions.changeKillPoint}
                 types={moneyTypes}
               />
             </Grid.Column>
@@ -95,7 +95,7 @@ class ProjectItemRowRenderTool extends React.PureComponent {
               <ProjectItemInteractingStoragePrice
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeStoragePrice}
+                onChangeValue={itemActions.changeStoragePrice}
                 types={moneyTypes}
               />
             </Grid.Column>
@@ -108,30 +108,30 @@ class ProjectItemRowRenderTool extends React.PureComponent {
               <ProjectItemInteractingCivilBM
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilBM}
+                onChangeValue={itemActions.changeCivilBM}
               />
               <ProjectItemInteractingCivilCM
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilCM}
+                onChangeValue={itemActions.changeCivilCM}
               />
               <ProjectItemInteractingCivilA
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilA}
+                onChangeValue={itemActions.changeCivilA}
               />
             </Grid.Column>
             <Grid.Column>
               <ProjectItemInteractingCivilBF
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilBF}
+                onChangeValue={itemActions.changeCivilBF}
               />
 
               <ProjectItemInteractingCivilCF
                 item={item}
                 itemNextValues={itemNextValues}
-                onChangeValue={actions.changeCivilCF}
+                onChangeValue={itemActions.changeCivilCF}
               />
             </Grid.Column>
           </Grid>
@@ -145,7 +145,7 @@ ProjectItemRowRenderTool.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
+  itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
     changeSell: PropTypes.func.isRequired,
