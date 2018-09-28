@@ -27,8 +27,8 @@ class ProjectStoreVirtualizedRow extends React.PureComponent {
   renderRow() {
     const {
       index,
-      items,
-      actions,
+      stores,
+      storeActions,
       nextValues,
       moneyTypes,
       itemGrades,
@@ -50,18 +50,17 @@ class ProjectStoreVirtualizedRow extends React.PureComponent {
       return null;
     }
 
-    const item = items.get(index);
+    const store = stores.get(index);
 
-    if (item && !(disableRenderItemsIsScrolling && isScrolling)) {
-      const itemNextValues = nextValues.get(item.get('id'), Map({}));
+    if (store && !(disableRenderItemsIsScrolling && isScrolling)) {
+      const storeNextValues = nextValues.get(store.get('id'), Map({}));
 
       return (
         <ProjectStoreRow
           nextValues={nextValues}
-          actions={actions}
-          items={items}
-          item={item}
-          itemNextValues={itemNextValues}
+          storeActions={storeActions}
+          store={store}
+          storeNextValues={storeNextValues}
           moneyTypes={moneyTypes}
           itemGrades={itemGrades}
           weaponTypes={weaponTypes}
@@ -90,13 +89,13 @@ ProjectStoreVirtualizedRow.propTypes = {
   isScrolling: PropTypes.bool.isRequired,
   isVisible: PropTypes.bool.isRequired,
   style: PropTypes.object.isRequired,
-  items: PropTypes.instanceOf(List).isRequired,
+  stores: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  actions: PropTypes.object.isRequired,
+  storeActions: PropTypes.object.isRequired,
 };
 
 export default ProjectStoreVirtualizedRow;
