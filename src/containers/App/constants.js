@@ -8,10 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-import { Map, List } from 'immutable';
-
-export const IMMUTABLE_MAP = Map({});
-export const IMMUTABLE_LIST = List([]);
+import { Map, List, fromJS } from 'immutable';
 
 export const CHANGE_CURRENT_USER = 'global/CHANGE_CURRENT_USER';
 export const CHANGE_CURRENT_USER_TOKEN = 'global/CHANGE_CURRENT_USER_TOKEN';
@@ -37,9 +34,70 @@ export const PROJECTS_NEXT_VALUES_CHANGE_IS_ERROR =
 export const PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE =
   'global/PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE';
 
+export const PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_BY =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_BY';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_WAY =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_SORT_WAY';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_TAKE_SKIP =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_TAKE_SKIP';
+export const PROJECTS_ENTRIES_FINDER_RESET_RESULT =
+  'global/PROJECTS_ENTRIES_FINDER_RESET_RESULT';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_ITEMS =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_ITEMS';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_TOTAL =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_TOTAL';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADING =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADING';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR';
+export const PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE =
+  'global/PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE';
+
 // constants
 export const ITEM = 'ITEM';
 export const STORE = 'STORE';
+
+export const IMMUTABLE_MAP = Map({});
+export const IMMUTABLE_LIST = List([]);
+
+export const PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS = {
+  [ITEM]: fromJS({
+    subType: ITEM,
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
+    errorMessage: '',
+    filter: {
+      take: 25,
+      skip: 0,
+      sortBy: 'nIndex',
+      sortWay: 1,
+      where: { search: '', type: '' },
+    },
+    result: { total: 1, items: [] },
+  }),
+  [STORE]: fromJS({
+    subType: STORE,
+    isLoading: false,
+    isLoaded: false,
+    isError: false,
+    errorMessage: '',
+    filter: {
+      take: 25,
+      skip: 0,
+      sortBy: 'nIndex',
+      sortWay: 1,
+      where: { search: '' },
+    },
+    result: { total: 1, items: [] },
+  }),
+};
 
 export const SKIP = 'skip';
 export const REPLACE = 'replace';
