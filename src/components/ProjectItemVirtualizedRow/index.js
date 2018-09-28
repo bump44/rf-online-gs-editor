@@ -8,7 +8,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 import { Dimmer, Loader } from 'semantic-ui-react';
-// import styled from 'styled-components';
 
 import Row from '../ProjectItemRow/styles';
 import ProjectItemRow from '../ProjectItemRow';
@@ -16,6 +15,7 @@ import ProjectItemRow from '../ProjectItemRow';
 import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
+  IMMUTABLE_MAP,
 } from '../../containers/App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -29,7 +29,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
     const {
       index,
       items,
-      actions,
+      itemActions,
       nextValues,
       moneyTypes,
       itemGrades,
@@ -37,6 +37,8 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
       localSettings,
       isScrolling,
       isVisible,
+      selectable,
+      onClickSelect,
     } = this.props;
 
     const disableRenderItemsIsScrolling = localSettings.get(
@@ -54,19 +56,20 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
     const item = items.get(index);
 
     if (item && !(disableRenderItemsIsScrolling && isScrolling)) {
-      const itemNextValues = nextValues.get(item.get('id'), Map({}));
+      const itemNextValues = nextValues.get(item.get('id'), IMMUTABLE_MAP);
 
       return (
         <ProjectItemRow
           nextValues={nextValues}
-          actions={actions}
-          items={items}
+          itemActions={itemActions}
           item={item}
           itemNextValues={itemNextValues}
           moneyTypes={moneyTypes}
           itemGrades={itemGrades}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
+          selectable={selectable}
+          onClickSelect={onClickSelect}
         />
       );
     }
@@ -97,7 +100,14 @@ ProjectItemVirtualizedRow.propTypes = {
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  actions: PropTypes.object.isRequired,
+  itemActions: PropTypes.object.isRequired,
+  selectable: PropTypes.bool,
+  onClickSelect: PropTypes.func,
+};
+
+ProjectItemRow.defaultProps = {
+  selectable: false,
+  onClickSelect: undefined,
 };
 
 export default ProjectItemVirtualizedRow;
