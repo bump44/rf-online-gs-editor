@@ -25,7 +25,16 @@ import ProjectStoreInteractingItemsList from './Interacting/ItemsList';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStore extends React.PureComponent {
   render() {
-    const { item, itemNextValues, actions } = this.props;
+    const {
+      item,
+      itemNextValues,
+      projectNextValues,
+      actions,
+      itemActions,
+      localSettings,
+      moneyTypes,
+      itemGrades,
+    } = this.props;
 
     const bUseAngle = projectStore.getUseAngle(
       itemNextValues.get('nextValue'),
@@ -112,6 +121,12 @@ class ProjectStore extends React.PureComponent {
         <ProjectStoreInteractingItemsList
           item={item}
           itemNextValues={itemNextValues}
+          projectNextValues={projectNextValues}
+          actions={actions}
+          itemActions={itemActions}
+          localSettings={localSettings}
+          moneyTypes={moneyTypes}
+          itemGrades={itemGrades}
         />
       </React.Fragment>
     );
@@ -121,13 +136,17 @@ class ProjectStore extends React.PureComponent {
 ProjectStore.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  projectNextValues: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
   actions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeLastName: PropTypes.func.isRequired,
     changeTrade: PropTypes.func.isRequired,
     changeUseAngle: PropTypes.func.isRequired,
   }).isRequired,
+  itemActions: PropTypes.object.isRequired,
 };
 
 export default ProjectStore;
