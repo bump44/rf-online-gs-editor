@@ -7,6 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
+import { Dimmer, Loader } from 'semantic-ui-react';
+import {
+  DISABLE_RENDER_ITEMS_IS_SCROLLING,
+  DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
+} from '../../../containers/App/constants';
+
 import SortableAutoSizeList, {
   CreateDragHangle,
   DragHangleDefault,
@@ -58,23 +64,39 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
       actions,
     } = this.props;
 
-    if (!isVisible || isScrolling) {
+    const disableRenderItemsIsScrolling = localSettings.get(
+      DISABLE_RENDER_ITEMS_IS_SCROLLING,
+    );
+
+    const disableRenderItemsIsNotVisible = localSettings.get(
+      DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
+    );
+
+    if (disableRenderItemsIsNotVisible && !isVisible) {
       return null;
     }
 
+    if (!(disableRenderItemsIsScrolling && isScrolling)) {
+      return (
+        <ProjectStoreInteractingItemList
+          item={item}
+          itemNextValues={itemNextValues}
+          index={index}
+          dragHandle={<DragHandle />}
+          projectNextValues={projectNextValues}
+          actions={actions}
+          itemActions={itemActions}
+          localSettings={localSettings}
+          moneyTypes={moneyTypes}
+          itemGrades={itemGrades}
+        />
+      );
+    }
+
     return (
-      <ProjectStoreInteractingItemList
-        item={item}
-        itemNextValues={itemNextValues}
-        index={index}
-        dragHandle={<DragHandle />}
-        projectNextValues={projectNextValues}
-        actions={actions}
-        itemActions={itemActions}
-        localSettings={localSettings}
-        moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
-      />
+      <Dimmer active inverted>
+        <Loader inverted />
+      </Dimmer>
     );
   }
 
