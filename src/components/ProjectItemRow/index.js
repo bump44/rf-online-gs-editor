@@ -29,23 +29,28 @@ class ProjectItemRow extends React.PureComponent {
   }
 
   renderTagIndexWithNextState() {
-    const { item, itemNextValues } = this.props;
+    const { item, itemNextValues, selectable, onClickSelect } = this.props;
+    const componentProps = { link: true };
+
+    if (selectable) {
+      componentProps.onClick = onClickSelect;
+      componentProps.link = false;
+    }
 
     return (
       <ProjectItemLabelDetail
         item={item}
         itemNextValues={itemNextValues}
-        link
+        {...componentProps}
       />
     );
   }
 
   render() {
     const {
-      items,
       item,
       itemNextValues,
-      actions,
+      itemActions,
       moneyTypes,
       itemGrades,
       weaponTypes,
@@ -97,8 +102,7 @@ class ProjectItemRow extends React.PureComponent {
               <Render
                 item={item}
                 itemNextValues={itemNextValues}
-                items={items}
-                actions={actions}
+                itemActions={itemActions}
                 moneyTypes={moneyTypes}
                 itemGrades={itemGrades}
                 weaponTypes={weaponTypes}
@@ -115,12 +119,18 @@ class ProjectItemRow extends React.PureComponent {
 ProjectItemRow.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  itemActions: PropTypes.object.isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
-  items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.object.isRequired,
+  selectable: PropTypes.bool,
+  onClickSelect: PropTypes.func,
+};
+
+ProjectItemRow.defaultProps = {
+  selectable: false,
+  onClickSelect: undefined,
 };
 
 export default ProjectItemRow;
