@@ -26,19 +26,22 @@ import ProjectStoreInteractingItemsList from './Interacting/ItemsList';
 class ProjectStore extends React.PureComponent {
   render() {
     const {
-      item,
-      itemNextValues,
-      projectNextValues,
-      actions,
+      store,
+      storeNextValues,
+      nextValues,
+      storeActions,
       itemActions,
       localSettings,
       moneyTypes,
       itemGrades,
+      weaponTypes,
+      entriesFinderItems,
+      entriesFinderItemsActions,
     } = this.props;
 
     const bUseAngle = projectStore.getUseAngle(
-      itemNextValues.get('nextValue'),
-      { item },
+      storeNextValues.get('nextValue'),
+      { store },
     );
 
     return (
@@ -47,24 +50,24 @@ class ProjectStore extends React.PureComponent {
           <Grid columns={3}>
             <Grid.Column largeScreen={4} widescreen={5}>
               <ProjectStoreInteractingName
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeName}
+                store={store}
+                storeNextValues={storeNextValues}
+                onChangeValue={storeActions.changeName}
                 className="pb-5"
               />
               <ProjectStoreInteractingLastName
-                item={item}
-                itemNextValues={itemNextValues}
-                onChangeValue={actions.changeLastName}
+                store={store}
+                storeNextValues={storeNextValues}
+                onChangeValue={storeActions.changeLastName}
               />
             </Grid.Column>
             <Grid.Column largeScreen={12} widescreen={11}>
               <Grid columns={2}>
                 <Grid.Column>
                   <ProjectStoreInteractingTrade
-                    item={item}
-                    itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeTrade}
+                    store={store}
+                    storeNextValues={storeNextValues}
+                    onChangeValue={storeActions.changeTrade}
                     className="pb-10"
                     label={
                       <Label>
@@ -73,16 +76,16 @@ class ProjectStore extends React.PureComponent {
                     }
                   />
                   <ProjectStoreInteractingUseAngle
-                    item={item}
-                    itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeUseAngle}
+                    store={store}
+                    storeNextValues={storeNextValues}
+                    onChangeValue={storeActions.changeUseAngle}
                   />
                 </Grid.Column>
                 <Grid.Column>
                   <ProjectStoreInteractingSize
-                    item={item}
-                    itemNextValues={itemNextValues}
-                    onChangeValue={actions.changeSize}
+                    store={store}
+                    storeNextValues={storeNextValues}
+                    onChangeValue={storeActions.changeSize}
                     className="pb-5"
                     label={
                       <Label>
@@ -98,9 +101,9 @@ class ProjectStore extends React.PureComponent {
                   >
                     <div>
                       <ProjectStoreInteractingAngle
-                        item={item}
-                        itemNextValues={itemNextValues}
-                        onChangeValue={actions.changeAngle}
+                        store={store}
+                        storeNextValues={storeNextValues}
+                        onChangeValue={storeActions.changeAngle}
                         label={
                           <Label>
                             <FormattedMessage {...messages.Angle} />
@@ -119,14 +122,17 @@ class ProjectStore extends React.PureComponent {
         </Header>
 
         <ProjectStoreInteractingItemsList
-          item={item}
-          itemNextValues={itemNextValues}
-          projectNextValues={projectNextValues}
-          actions={actions}
+          store={store}
+          storeNextValues={storeNextValues}
+          storeActions={storeActions}
+          nextValues={nextValues}
           itemActions={itemActions}
           localSettings={localSettings}
           moneyTypes={moneyTypes}
           itemGrades={itemGrades}
+          weaponTypes={weaponTypes}
+          entriesFinderItems={entriesFinderItems}
+          entriesFinderItemsActions={entriesFinderItemsActions}
         />
       </React.Fragment>
     );
@@ -134,19 +140,24 @@ class ProjectStore extends React.PureComponent {
 }
 
 ProjectStore.propTypes = {
-  item: PropTypes.instanceOf(Map).isRequired,
-  itemNextValues: PropTypes.instanceOf(Map).isRequired,
-  projectNextValues: PropTypes.instanceOf(Map).isRequired,
-  localSettings: PropTypes.instanceOf(Map).isRequired,
-  moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
-  actions: PropTypes.shape({
+  store: PropTypes.instanceOf(Map).isRequired,
+  storeNextValues: PropTypes.instanceOf(Map).isRequired,
+  nextValues: PropTypes.instanceOf(Map).isRequired,
+
+  storeActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeLastName: PropTypes.func.isRequired,
     changeTrade: PropTypes.func.isRequired,
     changeUseAngle: PropTypes.func.isRequired,
   }).isRequired,
+
   itemActions: PropTypes.object.isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
+  moneyTypes: PropTypes.instanceOf(List).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
+  weaponTypes: PropTypes.instanceOf(List).isRequired,
 };
 
 export default ProjectStore;
