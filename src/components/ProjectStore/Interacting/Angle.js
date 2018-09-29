@@ -32,7 +32,7 @@ class ProjectStoreInteractingAngle extends React.PureComponent {
     } = this.props;
 
     const value = projectStore.getAngle(storeNextValues.get('nextValue'), {
-      store,
+      entry: store,
     });
 
     return (
