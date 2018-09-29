@@ -8,6 +8,7 @@ import {
   announceProjectCountItems,
   announceProjectCountStores,
   announceProjectCountBoxItemOuts,
+  announceProjectCountHandler,
 } from './actions/announces';
 
 import {
@@ -50,6 +51,7 @@ export {
   announceProjectCountItems,
   announceProjectCountStores,
   announceProjectCountBoxItemOuts,
+  announceProjectCountHandler,
 };
 export {
   projectsImportsStartFileImport,
