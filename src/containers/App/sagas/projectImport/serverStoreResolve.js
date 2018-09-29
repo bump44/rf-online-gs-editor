@@ -46,8 +46,12 @@ export default function* defaultSaga({
       },
     });
 
-    const nextTotal = result.data.projectStoreImportServer.total;
-    yield put(announceProjectCountStores({ count: nextTotal, id: projectId }));
+    yield put(
+      announceProjectCountStores({
+        count: result.data.projectStoreImportServer.total,
+        id: projectId,
+      }),
+    );
 
     countCompleted += chunks[t].length;
     yield put(actions.changeCountCompleted(countCompleted));
