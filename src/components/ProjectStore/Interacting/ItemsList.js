@@ -42,14 +42,15 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     const { props } = this;
 
-    if (
-      this.sortableAutoSizeList &&
-      ((nextProps.nextValues &&
-        !nextProps.nextValues.equals(props.nextValues)) ||
-        (nextProps.entriesFinderItems &&
-          !nextProps.entriesFinderItems.equals(props.entriesFinderItems)))
-    ) {
-      this.sortableAutoSizeList.forceUpdateGrid();
+    if (this.sortableAutoSizeList) {
+      const statements = [
+        nextProps.nextValues && !nextProps.nextValues.equals(props.nextValues),
+        nextProps.entriesFinderItems &&
+          !nextProps.entriesFinderItems.equals(props.entriesFinderItems),
+      ];
+      if (statements.some(statement => statement)) {
+        this.sortableAutoSizeList.forceUpdateGrid();
+      }
     }
   }
 

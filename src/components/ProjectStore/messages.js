@@ -55,4 +55,13 @@ export default defineMessages({
     id: 'app.components.ProjectStore.SelectItem',
     defaultMessage: 'Select item',
   },
+  ItemBasicSegmentNotDefined: {
+    id: 'app.components.ProjectStore.ItemBasicSegmentNotDefined',
+    defaultMessage:
+      'For this item basic segment not defined. Quick editing is not available.',
+  },
+  EditingAnItem: {
+    id: 'app.components.ProjectStore.EditingAnItem',
+    defaultMessage: 'Editing an item {name}',
+  },
 });

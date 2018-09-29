@@ -34,7 +34,7 @@ import * as projectItem from '../../../containers/App/getters/projectItem';
 
 import ProjectItemsFinder from '../../ProjectItemsFinder';
 import ProjectItemLabelDetail from '../../ProjectItemLabelDetail';
-import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
+import projectItemSegmentBasicResolvers from '../../ProjectItem/segmentBasicResolvers';
 
 const modalSelectItemStyle = {
   main: { height: 'calc(100% - 60px)', left: 'initial !important' },
@@ -253,10 +253,22 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       return null;
     }
 
-    const { nextValues, itemActions } = this.props;
-    const id = projectItem.getId(undefined, { item });
+    const {
+      nextValues,
+      itemActions,
+      localSettings,
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+    } = this.props;
+
+    const id = projectItem.getId(undefined, { entry: item });
     const itemNextValues = nextValues.get(id, IMMUTABLE_MAP);
     const itemNextValue = itemNextValues.get('nextValue');
+    const ProjectItemSegmentBasicResolver =
+      projectItemSegmentBasicResolvers[
+        projectItem.getType(itemNextValue, { entry: item })
+      ];
 
     return (
       <React.Fragment>
@@ -268,20 +280,36 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
         <Modal
           trigger={
             <Label size="mini" color="blue" as={Button}>
-              {projectItem.getName(itemNextValue, { entry: item })}
+              {projectItem.getName(itemNextValue, { entry: item }) || '—'}
             </Label>
           }
-          size="large"
+          size="fullscreen"
         >
-          <Modal.Header>Edit</Modal.Header>
+          <Modal.Header>
+            <FormattedMessage
+              {...messages.EditingAnItem}
+              values={{
+                name:
+                  projectItem.getName(itemNextValue, { entry: item }) || '—',
+              }}
+            />
+          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
-              <ProjectItemInteractingName
-                item={item}
-                itemNextValues={nextValues}
-                onChangeValue={itemActions.changeName}
-                size="mini"
-              />
+              {ProjectItemSegmentBasicResolver && (
+                <ProjectItemSegmentBasicResolver
+                  item={item}
+                  itemNextValues={itemNextValues}
+                  itemActions={itemActions}
+                  localSettings={localSettings}
+                  moneyTypes={moneyTypes}
+                  itemGrades={itemGrades}
+                  weaponTypes={weaponTypes}
+                />
+              )}
+              {!ProjectItemSegmentBasicResolver && (
+                <FormattedMessage {...messages.ItemBasicSegmentNotDefined} />
+              )}
             </Modal.Description>
           </Modal.Content>
         </Modal>
