@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Grid, Header as PageHeader } from 'semantic-ui-react';
+import { Grid, Header as PageHeader, Statistic } from 'semantic-ui-react';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -115,6 +115,33 @@ export class ProjectPage extends React.PureComponent {
                   items={[project]}
                   currentUser={currentUser}
                 />
+
+                <Statistic.Group>
+                  <Statistic>
+                    <Statistic.Value>
+                      {currentProject
+                        .getIn(['items', 'total'], 0)
+                        .toLocaleString()}
+                    </Statistic.Value>
+                    <Statistic.Label>Items</Statistic.Label>
+                  </Statistic>
+                  <Statistic>
+                    <Statistic.Value>
+                      {currentProject
+                        .getIn(['boxItemOuts', 'total'], 0)
+                        .toLocaleString()}
+                    </Statistic.Value>
+                    <Statistic.Label>Box item outputs</Statistic.Label>
+                  </Statistic>
+                  <Statistic>
+                    <Statistic.Value>
+                      {currentProject
+                        .getIn(['stores', 'total'], 0)
+                        .toLocaleString()}
+                    </Statistic.Value>
+                    <Statistic.Label>Stores</Statistic.Label>
+                  </Statistic>
+                </Statistic.Group>
               </Grid.Column>
             </Grid>
           )}
