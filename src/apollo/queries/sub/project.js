@@ -25,6 +25,12 @@ export default gql`
       stores {
         total
       }
+      itemsBox: items(where: { type: "box" }) {
+        total
+      }
+      boxItemOuts {
+        total
+      }
     }
   }
 `;

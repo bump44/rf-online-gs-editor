@@ -1,27 +1,3 @@
-import gql from 'graphql-tag';
+import query from './sub/project';
 
-export default gql`
-  query($id: String!) {
-    project(id: $id) {
-      title
-      description
-      name
-      id
-      createdAt
-      updatedAt
-      isPublic
-      owner {
-        id
-        login
-        role {
-          id
-          name
-          title
-        }
-      }
-      items {
-        total
-      }
-    }
-  }
-`;
+export default query;

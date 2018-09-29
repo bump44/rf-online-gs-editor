@@ -31,6 +31,14 @@ export default gql`
         total
       }
 
+      itemsBox: items(where: { type: "box" }) {
+        total
+      }
+
+      boxItemOuts {
+        total
+      }
+
       moneyTypes {
         items {
           title
