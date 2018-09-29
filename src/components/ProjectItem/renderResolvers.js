@@ -1,5 +1,6 @@
 import * as ITEM_TYPES from '../../structs/item_types';
 import RenderTool from './Render/Tool';
+import RenderBox from './Render/Box';
 
 // want help in writing specific components ;)
 export default {
@@ -34,7 +35,7 @@ export default {
   [ITEM_TYPES.TICKET]: RenderTool,
   [ITEM_TYPES.QUEST]: RenderTool,
   [ITEM_TYPES.RECOVERY]: RenderTool,
-  [ITEM_TYPES.BOX]: RenderTool,
+  [ITEM_TYPES.BOX]: RenderBox,
   [ITEM_TYPES.FIRECRACKER]: RenderTool,
   [ITEM_TYPES.CASHMINING]: RenderTool,
   [ITEM_TYPES.RADAR]: RenderTool,
