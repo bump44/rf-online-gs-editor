@@ -7,8 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import { Segment, Grid, Transition, Label, Header } from 'semantic-ui-react';
-// import styled from 'styled-components';
+import { Grid, Transition, Label, Tab } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -22,10 +21,155 @@ import ProjectStoreInteractingSize from './Interacting/Size';
 import ProjectStoreInteractingAngle from './Interacting/Angle';
 import ProjectStoreInteractingItemsList from './Interacting/ItemsList';
 import ProjectStoreInteractingItemsListCount from './Interacting/ItemsListCount';
+import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
+
+const tabStyle = { height: '100%' };
+const tabMenu = {
+  color: 'grey',
+  inverted: true,
+  attached: false,
+  tabular: false,
+};
+const tabPaneStyle = {
+  padding: 0,
+  background: 'none',
+  border: 0,
+  boxShadow: 'none',
+  height: '100%',
+};
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStore extends React.PureComponent {
-  render() {
+  constructor(props) {
+    super(props);
+    this.getTabPanes = this.getTabPanes.bind(this);
+    this.renderTabs = this.renderTabs.bind(this);
+    this.renderBasic = this.renderBasic.bind(this);
+    this.renderItemsList = this.renderItemsList.bind(this);
+    this.renderButtons = this.renderButtons.bind(this);
+  }
+
+  getTabPanes() {
+    return [
+      {
+        menuItem: { key: 'basics', content: 'Basic' },
+        render: this.renderBasic,
+      },
+      {
+        menuItem: { key: 'buttons', content: 'Buttons' },
+        render: this.renderButtons,
+      },
+      {
+        menuItem: { key: 'itemsList', content: 'Items list' },
+        render: this.renderItemsList,
+      },
+    ];
+  }
+
+  renderBasic() {
+    const { store, storeNextValues, storeActions } = this.props;
+
+    const bUseAngle = projectStore.getUseAngle(
+      storeNextValues.get('nextValue'),
+      { store },
+    );
+
+    return (
+      <Tab.Pane attached={false}>
+        <Grid columns={3}>
+          <Grid.Column largeScreen={4} widescreen={5}>
+            <ProjectStoreInteractingName
+              store={store}
+              storeNextValues={storeNextValues}
+              onChangeValue={storeActions.changeName}
+              className="pb-5"
+            />
+            <ProjectStoreInteractingLastName
+              store={store}
+              storeNextValues={storeNextValues}
+              onChangeValue={storeActions.changeLastName}
+            />
+          </Grid.Column>
+          <Grid.Column largeScreen={12} widescreen={11}>
+            <Grid columns={2}>
+              <Grid.Column>
+                <ProjectStoreInteractingTrade
+                  store={store}
+                  storeNextValues={storeNextValues}
+                  onChangeValue={storeActions.changeTrade}
+                  className="pb-10"
+                  label={
+                    <Label>
+                      <FormattedMessage {...messages.Trade} />
+                    </Label>
+                  }
+                />
+                <ProjectStoreInteractingUseAngle
+                  store={store}
+                  storeNextValues={storeNextValues}
+                  onChangeValue={storeActions.changeUseAngle}
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <ProjectStoreInteractingSize
+                  store={store}
+                  storeNextValues={storeNextValues}
+                  onChangeValue={storeActions.changeSize}
+                  className="pb-5"
+                  label={
+                    <Label>
+                      <FormattedMessage {...messages.Size} />
+                    </Label>
+                  }
+                />
+
+                <Transition
+                  visible={bUseAngle}
+                  animation="scale"
+                  duration={500}
+                >
+                  <div>
+                    <ProjectStoreInteractingAngle
+                      store={store}
+                      storeNextValues={storeNextValues}
+                      onChangeValue={storeActions.changeAngle}
+                      label={
+                        <Label>
+                          <FormattedMessage {...messages.Angle} />
+                        </Label>
+                      }
+                    />
+                  </div>
+                </Transition>
+              </Grid.Column>
+            </Grid>
+          </Grid.Column>
+        </Grid>
+      </Tab.Pane>
+    );
+  }
+
+  renderButtons() {
+    const { store, storeNextValues, buttonTypes, storeActions } = this.props;
+
+    return (
+      <Tab.Pane attached={false}>
+        {Array.from(Array(10)).map((_, index) => (
+          <ProjectStoreInteractingButtonType
+            store={store}
+            storeNextValues={storeNextValues}
+            types={buttonTypes}
+            onChangeValue={storeActions.changeNpcClass}
+            n={index + 1}
+            key={index + 1} // eslint-disable-line
+            className="mb-10"
+          />
+        ))}
+      </Tab.Pane>
+    );
+  }
+
+  renderItemsList() {
     const {
       store,
       storeNextValues,
@@ -40,88 +184,8 @@ class ProjectStore extends React.PureComponent {
       entriesFinderItemsActions,
     } = this.props;
 
-    const bUseAngle = projectStore.getUseAngle(
-      storeNextValues.get('nextValue'),
-      { store },
-    );
-
     return (
-      <React.Fragment>
-        <Segment>
-          <Grid columns={3}>
-            <Grid.Column largeScreen={4} widescreen={5}>
-              <ProjectStoreInteractingName
-                store={store}
-                storeNextValues={storeNextValues}
-                onChangeValue={storeActions.changeName}
-                className="pb-5"
-              />
-              <ProjectStoreInteractingLastName
-                store={store}
-                storeNextValues={storeNextValues}
-                onChangeValue={storeActions.changeLastName}
-              />
-            </Grid.Column>
-            <Grid.Column largeScreen={12} widescreen={11}>
-              <Grid columns={2}>
-                <Grid.Column>
-                  <ProjectStoreInteractingTrade
-                    store={store}
-                    storeNextValues={storeNextValues}
-                    onChangeValue={storeActions.changeTrade}
-                    className="pb-10"
-                    label={
-                      <Label>
-                        <FormattedMessage {...messages.Trade} />
-                      </Label>
-                    }
-                  />
-                  <ProjectStoreInteractingUseAngle
-                    store={store}
-                    storeNextValues={storeNextValues}
-                    onChangeValue={storeActions.changeUseAngle}
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  <ProjectStoreInteractingSize
-                    store={store}
-                    storeNextValues={storeNextValues}
-                    onChangeValue={storeActions.changeSize}
-                    className="pb-5"
-                    label={
-                      <Label>
-                        <FormattedMessage {...messages.Size} />
-                      </Label>
-                    }
-                  />
-
-                  <Transition
-                    visible={bUseAngle}
-                    animation="scale"
-                    duration={500}
-                  >
-                    <div>
-                      <ProjectStoreInteractingAngle
-                        store={store}
-                        storeNextValues={storeNextValues}
-                        onChangeValue={storeActions.changeAngle}
-                        label={
-                          <Label>
-                            <FormattedMessage {...messages.Angle} />
-                          </Label>
-                        }
-                      />
-                    </div>
-                  </Transition>
-                </Grid.Column>
-              </Grid>
-            </Grid.Column>
-          </Grid>
-        </Segment>
-        <Header as="h4">
-          <FormattedMessage {...messages.Items} />
-        </Header>
-
+      <Tab.Pane attached={false} style={tabPaneStyle}>
         <ProjectStoreInteractingItemsListCount
           store={store}
           storeNextValues={storeNextValues}
@@ -148,8 +212,16 @@ class ProjectStore extends React.PureComponent {
           entriesFinderItems={entriesFinderItems}
           entriesFinderItemsActions={entriesFinderItemsActions}
         />
-      </React.Fragment>
+      </Tab.Pane>
     );
+  }
+
+  renderTabs() {
+    return <Tab menu={tabMenu} panes={this.getTabPanes()} style={tabStyle} />;
+  }
+
+  render() {
+    return this.renderTabs();
   }
 }
 
