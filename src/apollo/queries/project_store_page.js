@@ -43,7 +43,7 @@ export default gql`
         total
       }
 
-      moneyTypes(take: 50) {
+      moneyTypes {
         items {
           title
           value
@@ -52,14 +52,21 @@ export default gql`
         }
       }
 
-      itemGrades(take: 50) {
+      itemGrades {
         items {
           title
           value
         }
       }
 
-      weaponTypes(take: 50) {
+      weaponTypes {
+        items {
+          title
+          value
+        }
+      }
+
+      buttonTypes {
         items {
           title
           value
