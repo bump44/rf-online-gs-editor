@@ -64,4 +64,8 @@ export default defineMessages({
     id: 'app.components.ProjectStore.EditingAnItem',
     defaultMessage: 'Editing an item {name}',
   },
+  VendorItemsListCount: {
+    id: 'app.components.ProjectStore.VendorItemsListCount',
+    defaultMessage: 'Count',
+  },
 });

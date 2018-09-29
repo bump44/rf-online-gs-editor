@@ -21,6 +21,7 @@ import ProjectStoreInteractingUseAngle from './Interacting/UseAngle';
 import ProjectStoreInteractingSize from './Interacting/Size';
 import ProjectStoreInteractingAngle from './Interacting/Angle';
 import ProjectStoreInteractingItemsList from './Interacting/ItemsList';
+import ProjectStoreInteractingItemsListCount from './Interacting/ItemsListCount';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStore extends React.PureComponent {
@@ -120,6 +121,19 @@ class ProjectStore extends React.PureComponent {
         <Header as="h4">
           <FormattedMessage {...messages.Items} />
         </Header>
+
+        <ProjectStoreInteractingItemsListCount
+          store={store}
+          storeNextValues={storeNextValues}
+          onChangeValue={storeActions.changeItemsListCount}
+          label={
+            <Label>
+              <FormattedMessage {...messages.VendorItemsListCount} />
+            </Label>
+          }
+          fluid={false}
+          className="mb-15"
+        />
 
         <ProjectStoreInteractingItemsList
           store={store}
