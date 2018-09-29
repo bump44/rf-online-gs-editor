@@ -123,6 +123,10 @@ export class ProjectStorePage extends React.PureComponent {
           ['weaponTypes', 'items'],
           IMMUTABLE_LIST,
         ),
+        buttonTypes: currentProject.getIn(
+          ['buttonTypes', 'items'],
+          IMMUTABLE_LIST,
+        ),
       };
     })();
 
@@ -153,6 +157,7 @@ export class ProjectStorePage extends React.PureComponent {
       moneyTypes,
       itemGrades,
       weaponTypes,
+      buttonTypes,
     } = actionsBindPayload.additionalData;
 
     const fnProjectItemsActions = projectsItemsBindActions(actionsBindPayload);
@@ -239,6 +244,7 @@ export class ProjectStorePage extends React.PureComponent {
                       moneyTypes={moneyTypes}
                       itemGrades={itemGrades}
                       weaponTypes={weaponTypes}
+                      buttonTypes={buttonTypes}
                       entriesFinderItems={entriesFinderItems}
                       nextValues={nextValues}
                     />
