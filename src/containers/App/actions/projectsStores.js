@@ -17,6 +17,7 @@ export const projectsStores = {
       'size',
       'angle',
       'itemsListCount',
+      'npcClass',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

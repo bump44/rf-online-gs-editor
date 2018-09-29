@@ -99,6 +99,11 @@ const Resolvers = {
 
     return nextStore;
   },
+
+  npcClass: (store, { value, n }) =>
+    store
+      .setIn(['server', `nNpcClass__${n}`], value)
+      .setIn(['client', `nNpcClass__${n}`], value),
 };
 
 export default Resolvers;
