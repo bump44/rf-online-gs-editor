@@ -27,6 +27,7 @@ import ProjectStoresPage from '../ProjectStoresPage';
 import ProjectStorePage from '../ProjectStorePage';
 import ProjectItemsPage from '../ProjectItemsPage';
 import ProjectItemPage from '../ProjectItemPage';
+import ProjectBoxItemOutsPage from '../ProjectBoxItemOutsPage';
 import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
@@ -56,6 +57,11 @@ export default function App() {
         exact
         path="/project/:id/stores/:storeId"
         component={ProjectStorePage}
+      />
+      <Route
+        exact
+        path="/project/:id/boxItemOuts"
+        component={ProjectBoxItemOutsPage}
       />
 
       <Route component={NotFoundPage} />
