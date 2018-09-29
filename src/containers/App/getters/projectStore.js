@@ -1,5 +1,5 @@
 import { isNullOrUndefined, isNumber } from 'util';
-import { IMMUTABLE_MAP } from '../constants';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 
 /**
  * Return the most important title of the subject
@@ -279,4 +279,43 @@ export const getIndex = (
 ) => {
   const value = nextValue.get('nIndex', entry.get('nIndex'));
   return isNumber(value) ? value : undefined;
+};
+
+/**
+ * Return vendor button type value
+ * @param {Object} nextValue next item values
+ * @param {Object} props entry: the first thing we got from the server
+ * @param {Object} props n: cell 1-200
+ *
+ * @returns Number
+ */
+export const getButtonValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  nextValue.getIn(
+    ['server', `nNpcClass__${n}`],
+    entry.getIn(
+      [['server', `nNpcClass__${n}`], ['client', `nNpcClass__${n}`]].find(
+        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
+      ) || ['server', `nNpcClass__${n}`],
+    ),
+  ) || 0;
+
+/**
+ * Return vendor button type
+ * @param {Object} nextValue next item values
+ * @param {Object} props entry: the first thing we got from the server
+ * @param {Object} props n: cell 1-200
+ *
+ * @returns Immutable.Map|undefined
+ */
+export const getButtonType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, buttonTypes = IMMUTABLE_LIST },
+  { n = 1 } = {},
+) => {
+  const value = getButtonValue(nextValue, { entry }, { n });
+  return buttonTypes.find(buttonType => buttonType.get('value') === value);
 };
