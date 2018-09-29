@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
 import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
+import ProjectBoxItemOutNameParts from '../fragments/ProjectBoxItemOutNameParts';
 
 export default gql`
   query($id: String!, $itemId: String!) {
@@ -65,10 +66,16 @@ export default gql`
       server {
         ...ProjectItemServerNameParts
       }
+      boxItemOut {
+        id
+        nIndex
+        ...ProjectBoxItemOutNameParts
+      }
     }
   }
 
   # include fragments
   ${ProjectItemClientNameParts}
   ${ProjectItemServerNameParts}
+  ${ProjectBoxItemOutNameParts}
 `;
