@@ -76,4 +76,16 @@ export default defineMessages({
     id: 'app.components.ProjectStore.UnknownButtonType',
     defaultMessage: 'Unknown button type',
   },
+  Basic: {
+    id: 'app.components.ProjectStore.Basic',
+    defaultMessage: 'Basic',
+  },
+  Buttons: {
+    id: 'app.components.ProjectStore.Buttons',
+    defaultMessage: 'Buttons',
+  },
+  ItemsList: {
+    id: 'app.components.ProjectStore.Items list',
+    defaultMessage: 'Items list',
+  },
 });

@@ -52,11 +52,17 @@ class ProjectStore extends React.PureComponent {
 
     return [
       {
-        menuItem: { key: 'basics', content: 'Basic' },
+        menuItem: {
+          key: 'basics',
+          content: <FormattedMessage {...messages.Basic} />,
+        },
         render: this.renderBasic,
       },
       {
-        menuItem: { key: 'buttons', content: 'Buttons' },
+        menuItem: {
+          key: 'buttons',
+          content: <FormattedMessage {...messages.Buttons} />,
+        },
         render: this.renderButtons,
       },
       {
@@ -64,7 +70,7 @@ class ProjectStore extends React.PureComponent {
           key: 'itemsList',
           content: (
             <span>
-              Items list{' '}
+              <FormattedMessage {...messages.ItemsList} />{' '}
               <u>
                 {projectStore.getItemsListCount(
                   storeNextValues.get('nextValue'),
