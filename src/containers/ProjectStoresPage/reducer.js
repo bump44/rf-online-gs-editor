@@ -5,6 +5,8 @@
  */
 
 import { fromJS } from 'immutable';
+import { announceProjectCountHandler } from '../App/actions';
+
 import {
   CHANGE_ID,
   DEFAULT_ACTION,
@@ -23,6 +25,7 @@ import {
 import {
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   ANNOUNCE_PROJECT_COUNT_STORES,
+  ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS,
 } from '../App/constants';
 
 export const initialState = fromJS({
@@ -80,18 +83,11 @@ function projectStoresPageReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case ANNOUNCE_PROJECT_COUNT_ITEMS:
-      return state.set(
-        'project',
-        state.getIn(['project', 'id']) === action.id
-          ? state.get('project').setIn(['items', 'total'], action.count)
-          : state.get('project'),
-      );
     case ANNOUNCE_PROJECT_COUNT_STORES:
+    case ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS:
       return state.set(
         'project',
-        state.getIn(['project', 'id']) === action.id
-          ? state.get('project').setIn(['stores', 'total'], action.count)
-          : state.get('project'),
+        announceProjectCountHandler(state.get('project'), action),
       );
     default:
       return state;

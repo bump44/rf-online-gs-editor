@@ -5,10 +5,13 @@
  */
 
 import { fromJS } from 'immutable';
+import { announceProjectCountHandler } from '../App/actions';
+
 import {
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   SKIP,
   ANNOUNCE_PROJECT_COUNT_STORES,
+  ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS,
 } from '../App/constants';
 
 import {
@@ -40,18 +43,11 @@ function projectImportPageReducer(state = initialState, action) {
     case CHANGE_PROJECT:
       return state.set('project', fromJS(action.project));
     case ANNOUNCE_PROJECT_COUNT_ITEMS:
-      return state.set(
-        'project',
-        state.getIn(['project', 'id']) === action.id
-          ? state.get('project').setIn(['items', 'total'], action.count)
-          : state.get('project'),
-      );
     case ANNOUNCE_PROJECT_COUNT_STORES:
+    case ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS:
       return state.set(
         'project',
-        state.getIn(['project', 'id']) === action.id
-          ? state.get('project').setIn(['stores', 'total'], action.count)
-          : state.get('project'),
+        announceProjectCountHandler(state.get('project'), action),
       );
     case DEFAULT_ACTION:
       return state;
