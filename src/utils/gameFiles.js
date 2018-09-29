@@ -28,6 +28,7 @@ export const RESOLVERS = {
   CLIENT_STORE: 'clientStoreResolve',
   SERVER_ITEM: 'serverItemResolve',
   SERVER_STORE: 'serverStoreResolve',
+  SERVER_BOX_ITEM_OUT: 'serverBoxItemOutResolve',
 };
 
 // All of resolved files
@@ -54,6 +55,12 @@ export const FILES = {
   'Script/StoreList.dat': {
     path: 'Script/StoreList.dat',
     resolve: RESOLVERS.SERVER_STORE,
+    type: FILE_TYPE_SERVER,
+    extensions: ['dat'],
+  },
+  'Script/BoxItemOut.dat': {
+    path: 'Script/BoxItemOut.dat',
+    resolve: RESOLVERS.SERVER_BOX_ITEM_OUT,
     type: FILE_TYPE_SERVER,
     extensions: ['dat'],
   },
