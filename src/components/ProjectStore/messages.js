@@ -43,6 +43,10 @@ export default defineMessages({
     id: 'app.components.ProjectStore.Disable',
     defaultMessage: 'Disable',
   },
+  Disabled: {
+    id: 'app.components.ProjectStore.Disabled',
+    defaultMessage: 'Disabled',
+  },
   Remove: {
     id: 'app.components.ProjectStore.Remove',
     defaultMessage: 'Remove',
@@ -67,5 +71,9 @@ export default defineMessages({
   VendorItemsListCount: {
     id: 'app.components.ProjectStore.VendorItemsListCount',
     defaultMessage: 'Count',
+  },
+  UnknownButtonType: {
+    id: 'app.components.ProjectStore.UnknownButtonType',
+    defaultMessage: 'Unknown button type',
   },
 });
