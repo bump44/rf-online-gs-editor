@@ -34,6 +34,7 @@ import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
+import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
 
 import apolloClient from '../../../apollo';
 
@@ -42,6 +43,7 @@ const Resolvers = {
   clientStoreResolve,
   serverItemResolve,
   serverStoreResolve,
+  serverBoxItemOutResolve,
 };
 
 const Workers = {};
