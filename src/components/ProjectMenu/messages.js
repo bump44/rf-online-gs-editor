@@ -35,6 +35,10 @@ export default defineMessages({
     id: 'app.components.ProjectMenu.Items',
     defaultMessage: 'Items',
   },
+  BoxItemOuts: {
+    id: 'app.components.ProjectMenu.BoxItemOuts',
+    defaultMessage: 'Box item outputs',
+  },
   Stores: {
     id: 'app.components.ProjectMenu.Stores',
     defaultMessage: 'Stores',

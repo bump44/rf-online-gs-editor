@@ -33,6 +33,20 @@ function ProjectMenuIsOwnerItems({
           {project.getIn(['items', 'total'], 0)}
         </Label>
       </Menu.Item>
+      <Menu.Item as={NavLink} to={`/project/${projectId}/boxItemOuts`} exact>
+        <FormattedMessage {...messages.BoxItemOuts} />
+        <Label
+          circular
+          color={
+            project.getIn(['itemsBox', 'total'], 0) !==
+            project.getIn(['boxItemOuts', 'total'], 0)
+              ? 'yellow'
+              : 'green'
+          }
+        >
+          {project.getIn(['boxItemOuts', 'total'], 0)}
+        </Label>
+      </Menu.Item>
       <Menu.Item as={NavLink} to={`/project/${projectId}/stores`} exact>
         <FormattedMessage {...messages.Stores} />
         <Label circular color="green">
