@@ -25,10 +25,8 @@ import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
-  color: 'grey',
-  inverted: true,
-  attached: false,
-  tabular: false,
+  secondary: true,
+  pointing: true,
 };
 const tabPaneStyle = {
   padding: 0,
@@ -50,6 +48,8 @@ class ProjectStore extends React.PureComponent {
   }
 
   getTabPanes() {
+    const { store, storeNextValues } = this.props;
+
     return [
       {
         menuItem: { key: 'basics', content: 'Basic' },
@@ -60,7 +60,20 @@ class ProjectStore extends React.PureComponent {
         render: this.renderButtons,
       },
       {
-        menuItem: { key: 'itemsList', content: 'Items list' },
+        menuItem: {
+          key: 'itemsList',
+          content: (
+            <span>
+              Items list{' '}
+              <u>
+                {projectStore.getItemsListCount(
+                  storeNextValues.get('nextValue'),
+                  { entry: store },
+                )}
+              </u>
+            </span>
+          ),
+        },
         render: this.renderItemsList,
       },
     ];
