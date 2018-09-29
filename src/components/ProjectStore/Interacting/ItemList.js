@@ -293,6 +293,11 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
                   projectItem.getName(itemNextValue, { entry: item }) || '—',
               }}
             />
+            <ProjectItemLabelDetail
+              item={item}
+              itemNextValues={itemNextValues}
+              link={false}
+            />
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
