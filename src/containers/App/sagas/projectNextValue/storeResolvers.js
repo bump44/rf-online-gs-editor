@@ -48,7 +48,10 @@ const Resolvers = {
         server,
       } = getItemList(nextStore, { entry }, { n });
 
-      if (serverCode && serverCode.length > 1) {
+      if (
+        (serverCode && serverCode.length > 1) ||
+        (clientCode && clientCode.length > 1 && clientCode !== '00000000')
+      ) {
         itemsList.push({ serverCode, clientCode, clientType });
 
         nextStore = Resolvers.itemListUpdate(nextStore, {
