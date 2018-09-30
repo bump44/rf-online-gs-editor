@@ -16,6 +16,11 @@ const makeSelectProject = () =>
     substate.get('project'),
   );
 
+const makeSelectId = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.get('id'),
+  );
+
 const makeSelectResultTotal = () =>
   createSelector(selectProjectBoxItemOutsPageDomain, substate =>
     substate.getIn(['result', 'total']),
@@ -47,6 +52,7 @@ export default makeSelectProjectBoxItemOutsPage;
 export {
   selectProjectBoxItemOutsPageDomain,
   makeSelectProject,
+  makeSelectId,
   makeSelectResultTotal,
   makeSelectResultItems,
   makeSelectResult,
