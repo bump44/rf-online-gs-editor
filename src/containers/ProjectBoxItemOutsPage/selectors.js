@@ -11,6 +11,11 @@ const selectProjectBoxItemOutsPageDomain = state =>
 /**
  * Other specific selectors
  */
+const makeSelectProject = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.get('project'),
+  );
+
 const makeSelectResultTotal = () =>
   createSelector(selectProjectBoxItemOutsPageDomain, substate =>
     substate.getIn(['result', 'total']),
@@ -36,13 +41,12 @@ const makeSelectFilter = () =>
  */
 
 const makeSelectProjectBoxItemOutsPage = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.toJS(),
-  );
+  createSelector(selectProjectBoxItemOutsPageDomain, substate => substate);
 
 export default makeSelectProjectBoxItemOutsPage;
 export {
   selectProjectBoxItemOutsPageDomain,
+  makeSelectProject,
   makeSelectResultTotal,
   makeSelectResultItems,
   makeSelectResult,

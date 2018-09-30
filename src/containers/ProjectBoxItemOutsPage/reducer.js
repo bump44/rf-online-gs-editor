@@ -15,6 +15,9 @@ import {
   CHANGE_RESULT_TOTAL,
   CHANGE_RESULT_ITEMS,
   CONCAT_RESULT_ITEMS_FROM_JS,
+  CHANGE_ID,
+  CHANGE_FIELD_VALUE,
+  CHANGE_PROJECT,
 } from './constants';
 
 import {
@@ -26,6 +29,12 @@ import {
 import { announceProjectCountHandler } from '../App/actions';
 
 export const initialState = fromJS({
+  id: '',
+  project: null,
+  isLoading: false,
+  isLoaded: false,
+  isError: false,
+  errorMessage: '',
   filter: {
     take: 25,
     skip: 0,
@@ -41,6 +50,15 @@ export const initialState = fromJS({
 
 function projectBoxItemOutsPageReducer(state = initialState, action) {
   switch (action.type) {
+    case CHANGE_ID:
+      return state
+        .set('id', action.id)
+        .set('project', null)
+        .set('isLoaded', false);
+    case CHANGE_FIELD_VALUE:
+      return state.set(action.key, action.value);
+    case CHANGE_PROJECT:
+      return state.set('project', fromJS(action.project));
     case CHANGE_RESULT_TOTAL:
       return state.setIn(['result', 'total'], action.total);
     case CONCAT_RESULT_ITEMS_FROM_JS:
