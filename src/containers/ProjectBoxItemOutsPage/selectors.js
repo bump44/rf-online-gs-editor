@@ -11,6 +11,25 @@ const selectProjectBoxItemOutsPageDomain = state =>
 /**
  * Other specific selectors
  */
+const makeSelectResultTotal = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.getIn(['result', 'total']),
+  );
+
+const makeSelectResultItems = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.getIn(['result', 'items']),
+  );
+
+const makeSelectResult = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.get('result'),
+  );
+
+const makeSelectFilter = () =>
+  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
+    substate.get('filter'),
+  );
 
 /**
  * Default selector used by ProjectBoxItemOutsPage
@@ -22,4 +41,10 @@ const makeSelectProjectBoxItemOutsPage = () =>
   );
 
 export default makeSelectProjectBoxItemOutsPage;
-export { selectProjectBoxItemOutsPageDomain };
+export {
+  selectProjectBoxItemOutsPageDomain,
+  makeSelectResultTotal,
+  makeSelectResultItems,
+  makeSelectResult,
+  makeSelectFilter,
+};
