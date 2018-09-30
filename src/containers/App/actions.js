@@ -47,6 +47,12 @@ import {
   projectsStoresBindActions,
 } from './actions/projectsStores';
 
+import {
+  projectsBoxItemOuts,
+  projectsBoxItemOutsActionNames,
+  projectsBoxItemOutsBindActions,
+} from './actions/projectsBoxItemOuts';
+
 export {
   announceProjectCountItems,
   announceProjectCountStores,
@@ -76,6 +82,11 @@ export {
 };
 export { projectsItems, projectsItemsActionNames, projectsItemsBindActions };
 export { projectsStores, projectsStoresActionNames, projectsStoresBindActions };
+export {
+  projectsBoxItemOuts,
+  projectsBoxItemOutsActionNames,
+  projectsBoxItemOutsBindActions,
+};
 
 /**
  * Current User Actions

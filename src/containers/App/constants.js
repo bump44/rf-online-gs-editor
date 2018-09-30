@@ -62,6 +62,7 @@ export const PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE =
 // constants
 export const ITEM = 'ITEM';
 export const STORE = 'STORE';
+export const BOX_ITEM_OUT = 'BOX_ITEM_OUT';
 
 export const IMMUTABLE_MAP = Map({});
 export const IMMUTABLE_LIST = List([]);
