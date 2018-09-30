@@ -14,21 +14,62 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Header as PageHeader, Segment, Label } from 'semantic-ui-react';
 
-import withProject from '../App/hocs/withProject';
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
+import makeSelectProjectContributorsPage, {
+  makeSelectProject,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { changeId } from './actions';
 import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
 import { logoutCurrentUser } from '../App/actions';
+import Header from '../../components/Header';
+import Container from '../../components/Container';
+import Notification from '../../components/Notification';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectContributorsPage extends React.PureComponent {
+  componentWillMount() {
+    this.loadProjectIfIdChanged(this.props, { isMount: true });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.loadProjectIfIdChanged(nextProps);
+  }
+
+  loadProjectIfIdChanged(props, { isMount = false } = {}) {
+    const { id } = props.projectContributorsPage;
+    const { match } = props;
+    const { params } = match;
+
+    const nextId = params.id;
+
+    if (id !== nextId || isMount) {
+      props.fnChangeId(nextId);
+    }
+  }
+
   render() {
-    const { isLoggedIn, currentUser, projectState } = this.props;
-    const project = projectState.data.get('project');
+    const {
+      isLoggedIn,
+      currentUser,
+      currentProject,
+      projectContributorsPage,
+      fnLogoutCurrentUser,
+    } = this.props;
+
+    const {
+      project,
+      isLoaded,
+      isError,
+      errorMessage,
+      isLoading,
+      id,
+    } = projectContributorsPage;
 
     return (
       <div>
@@ -40,32 +81,49 @@ export class ProjectContributorsPage extends React.PureComponent {
           />
         </Helmet>
 
-        <Grid columns={2}>
-          <Grid.Column largeScreen={3} widescreen={2}>
-            <ProjectMenu
-              isLoggedIn={isLoggedIn}
-              project={project}
-              projectId={project.get('id')}
-              currentUser={currentUser}
-            />
-          </Grid.Column>
-          <Grid.Column largeScreen={13} widescreen={14}>
-            <PageHeader>
-              <FormattedMessage
-                {...messages.header}
-                values={{ title: project.get('title') }}
-              />
-            </PageHeader>
-            <Segment>
-              <Label color="red">
-                {project.getIn(['owner', 'login'])}
-                <Label.Detail>
-                  <FormattedMessage {...messages.Owner} />
-                </Label.Detail>
-              </Label>
-            </Segment>
-          </Grid.Column>
-        </Grid>
+        <Header
+          isLoggedIn={isLoggedIn}
+          currentUser={currentUser}
+          currentProject={currentProject}
+          onClickLogout={fnLogoutCurrentUser}
+        />
+
+        <Container>
+          {isError && (
+            <Notification className="is-danger">{errorMessage}</Notification>
+          )}
+
+          {isLoading && <LoadingIndicator />}
+
+          {isLoaded && (
+            <Grid columns={2}>
+              <Grid.Column largeScreen={3} widescreen={2}>
+                <ProjectMenu
+                  isLoggedIn={isLoggedIn}
+                  project={currentProject}
+                  projectId={id}
+                  currentUser={currentUser}
+                />
+              </Grid.Column>
+              <Grid.Column largeScreen={13} widescreen={14}>
+                <PageHeader>
+                  <FormattedMessage
+                    {...messages.header}
+                    values={{ title: project.title }}
+                  />
+                </PageHeader>
+                <Segment>
+                  <Label color="red">
+                    {project.owner.login}
+                    <Label.Detail>
+                      <FormattedMessage {...messages.Owner} />
+                    </Label.Detail>
+                  </Label>
+                </Segment>
+              </Grid.Column>
+            </Grid>
+          )}
+        </Container>
       </div>
     );
   }
@@ -73,22 +131,33 @@ export class ProjectContributorsPage extends React.PureComponent {
 
 ProjectContributorsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  onClickLogout: PropTypes.func.isRequired,
+  fnChangeId: PropTypes.func.isRequired,
+  fnLogoutCurrentUser: PropTypes.func.isRequired,
+  projectContributorsPage: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }),
   isLoggedIn: PropTypes.bool.isRequired,
+  currentProject: PropTypes.instanceOf(Map),
   currentUser: PropTypes.instanceOf(Map),
 };
 
-ProjectContributorsPage.defaultProps = {};
+ProjectContributorsPage.defaultProps = {
+  currentProject: null,
+  currentUser: null,
+};
 
 const mapStateToProps = createStructuredSelector({
+  projectContributorsPage: makeSelectProjectContributorsPage(),
   isLoggedIn: makeSelectIsLoggedIn(),
+  currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    onClickLogout: () => dispatch(logoutCurrentUser()),
+    fnChangeId: id => dispatch(changeId(id)),
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
   };
 }
 
@@ -104,13 +173,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withProject({
-    variables: ({
-      match: {
-        params: { id },
-      },
-    }) => ({
-      id,
-    }),
-  }),
 )(ProjectContributorsPage);
