@@ -270,3 +270,13 @@ export const getServerCode = (
 ) =>
   nextValue.getIn(['server', 'strCode'], entry.getIn(['server', 'strCode'])) ||
   '';
+
+export const getRouteLink = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  `/project/${getProjectId(nextValue, {
+    entry,
+  })}/items/${getId(nextValue, {
+    entry,
+  })}`;
