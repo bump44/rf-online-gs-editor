@@ -9,6 +9,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.ProjectBoxItemOutsPage.header',
-    defaultMessage: '{title} box item outputs',
+    defaultMessage: '{title} box item outputs {total}',
   },
 });

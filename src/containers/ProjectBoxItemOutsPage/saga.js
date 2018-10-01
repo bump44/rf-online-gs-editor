@@ -86,7 +86,7 @@ export function* changeFilter() {
       },
     });
 
-    const { items, total } = result.data.projectStores;
+    const { items, total } = result.data.projectBoxItemOuts;
     let nextItems = yield select(makeSelectResultItems());
 
     items.forEach((item, index) => {

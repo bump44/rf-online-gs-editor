@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Grid, Header as PageHeader } from 'semantic-ui-react';
+import { Grid, Header as PageHeader, Label } from 'semantic-ui-react';
 import { IMMUTABLE_LIST, IMMUTABLE_MAP } from '../App/constants';
 
 import injectSaga from '../../utils/injectSaga';
@@ -37,6 +37,7 @@ import messages from './messages';
 import {
   logoutCurrentUser,
   projectsBoxItemOutsBindActions,
+  projectsItemsBindActions,
 } from '../App/actions';
 
 import {
@@ -167,6 +168,8 @@ export class ProjectBoxItemOutsPage extends React.Component {
       actionsBindPayload,
     );
 
+    const itemActions = projectsItemsBindActions(actionsBindPayload);
+
     const nextValues =
       project && projectsNextValues.get(project.get('id'), IMMUTABLE_MAP);
 
@@ -177,6 +180,7 @@ export class ProjectBoxItemOutsPage extends React.Component {
         boxItemOuts={result.get('items')}
         nextValues={nextValues}
         boxItemOutActions={boxItemOutActions}
+        itemActions={itemActions}
         moneyTypes={moneyTypes}
         itemGrades={itemGrades}
         weaponTypes={weaponTypes}
@@ -245,7 +249,10 @@ export class ProjectBoxItemOutsPage extends React.Component {
                 <PageHeader>
                   <FormattedMessage
                     {...messages.header}
-                    values={{ title: project.get('title') }}
+                    values={{
+                      title: project.get('title'),
+                      total: <Label circular>{result.get('total')}</Label>,
+                    }}
                   />
                 </PageHeader>
 
