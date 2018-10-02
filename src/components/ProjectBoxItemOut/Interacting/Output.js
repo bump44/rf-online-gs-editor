@@ -7,8 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parseInt, min, max } from 'lodash';
-import { Map } from 'immutable';
-import { Comment, Input } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import { Comment, Input, Label, Modal } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import { IMMUTABLE_MAP } from '../../../containers/App/constants';
 import messages from '../messages';
@@ -17,11 +17,19 @@ import * as projectItem from '../../../containers/App/getters/projectItem';
 import * as projectBoxItemOut from '../../../containers/App/getters/projectBoxItemOut';
 
 import ProjectItemLabelDetail from '../../ProjectItemLabelDetail';
+import ProjectItemsFinder from '../../ProjectItemsFinder';
+
+const modalSelectItemStyle = {
+  main: { height: 'calc(100% - 60px)', left: 'initial !important' },
+  content: { height: 'calc(100% - 90px)' },
+};
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.itemListSelected = this.itemListSelected.bind(this);
 
     this.onClickDisable = () => {
       const { boxItemOutActions, boxItemOut, index } = this.props;
@@ -65,6 +73,29 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
         prob,
       });
     };
+
+    this.toggleSelectItemModal = () =>
+      this.setState(prevState => ({
+        selectItemModalOpen: !prevState.selectItemModalOpen,
+      }));
+
+    this.state = { selectItemModalOpen: false };
+  }
+
+  itemListSelected(item, itemNextValues) {
+    this.setState({ selectItemModalOpen: false });
+    const itemNextValue = itemNextValues.get('nextValue');
+    const { boxItemOut, boxItemOutActions, index } = this.props;
+
+    boxItemOutActions.changeOutputCode(boxItemOut, {
+      n: index + 1,
+      code: projectItem.getServerCode(itemNextValue, { entry: item }),
+    });
+
+    boxItemOutActions.changeOutputItem(boxItemOut, {
+      n: index + 1,
+      item,
+    });
   }
 
   render() {
@@ -74,7 +105,15 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
       index,
       nextValues,
       itemActions,
+      entriesFinderItems,
+      entriesFinderItemsActions,
+      itemGrades,
+      weaponTypes,
+      localSettings,
+      moneyTypes,
     } = this.props;
+
+    const { selectItemModalOpen } = this.state;
 
     const n = index + 1;
     const output = projectBoxItemOut.getOutput(
@@ -84,6 +123,7 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
     );
 
     const { item } = output;
+
     const itemNextValues =
       (item
         ? nextValues.get(projectItem.getId(undefined, { entry: item }))
@@ -93,15 +133,16 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
       <Comment key={output.n}>
         <Comment.Author>№{output.n}</Comment.Author>
         {item && (
-          <Comment.Metadata>
-            <div>
-              <ProjectItemLabelDetail
-                item={item}
-                itemNextValues={itemNextValues}
-                itemActions={itemActions}
-              />
-            </div>
-          </Comment.Metadata>
+          <Comment.Text>
+            <ProjectItemLabelDetail
+              item={item}
+              itemNextValues={itemNextValues}
+              itemActions={itemActions}
+            />
+            <Label>
+              {projectItem.getName(itemNextValues, { entry: item })}
+            </Label>
+          </Comment.Text>
         )}
         <Comment.Text>
           <Input
@@ -145,6 +186,35 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
           />
         </Comment.Text>
         <Comment.Actions>
+          <Modal
+            trigger={
+              <Comment.Action onClick={this.toggleSelectItemModal}>
+                <FormattedMessage {...messages.SelectItem} />
+              </Comment.Action>
+            }
+            size="fullscreen"
+            style={modalSelectItemStyle.main}
+            onClose={this.toggleSelectItemModal}
+            open={selectItemModalOpen}
+          >
+            <Modal.Header>
+              <FormattedMessage {...messages.SelectItem} />
+            </Modal.Header>
+            <Modal.Content style={modalSelectItemStyle.content}>
+              <ProjectItemsFinder
+                state={entriesFinderItems}
+                actions={entriesFinderItemsActions}
+                nextValues={nextValues}
+                itemActions={itemActions}
+                itemGrades={itemGrades}
+                weaponTypes={weaponTypes}
+                localSettings={localSettings}
+                moneyTypes={moneyTypes}
+                selectable
+                onClickSelect={this.itemListSelected}
+              />
+            </Modal.Content>
+          </Modal>
           <Comment.Action onClick={this.onClickDisable}>
             <FormattedMessage {...messages.Disable} />
           </Comment.Action>
@@ -158,14 +228,14 @@ ProjectBoxItemOutInteractingOutput.propTypes = {
   boxItemOut: PropTypes.instanceOf(Map).isRequired,
   boxItemOutNextValues: PropTypes.instanceOf(Map).isRequired,
   boxItemOutActions: PropTypes.object.isRequired,
-  // localSettings: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   itemActions: PropTypes.object.isRequired,
-  // moneyTypes: PropTypes.instanceOf(List).isRequired,
-  // itemGrades: PropTypes.instanceOf(List).isRequired,
-  // weaponTypes: PropTypes.instanceOf(List).isRequired,
-  // entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
-  // entriesFinderItemsActions: PropTypes.object.isRequired,
+  moneyTypes: PropTypes.instanceOf(List).isRequired,
+  itemGrades: PropTypes.instanceOf(List).isRequired,
+  weaponTypes: PropTypes.instanceOf(List).isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
 };
 
