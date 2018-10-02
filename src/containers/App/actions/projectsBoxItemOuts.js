@@ -9,7 +9,7 @@ import { projectsNextValuesChangePropValue } from './projectsNextValues';
 export const projectsBoxItemOuts = {
   // generated actions eq. changeName
   ...(() => {
-    const propKeys = ['outputCode', 'outputCount', 'outputProb'];
+    const propKeys = ['outputCode', 'outputCount', 'outputProb', 'outputItem'];
     const fns = {};
     propKeys.forEach(propKey => {
       fns[`change${upperFirst(propKey)}`] = args =>
