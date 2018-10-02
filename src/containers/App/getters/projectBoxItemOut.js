@@ -61,6 +61,7 @@ export const getOutput = (...props) => ({
   prob: getOutputProb(...props),
   probPercent: getOutputProbPercent(...props),
   n: props[2].n,
+  item: undefined,
 });
 
 export const getOutputCode = (

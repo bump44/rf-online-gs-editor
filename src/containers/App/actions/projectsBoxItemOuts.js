@@ -9,7 +9,7 @@ import { projectsNextValuesChangePropValue } from './projectsNextValues';
 export const projectsBoxItemOuts = {
   // generated actions eq. changeName
   ...(() => {
-    const propKeys = [];
+    const propKeys = ['outputCode', 'outputCount', 'outputProb'];
     const fns = {};
     propKeys.forEach(propKey => {
       fns[`change${upperFirst(propKey)}`] = args =>
@@ -21,6 +21,18 @@ export const projectsBoxItemOuts = {
     });
     return fns;
   })(),
+  outputUpdate: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: BOX_ITEM_OUT,
+      propKey: 'outputUpdate',
+    }),
+  outputDisable: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: BOX_ITEM_OUT,
+      propKey: 'outputDisable',
+    }),
 };
 
 export const projectsBoxItemOutsActionNames = Object.keys(projectsBoxItemOuts);

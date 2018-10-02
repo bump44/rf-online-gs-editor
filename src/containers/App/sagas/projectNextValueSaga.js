@@ -16,6 +16,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
   ITEM,
   STORE,
+  BOX_ITEM_OUT,
 } from '../constants';
 
 import {
@@ -38,15 +39,17 @@ import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
 
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
+import boxItemOutResolvers from './projectNextValue/boxItemOutResolvers';
 
 const Workers = {};
 
 const Resolvers = {
   [ITEM]: itemResolvers,
   [STORE]: storeResolvers,
+  [BOX_ITEM_OUT]: boxItemOutResolvers,
 };
 
-const MutationUpdateQueries = {
+const MutationQueries = {
   [ITEM]: projectItemUpdate,
   [STORE]: projectStoreUpdate,
 };
@@ -141,7 +144,7 @@ export function* worker({ projectId, keyId, subType }) {
     yield put(callAction(projectsNextValuesChangeIsError, false));
     yield delay(1500); // delay before mutate
 
-    const typeMutation = MutationUpdateQueries[subType];
+    const typeMutation = MutationQueries[subType];
 
     if (!typeMutation) {
       throw new Error('Value mutation not defined');
