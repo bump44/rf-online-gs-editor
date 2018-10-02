@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
 import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
 import ProjectBoxItemOutNameParts from '../fragments/ProjectBoxItemOutNameParts';
+import ProjectBoxItemOutItemListNameParts from '../fragments/ProjectBoxItemOutItemListNameParts';
 
 export default gql`
   query($id: String!, $itemId: String!) {
@@ -78,6 +79,7 @@ export default gql`
         id
         nIndex
         ...ProjectBoxItemOutNameParts
+        ...ProjectBoxItemOutItemListNameParts
       }
     }
   }
@@ -86,4 +88,5 @@ export default gql`
   ${ProjectItemClientNameParts}
   ${ProjectItemServerNameParts}
   ${ProjectBoxItemOutNameParts}
+  ${ProjectBoxItemOutItemListNameParts}
 `;
