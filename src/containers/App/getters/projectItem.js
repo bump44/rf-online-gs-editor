@@ -280,3 +280,8 @@ export const getRouteLink = (
   })}/items/${getId(nextValue, {
     entry,
   })}`;
+
+export const getBoxItemOut = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) => nextValue.get('boxItemOut') || entry.get('boxItemOut') || undefined;
