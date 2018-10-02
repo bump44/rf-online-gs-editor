@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 import ProjectStoreClientNameParts from '../fragments/ProjectStoreClientNameParts';
 import ProjectStoreServerNameParts from '../fragments/ProjectStoreServerNameParts';
+import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
+import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
 
 const itemList = Array.from(Array(200)).map(
   (_, index) => `
@@ -9,7 +11,10 @@ itemList__${index + 1} {
   type
   nIndex
   client {
-    strName
+    ...ProjectItemClientNameParts
+  }
+  server {
+    ...ProjectItemServerNameParts
   }
 }
 `,
@@ -92,6 +97,7 @@ export default gql`
       }
       server {
         ...ProjectStoreServerNameParts
+        ${itemList}
       }
     }
   }
@@ -99,4 +105,6 @@ export default gql`
   # include fragments
   ${ProjectStoreClientNameParts}
   ${ProjectStoreServerNameParts}
+  ${ProjectItemClientNameParts}
+  ${ProjectItemServerNameParts}
 `;
