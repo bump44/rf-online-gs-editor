@@ -20,6 +20,7 @@ import * as projectBoxItemOut from '../../containers/App/getters/projectBoxItemO
 import ProjectBoxItemOutLabelDetail from '../ProjectBoxItemOutLabelDetail';
 import ProjectItemInteractingName from '../ProjectItem/Interacting/Name';
 import ProjectBoxItemOutInteractingOutputs from '../ProjectBoxItemOut/Interacting/Outputs';
+import ProjectBoxItemOutInteractingOutputsProbDetail from '../ProjectBoxItemOut/Interacting/OutputsProbDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutRender extends React.PureComponent {
@@ -50,41 +51,12 @@ class ProjectBoxItemOutRender extends React.PureComponent {
 
   renderOutputsProbDetails() {
     const { boxItemOutNextValues, boxItemOut } = this.props;
-    const outputsProb = projectBoxItemOut.getOutputsProb(
-      boxItemOutNextValues.get('nextValue'),
-      {
-        entry: boxItemOut,
-      },
-    );
-
-    const isCorrect = outputsProb === 10000;
-    const expected = outputsProb - 10000;
 
     return (
-      <div>
-        <Label color="grey">
-          <FormattedMessage {...messages.TotalProbability} />:
-        </Label>
-        {isCorrect && (
-          <Label color="green">
-            <FormattedMessage {...messages.isCorrect} />
-          </Label>
-        )}
-        {!isCorrect && (
-          <Label color="red">
-            <FormattedMessage {...messages.incorrect} />
-            :&nbsp;
-            {outputsProb}
-            {expected < 0 ? '+' : '-'}
-            <i>{expected.toString().replace(/[^\d]/g, '')}</i>
-          </Label>
-        )}
-        {!isCorrect && (
-          <Label as={Link} to="/">
-            allocate probability
-          </Label>
-        )}
-      </div>
+      <ProjectBoxItemOutInteractingOutputsProbDetail
+        boxItemOutNextValues={boxItemOutNextValues}
+        boxItemOut={boxItemOut}
+      />
     );
   }
 
@@ -122,6 +94,8 @@ class ProjectBoxItemOutRender extends React.PureComponent {
       localSettings,
       boxItemOutActions,
       itemActions,
+      entriesFinderItemsActions,
+      entriesFinderItems,
     } = this.props;
 
     return (
@@ -172,6 +146,8 @@ class ProjectBoxItemOutRender extends React.PureComponent {
                   localSettings={localSettings}
                   boxItemOutActions={boxItemOutActions}
                   itemActions={itemActions}
+                  entriesFinderItemsActions={entriesFinderItemsActions}
+                  entriesFinderItems={entriesFinderItems}
                 />
               </Modal.Description>
             </Modal.Content>
@@ -192,6 +168,8 @@ ProjectBoxItemOutRender.propTypes = {
   localSettings: PropTypes.instanceOf(Map).isRequired,
   boxItemOutActions: PropTypes.object.isRequired,
   itemActions: PropTypes.object.isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default ProjectBoxItemOutRender;
