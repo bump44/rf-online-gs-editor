@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
-import { Grid, Label, Icon, Popup } from 'semantic-ui-react';
+import { Grid, Label, Icon, Modal, Button } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -17,7 +17,9 @@ import { IMMUTABLE_MAP } from '../../containers/App/constants';
 import * as projectItem from '../../containers/App/getters/projectItem';
 import * as projectBoxItemOut from '../../containers/App/getters/projectBoxItemOut';
 
+import ProjectBoxItemOutLabelDetail from '../ProjectBoxItemOutLabelDetail';
 import ProjectItemInteractingName from '../ProjectItem/Interacting/Name';
+import ProjectBoxItemOutInteractingOutputs from '../ProjectBoxItemOut/Interacting/Outputs';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutRender extends React.PureComponent {
@@ -25,7 +27,6 @@ class ProjectBoxItemOutRender extends React.PureComponent {
     super(props);
     this.renderItem = this.renderItem.bind(this);
     this.renderOutputsProbDetails = this.renderOutputsProbDetails.bind(this);
-
     this.getItemData = this.getItemData.bind(this);
   }
 
@@ -111,23 +112,25 @@ class ProjectBoxItemOutRender extends React.PureComponent {
 
   render() {
     const { item, itemNextValues } = this.getItemData();
-    const { boxItemOutNextValues, boxItemOut } = this.props;
+    const {
+      moneyTypes,
+      itemGrades,
+      weaponTypes,
+      nextValues,
+      boxItemOut,
+      boxItemOutNextValues,
+      localSettings,
+      boxItemOutActions,
+      itemActions,
+    } = this.props;
 
-    const outputs = projectBoxItemOut.getOutputs(
-      boxItemOutNextValues.get('nextValue'),
-      {
-        entry: boxItemOut,
-      },
-    );
-
-    console.log(outputs);
     return (
       <Grid columns={2}>
         <Grid.Column largeScreen={12} widescreen={8}>
           <div className="mb-5">{this.renderItem()}</div>
           {this.renderOutputsProbDetails()}
         </Grid.Column>
-        <Grid.Column largeScreen={4} widescreen={3}>
+        <Grid.Column largeScreen={4} widescreen={8}>
           {item && (
             <Label
               as={Link}
@@ -139,34 +142,40 @@ class ProjectBoxItemOutRender extends React.PureComponent {
             </Label>
           )}
 
-          <Label as={Link} to="/">
-            <Icon name="pencil" /> <FormattedMessage {...messages.EditRaw} />
-          </Label>
-        </Grid.Column>
-        <Grid.Column largeScreen={0} widescreen={5}>
-          {outputs.map(
-            output =>
-              output.code.length > 2 && (
-                <Popup
-                  key={output.n}
-                  trigger={<Label size="mini">{output.code}</Label>}
-                  content={
-                    <div>
-                      <div>
-                        <FormattedMessage {...messages.Count} />: {output.count}
-                      </div>
-                      <div>
-                        <FormattedMessage {...messages.Prob} />: {output.prob} (
-                        {output.probPercent}
-                        %)
-                      </div>
-                    </div>
-                  }
-                  inverted
-                  size="mini"
+          <Modal
+            trigger={
+              <Button size="mini" primary>
+                <Icon name="pencil" />{' '}
+                <FormattedMessage {...messages.EditRaw} />
+              </Button>
+            }
+          >
+            <Modal.Content scrolling>
+              <Modal.Description>
+                <div>
+                  <div className="mb-15">
+                    <ProjectBoxItemOutLabelDetail
+                      boxItemOutActions={boxItemOutActions}
+                      boxItemOut={boxItemOut}
+                      boxItemOutNextValues={boxItemOutNextValues}
+                    />
+                  </div>
+                  {this.renderOutputsProbDetails()}
+                </div>
+                <ProjectBoxItemOutInteractingOutputs
+                  moneyTypes={moneyTypes}
+                  itemGrades={itemGrades}
+                  weaponTypes={weaponTypes}
+                  nextValues={nextValues}
+                  boxItemOut={boxItemOut}
+                  boxItemOutNextValues={boxItemOutNextValues}
+                  localSettings={localSettings}
+                  boxItemOutActions={boxItemOutActions}
+                  itemActions={itemActions}
                 />
-              ),
-          )}
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
         </Grid.Column>
       </Grid>
     );
