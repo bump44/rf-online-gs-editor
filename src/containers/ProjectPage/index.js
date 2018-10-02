@@ -25,7 +25,9 @@ import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
+
 import Header from '../../components/Header';
 import Container from '../../components/Container';
 import Notification from '../../components/Notification';
@@ -64,6 +66,7 @@ export class ProjectPage extends React.PureComponent {
       projectPage,
       projectsImportsProcessingData,
       fnLogoutCurrentUser,
+      projectImportsProcessingData,
     } = this.props;
 
     const {
@@ -105,6 +108,7 @@ export class ProjectPage extends React.PureComponent {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <Grid.Column largeScreen={13} widescreen={14}>
@@ -173,6 +177,14 @@ const mapStateToProps = createStructuredSelector({
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(dispatch) {

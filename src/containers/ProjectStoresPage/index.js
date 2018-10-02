@@ -26,6 +26,7 @@ import {
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
+  makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
 
 import { logoutCurrentUser, projectsStoresBindActions } from '../App/actions';
@@ -191,6 +192,7 @@ export class ProjectStoresPage extends React.Component {
       fnChangeFilterSortBy,
       fnChangeFilterSortWay,
       fnChangeFilterWhereSearch,
+      projectImportsProcessingData,
     } = this.props;
 
     const {
@@ -229,6 +231,7 @@ export class ProjectStoresPage extends React.Component {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <FullheightColumn largeScreen={13} widescreen={14}>
@@ -290,6 +293,14 @@ const mapStateToProps = createStructuredSelector({
   projectsNextValues: makeSelectProjectsNextValues(),
   result: makeSelectResult(),
   filter: makeSelectFilter(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(dispatch) {

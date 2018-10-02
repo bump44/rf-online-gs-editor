@@ -29,7 +29,7 @@ export class NotFoundPage extends React.PureComponent {
       currentProject,
       currentUser,
       isLoggedIn,
-      fnLogoutCurrentUser,
+      onClickLogout,
     } = this.props;
 
     return (
@@ -43,7 +43,7 @@ export class NotFoundPage extends React.PureComponent {
           currentProject={currentProject}
           currentUser={currentUser}
           isLoggedIn={isLoggedIn}
-          onClickLogout={fnLogoutCurrentUser}
+          onClickLogout={onClickLogout}
         />
 
         <Container>
@@ -58,7 +58,7 @@ export class NotFoundPage extends React.PureComponent {
 
 NotFoundPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  fnLogoutCurrentUser: PropTypes.func.isRequired,
+  onClickLogout: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
@@ -73,7 +73,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
+    onClickLogout: () => dispatch(logoutCurrentUser()),
   };
 }
 

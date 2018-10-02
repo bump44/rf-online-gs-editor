@@ -23,7 +23,14 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId } from './actions';
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
+
+import {
+  makeSelectIsLoggedIn,
+  makeSelectCurrentUser,
+  makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
+} from '../App/selectors';
+
 import { logoutCurrentUser } from '../App/actions';
 import Header from '../../components/Header';
 import Container from '../../components/Container';
@@ -60,6 +67,8 @@ export class ProjectContributorsPage extends React.PureComponent {
       currentProject,
       projectContributorsPage,
       fnLogoutCurrentUser,
+      projectsImportsProcessingData,
+      projectImportsProcessingData,
     } = this.props;
 
     const {
@@ -86,6 +95,7 @@ export class ProjectContributorsPage extends React.PureComponent {
           currentUser={currentUser}
           currentProject={currentProject}
           onClickLogout={fnLogoutCurrentUser}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <Container>
@@ -103,6 +113,7 @@ export class ProjectContributorsPage extends React.PureComponent {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <Grid.Column largeScreen={13} widescreen={14}>
@@ -151,6 +162,15 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: makeSelectIsLoggedIn(),
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(dispatch) {

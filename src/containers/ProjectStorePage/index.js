@@ -26,6 +26,7 @@ import {
   projectsStoresBindActions,
   projectsItemsBindActions,
   projectsEntriesFinderItemsBindActions,
+  logoutCurrentUser,
 } from '../App/actions';
 
 import {
@@ -34,6 +35,8 @@ import {
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
   makeSelectProjectsEntriesFinder,
+  makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
 
 import { changeId } from './actions';
@@ -148,6 +151,9 @@ export class ProjectStorePage extends React.PureComponent {
       projectsEntriesFinder,
       localSettings,
       entriesFinderItemsActions,
+      fnLogoutCurrentUser,
+      projectsImportsProcessingData,
+      projectImportsProcessingData,
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectStorePage;
@@ -196,6 +202,8 @@ export class ProjectStorePage extends React.PureComponent {
           currentProject={currentProject}
           currentUser={currentUser}
           isLoggedIn={isLoggedIn}
+          onClickLogout={fnLogoutCurrentUser}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <Container>
@@ -213,6 +221,7 @@ export class ProjectStorePage extends React.PureComponent {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <FullheightColumn largeScreen={13} widescreen={14}>
@@ -268,11 +277,19 @@ const mapStateToProps = createStructuredSelector({
   currentUser: makeSelectCurrentUser(),
   currentProject: makeSelectProject(),
   currentProjectStore: makeSelectProjectStore(),
-
   isLoggedIn: makeSelectIsLoggedIn(),
   localSettings: makeSelectLocalSettings(),
   projectsNextValues: makeSelectProjectsNextValues(),
   projectsEntriesFinder: makeSelectProjectsEntriesFinder(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(
@@ -285,6 +302,7 @@ function mapDispatchToProps(
 ) {
   return {
     dispatch,
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
     fnChangeId: (payloadID, storeId) => dispatch(changeId(payloadID, storeId)),
     entriesFinderItemsActions: projectsEntriesFinderItemsBindActions({
       projectId: id,

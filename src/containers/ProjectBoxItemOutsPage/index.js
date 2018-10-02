@@ -13,10 +13,26 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Header as PageHeader, Label } from 'semantic-ui-react';
-import { IMMUTABLE_LIST, IMMUTABLE_MAP } from '../App/constants';
+import { IMMUTABLE_MAP, ITEM } from '../App/constants';
+import { getRefs } from '../App/getters/project';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
+import {
+  logoutCurrentUser,
+  projectsBoxItemOutsBindActions,
+  projectsItemsBindActions,
+  projectsEntriesFinderItemsBindActions,
+} from '../App/actions';
+
+import {
+  makeSelectIsLoggedIn,
+  makeSelectCurrentUser,
+  makeSelectLocalSettings,
+  makeSelectProjectsNextValues,
+  makeSelectProjectsImportsProcessingData,
+  makeSelectProjectImportsProcessingData,
+  makeSelectProjectsEntriesFinder,
+} from '../App/selectors';
+
 import makeSelectProjectBoxItemOutsPage, {
   makeSelectFilter,
 } from './selectors';
@@ -30,22 +46,12 @@ import {
   changeId,
 } from './actions';
 
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import {
-  logoutCurrentUser,
-  projectsBoxItemOutsBindActions,
-  projectsItemsBindActions,
-} from '../App/actions';
-
-import {
-  makeSelectIsLoggedIn,
-  makeSelectCurrentUser,
-  makeSelectLocalSettings,
-  makeSelectProjectsNextValues,
-} from '../App/selectors';
 import ProjectBoxItemOutsFilters from '../../components/ProjectBoxItemOutsFilters';
 import ProjectMenu from '../../components/ProjectMenu';
 import Header from '../../components/Header';
@@ -98,26 +104,23 @@ export class ProjectBoxItemOutsPage extends React.Component {
   }
 
   getActionsBindPayload() {
-    const { dispatch, match, projectBoxItemOutsPage } = this.props;
-    const project = projectBoxItemOutsPage.get('project');
+    const {
+      dispatch,
+      match,
+      projectBoxItemOutsPage,
+      projectsNextValues,
+    } = this.props;
 
-    const additionalData = (() => {
-      if (!project) {
-        return {};
-      }
-
-      return {
-        moneyTypes: project.getIn(['moneyTypes', 'items'], IMMUTABLE_LIST),
-        itemGrades: project.getIn(['itemGrades', 'items'], IMMUTABLE_LIST),
-        weaponTypes: project.getIn(['weaponTypes', 'items'], IMMUTABLE_LIST),
-        buttonTypes: project.getIn(['buttonTypes', 'items'], IMMUTABLE_LIST),
-      };
-    })();
+    const project = projectBoxItemOutsPage.get('project') || IMMUTABLE_MAP;
+    const nextValues = projectsNextValues.getIn(
+      [match.params.id, match.params.id],
+      IMMUTABLE_MAP,
+    );
 
     return {
       dispatch,
       projectId: match.params.id,
-      additionalData,
+      additionalData: getRefs(nextValues.get('nextValue'), { entry: project }),
     };
   }
 
@@ -151,6 +154,8 @@ export class ProjectBoxItemOutsPage extends React.Component {
       projectBoxItemOutsPage,
       projectsNextValues,
       localSettings,
+      projectsEntriesFinder,
+      entriesFinderItemsActions,
     } = this.props;
 
     const result = projectBoxItemOutsPage.get('result');
@@ -173,6 +178,10 @@ export class ProjectBoxItemOutsPage extends React.Component {
     const nextValues =
       project && projectsNextValues.get(project.get('id'), IMMUTABLE_MAP);
 
+    const entriesFinderItems =
+      project &&
+      projectsEntriesFinder.getIn([project.get('id'), ITEM], IMMUTABLE_MAP);
+
     return (
       <ProjectBoxItemOutVirtualizedRow
         {...props}
@@ -186,6 +195,8 @@ export class ProjectBoxItemOutsPage extends React.Component {
         weaponTypes={weaponTypes}
         buttonTypes={buttonTypes}
         localSettings={localSettings}
+        entriesFinderItems={entriesFinderItems}
+        entriesFinderItemsActions={entriesFinderItemsActions}
       />
     );
   }
@@ -201,6 +212,8 @@ export class ProjectBoxItemOutsPage extends React.Component {
       fnChangeFilterWhereType,
       projectBoxItemOutsPage,
       onClickLogout,
+      projectsImportsProcessingData,
+      projectImportsProcessingData,
     } = this.props;
 
     const id = projectBoxItemOutsPage.get('id');
@@ -226,6 +239,7 @@ export class ProjectBoxItemOutsPage extends React.Component {
           currentUser={currentUser}
           currentProject={project}
           onClickLogout={onClickLogout}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <Container>
@@ -243,6 +257,7 @@ export class ProjectBoxItemOutsPage extends React.Component {
                   project={project}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <FullheightColumn largeScreen={13} widescreen={14}>
@@ -299,13 +314,30 @@ const mapStateToProps = createStructuredSelector({
   projectBoxItemOutsPage: makeSelectProjectBoxItemOutsPage(),
   localSettings: makeSelectLocalSettings(),
   projectsNextValues: makeSelectProjectsNextValues(),
+  projectsEntriesFinder: makeSelectProjectsEntriesFinder(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(
+  dispatch,
+  {
+    match: {
+      params: { id },
+    },
+  },
+) {
   return {
     dispatch,
     onClickLogout: () => dispatch(logoutCurrentUser()),
-    fnChangeId: id => dispatch(changeId(id)),
+    fnChangeId: payloadID => dispatch(changeId(payloadID)),
     fnResetResult: () => dispatch(resetResult()),
     fnChangeFilterTakeSkip: (take, skip) =>
       dispatch(changeFilterTakeSkip(take, skip)),
@@ -313,6 +345,10 @@ function mapDispatchToProps(dispatch) {
     fnChangeFilterSortWay: sortWay => dispatch(changeFilterSortWay(sortWay)),
     fnChangeFilterWhereSearch: whereSearch =>
       dispatch(changeFilterWhereSearch(whereSearch)),
+    entriesFinderItemsActions: projectsEntriesFinderItemsBindActions({
+      projectId: id,
+      dispatch,
+    }),
   };
 }
 

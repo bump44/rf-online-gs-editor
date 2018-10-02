@@ -40,6 +40,8 @@ class ProjectBoxItemOutVirtualizedRow extends React.PureComponent {
       isVisible,
       selectable,
       onClickSelect,
+      entriesFinderItemsActions,
+      entriesFinderItems,
     } = this.props;
 
     const disableRenderItemsIsScrolling = localSettings.get(
@@ -75,6 +77,8 @@ class ProjectBoxItemOutVirtualizedRow extends React.PureComponent {
           localSettings={localSettings}
           selectable={selectable}
           onClickSelect={onClickSelect}
+          entriesFinderItemsActions={entriesFinderItemsActions}
+          entriesFinderItems={entriesFinderItems}
         />
       );
     }
@@ -107,6 +111,8 @@ ProjectBoxItemOutVirtualizedRow.propTypes = {
   localSettings: PropTypes.instanceOf(Map).isRequired,
   boxItemOutActions: PropTypes.object.isRequired,
   itemActions: PropTypes.object.isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   selectable: PropTypes.bool,
   onClickSelect: PropTypes.func,
 };

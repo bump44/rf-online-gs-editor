@@ -32,6 +32,7 @@ import {
   makeSelectIsLoggedIn,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
+  makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
 
 import reducer from './reducer';
@@ -196,6 +197,7 @@ export class ProjectItemsPage extends React.PureComponent {
       fnChangeFilterWhereSearch,
       fnChangeFilterWhereType,
       fnLogoutCurrentUser,
+      projectImportsProcessingData,
     } = this.props;
 
     const {
@@ -235,6 +237,7 @@ export class ProjectItemsPage extends React.PureComponent {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <FullheightColumn largeScreen={13} widescreen={14}>
@@ -301,6 +304,14 @@ const mapStateToProps = createStructuredSelector({
   result: makeSelectResult(),
   filter: makeSelectFilter(),
   localSettings: makeSelectLocalSettings(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
 function mapDispatchToProps(dispatch) {

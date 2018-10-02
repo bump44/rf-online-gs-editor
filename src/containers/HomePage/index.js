@@ -39,7 +39,7 @@ export class HomePage extends React.PureComponent {
       isLoggedIn,
       currentUser,
       currentProject,
-      fnLogoutCurrentUser,
+      onClickLogout,
       projectsImportsProcessingData,
       localSettings,
     } = this.props;
@@ -52,7 +52,7 @@ export class HomePage extends React.PureComponent {
         </Helmet>
 
         <Header
-          onClickLogout={fnLogoutCurrentUser}
+          onClickLogout={onClickLogout}
           currentUser={currentUser}
           currentProject={currentProject}
           isLoggedIn={isLoggedIn}
@@ -70,16 +70,11 @@ export class HomePage extends React.PureComponent {
 
 HomePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  fnLogoutCurrentUser: PropTypes.func.isRequired,
+  onClickLogout: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
   localSettings: PropTypes.instanceOf(Map),
-};
-
-HomePage.defaultProps = {
-  currentUser: null,
-  currentProject: null,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -87,14 +82,14 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: makeSelectIsLoggedIn(),
   currentUser: makeSelectCurrentUser(),
   currentProject: makeSelectProject(),
-  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
   localSettings: makeSelectLocalSettings(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
+    onClickLogout: () => dispatch(logoutCurrentUser()),
   };
 }
 

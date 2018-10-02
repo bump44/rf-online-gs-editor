@@ -13,6 +13,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST, ITEM } from '../App/constants';
+import * as projectItem from '../App/getters/projectItem';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -20,14 +22,21 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import * as projectItem from '../App/getters/projectItem';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../App/constants';
-import { projectsItemsBindActions } from '../App/actions';
+import {
+  projectsItemsBindActions,
+  projectsBoxItemOutsBindActions,
+  projectsEntriesFinderItemsBindActions,
+  logoutCurrentUser,
+} from '../App/actions';
+
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
+  makeSelectProjectsEntriesFinder,
+  makeSelectProjectImportsProcessingData,
+  makeSelectProjectsImportsProcessingData,
 } from '../App/selectors';
 
 import { changeId } from './actions';
@@ -42,7 +51,6 @@ import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
 } from '../../components/FullheightColumn';
-
 import Notification from '../../components/Notification';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProjectMenu from '../../components/ProjectMenu';
@@ -131,11 +139,16 @@ export class ProjectItemPage extends React.PureComponent {
       currentProjectItem,
       projectsNextValues,
       localSettings,
+      projectsEntriesFinder,
+      entriesFinderItemsActions,
+      projectImportsProcessingData,
+      fnLogoutCurrentUser,
+      projectsImportsProcessingData,
     } = this.props;
 
     const { isLoaded, isError, errorMessage, isLoading, id } = projectItemPage;
-
     const actionsBindPayload = this.getActionsBindPayload();
+
     const {
       moneyTypes,
       itemGrades,
@@ -143,6 +156,9 @@ export class ProjectItemPage extends React.PureComponent {
     } = actionsBindPayload.additionalData;
 
     const itemActions = projectsItemsBindActions(actionsBindPayload);
+    const boxItemOutActions = projectsBoxItemOutsBindActions(
+      actionsBindPayload,
+    );
 
     const nextValues =
       currentProject &&
@@ -155,6 +171,13 @@ export class ProjectItemPage extends React.PureComponent {
       currentProjectItem &&
       nextValues.get(currentProjectItem.get('id'), IMMUTABLE_MAP);
 
+    const entriesFinderItems =
+      currentProject &&
+      projectsEntriesFinder.getIn(
+        [currentProject.get('id'), ITEM],
+        IMMUTABLE_MAP,
+      );
+
     return (
       <div>
         <Helmet>
@@ -166,6 +189,8 @@ export class ProjectItemPage extends React.PureComponent {
           currentProject={currentProject}
           currentUser={currentUser}
           isLoggedIn={isLoggedIn}
+          onClickLogout={fnLogoutCurrentUser}
+          projectsImportsProcessingData={projectsImportsProcessingData}
         />
 
         <Container>
@@ -183,6 +208,7 @@ export class ProjectItemPage extends React.PureComponent {
                   project={currentProject}
                   projectId={id}
                   currentUser={currentUser}
+                  projectImportsProcessingData={projectImportsProcessingData}
                 />
               </Grid.Column>
               <FullheightColumn largeScreen={13} widescreen={14}>
@@ -213,6 +239,9 @@ export class ProjectItemPage extends React.PureComponent {
                       itemGrades={itemGrades}
                       weaponTypes={weaponTypes}
                       itemActions={itemActions}
+                      boxItemOutActions={boxItemOutActions}
+                      entriesFinderItems={entriesFinderItems}
+                      entriesFinderItemsActions={entriesFinderItemsActions}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>
@@ -236,13 +265,35 @@ const mapStateToProps = createStructuredSelector({
   currentProjectItem: makeSelectProjectItem(),
   isLoggedIn: makeSelectIsLoggedIn(),
   projectsNextValues: makeSelectProjectsNextValues(),
+  projectsEntriesFinder: makeSelectProjectsEntriesFinder(),
   localSettings: makeSelectLocalSettings(),
+  projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
+  projectImportsProcessingData: (
+    state,
+    {
+      match: {
+        params: { id },
+      },
+    },
+  ) => makeSelectProjectImportsProcessingData(id)(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(
+  dispatch,
+  {
+    match: {
+      params: { id },
+    },
+  },
+) {
   return {
     dispatch,
-    fnChangeId: (id, itemId) => dispatch(changeId(id, itemId)),
+    fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
+    fnChangeId: (payloadID, itemId) => dispatch(changeId(payloadID, itemId)),
+    entriesFinderItemsActions: projectsEntriesFinderItemsBindActions({
+      projectId: id,
+      dispatch,
+    }),
   };
 }
 

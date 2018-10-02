@@ -79,6 +79,8 @@ class ProjectBoxItemOutRow extends React.PureComponent {
       localSettings,
       boxItemOutActions,
       itemActions,
+      entriesFinderItemsActions,
+      entriesFinderItems,
     } = this.props;
 
     return (
@@ -102,6 +104,8 @@ class ProjectBoxItemOutRow extends React.PureComponent {
               localSettings={localSettings}
               boxItemOutActions={boxItemOutActions}
               itemActions={itemActions}
+              entriesFinderItemsActions={entriesFinderItemsActions}
+              entriesFinderItems={entriesFinderItems}
             />
           </Grid.Column>
         </Grid>
@@ -120,6 +124,8 @@ ProjectBoxItemOutRow.propTypes = {
   localSettings: PropTypes.instanceOf(Map).isRequired,
   boxItemOutActions: PropTypes.object.isRequired,
   itemActions: PropTypes.object.isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   selectable: PropTypes.bool,
   onClickSelect: PropTypes.func,
 };

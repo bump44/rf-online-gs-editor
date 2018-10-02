@@ -20,6 +20,10 @@ function ProjectItem({
   itemGrades,
   weaponTypes,
   localSettings,
+  nextValues,
+  boxItemOutActions,
+  entriesFinderItemsActions,
+  entriesFinderItems,
 }) {
   const Render = renderResolvers[item.get('type')];
 
@@ -35,6 +39,10 @@ function ProjectItem({
           itemGrades={itemGrades}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
+          nextValues={nextValues}
+          boxItemOutActions={boxItemOutActions}
+          entriesFinderItemsActions={entriesFinderItemsActions}
+          entriesFinderItems={entriesFinderItems}
         />
       )}
     </div>
@@ -44,11 +52,15 @@ function ProjectItem({
 ProjectItem.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGrades: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.object.isRequired,
+  boxItemOutActions: PropTypes.object.isRequired,
+  entriesFinderItemsActions: PropTypes.object.isRequired,
+  entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   style: PropTypes.object,
 };
 
