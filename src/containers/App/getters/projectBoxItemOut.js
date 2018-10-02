@@ -60,9 +60,17 @@ export const getOutput = (...props) => ({
   count: getOutputCount(...props),
   prob: getOutputProb(...props),
   probPercent: getOutputProbPercent(...props),
+  item: getOutputItem(...props),
   n: props[2].n,
-  item: undefined,
 });
+
+export const getOutputItem = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  nextValue.getIn([`itemList__${n}`], entry.getIn([`itemList__${n}`])) ||
+  undefined;
 
 export const getOutputCode = (
   nextValue = IMMUTABLE_MAP,
