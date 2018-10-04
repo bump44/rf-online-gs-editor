@@ -35,6 +35,20 @@ export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     ),
   ) || '';
 
+export const getMoney = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue.getIn(
+    ['server', 'nMoney'],
+    entry.getIn(
+      [['server', 'nMoney'], ['client', 'nMoney']].find(
+        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
+      ) || ['server', 'nMoney'],
+      0,
+    ),
+  );
+
 /**
  * Return moneyType
  * @param {Object} nextValue next item values
@@ -47,16 +61,7 @@ export const getMoneyType = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP, moneyTypes = IMMUTABLE_LIST },
 ) => {
-  const value = nextValue.getIn(
-    ['server', 'nMoney'],
-    entry.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['server', 'nMoney'],
-      0,
-    ),
-  );
-
+  const value = getMoney(nextValue, { entry });
   return moneyTypes.find(val => val.get('value') === value);
 };
 
@@ -73,7 +78,22 @@ export const getMoneyValue = (
   { entry = IMMUTABLE_MAP, moneyTypes = IMMUTABLE_LIST },
 ) => {
   const moneyType = getMoneyType(nextValue, { entry, moneyTypes });
+  return getMoneyValueByMoneyType(nextValue, { entry }, { moneyType });
+};
 
+/**
+ * Return moneyValue by moneyType
+ * @param {Object} nextValue next item values
+ * @param {Object} props entry: the first thing we got from the server
+ *                       moneyTypes: list of money types
+ *
+ * @returns Number
+ */
+export const getMoneyValueByMoneyType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { moneyType },
+) => {
   // unknown money type
   if (!moneyType) {
     return 0;
