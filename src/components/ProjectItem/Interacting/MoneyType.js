@@ -14,71 +14,31 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
+import {
+  getMoneyType,
+  getMoney,
+  getMoneyValueByMoneyType,
+} from '../../../containers/App/getters/projectItem';
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingMoneyType extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.getMoneyValue = this.getMoneyValue.bind(this);
-    this.getMoneyType = this.getMoneyType.bind(this);
     this.changeValue = (evt, owns) => {
       const { onChangeValue, item } = this.props;
       onChangeValue(item, parseInt(owns.value) || 0);
     };
   }
 
-  getMoneyType() {
-    const { item, itemNextValues } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
-
-    const currValue = item.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nMoney'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-
-    return value;
-  }
-
-  getMoneyValue(type) {
-    if (!type) {
-      return 0;
-    }
-
-    const { item, itemNextValues } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      type.get('fieldName'),
-    ]);
-
-    const currValue = item.getIn(
-      [
-        ['server', type.get('fieldName')],
-        ['client', type.get('fieldName')],
-      ].find(fieldSets => item.getIn(fieldSets) !== undefined) || [
-        'server',
-        type.get('fieldName'),
-      ],
-      0,
-    );
-
-    const value =
-      parseInt(nextValue !== undefined ? nextValue : currValue) || 0;
-
-    return value;
-  }
-
   render() {
-    const { types, className } = this.props;
+    const { types, className, itemNextValues, item } = this.props;
 
-    const value = this.getMoneyType();
-    const type = types.find(val => val.get('value') === value);
+    const value = getMoney(itemNextValues.get('nextValue'), { entry: item });
+    const type = getMoneyType(itemNextValues.get('nextValue'), {
+      entry: item,
+      moneyTypes: types,
+    });
+
     const isUnknown = !type;
 
     return (
@@ -124,7 +84,11 @@ class ProjectItemInteractingMoneyType extends React.PureComponent {
                   {val.get('value')}: {val.get('title')}
                   &nbsp;
                   <small className="gray">
-                    {this.getMoneyValue(val).toLocaleString()}
+                    {getMoneyValueByMoneyType(
+                      itemNextValues.get('nextValue'),
+                      { entry: item },
+                      { moneyType: val },
+                    ).toLocaleString()}
                   </small>
                 </span>
               }
