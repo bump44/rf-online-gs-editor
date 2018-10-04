@@ -4,22 +4,6 @@ import ProjectStoreServerNameParts from '../fragments/ProjectStoreServerNamePart
 import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
 import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
 
-const itemList = Array.from(Array(200)).map(
-  (_, index) => `
-itemList__${index + 1} {
-  id
-  type
-  nIndex
-  client {
-    ...ProjectItemClientNameParts
-  }
-  server {
-    ...ProjectItemServerNameParts
-  }
-}
-`,
-);
-
 export default gql`
   query($id: String!, $storeId: String!) {
     project(id: $id) {
@@ -93,11 +77,20 @@ export default gql`
       searchTextValue
       client {
         ...ProjectStoreClientNameParts
-        ${itemList}
       }
       server {
         ...ProjectStoreServerNameParts
-        ${itemList}
+      }
+      arrayItems {
+        id
+        type
+        nIndex
+        client {
+          ...ProjectItemClientNameParts
+        }
+        server {
+          ...ProjectItemServerNameParts
+        }
       }
     }
   }
