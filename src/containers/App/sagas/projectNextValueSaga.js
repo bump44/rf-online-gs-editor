@@ -1,5 +1,6 @@
 import { Map } from 'immutable';
 import { delay } from 'redux-saga';
+import { pick, omit } from 'lodash';
 
 import {
   take,
@@ -53,6 +54,12 @@ const MutationQueries = {
   [ITEM]: projectItemUpdate,
   [STORE]: projectStoreUpdate,
 };
+
+const PickFields = {
+  [STORE]: ['client', 'server'],
+};
+
+const OmitFields = {};
 
 export function* changeProp({
   projectId,
@@ -150,12 +157,19 @@ export function* worker({ projectId, keyId, subType }) {
       throw new Error('Value mutation not defined');
     }
 
+    const nextValueJS = state.get('nextValue').toJS();
+
     // mutate server state
     yield apolloClient.mutate({
       mutation: typeMutation,
       variables: {
         id: keyId,
-        values: state.get('nextValue').toJS(),
+        values: omit(
+          PickFields[subType]
+            ? pick(nextValueJS, PickFields[subType])
+            : nextValueJS,
+          OmitFields[subType] || [],
+        ),
       },
     });
 
