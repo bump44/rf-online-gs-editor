@@ -1,4 +1,6 @@
+import { Map } from 'immutable';
 import { getItemList } from '../../getters/projectStore';
+import { IMMUTABLE_LIST } from '../../constants';
 
 const Resolvers = {
   name: (store, value) =>
@@ -19,19 +21,26 @@ const Resolvers = {
     store
       .setIn(['server', `strItemCode__${n}`], '')
       .setIn(['client', `strItemList__${n}_2`], '')
-      .setIn(['client', `nItemListType__${n}_1`], 0)
-      .setIn(['client', `itemList__${n}`], null)
-      .setIn(['server', `itemList__${n}`], null),
+      .setIn(['client', `nItemListType__${n}_1`], 0),
   itemListUpdate: (
     store,
     { n, clientCode = '', clientType = 0, serverCode = '', itemList } = {},
-  ) =>
-    store
+    { entry },
+  ) => {
+    let nextStore = store
       .setIn(['server', `strItemCode__${n}`], serverCode)
       .setIn(['client', `strItemList__${n}_2`], clientCode)
-      .setIn(['client', `nItemListType__${n}_1`], clientType)
-      .setIn(['client', `itemList__${n}`], itemList)
-      .setIn(['server', `itemList__${n}`], itemList),
+      .setIn(['client', `nItemListType__${n}_1`], clientType);
+
+    if (itemList instanceof Map) {
+      nextStore = nextStore.set(
+        'arrayItems',
+        entry.get('arrayItems', IMMUTABLE_LIST).push(itemList),
+      );
+    }
+
+    return nextStore;
+  },
   itemsListReshuffle: (store, value, { entry }) => {
     const itemsList = [];
 

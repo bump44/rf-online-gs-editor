@@ -1,5 +1,7 @@
 import { isNullOrUndefined, isNumber } from 'util';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import { getTypeNameByFinite } from '../../../structs/item_types_utils';
+import * as projectItem from './projectItem';
 
 /**
  * Return the most important title of the subject
@@ -118,6 +120,11 @@ export const getAngle = (
     ),
   ) || 0;
 
+export const getArrayItems = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) => nextValue.get('arrayItems', entry.get('arrayItems')) || IMMUTABLE_LIST;
+
 /**
  * Return vendor list item type from client cell
  * @param {Object} nextValue next item values
@@ -164,13 +171,57 @@ export const getItemListClientCode = (
  */
 export const getItemListClient = (
   nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
   { n = 1 },
-) =>
-  nextValue.getIn(
-    ['client', `itemList__${n}`],
-    entry.getIn(['client', `itemList__${n}`]),
-  ) || undefined;
+) => {
+  const finite = getItemListClientType(nextValue, { entry }, { n });
+  const typeName = getTypeNameByFinite(finite);
+  const code = getItemListClientCode(nextValue, { entry }, { n });
+  if (!typeName || !code) {
+    return undefined;
+  }
+
+  const arrayItems = getArrayItems(nextValue, { entry });
+  const arrayItem = arrayItems.find(
+    value =>
+      projectItem.getClientCode(nextValues.get(value.get('id')), {
+        entry: value,
+      }) === code &&
+      typeName ===
+        projectItem.getType(nextValues.get(value.get('id')), {
+          entry: value,
+        }),
+  );
+
+  return arrayItem;
+};
+
+/**
+ * Return vendor list item from server cell
+ * @param {Object} nextValue next item values
+ * @param {Object} props entry: the first thing we got from the server
+ * @param {Object} props n: cell 1-200
+ *
+ * @returns Immutable.Map|undefined
+ */
+export const getItemListServer = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const code = getItemListServerCode(nextValue, { entry }, { n });
+  if (!code) {
+    return undefined;
+  }
+
+  const arrayItems = getArrayItems(nextValue, { entry });
+  return arrayItems.find(
+    arrayItem =>
+      projectItem.getServerCode(nextValues.get(arrayItem.get('id')), {
+        entry: arrayItem,
+      }) === code,
+  );
+};
 
 /**
  * Return vendor list item code from server cell
@@ -200,6 +251,7 @@ export const getItemListServerCode = (
  */
 export const getItemList = (...props) => ({
   client: getItemListClient(...props),
+  server: getItemListServer(...props),
   clientType: getItemListClientType(...props),
   clientCode: getItemListClientCode(...props),
   serverCode: getItemListServerCode(...props),
@@ -215,10 +267,10 @@ export const getItemList = (...props) => ({
  */
 export const getItemsList = (
   nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
 ) =>
   Array.from(Array(200)).map((_, index) =>
-    getItemList(nextValue, { entry }, { n: index + 1 }),
+    getItemList(nextValue, { entry, nextValues }, { n: index + 1 }),
   );
 
 /**

@@ -152,7 +152,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
     const nextValue = storeNextValues.get('nextValue');
     const itemList = projectStore.getItemList(
       nextValue,
-      { entry: store },
+      { entry: store, nextValues },
       { n: index + 1 },
     );
 
