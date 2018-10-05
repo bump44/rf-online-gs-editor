@@ -8,10 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getSell } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingSell extends React.PureComponent {
@@ -26,17 +25,7 @@ class ProjectItemInteractingSell extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bSell']);
-
-    const currValue = item.getIn(
-      [['server', 'bSell'], ['client', 'bSell']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bSell'],
-      false,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getSell(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <FormattedMessage {...messages.Sell}>
