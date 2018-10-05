@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus, no-unneeded-ternary, default-case, no-fallthrough, no-console */
 import fs from 'fs';
 import iconv from 'iconv-lite';
+import { deCryptByPath } from '../utils/edf';
 
 export default class Reader {
   constructor({ path, completedBuffer, fileBuffer, needDecrypt }) {
@@ -255,8 +256,10 @@ export default class Reader {
     }
 
     if (/^.+\.edf$/i.test(this.path) || this.needDecrypt) {
-      console.error('decrypt need');
-      // TODO: decrypt & return
+      return deCryptByPath(this.path).then(buf => {
+        this.completedBuffer = buf;
+        return this.completedBuffer;
+      });
     }
 
     return this.loadFileBuffer().then(buffer => {
