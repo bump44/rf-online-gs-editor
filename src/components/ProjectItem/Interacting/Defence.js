@@ -9,10 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { getDefFc } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefence extends React.PureComponent {
@@ -27,26 +24,7 @@ class ProjectItemInteractingDefence extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className, size } = this.props;
-
-    const nextValue = itemNextValues.getIn(
-      [
-        ['nextValue', 'server', 'nDefFc'],
-        ['nextValue', 'server', 'fDefFc'], // because server store defence value as a float type but value must be used integer
-      ].find(fieldSets => itemNextValues.getIn(fieldSets) !== undefined) || [
-        'nextValue',
-        'server',
-        'nDefFc',
-      ],
-    );
-
-    const currValue = item.getIn(
-      [['server', 'nDefFc'], ['server', 'fDefFc'], ['client', 'nDefFc']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nDefFc'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getDefFc(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <Input
