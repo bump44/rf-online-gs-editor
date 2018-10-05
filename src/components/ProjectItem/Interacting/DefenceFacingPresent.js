@@ -14,10 +14,11 @@ import {
   getDefenceFacingPresentValue,
   getDefenctFacingUnpresentValue,
 } from '../../../utils/converters';
-// import styled from 'styled-components';
 
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import {
+  getDefGap,
+  getDefFacing,
+} from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefenceFacingPresent extends React.PureComponent {
@@ -38,37 +39,16 @@ class ProjectItemInteractingDefenceFacingPresent extends React.PureComponent {
 
   getDefGap() {
     const { item, itemNextValues } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'fDefGap']);
-
-    const currValue = item.getIn(
-      [['server', 'fDefGap'], ['client', 'fDefGap']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'fDefGap'],
-      0.5,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-    return value;
+    return getDefGap(itemNextValues.get('nextValue'), { entry: item });
   }
 
   render() {
     const { item, itemNextValues, size, className } = this.props;
 
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'fDefFacing',
-    ]);
+    const value = getDefFacing(itemNextValues.get('nextValue'), {
+      entry: item,
+    });
 
-    const currValue = item.getIn(
-      [['server', 'fDefFacing'], ['client', 'fDefFacing']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'fDefFacing'],
-      1,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
     const present = getDefenceFacingPresentValue({
       defFacing: value,
       defGap: this.getDefGap(),
