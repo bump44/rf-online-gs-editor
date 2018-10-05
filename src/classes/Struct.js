@@ -138,6 +138,10 @@ class Struct {
   toSchema() {
     return this.fields.map(field => field.toSchema());
   }
+
+  isDynamic() {
+    return this.fields.some(field => field.isDynamic());
+  }
 }
 
 export default Struct;

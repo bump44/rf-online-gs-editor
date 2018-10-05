@@ -9,6 +9,11 @@ class Field {
     this.as = as;
     this.schemaProps = schemaProps || {};
     this.writerProps = writerProps || {};
+    this.dynamic = typeof this.len === 'function';
+  }
+
+  isDynamic() {
+    return this.dynamic;
   }
 
   getAs() {
@@ -23,8 +28,8 @@ class Field {
     return this.type;
   }
 
-  getLen() {
-    return this.len;
+  getLen(values = {}) {
+    return typeof this.len === 'function' ? this.len(values) : this.len;
   }
 
   getWriterProps() {
@@ -35,11 +40,11 @@ class Field {
     return get(this.getWriterProps(), key, returnDefault);
   }
 
-  getWeight() {
+  getWeight(values = {}) {
     switch (this.getType()) {
       case Boolean:
       case Number:
-        switch (this.getLen()) {
+        switch (this.getLen(values)) {
           case 8:
             return 1;
           case 16:
@@ -52,7 +57,7 @@ class Field {
       case String:
         switch (this.getAs()) {
           case 'hex':
-            switch (this.getLen()) {
+            switch (this.getLen(values)) {
               case 8:
                 return 1;
               case 16:
@@ -61,7 +66,7 @@ class Field {
                 return 4;
             }
           default:
-            return this.getLen();
+            return this.getLen(values);
         }
     }
 

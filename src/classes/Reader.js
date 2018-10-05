@@ -110,7 +110,7 @@ export default class Reader {
     return buffer.readDoubleLE(offset, !!props.noAssert);
   }
 
-  getByField(field, stepProps = {}) {
+  getByField(field, stepProps = {}, values = {}) {
     const props = { ...stepProps };
     const offset = props.offset === undefined ? this.offset : props.offset;
     const increaseOffsetAndReturnValue = (offsetValue, returnValue) => {
@@ -154,7 +154,7 @@ export default class Reader {
             }
         }
       case String:
-        switch (field.getLen()) {
+        switch (field.getLen(values)) {
           case 32:
             if (field.getAs() === 'hex') {
               return increaseOffsetAndReturnValue(
@@ -168,7 +168,7 @@ export default class Reader {
               this.getString(offset, {
                 iconv: 'win1251',
                 ...props.readProps,
-                len: field.getLen(),
+                len: field.getLen(values),
               }),
             );
         }

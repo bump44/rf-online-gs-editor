@@ -1,7 +1,13 @@
 import Promise from 'bluebird';
 import { forEach, map } from 'lodash';
 import Reader from './Reader';
-import { COUNT, OFFSET, BLOCK_SIZE, TOTAL_SIZE } from './constants';
+import {
+  COUNT,
+  OFFSET,
+  BLOCK_SIZE,
+  TOTAL_SIZE,
+  COUNT_COLUMNS,
+} from './constants';
 
 export default class FileReader {
   constructor({ name, path, struct = [] }) {
@@ -36,8 +42,16 @@ export default class FileReader {
     // clean offset step
     this.reader.cleanOffset();
 
+    let globDynamic = false;
+    let dynamicOffset = 0;
+    let lastStaticOffset = 0;
+
     forEach(this.struct, (struct, index) => {
       const typeHeader = headers[index];
+      const isDynamic = struct.block.isDynamic();
+      if (isDynamic) {
+        globDynamic = true;
+      }
 
       if (typeHeader === undefined) {
         throw new Error(`Header for object type ${struct.type} not parsed!`);
@@ -59,12 +73,17 @@ export default class FileReader {
         0,
       );
 
-      if (header[COUNT] > 120000) {
+      if (!globDynamic) {
+        lastStaticOffset = header[OFFSET] + header[TOTAL_SIZE] + headerWeight;
+      }
+
+      if (header[COUNT] > 120000 || header[COUNT] < 0) {
         throw new Error(`Header count value: ${header[COUNT]}`);
       }
 
-      if (struct.block.getWeight() !== header[BLOCK_SIZE]) {
-        console.warn( // eslint-disable-line
+      if (!globDynamic && struct.block.getWeight() !== header[BLOCK_SIZE]) {
+        // eslint-disable-next-line
+        console.warn(
           `The structure '${struct.type}' probably contains an error!`,
           'Header block size not equal fields weight.',
           {
@@ -79,9 +98,10 @@ export default class FileReader {
           return [];
         }
 
-        return map(Array.from(Array(header[COUNT])), (empty, arrayIndex) => {
+        const staticReader = (_, arrayIndex) => {
           const baseOffset = header[OFFSET] + headerWeight;
           const blockOffset = arrayIndex * header[BLOCK_SIZE];
+
           let blockReader;
 
           try {
@@ -102,7 +122,11 @@ export default class FileReader {
 
           forEach(struct.block.getFields(), field => {
             try {
-              values[field.getName()] = blockReader.getByField(field);
+              values[field.getName()] = blockReader.getByField(
+                field,
+                undefined,
+                values,
+              );
             } catch (err) {
               throw new Error(
                 `Could not read block value ${
@@ -114,7 +138,43 @@ export default class FileReader {
 
           values.arrayIndex = arrayIndex;
           return values;
-        });
+        };
+
+        const dynamicReader = (_, arrayIndex) => {
+          const values = {};
+          forEach(struct.block.getFields(), field => {
+            values[field.getName()] = this.reader.getByField(
+              field,
+              {
+                offset: lastStaticOffset + dynamicOffset,
+              },
+              values,
+            );
+
+            dynamicOffset += field.getWeight(values);
+          });
+
+          return { ...values, arrayIndex };
+        };
+
+        if (globDynamic) {
+          let count = 0;
+          forEach(struct.header, field => {
+            const value = this.reader.getByField(field, {
+              offset: lastStaticOffset + dynamicOffset,
+            });
+
+            if (field.getName() === COUNT) {
+              count = value;
+            }
+
+            dynamicOffset += field.getWeight();
+          });
+
+          return map(Array.from(Array(count)), dynamicReader);
+        }
+
+        return map(Array.from(Array(header[COUNT])), staticReader);
       };
 
       const blocks = getBlocks();
@@ -140,11 +200,29 @@ export default class FileReader {
     // clean offset step
     this.reader.cleanOffset();
 
+    let globDynamic = false;
     let autoNOffset = 0;
 
     forEach(this.struct, struct => {
-      const header = {};
+      if (globDynamic || struct.block.isDynamic()) {
+        globDynamic = true;
 
+        // we cannot count because some of the values are formed sequentially
+        results.push({
+          type: struct.type,
+          header: {
+            [COUNT]: 0,
+            [OFFSET]: 0,
+            [BLOCK_SIZE]: 0,
+            [TOTAL_SIZE]: 0,
+            [COUNT_COLUMNS]: 0,
+          },
+        });
+
+        return;
+      }
+
+      const header = {};
       let headerSize = 0;
 
       forEach(struct.header, field => {
@@ -159,7 +237,15 @@ export default class FileReader {
         });
       }
 
-      if (header[TOTAL_SIZE] === undefined) {
+      if (header[BLOCK_SIZE] === undefined) {
+        header[BLOCK_SIZE] = struct.block.getWeight();
+      }
+
+      if (
+        header[TOTAL_SIZE] === undefined &&
+        header[COUNT] !== undefined &&
+        header[BLOCK_SIZE] !== undefined
+      ) {
         header[TOTAL_SIZE] = header[COUNT] * header[BLOCK_SIZE];
       }
 
@@ -167,15 +253,10 @@ export default class FileReader {
         header[OFFSET] = autoNOffset; // auto-calc offset
       }
 
-      autoNOffset += header[TOTAL_SIZE] + headerSize;
+      autoNOffset +=
+        (header[TOTAL_SIZE] !== undefined ? header[TOTAL_SIZE] : 0) +
+        headerSize;
 
-      // header weights
-      // const headerWeight = struct.header.reduce((accumulator, field) => {
-      //   return accumulator + field.getWeight();
-      // }, 0);
-
-      // this.reader.increaseOffset(headerWeight);
-      // this.reader.increaseOffset(header[TOTAL_SIZE]);
       this.reader.increaseOffset(header[COUNT] * header[BLOCK_SIZE]);
 
       results.push({
