@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
 import { Map } from 'immutable';
 import { Input } from 'semantic-ui-react';
+import { getSubType } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingSubType extends React.PureComponent {
@@ -23,17 +24,7 @@ class ProjectItemInteractingSubType extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, size, className } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nSubType']);
-
-    const currValue = item.getIn(
-      [['server', 'nSubType'], ['client', 'nSubType']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nSubType'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getSubType(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <Input
