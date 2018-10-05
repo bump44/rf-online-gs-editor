@@ -15,6 +15,11 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
+import {
+  getItemGrade,
+  getItemGradeType,
+} from '../../../containers/App/getters/projectItem';
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingItemGrade extends React.PureComponent {
   constructor(props) {
@@ -28,22 +33,15 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, types, className } = this.props;
+    const value = getItemGrade(itemNextValues.get('nextValue'), {
+      entry: item,
+    });
 
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'nItemGrade',
-    ]);
+    const type = getItemGradeType(itemNextValues.get('nextValue'), {
+      entry: item,
+      itemGrades: types,
+    });
 
-    const currValue = item.getIn(
-      [['server', 'nItemGrade'], ['client', 'nItemGrade']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nItemGrade'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-    const type = types.find(val => val.get('value') === value);
     const isUnknown = !type;
 
     return (
