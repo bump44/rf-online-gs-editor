@@ -10,9 +10,14 @@ import { parseInt, concat } from 'lodash';
 import { Map, List } from 'immutable';
 import styled from 'styled-components';
 import { Input, Button, Popup, Label } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+
+import {
+  getStoragePrice,
+  getMoneyValueByMoneyType,
+  getMoneyType,
+} from '../../../containers/App/getters/projectItem';
 
 const PERCENTS = [1, 3, 5, 9, 15, 25, 50, 75];
 
@@ -71,68 +76,24 @@ class ProjectItemInteractingStoragePrice extends React.PureComponent {
 
   getStoragePrice() {
     const { item, itemNextValues } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'nStoragePrice',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'nStoragePrice'], ['client', 'nStoragePrice']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nStoragePrice'],
-      0,
-    );
-
-    return parseInt(nextValue !== undefined ? nextValue : currValue) || 0;
+    return getStoragePrice(itemNextValues.get('nextValue'), { entry: item });
   }
 
   getMoneyValue(type) {
-    if (!type) {
-      return 0;
-    }
-
     const { item, itemNextValues } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      type.get('fieldName'),
-    ]);
-
-    const currValue = item.getIn(
-      [
-        ['server', type.get('fieldName')],
-        ['client', type.get('fieldName')],
-      ].find(fieldSets => item.getIn(fieldSets) !== undefined) || [
-        'server',
-        type.get('fieldName'),
-      ],
-      0,
+    return getMoneyValueByMoneyType(
+      itemNextValues.get('nextValue'),
+      { entry: item },
+      { moneyType: type },
     );
-
-    const value =
-      parseInt(nextValue !== undefined ? nextValue : currValue) || 0;
-
-    return value;
   }
 
   getMoneyType() {
     const { item, itemNextValues, types } = this.props;
-
-    // money type
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
-
-    const currValue = item.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nMoney'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-    return types.find(val => val.get('value') === value);
+    return getMoneyType(itemNextValues.get('nextValue'), {
+      entry: item,
+      moneyTypes: types,
+    });
   }
 
   renderPercentNumber(percent) {
