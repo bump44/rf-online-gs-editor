@@ -9,10 +9,7 @@ import PropTypes from 'prop-types';
 import { isFinite } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { getDefGap } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefenceGap extends React.PureComponent {
@@ -28,17 +25,7 @@ class ProjectItemInteractingDefenceGap extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, size, className } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'fDefGap']);
-
-    const currValue = item.getIn(
-      [['server', 'fDefGap'], ['client', 'fDefGap']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'fDefGap'],
-      0.5,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getDefGap(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <Input
