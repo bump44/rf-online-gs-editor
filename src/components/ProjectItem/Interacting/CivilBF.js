@@ -11,6 +11,7 @@ import { Checkbox } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getCivilBF } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingCivilBF extends React.PureComponent {
@@ -25,17 +26,7 @@ class ProjectItemInteractingCivilBF extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'civil_bf']);
-
-    const currValue = item.getIn(
-      [['server', 'civil_bf'], ['client', 'civil_bf']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'civil_bf'],
-      false,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getCivilBF(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <FormattedMessage {...messages.CivilBF}>
