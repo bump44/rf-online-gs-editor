@@ -8,10 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getExchange } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingExchange extends React.PureComponent {
@@ -26,21 +25,7 @@ class ProjectItemInteractingExchange extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'bExchange',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'bExchange'], ['client', 'bExchange']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bExchange'],
-      false,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getExchange(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <FormattedMessage {...messages.Exchange}>
