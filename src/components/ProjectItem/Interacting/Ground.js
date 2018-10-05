@@ -8,10 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getGround } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingGround extends React.PureComponent {
@@ -26,17 +25,7 @@ class ProjectItemInteractingGround extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className } = this.props;
-
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'bGround']);
-
-    const currValue = item.getIn(
-      [['server', 'bGround'], ['client', 'bGround']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bGround'],
-      false,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getGround(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <FormattedMessage {...messages.Ground}>
