@@ -10,9 +10,9 @@ import { parseInt, isNumber } from 'lodash';
 import { Map, List } from 'immutable';
 import { Dropdown as DropdownUI } from 'semantic-ui-react';
 import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getWP, getWPType } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingWPType extends React.PureComponent {
@@ -28,17 +28,12 @@ class ProjectItemInteractingWPType extends React.PureComponent {
   render() {
     const { item, itemNextValues, types, className } = this.props;
 
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nWPType']);
+    const value = getWP(itemNextValues.get('nextValue'), { entry: item });
+    const type = getWPType(itemNextValues.get('nextValue'), {
+      entry: item,
+      weaponTypes: types,
+    });
 
-    const currValue = item.getIn(
-      [['server', 'nWPType'], ['client', 'nWPType']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nWPType'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-    const type = types.find(val => val.get('value') === value);
     const isUnknown = !type;
 
     return (
