@@ -8,10 +8,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import { getStoragePossible } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingStoragePossible extends React.PureComponent {
@@ -26,21 +25,9 @@ class ProjectItemInteractingStoragePossible extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'bStoragePossible',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'bStoragePossible'], ['client', 'bStoragePossible']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'bStoragePossible'],
-      false,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getStoragePossible(itemNextValues.get('nextValue'), {
+      entry: item,
+    });
 
     return (
       <FormattedMessage {...messages.StoragePossible}>
