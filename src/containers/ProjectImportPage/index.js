@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { map, forEach, some } from 'lodash';
 import styled from 'styled-components';
 import cx from 'classnames';
+import path from 'path';
+import { statSync } from 'fs';
 import { remote } from 'electron';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
@@ -40,7 +42,13 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { changeId, changeImportType } from './actions';
-import { CLIENT_FILES, FILES, SERVER_FILES } from '../../utils/gameFiles';
+
+import {
+  CLIENT_FILES,
+  FILES,
+  SERVER_FILES,
+  CLIENT_ND_FILES,
+} from '../../utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
@@ -87,6 +95,8 @@ export class ProjectImportPage extends React.Component {
     this.onClickCancelAll = this.onClickCancelAll.bind(this);
     this.isSomeStarted = this.isSomeStarted.bind(this);
     this.isSomeReadyToStart = this.isSomeReadyToStart.bind(this);
+    this.onClickSelectClientFolder = this.onClickSelectClientFolder.bind(this);
+    this.onClickSelectServerFolder = this.onClickSelectServerFolder.bind(this);
   }
 
   componentWillMount() {
@@ -107,6 +117,52 @@ export class ProjectImportPage extends React.Component {
     if (id !== nextId) {
       props.fnChangeId(nextId);
     }
+  }
+
+  onClickSelectClientFolder() {
+    const { fnProjectsImportsChangeFilePropValue } = this.props;
+
+    remote.dialog.showOpenDialog(
+      {
+        properties: ['openDirectory'],
+      },
+      dirs => {
+        try {
+          const [dir] = dirs;
+          if (statSync(path.resolve(dir, 'datatable'))) {
+            forEach(CLIENT_FILES, (file, fileKey) => {
+              const fileActions = fnProjectsImportsChangeFilePropValue[fileKey];
+              fileActions.changeFilePath(path.resolve(dir, file.path));
+            });
+          }
+        } catch (err) {
+          // ignore
+        }
+      },
+    );
+  }
+
+  onClickSelectServerFolder() {
+    const { fnProjectsImportsChangeFilePropValue } = this.props;
+
+    remote.dialog.showOpenDialog(
+      {
+        properties: ['openDirectory'],
+      },
+      dirs => {
+        try {
+          const [dir] = dirs;
+          if (statSync(path.resolve(dir, 'script'))) {
+            forEach(SERVER_FILES, (file, fileKey) => {
+              const fileActions = fnProjectsImportsChangeFilePropValue[fileKey];
+              fileActions.changeFilePath(path.resolve(dir, file.path));
+            });
+          }
+        } catch (err) {
+          // ignore
+        }
+      },
+    );
   }
 
   onClickSelectFilePath(fileKey) {
@@ -464,10 +520,21 @@ export class ProjectImportPage extends React.Component {
                         <PageHeader>
                           <FormattedMessage {...messages.ClientFiles} />
                         </PageHeader>
-
+                        <Button
+                          size="mini"
+                          onClick={this.onClickSelectClientFolder}
+                        >
+                          <FormattedMessage {...messages.SelectFolder} />
+                        </Button>
                         <SegmentComments>
                           <Comment.Group>
                             {this.renderFiles(CLIENT_FILES)}
+                          </Comment.Group>
+                        </SegmentComments>
+
+                        <SegmentComments>
+                          <Comment.Group>
+                            {this.renderFiles(CLIENT_ND_FILES)}
                           </Comment.Group>
                         </SegmentComments>
                       </Grid.Column>
@@ -475,6 +542,12 @@ export class ProjectImportPage extends React.Component {
                         <PageHeader>
                           <FormattedMessage {...messages.ServerFiles} />
                         </PageHeader>
+                        <Button
+                          size="mini"
+                          onClick={this.onClickSelectServerFolder}
+                        >
+                          <FormattedMessage {...messages.SelectFolder} />
+                        </Button>
                         <SegmentComments>
                           <Comment.Group>
                             {this.renderFiles(SERVER_FILES)}

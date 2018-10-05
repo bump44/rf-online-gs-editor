@@ -11,6 +11,10 @@ export default defineMessages({
     id: 'app.containers.ProjectImportPage.header',
     defaultMessage: '{title} imports',
   },
+  SelectFolder: {
+    id: 'app.containers.ProjectImportPage.SelectFolder',
+    defaultMessage: 'Select Folder',
+  },
   clientHelpMessage: {
     id: 'app.containers.ProjectImportPage.clientHelpMessage',
     defaultMessage: 'Select files to import. Supported edf & dat formats.',
