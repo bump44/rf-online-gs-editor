@@ -9,10 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { getProcPoint } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingProcPoint extends React.PureComponent {
@@ -28,22 +25,9 @@ class ProjectItemInteractingProcPoint extends React.PureComponent {
   render() {
     const { item, itemNextValues, size, className, label } = this.props;
 
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'nProcPoint',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'nProcPoint'], ['client', 'nProcPoint']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nProcPoint'],
-      0,
-    );
-
-    const value = (
-      parseInt(nextValue !== undefined ? nextValue : currValue) || 0
-    ).toLocaleString();
+    const value = getProcPoint(itemNextValues.get('nextValue'), {
+      entry: item,
+    }).toLocaleString();
 
     return (
       <Input
