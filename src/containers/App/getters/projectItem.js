@@ -2,7 +2,15 @@
  * Getting data on more important item fields
  */
 
-import { max, parseInt, isNumber, isBoolean, isInteger } from 'lodash';
+import {
+  max,
+  parseInt,
+  isNumber,
+  isBoolean,
+  isInteger,
+  isString,
+} from 'lodash';
+
 import { isNullOrUndefined } from 'util';
 import { getFiniteByTypeName } from '../../../structs/item_types_utils';
 import { getValue } from './nextValue';
@@ -21,33 +29,42 @@ import {
  * @returns String
  */
 export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.getIn(
-    ['clientNd', 'strName'],
-    entry.getIn(
-      [
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [
         ['priorStrName'],
         ['clientNd', 'strName'],
         ['client', 'strName'],
-        ['serverStr', 'strNameEN'],
+        ['serverStr', 'strNameEN'], // FIXME: locale
         ['serverStr', 'strNameGLOBAL'],
         ['server', 'strName'],
-      ].find(fieldSets => !isNullOrUndefined(entry.getIn(fieldSets))) ||
-        'priorStrName',
-    ),
-  ) || '';
+      ],
+      def: '',
+      fnc: isString,
+    },
+  );
 
+/**
+ * Return money (number-type)
+ * @param {Object} nextValue next item values
+ * @param {Object} props entry: the first thing we got from the server
+ *
+ * @returns Number
+ */
 export const getMoney = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
 ) =>
-  nextValue.getIn(
-    ['server', 'nMoney'],
-    entry.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['server', 'nMoney'],
-      0,
-    ),
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nMoney'], ['client', 'nMoney']],
+      def: 0,
+      fnc: isInteger,
+    },
   );
 
 /**
