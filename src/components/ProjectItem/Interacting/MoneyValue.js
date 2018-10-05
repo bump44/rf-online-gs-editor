@@ -7,16 +7,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
 
 import StdPrice from './StdPrice';
 import StdPoint from './StdPoint';
 import GoldPoint from './GoldPoint';
 import ProcPoint from './ProcPoint';
 import KillPoint from './KillPoint';
+
+import { getMoneyType } from '../../../containers/App/getters/projectItem';
 
 const InteractingComponents = {
   nStdPrice: StdPrice,
@@ -52,18 +50,11 @@ class ProjectItemInteractingMoneyValue extends React.PureComponent {
     };
 
     // money type
-    const nextValue = itemNextValues.getIn(['nextValue', 'server', 'nMoney']);
+    const type = getMoneyType(itemNextValues.get('nextValue'), {
+      entry: item,
+      moneyTypes: types,
+    });
 
-    const currValue = item.getIn(
-      [['server', 'nMoney'], ['client', 'nMoney']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nMoney'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
-
-    const type = types.find(val => val.get('value') === value);
     const isUnknown = !type;
 
     if (isUnknown) {
