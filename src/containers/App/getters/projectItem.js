@@ -2,15 +2,16 @@
  * Getting data on more important item fields
  */
 
-import { max, parseInt, isNumber } from 'lodash';
+import { max, parseInt, isNumber, isBoolean, isInteger } from 'lodash';
 import { isNullOrUndefined } from 'util';
+import { getFiniteByTypeName } from '../../../structs/item_types_utils';
+import { getValue } from './nextValue';
 
 import {
   DEFAULT_STORAGE_PRICE_PERCENT,
   IMMUTABLE_MAP,
   IMMUTABLE_LIST,
 } from '../constants';
-import { getFiniteByTypeName } from '../../../structs/item_types_utils';
 
 /**
  * Return the most important title of the subject
@@ -263,11 +264,315 @@ export const getCivilA = (
   !!nextValue.getIn(
     ['server', 'civil_a'],
     entry.getIn(
-      [['server', 'civil_a'], ['client', 'civil_a']].find(
-        fieldSets => entry.getIn(fieldSets) !== undefined,
+      [['server', 'civil_a'], ['client', 'civil_a']].find(fieldSets =>
+        isBoolean(entry.getIn(fieldSets)),
       ) || ['server', 'civil_a'],
     ),
   );
+
+export const getCivilBM = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  !!nextValue.getIn(
+    ['server', 'civil_bm'],
+    entry.getIn(
+      [['server', 'civil_bm'], ['client', 'civil_bm']].find(fieldSets =>
+        isBoolean(entry.getIn(fieldSets)),
+      ) || ['server', 'civil_bm'],
+    ),
+  );
+
+export const getCivilBF = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  !!nextValue.getIn(
+    ['server', 'civil_bf'],
+    entry.getIn(
+      [['server', 'civil_bf'], ['client', 'civil_bf']].find(fieldSets =>
+        isBoolean(entry.getIn(fieldSets)),
+      ) || ['server', 'civil_bf'],
+    ),
+  );
+
+export const getCivilCM = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  !!nextValue.getIn(
+    ['server', 'civil_cm'],
+    entry.getIn(
+      [['server', 'civil_cm'], ['client', 'civil_cm']].find(fieldSets =>
+        isBoolean(entry.getIn(fieldSets)),
+      ) || ['server', 'civil_cm'],
+    ),
+  );
+
+export const getCivilCF = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  !!nextValue.getIn(
+    ['server', 'civil_cf'],
+    entry.getIn(
+      [['server', 'civil_cf'], ['client', 'civil_cf']].find(fieldSets =>
+        isBoolean(entry.getIn(fieldSets)),
+      ) || ['server', 'civil_cf'],
+    ),
+  );
+
+export const getDefFc = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [
+        ['server', 'nDefFc'],
+        ['server', 'fDefFc'],
+        ['client', 'nDefFc'],
+      ],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
+
+export const getDefFacing = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'fDefFacing'], ['client', 'fDefFacing']],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
+
+export const getDefGap = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'fDefGap'], ['client', 'fDefGap']],
+      def: 0.5,
+      fnc: isNumber,
+    },
+  );
+
+export const getExchange = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'bExchange'], ['client', 'bExchange']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getSell = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'bSell'], ['client', 'bSell']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getGround = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'bGround'], ['client', 'bGround']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getGoldPoint = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nGoldPoint'], ['client', 'nGoldPoint']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getKillPoint = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nKillPoint'], ['client', 'nKillPoint']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getProcPoint = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nProcPoint'], ['client', 'nProcPoint']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getStdPoint = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nStdPoint'], ['client', 'nStdPoint']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getStdPrice = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nStdPrice'], ['client', 'nStdPrice']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getLevel = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nLevelLim'], ['client', 'nLevelLim']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getItemGrade = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nItemGrade'], ['client', 'nItemGrade']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getItemGradeType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, itemGrades = IMMUTABLE_LIST },
+) => {
+  const value = getItemGrade(nextValue, { entry });
+  return itemGrades.find(val => val.get('value') === value);
+};
+
+export const getStoragePossible = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'bStoragePossible'], ['client', 'bStoragePossible']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getSubType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nSubType'], ['client', 'nSubType']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getUpLevel = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nUpLevelLim'], ['client', 'nUpLevelLim']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getWP = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nWPType'], ['client', 'nWPType']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getWPType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, weaponTypes = IMMUTABLE_LIST },
+) => {
+  const value = getWP(nextValue, { entry });
+  return weaponTypes.find(val => val.get('value') === value);
+};
 
 export const getClientCode = (
   nextValue = IMMUTABLE_MAP,
