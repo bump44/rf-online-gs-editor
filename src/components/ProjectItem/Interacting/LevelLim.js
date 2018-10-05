@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
 import { Map } from 'immutable';
 import { Input } from 'semantic-ui-react';
+import { getLevel } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingLevelLim extends React.PureComponent {
@@ -23,21 +24,7 @@ class ProjectItemInteractingLevelLim extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, className, size } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'nLevelLim',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'nLevelLim'], ['client', 'nLevelLim']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'nLevelLim'],
-      0,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getLevel(itemNextValues.get('nextValue'), { entry: item });
 
     return (
       <Input
