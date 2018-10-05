@@ -9,10 +9,7 @@ import PropTypes from 'prop-types';
 import { isFinite } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-// import styled from 'styled-components';
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from '../messages';
+import { getDefFacing } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefenceFacing extends React.PureComponent {
@@ -28,21 +25,9 @@ class ProjectItemInteractingDefenceFacing extends React.PureComponent {
 
   render() {
     const { item, itemNextValues, size, className } = this.props;
-
-    const nextValue = itemNextValues.getIn([
-      'nextValue',
-      'server',
-      'fDefFacing',
-    ]);
-
-    const currValue = item.getIn(
-      [['server', 'fDefFacing'], ['client', 'fDefFacing']].find(
-        fieldSets => item.getIn(fieldSets) !== undefined,
-      ) || ['server', 'fDefFacing'],
-      1,
-    );
-
-    const value = nextValue !== undefined ? nextValue : currValue;
+    const value = getDefFacing(itemNextValues.get('nextValue'), {
+      entry: item,
+    });
 
     return (
       <Input
