@@ -35,7 +35,7 @@ export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     {
       fields: [
         ['priorStrName'],
-        ['clientNd', 'strName'],
+        ['clientND', 'strName'],
         ['client', 'strName'],
         ['serverStr', 'strNameEN'], // FIXME: locale
         ['serverStr', 'strNameGLOBAL'],

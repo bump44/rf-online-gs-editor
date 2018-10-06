@@ -118,7 +118,7 @@ export const ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS =
 export const PROJECT_ITEM_NAME_FIELDS = [
   ['priorStrName'],
   ['client', 'strName'],
-  ['clientNd', 'strName'],
+  ['clientND', 'strName'],
   ['server', 'strName'],
   ['serverStr', 'strNameGLOBAL'],
   ['serverStr', 'strNameRU'],
