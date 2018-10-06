@@ -35,11 +35,13 @@ import clientStoreResolve from './projectImport/clientStoreResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
 import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
+import clientItemNDResolve from './projectImport/clientItemNDResolve';
 
 import apolloClient from '../../../apollo';
 
 const Resolvers = {
   clientItemResolve,
+  clientItemNDResolve,
   clientStoreResolve,
   serverItemResolve,
   serverStoreResolve,

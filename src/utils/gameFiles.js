@@ -24,7 +24,7 @@ export const FILE_TYPES = {
 // Saga resolvers
 export const RESOLVERS = {
   CLIENT_ITEM: 'clientItemResolve',
-  CLIENT_ITEM_ND: 'clientItemND',
+  CLIENT_ITEM_ND: 'clientItemNDResolve',
   CLIENT_STORE: 'clientStoreResolve',
   SERVER_ITEM: 'serverItemResolve',
   SERVER_STORE: 'serverStoreResolve',
