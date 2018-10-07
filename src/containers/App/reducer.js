@@ -24,7 +24,6 @@ import {
   PROJECTS_ENTRIES_FINDER_CHANGE_RESULT_TOTAL,
   PROJECTS_ENTRIES_FINDER_RESET_RESULT,
   PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS,
-  ITEM,
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADING,
   PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE,
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR,
@@ -160,7 +159,7 @@ function appReducer(state = initialState, action) {
     case PROJECTS_ENTRIES_FINDER_RESET_RESULT:
       return state.setIn(
         ['projectsEntriesFinder', action.projectId, action.subType, 'result'],
-        PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS[ITEM].get('result'),
+        PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS[action.subType].get('result'),
       );
     case PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH:
       return state.setIn(
