@@ -4,6 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import ClientItemNDReader from '../../../../structs/client/itemnd/reader';
 import apolloClient from '../../../../apollo';
 import projectItemImportClientNDMutation from '../../../../apollo/mutations/project_item_import_client_nd';
+import projectItemClientNDDescriptionImportBlocksMutation from '../../../../apollo/mutations/project_item_client_nd_description_import_blocks';
 import { announceProjectCountItems } from '../../actions';
 import { BLOCK_SIZE } from '../../../../classes/constants';
 
@@ -42,7 +43,9 @@ export default function* defaultSaga({
     let t = 0;
     while (chunks.length > t) {
       const result = yield apolloClient.mutate({
-        mutation: !isDescription ? projectItemImportClientNDMutation : null,
+        mutation: !isDescription
+          ? projectItemImportClientNDMutation
+          : projectItemClientNDDescriptionImportBlocksMutation,
         variables: {
           projectId,
           type: !isDescription
@@ -53,12 +56,14 @@ export default function* defaultSaga({
         },
       });
 
-      yield put(
-        announceProjectCountItems({
-          count: result.data.projectItemImportClientND.total,
-          id: projectId,
-        }),
-      );
+      if (!isDescription) {
+        yield put(
+          announceProjectCountItems({
+            count: result.data.projectItemImportClientND.total,
+            id: projectId,
+          }),
+        );
+      }
 
       countCompleted += chunks[t].length;
       yield put(actions.changeCountCompleted(countCompleted));
