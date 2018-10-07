@@ -6,7 +6,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -124,10 +123,12 @@ export class ProjectItemPage extends React.PureComponent {
 
     const projectNextValues = projectsNextValues.getIn(
       [currentProject.get('id'), currentProjectItem.get('id'), 'nextValue'],
-      Map({}),
+      IMMUTABLE_MAP,
     );
 
-    return projectItem.getName(projectNextValues, { item: currentProjectItem });
+    return projectItem.getName(projectNextValues, {
+      entry: currentProjectItem,
+    });
   }
 
   render() {
