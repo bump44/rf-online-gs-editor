@@ -4,6 +4,7 @@ import {
   CHANGE_CURRENT_USER_TOKEN,
   LOGOUT_CURRENT_USER,
   PROJECTS_IMPORTS_CHANGE_PROP_VALUE,
+  PROJECTS_EXPORTS_CHANGE_PROP_VALUE,
   PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
   PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING,
@@ -62,6 +63,22 @@ export const initialState = fromJS({
    *  }
    */
   projectsImports: {},
+
+  /**
+   * Projects Exports Operations
+   * {
+   *  [project.id]: {
+   *    [fileKey]: {
+   *      fileKey: '',
+   *      status: WAITING/PROCESSING/FINISHED/ERROR/CANCELLED,
+   *      errorMessage: '',
+   *      loaded: 0,
+   *      total: 0,
+   *    }
+   *  }
+   * }
+   */
+  projectsExports: {},
 
   /**
    * Projects Next Values Operations
@@ -294,6 +311,8 @@ function appReducer(state = initialState, action) {
             Map({}),
           ),
         );
+
+    // PROJECTS_IMPORTS
     case PROJECTS_IMPORTS_CHANGE_PROP_VALUE:
       return state
         .setIn(
@@ -308,6 +327,23 @@ function appReducer(state = initialState, action) {
           ['projectsImports', action.projectId, action.fileKey, 'fileKey'],
           action.fileKey,
         );
+
+    // PROJECTS_EXPORTS
+    case PROJECTS_EXPORTS_CHANGE_PROP_VALUE:
+      return state
+        .setIn(
+          ['projectsExports', action.projectId, action.fileKey, action.propKey],
+          action.propValue,
+        )
+        .setIn(
+          ['projectsExports', action.projectId, action.fileKey, 'projectId'],
+          action.projectId,
+        )
+        .setIn(
+          ['projectsExports', action.projectId, action.fileKey, 'fileKey'],
+          action.fileKey,
+        );
+
     case CHANGE_CURRENT_USER:
       return state
         .set('currentUser', fromJS(action.user))

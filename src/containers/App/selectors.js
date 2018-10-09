@@ -20,6 +20,11 @@ const makeSelectProjectsImports = () =>
     globalState.get('projectsImports'),
   );
 
+const makeSelectProjectsExports = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('projectsExports'),
+  );
+
 const makeSelectLocalSettings = () =>
   createSelector(selectGlobal, globalState =>
     initialState.get('localSettings').merge(globalState.get('localSettings')),
@@ -145,6 +150,7 @@ export {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsImports,
+  makeSelectProjectsExports,
   makeSelectProjectsImportsIsProcessing,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,

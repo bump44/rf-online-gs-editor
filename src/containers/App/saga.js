@@ -1,12 +1,14 @@
 import { all, fork } from 'redux-saga/effects';
 import projectImportSaga from './sagas/projectImportSaga';
+import projectExportSaga from './sagas/projectExportSaga';
 import projectNextValueSaga from './sagas/projectNextValueSaga';
-import projectEntriesFinder from './sagas/projectEntriesFinder';
+import projectEntriesFinderSaga from './sagas/projectEntriesFinderSaga';
 
 export default function* defaultSaga() {
   yield all([
     fork(projectImportSaga),
+    fork(projectExportSaga),
     fork(projectNextValueSaga),
-    fork(projectEntriesFinder),
+    fork(projectEntriesFinderSaga),
   ]);
 }
