@@ -59,7 +59,6 @@ import {
   FINISHED,
   ERROR,
   CANCELLED,
-  LOADING,
 } from '../App/constants';
 
 import Header from '../../components/Header';
@@ -149,7 +148,6 @@ export class ProjectExportPage extends React.Component {
                 horizontal
                 color={cx({
                   teal: fileStatus === WAITING,
-                  orange: fileStatus === LOADING,
                   purple: fileStatus === PROCESSING,
                   green: fileStatus === FINISHED,
                   red: fileStatus === ERROR,
@@ -161,15 +159,13 @@ export class ProjectExportPage extends React.Component {
               {file.title || file.path}
             </Comment.Author>
 
-            <Comment.Text>
-              <code>123</code>
-            </Comment.Text>
             {fileStatus === ERROR && (
               <Comment.Text>
                 <Notification type="danger">{fileErrorMessage}</Notification>
               </Comment.Text>
             )}
-            {fileStatus === LOADING && (
+            <Comment.Text />
+            {fileStatus === PROCESSING && (
               <Comment.Text>
                 <Progress size="tiny" percent={percent} indicating>
                   {percent}%
@@ -177,11 +173,6 @@ export class ProjectExportPage extends React.Component {
               </Comment.Text>
             )}
             <Comment.Actions>
-              <Comment.Action>
-                <Icon name="hand pointer" />
-                action
-              </Comment.Action>
-
               <Comment.Action onClick={onClickStart}>
                 <Icon
                   name={cx({
@@ -191,8 +182,12 @@ export class ProjectExportPage extends React.Component {
                     times: fileStatus === PROCESSING,
                   })}
                 />
-                {![LOADING, PROCESSING].includes(fileStatus) && 'Start'}
-                {[LOADING, PROCESSING].includes(fileStatus) && 'Cancel'}
+                {fileStatus !== PROCESSING && (
+                  <FormattedMessage {...messages.Start} />
+                )}
+                {fileStatus === PROCESSING && (
+                  <FormattedMessage {...messages.Cancel} />
+                )}
               </Comment.Action>
             </Comment.Actions>
           </Comment.Content>

@@ -11,4 +11,12 @@ export default defineMessages({
     id: 'app.containers.ProjectExportPage.header',
     defaultMessage: 'This is ProjectExportPage container !',
   },
+  Start: {
+    id: 'app.containers.ProjectExportPage.Start',
+    defaultMessage: 'Start',
+  },
+  Cancel: {
+    id: 'app.containers.ProjectExportPage.Cancel',
+    defaultMessage: 'Cancel',
+  },
 });
