@@ -13,7 +13,7 @@ export default class ServerItemShoeReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: SHOE,
     header: defaultHeader,

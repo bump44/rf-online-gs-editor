@@ -13,7 +13,7 @@ export default class ServerItemBatteryReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: BATTERY,
     header: defaultHeader,

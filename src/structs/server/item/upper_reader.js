@@ -13,7 +13,7 @@ export default class ServerItemUpperReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: UPPER,
     header: defaultHeader,

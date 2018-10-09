@@ -13,7 +13,7 @@ export default class ServerItemGauntletReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: GAUNTLET,
     header: defaultHeader,

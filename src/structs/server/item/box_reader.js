@@ -13,7 +13,7 @@ export default class ServerItemBoxReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: BOX,
     header: defaultHeader,

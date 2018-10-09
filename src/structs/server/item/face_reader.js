@@ -13,7 +13,7 @@ export default class ServerItemFaceReader extends FileReader {
   }
 }
 
-const struct = [
+export const struct = [
   {
     type: FACE,
     header: defaultHeader,
