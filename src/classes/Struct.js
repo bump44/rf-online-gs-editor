@@ -135,6 +135,10 @@ class Struct {
     return this.fields;
   }
 
+  getFieldNames() {
+    return this.fields.map(field => field.getName());
+  }
+
   toSchema() {
     return this.fields.map(field => field.toSchema());
   }
