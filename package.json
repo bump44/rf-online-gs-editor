@@ -58,33 +58,7 @@
     ]
   },
   "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel",
-          "zip"
-        ]
-      },
-      "electronPackagerConfig": {
-        "packageManager": "yarn",
-        "asar": true,
-        "ignore": [
-          ".vscode",
-          "coverage",
-          "out",
-          "internals"
-        ]
-      },
-      "electronWinstallerConfig": {
-        "name": "rf-online-gs-editor"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "Omashu",
-        "name": "rf-online-gs-editor"
-      }
-    }
+    "forge": "./forge.config.js"
   },
   "dependencies": {
     "apollo-cache-inmemory": "^1.2.9",
@@ -97,6 +71,7 @@
     "electron-compile": "^6.4.3",
     "electron-squirrel-startup": "^1.0.0",
     "fontfaceobserver": "^2.0.13",
+    "fs-extra": "^7.0.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
     "history": "^4.7.2",
@@ -140,6 +115,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.4.1",
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "electron-devtools-installer": "^2.2.4",
