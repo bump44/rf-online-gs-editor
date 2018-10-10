@@ -1,4 +1,4 @@
-import chunk from 'lodash/chunk';
+import { chunk, pull } from 'lodash';
 import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
@@ -10,7 +10,12 @@ import * as ITEM_TYPES from '../../../../structs/item_types';
 const TypeToReader = {};
 
 // generate readers
-Object.values(ITEM_TYPES).forEach(type => {
+pull(
+  Object.values(ITEM_TYPES),
+  ITEM_TYPES.COMBINEDATA,
+  ITEM_TYPES.MAKEDATA,
+  ITEM_TYPES.UNK3,
+).forEach(type => {
   try {
     TypeToReader[
       type
