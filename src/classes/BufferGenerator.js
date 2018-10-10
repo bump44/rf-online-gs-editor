@@ -1,9 +1,7 @@
 /*
   eslint-disable no-plusplus,
-  no-unneeded-ternary,
   default-case,
   no-fallthrough,
-  no-underscore-dangle
 */
 
 import iconv from 'iconv-lite';
@@ -108,6 +106,7 @@ class BufferGenerator {
             return this.addString(value, {
               iconv: 'win1251',
               len: field.getLen(values),
+              ...props,
             });
         }
       case Boolean:
@@ -120,17 +119,6 @@ class BufferGenerator {
             return this.addInt32LE(value ? 1 : 0);
         }
     }
-
-    // eslint-disable-next-line
-    console.error(
-      'Undefined field type!',
-      'Field:',
-      field,
-      'StepProps:',
-      props,
-      'GenProps:',
-      props,
-    );
 
     throw new Error(
       `Undefined field type ${typeof field.getType()}: ${field.getLen(values)}`,
