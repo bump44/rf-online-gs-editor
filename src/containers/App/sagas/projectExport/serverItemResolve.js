@@ -1,3 +1,4 @@
+import path from 'path';
 import gql from 'graphql-tag';
 import { pull } from 'lodash';
 import { delay } from 'redux-saga';
@@ -14,6 +15,9 @@ import * as ITEM_TYPES from '../../../../structs/item_types';
 import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
 import apolloClient from '../../../../apollo';
 import projectItemsTotalQuery from '../../../../apollo/queries/sub/project_items_total';
+import { getReleaseFilesPath } from '../../../../utils/path';
+import { mkdir, writeFile } from '../../../../utils/fs';
+import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
 
 const TypeToReaderStruct = {};
 
@@ -79,14 +83,22 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
 /**
  * Export Server Items Resolver
  */
-export default function* defaultSaga({
-  projectId,
-  // projectExportState,
-  actions,
-  fileData,
-}) {
+export default function* defaultSaga({ projectId, actions, fileData }) {
   yield delay(1000);
   const { type } = fileData.args;
+
+  const parsePath = path.parse(fileData.path);
+  const fileName = parsePath.base;
+  const fileDir = parsePath.dir;
+
+  const releasePath = getReleaseFilesPath(
+    projectId,
+    RELEASE_FILES_SERVER_FOLDER,
+    fileDir,
+  );
+
+  yield mkdir(releasePath);
+
   const readerStruct = TypeToReaderStruct[type];
   const bufferGenerator = new BufferGenerator();
   const total = yield apolloClient.query({
@@ -129,7 +141,7 @@ export default function* defaultSaga({
     const buffers = [];
     objects.forEach(object => {
       const values = {
-        ...object.client,
+        ...object.server,
         nType: getFiniteByTypeName(object.type),
         nIndex: object.nIndex,
       };
@@ -145,7 +157,13 @@ export default function* defaultSaga({
     i += 1;
   }
 
-  return {
-    buffer: bufferGenerator.getBuffer(),
-  };
+  yield writeFile(
+    getReleaseFilesPath(
+      projectId,
+      RELEASE_FILES_SERVER_FOLDER,
+      fileDir,
+      fileName,
+    ),
+    bufferGenerator.getBuffer(),
+  );
 }

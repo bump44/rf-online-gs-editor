@@ -1,3 +1,4 @@
+import path from 'path';
 import gql from 'graphql-tag';
 import { pull } from 'lodash';
 import { delay } from 'redux-saga';
@@ -15,6 +16,13 @@ import readerStruct from '../../../../structs/client/item/reader_struct';
 import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
 import apolloClient from '../../../../apollo';
 import projectItemsTotalQuery from '../../../../apollo/queries/sub/project_items_total';
+import { getReleaseFilesPath } from '../../../../utils/path';
+import { mkdir, writeFile } from '../../../../utils/fs';
+import { enCryptByBuf } from '../../../../utils/edf';
+import {
+  RELEASE_FILES_CLIENT_FOLDER,
+  RELEASE_FILES_CLIENTDAT_FOLDER,
+} from '../../../../utils/constants';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`
@@ -67,13 +75,20 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
 /**
  * Export Client Items Resolver
  */
-export default function* defaultSaga({
-  projectId,
-  // projectExportState,
-  actions,
-}) {
+export default function* defaultSaga({ projectId, actions, fileData }) {
   yield delay(1000);
-  // const state = projectExportState.toJS();
+  const parsePath = path.parse(fileData.path);
+  const fileName = parsePath.name;
+  const fileDir = parsePath.dir;
+
+  yield mkdir(
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
+  );
+
+  yield mkdir(
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
+  );
+
   const bufferGenerator = new BufferGenerator();
   const total = yield apolloClient.query({
     query: projectItemsTotalQuery,
@@ -89,6 +104,7 @@ export default function* defaultSaga({
   while (readerStruct.length > i) {
     const section = readerStruct[i];
     const { header, type, block } = section;
+
     const objects = yield loadObjects({
       type,
       projectId,
@@ -132,6 +148,7 @@ export default function* defaultSaga({
         ...object.client,
         nType: getFiniteByTypeName(object.type),
         nIndex: object.nIndex,
+        nMoney: null,
       };
 
       const buffer = new BufferGenerator();
@@ -146,7 +163,23 @@ export default function* defaultSaga({
     i += 1;
   }
 
-  return {
-    buffer: bufferGenerator.getBuffer(),
-  };
+  yield writeFile(
+    getReleaseFilesPath(
+      projectId,
+      RELEASE_FILES_CLIENTDAT_FOLDER,
+      fileDir,
+      `${fileName}.dat`,
+    ),
+    bufferGenerator.getBuffer(),
+  );
+
+  yield writeFile(
+    getReleaseFilesPath(
+      projectId,
+      RELEASE_FILES_CLIENT_FOLDER,
+      fileDir,
+      `${fileName}.edf`,
+    ),
+    yield enCryptByBuf(bufferGenerator.getBuffer()),
+  );
 }
