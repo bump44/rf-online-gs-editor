@@ -23,10 +23,12 @@ import {
 import { projectsExportsBindActionsWithFileKey } from '../actions';
 import { makeSelectProjectsExports } from '../selectors';
 import { FILES } from '../../../utils/gameFiles';
+import { rmdir, mkdir } from '../../../utils/fs';
 
 import clientItemResolve from './projectExport/clientItemResolve';
 // import clientStoreResolve from './projectExport/clientStoreResolve';
 import serverItemResolve from './projectExport/serverItemResolve';
+import { getReleaseFilesPath } from '../../../utils/path';
 // import serverStoreResolve from './projectExport/serverStoreResolve';
 // import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
 // import clientItemNDResolve from './projectExport/clientItemNDResolve';
@@ -107,6 +109,11 @@ export function* worker({ projectId, fileKey }) {
     if (!resolver) {
       throw new Error('Export file resolver not defined');
     }
+
+    const releasePath = getReleaseFilesPath(projectId);
+
+    yield rmdir(releasePath);
+    yield mkdir(releasePath);
 
     // call resolver
     yield call(resolver, {
