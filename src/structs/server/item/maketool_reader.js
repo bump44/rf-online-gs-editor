@@ -3,11 +3,11 @@ import { MAKETOOL } from '../../item_types';
 import defaultHeader from './default_header';
 import maketoolStruct from './maketool_struct';
 
-export default class ServerItemMakeToolReader extends FileReader {
+export default class ServerItemMaketoolReader extends FileReader {
   constructor(props = {}) {
     super({
       ...props,
-      name: 'ServerItemMakeToolReader',
+      name: 'ServerItemMaketoolReader',
       struct,
     });
   }
