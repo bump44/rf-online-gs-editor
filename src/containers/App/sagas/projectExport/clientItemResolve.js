@@ -17,7 +17,7 @@ import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
 import apolloClient from '../../../../apollo';
 import projectItemsTotalQuery from '../../../../apollo/queries/sub/project_items_total';
 import { getReleaseFilesPath } from '../../../../utils/path';
-import { mkdir, writeFile } from '../../../../utils/fs';
+import { mkdirSync, writeFile } from '../../../../utils/fs';
 import { enCryptByBuf } from '../../../../utils/edf';
 import {
   RELEASE_FILES_CLIENT_FOLDER,
@@ -81,11 +81,11 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   const fileName = parsePath.name;
   const fileDir = parsePath.dir;
 
-  yield mkdir(
+  yield mkdirSync(
     getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
   );
 
-  yield mkdir(
+  yield mkdirSync(
     getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
   );
 

@@ -16,13 +16,18 @@ import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
 import apolloClient from '../../../../apollo';
 import projectItemsTotalQuery from '../../../../apollo/queries/sub/project_items_total';
 import { getReleaseFilesPath } from '../../../../utils/path';
-import { mkdir, writeFile } from '../../../../utils/fs';
+import { mkdirSync, writeFile } from '../../../../utils/fs';
 import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
 
 const TypeToReaderStruct = {};
 
-// generate reader structs
-Object.values(ITEM_TYPES).forEach(type => {
+// generate readers
+pull(
+  Object.values(ITEM_TYPES),
+  ITEM_TYPES.COMBINEDATA,
+  ITEM_TYPES.MAKEDATA,
+  ITEM_TYPES.UNK3,
+).forEach(type => {
   try {
     TypeToReaderStruct[
       type
@@ -91,13 +96,9 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   const fileName = parsePath.base;
   const fileDir = parsePath.dir;
 
-  const releasePath = getReleaseFilesPath(
-    projectId,
-    RELEASE_FILES_SERVER_FOLDER,
-    fileDir,
+  yield mkdirSync(
+    getReleaseFilesPath(projectId, RELEASE_FILES_SERVER_FOLDER, fileDir),
   );
-
-  yield mkdir(releasePath);
 
   const readerStruct = TypeToReaderStruct[type];
   const bufferGenerator = new BufferGenerator();
