@@ -58,6 +58,8 @@ export const mkdir = path =>
     });
   });
 
+export const mkdirSync = path => mkdirp.sync(path);
+
 export const rmdir = path =>
   new Promise((resolve, reject) => {
     rimraf(path, [], err => {
