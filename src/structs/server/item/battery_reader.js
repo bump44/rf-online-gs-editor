@@ -1,7 +1,7 @@
 import FileReader from '../../../classes/FileReader';
 import { BATTERY } from '../../item_types';
 import defaultHeader from './default_header';
-import boxStruct from './box_struct';
+import batteryStruct from './battery_struct';
 
 export default class ServerItemBatteryReader extends FileReader {
   constructor(props = {}) {
@@ -17,6 +17,6 @@ export const struct = [
   {
     type: BATTERY,
     header: defaultHeader,
-    block: boxStruct,
+    block: batteryStruct,
   },
 ];
