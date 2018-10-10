@@ -6,9 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map } from 'lodash';
+import { map, some, forEach } from 'lodash';
 import styled from 'styled-components';
 import cx from 'classnames';
+import { remote } from 'electron';
+import { statSync } from 'fs';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -23,8 +25,10 @@ import {
   Comment,
   Progress,
   Icon,
+  Button,
 } from 'semantic-ui-react';
 
+import { getReleaseFilesPath } from '../../utils/path';
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
 import reducer from './reducer';
@@ -59,6 +63,7 @@ import {
   FINISHED,
   ERROR,
   CANCELLED,
+  IMMUTABLE_MAP,
 } from '../App/constants';
 
 import Header from '../../components/Header';
@@ -76,6 +81,11 @@ export class ProjectExportPage extends React.Component {
   constructor(props) {
     super(props);
     this.renderFiles = this.renderFiles.bind(this);
+    this.onClickStartAll = this.onClickStartAll.bind(this);
+    this.onClickCancelAll = this.onClickCancelAll.bind(this);
+    this.isSomeStarted = this.isSomeStarted.bind(this);
+    this.isSomeReadyToStart = this.isSomeReadyToStart.bind(this);
+    this.onClickOpenReleaseFolder = this.onClickOpenReleaseFolder.bind(this);
   }
 
   componentWillMount() {
@@ -98,6 +108,89 @@ export class ProjectExportPage extends React.Component {
     }
   }
 
+  isSomeStarted() {
+    const { projectsExports, projectExportPage } = this.props;
+    const { project } = projectExportPage;
+    const projectExports = projectsExports.get(project.id, IMMUTABLE_MAP);
+
+    return some(FILES, (file, key) => {
+      const fileState = projectExports.get(key, IMMUTABLE_MAP);
+      const fileStatus = fileState.get('status', WAITING);
+      return fileStatus === PROCESSING;
+    });
+  }
+
+  isSomeReadyToStart() {
+    const { projectsExports, projectExportPage } = this.props;
+    const { project } = projectExportPage;
+    const projectExports = projectsExports.get(project.id, IMMUTABLE_MAP);
+
+    return some(FILES, (file, key) => {
+      const fileState = projectExports.get(key, IMMUTABLE_MAP);
+      const fileStatus = fileState.get('status', WAITING);
+      return fileStatus !== PROCESSING;
+    });
+  }
+
+  onClickOpenReleaseFolder() {
+    const { projectExportPage } = this.props;
+    const { project } = projectExportPage;
+
+    try {
+      if (statSync(getReleaseFilesPath(project.id))) {
+        remote.shell.openItem(getReleaseFilesPath(project.id));
+      }
+    } catch (err) {
+      remote.dialog.showErrorBox('Release', 'Not found');
+    }
+  }
+
+  onClickStartAll() {
+    const {
+      projectsExports,
+      fnProjectsExportsStartFileExport,
+      projectExportPage,
+    } = this.props;
+
+    const { project } = projectExportPage;
+    const projectExports = projectsExports.get(project.id, IMMUTABLE_MAP);
+
+    forEach(FILES, (file, key) => {
+      const fileState = projectExports.get(key, IMMUTABLE_MAP);
+      const fileStatus = fileState.get('status', WAITING);
+
+      if (fileStatus !== PROCESSING) {
+        fnProjectsExportsStartFileExport({
+          projectId: project.id,
+          fileKey: key,
+        });
+      }
+    });
+  }
+
+  onClickCancelAll() {
+    const {
+      projectsExports,
+      fnProjectsExportsCancelFileExport,
+      projectExportPage,
+    } = this.props;
+
+    const { project } = projectExportPage;
+    const projectExports = projectsExports.get(project.id, IMMUTABLE_MAP);
+
+    forEach(FILES, (file, key) => {
+      const fileState = projectExports.get(key, IMMUTABLE_MAP);
+      const fileStatus = fileState.get('status', WAITING);
+
+      if (fileStatus === PROCESSING) {
+        fnProjectsExportsCancelFileExport({
+          projectId: project.id,
+          fileKey: key,
+        });
+      }
+    });
+  }
+
   renderFiles(files = {}) {
     const {
       // fnProjectsExportsChangeFilePropValue,
@@ -113,11 +206,11 @@ export class ProjectExportPage extends React.Component {
     };
 
     const { project } = projectExportPage;
-    const projectExports = projectsExports.get(project.id, Map({}));
+    const projectExports = projectsExports.get(project.id, IMMUTABLE_MAP);
 
     return map(files, (file, key) => {
       // const fileActions = fnProjectsExportsChangeFilePropValue[key];
-      const fileState = projectExports.get(key, Map({}));
+      const fileState = projectExports.get(key, IMMUTABLE_MAP);
       const fileStatus = fileState.get('status', WAITING);
       const fileErrorMessage = fileState.get('errorMessage', '');
       const total = fileState.get('total', 0);
@@ -256,6 +349,32 @@ export class ProjectExportPage extends React.Component {
                     values={{ title: project.title }}
                   />
                 </PageHeader>
+
+                <div>
+                  <Segment floated="left">
+                    <Button
+                      primary
+                      onClick={this.onClickStartAll}
+                      disabled={!this.isSomeReadyToStart()}
+                    >
+                      <Icon name="play" />
+                      <FormattedMessage {...messages.Start} />
+                    </Button>
+
+                    <Button
+                      secondary
+                      onClick={this.onClickCancelAll}
+                      disabled={!this.isSomeStarted()}
+                    >
+                      <Icon name="stop" />
+                      <FormattedMessage {...messages.Cancel} />
+                    </Button>
+
+                    <Button secondary onClick={this.onClickOpenReleaseFolder}>
+                      <FormattedMessage {...messages.OpenReleaseFolder} />
+                    </Button>
+                  </Segment>
+                </div>
 
                 <FullheightThis>
                   <FullheightAutoSizer>

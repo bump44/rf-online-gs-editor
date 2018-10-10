@@ -19,4 +19,8 @@ export default defineMessages({
     id: 'app.containers.ProjectExportPage.Cancel',
     defaultMessage: 'Cancel',
   },
+  OpenReleaseFolder: {
+    id: 'app.containers.ProjectExportPage.OpenReleaseFolder',
+    defaultMessage: 'Open release folder',
+  },
 });
