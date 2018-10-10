@@ -123,24 +123,24 @@ export default class Reader {
         switch (field.getLen()) {
           case 8:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               this.getInt8(offset, props.readProps),
             );
           case 16:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               this.getInt16LE(offset, props.readProps),
             );
           case 32:
             switch (field.getAs()) {
               case 'float':
                 return increaseOffsetAndReturnValue(
-                  field.getWeight(),
+                  field.getWeight(values),
                   this.getFloatLE(offset, props.readProps),
                 );
               default:
                 return increaseOffsetAndReturnValue(
-                  field.getWeight(),
+                  field.getWeight(values),
                   this.getInt32LE(offset, props.readProps),
                 );
             }
@@ -148,7 +148,7 @@ export default class Reader {
             switch (field.getAs()) {
               case 'double':
                 return increaseOffsetAndReturnValue(
-                  field.getWeight(),
+                  field.getWeight(values),
                   this.getDobuleLE(offset, props.readProps),
                 );
             }
@@ -158,13 +158,13 @@ export default class Reader {
           case 32:
             if (field.getAs() === 'hex') {
               return increaseOffsetAndReturnValue(
-                field.getWeight(),
+                field.getWeight(values),
                 this.getHex32(offset, props.readProps),
               );
             }
           default:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               this.getString(offset, {
                 iconv: 'win1251',
                 ...props.readProps,
@@ -176,17 +176,17 @@ export default class Reader {
         switch (field.getLen()) {
           case 8:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               !!this.getInt8(offset, props.readProps),
             );
           case 16:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               !!this.getInt16LE(offset, props.readProps),
             );
           case 32:
             return increaseOffsetAndReturnValue(
-              field.getWeight(),
+              field.getWeight(values),
               !!this.getInt32LE(offset, props.readProps),
             );
         }
