@@ -59,7 +59,7 @@ export const deCryptByPath = edfPath =>
 
 export const deCryptByBuf = edfBuf => {
   const tmpPath = getRandomTmpPath();
-  const EdfDeCrypt = path.resolve('./', 'resources/EdfDeCrypt.exe');
+  const EdfDeCrypt = path.resolve('./', 'extras/EdfDeCrypt.exe');
 
   return mkdir(tmpPath)
     .then(() => cloneExe(tmpPath, EdfDeCrypt))
@@ -69,7 +69,7 @@ export const deCryptByBuf = edfBuf => {
 
 export const enCryptByBuf = datBuf => {
   const tmpPath = getRandomTmpPath();
-  const EdfCrypt = path.resolve('./', 'resources/EdfCrypt.exe');
+  const EdfCrypt = path.resolve('./', 'extras/EdfCrypt.exe');
 
   return mkdir(tmpPath)
     .then(() => cloneExe(tmpPath, EdfCrypt))
