@@ -78,6 +78,83 @@ export const FILES = {
     args: { type: ITEM_TYPES.TOWER },
     extensions: ['dat'],
   },
+  'Script/EventItem.dat': {
+    path: 'Script/EventItem.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.QUEST },
+    extensions: ['dat'],
+  },
+  'Script/UnitBullet.dat': {
+    path: 'Script/UnitBullet.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUBULLET },
+    extensions: ['dat'],
+  },
+  'Script/UnitArms.dat': {
+    path: 'Script/UnitArms.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUARM },
+    extensions: ['dat'],
+  },
+  'Script/UnitBack.dat': {
+    path: 'Script/UnitBack.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUBACK },
+    extensions: ['dat'],
+  },
+  'Script/UnitHead.dat': {
+    path: 'Script/UnitHead.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUHEAD },
+    extensions: ['dat'],
+  },
+  'Script/UnitLower.dat': {
+    path: 'Script/UnitLower.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAULOWER },
+    extensions: ['dat'],
+  },
+  'Script/UnitShoulder.dat': {
+    path: 'Script/UnitShoulder.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUSHOULDER },
+    extensions: ['dat'],
+  },
+  'Script/UnitUpper.dat': {
+    path: 'Script/UnitUpper.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.MAUUPPER },
+    extensions: ['dat'],
+  },
+  'Script/NPCLinkItem.dat': {
+    path: 'Script/NPCLinkItem.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.PAGER },
+    extensions: ['dat'],
+  },
+  'Script/UnmannedMiner.dat': {
+    path: 'Script/UnmannedMiner.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.CASHMINING },
+    extensions: ['dat'],
+  },
+  'Script/BattleDungeonItem.dat': {
+    path: 'Script/BattleDungeonItem.dat',
+    resolve: RESOLVERS.SERVER_ITEM,
+    type: FILE_TYPE_SERVER,
+    args: { type: ITEM_TYPES.DUNGEONKEY },
+    extensions: ['dat'],
+  },
 };
 
 Object.values(ITEM_TYPES)
@@ -99,6 +176,7 @@ Object.values(ITEM_TYPES)
         ITEM_TYPES.FIRECRACKER,
         ITEM_TYPES.DUNGEONKEY,
         ITEM_TYPES.TOWER,
+        ITEM_TYPES.QUEST,
       ].indexOf(type) === -1,
   )
   .forEach(type => {
