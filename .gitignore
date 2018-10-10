@@ -4,6 +4,7 @@ out
 coverage
 build
 stats.json
+releaseFiles
 
 .DS_Store
 npm-debug.log
