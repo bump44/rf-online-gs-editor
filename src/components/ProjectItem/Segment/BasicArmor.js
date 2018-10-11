@@ -37,7 +37,7 @@ class ProjectItemSegmentBasicArmor extends React.PureComponent {
       itemNextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
     } = this.props;
 
     return (
@@ -60,7 +60,7 @@ class ProjectItemSegmentBasicArmor extends React.PureComponent {
                     itemNextValues={itemNextValues}
                     onChangeValue={itemActions.changeItemGrade}
                     className="mr-15 mb-5"
-                    types={itemGrades}
+                    types={itemGradeTypes}
                   />
                 }
               />
@@ -195,7 +195,7 @@ ProjectItemSegmentBasicArmor.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,

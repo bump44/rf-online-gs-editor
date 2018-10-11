@@ -33,7 +33,7 @@ class ProjectBoxItemOutVirtualizedRow extends React.PureComponent {
       itemActions,
       nextValues,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       isScrolling,
@@ -72,7 +72,7 @@ class ProjectBoxItemOutVirtualizedRow extends React.PureComponent {
           boxItemOut={boxItemOut}
           boxItemOutNextValues={boxItemOutNextValues}
           moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
+          itemGradeTypes={itemGradeTypes}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
           selectable={selectable}
@@ -105,7 +105,7 @@ ProjectBoxItemOutVirtualizedRow.propTypes = {
   style: PropTypes.object.isRequired,
   boxItemOuts: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,

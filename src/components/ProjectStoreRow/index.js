@@ -42,7 +42,7 @@ class ProjectStoreRow extends React.PureComponent {
       storeNextValues,
       storeActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
     } = this.props;
@@ -89,7 +89,7 @@ class ProjectStoreRow extends React.PureComponent {
                 storeNextValues={storeNextValues}
                 storeActions={storeActions}
                 moneyTypes={moneyTypes}
-                itemGrades={itemGrades}
+                itemGradeTypes={itemGradeTypes}
                 weaponTypes={weaponTypes}
                 localSettings={localSettings}
               />
@@ -106,7 +106,7 @@ ProjectStoreRow.propTypes = {
   storeNextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   storeActions: PropTypes.object.isRequired,
 };

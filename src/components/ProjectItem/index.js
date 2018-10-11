@@ -17,7 +17,7 @@ function ProjectItem({
   itemNextValues,
   itemActions,
   moneyTypes,
-  itemGrades,
+  itemGradeTypes,
   weaponTypes,
   localSettings,
   nextValues,
@@ -36,7 +36,7 @@ function ProjectItem({
           itemNextValues={itemNextValues}
           itemActions={itemActions}
           moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
+          itemGradeTypes={itemGradeTypes}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
           nextValues={nextValues}
@@ -55,7 +55,7 @@ ProjectItem.propTypes = {
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.object.isRequired,
   boxItemOutActions: PropTypes.object.isRequired,

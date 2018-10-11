@@ -22,7 +22,7 @@ import makeSelectProjectItemsPage, {
   makeSelectResult,
   makeSelectFilter,
   makeSelectProjectMoneyTypes,
-  makeSelectProjectItemGrades,
+  makeSelectProjectItemGradeTypes,
   makeSelectProjectWeaponTypes,
 } from './selectors';
 
@@ -119,8 +119,8 @@ export class ProjectItemsPage extends React.PureComponent {
           ['moneyTypes', 'items'],
           IMMUTABLE_LIST,
         ),
-        itemGrades: currentProject.getIn(
-          ['itemGrades', 'items'],
+        itemGradeTypes: currentProject.getIn(
+          ['itemGradeTypes', 'items'],
           IMMUTABLE_LIST,
         ),
         weaponTypes: currentProject.getIn(
@@ -153,7 +153,7 @@ export class ProjectItemsPage extends React.PureComponent {
     const actionsBindPayload = this.getActionsBindPayload();
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
     } = actionsBindPayload.additionalData;
 
@@ -170,7 +170,7 @@ export class ProjectItemsPage extends React.PureComponent {
         nextValues={nextValues}
         itemActions={itemActions}
         moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
+        itemGradeTypes={itemGradeTypes}
         weaponTypes={weaponTypes}
         localSettings={localSettings}
       />
@@ -296,7 +296,7 @@ const mapStateToProps = createStructuredSelector({
   isLoggedIn: makeSelectIsLoggedIn(),
   currentProject: makeSelectProject(),
   projectMoneyTypes: makeSelectProjectMoneyTypes(),
-  projectItemGrades: makeSelectProjectItemGrades(),
+  projectItemGradeTypes: makeSelectProjectItemGradeTypes(),
   projectWeaponTypes: makeSelectProjectWeaponTypes(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),

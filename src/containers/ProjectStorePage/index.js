@@ -118,8 +118,8 @@ export class ProjectStorePage extends React.PureComponent {
           ['moneyTypes', 'items'],
           IMMUTABLE_LIST,
         ),
-        itemGrades: currentProject.getIn(
-          ['itemGrades', 'items'],
+        itemGradeTypes: currentProject.getIn(
+          ['itemGradeTypes', 'items'],
           IMMUTABLE_LIST,
         ),
         weaponTypes: currentProject.getIn(
@@ -161,7 +161,7 @@ export class ProjectStorePage extends React.PureComponent {
     const actionsBindPayload = this.getActionsBindPayload();
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       buttonTypes,
     } = actionsBindPayload.additionalData;
@@ -251,7 +251,7 @@ export class ProjectStorePage extends React.PureComponent {
                       entriesFinderItemsActions={entriesFinderItemsActions}
                       localSettings={localSettings}
                       moneyTypes={moneyTypes}
-                      itemGrades={itemGrades}
+                      itemGradeTypes={itemGradeTypes}
                       weaponTypes={weaponTypes}
                       buttonTypes={buttonTypes}
                       entriesFinderItems={entriesFinderItems}

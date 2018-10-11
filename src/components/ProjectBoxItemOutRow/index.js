@@ -73,7 +73,7 @@ class ProjectBoxItemOutRow extends React.PureComponent {
       boxItemOut,
       boxItemOutNextValues,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       nextValues,
       localSettings,
@@ -98,7 +98,7 @@ class ProjectBoxItemOutRow extends React.PureComponent {
               boxItemOut={boxItemOut}
               boxItemOutNextValues={boxItemOutNextValues}
               moneyTypes={moneyTypes}
-              itemGrades={itemGrades}
+              itemGradeTypes={itemGradeTypes}
               weaponTypes={weaponTypes}
               nextValues={nextValues}
               localSettings={localSettings}
@@ -116,7 +116,7 @@ class ProjectBoxItemOutRow extends React.PureComponent {
 
 ProjectBoxItemOutRow.propTypes = {
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   boxItemOut: PropTypes.instanceOf(Map).isRequired,

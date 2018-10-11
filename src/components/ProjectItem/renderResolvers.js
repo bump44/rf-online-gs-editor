@@ -1,18 +1,19 @@
 import * as ITEM_TYPES from '../../structs/item_types';
 import RenderTool from './Render/Tool';
+import RenderArmor from './Render/Armor';
 import RenderBox from './Render/Box';
 
 // want help in writing specific components ;)
 export default {
   [ITEM_TYPES.FACE]: RenderTool,
-  [ITEM_TYPES.UPPER]: RenderTool,
-  [ITEM_TYPES.LOWER]: RenderTool,
-  [ITEM_TYPES.GAUNTLET]: RenderTool,
-  [ITEM_TYPES.SHOE]: RenderTool,
-  [ITEM_TYPES.HELMET]: RenderTool,
+  [ITEM_TYPES.UPPER]: RenderArmor,
+  [ITEM_TYPES.LOWER]: RenderArmor,
+  [ITEM_TYPES.GAUNTLET]: RenderArmor,
+  [ITEM_TYPES.SHOE]: RenderArmor,
+  [ITEM_TYPES.HELMET]: RenderArmor,
   [ITEM_TYPES.WEAPON]: RenderTool,
-  [ITEM_TYPES.SHIELD]: RenderTool,
-  [ITEM_TYPES.CLOAK]: RenderTool,
+  [ITEM_TYPES.SHIELD]: RenderArmor,
+  [ITEM_TYPES.CLOAK]: RenderArmor,
   [ITEM_TYPES.RING]: RenderTool,
   [ITEM_TYPES.AMULET]: RenderTool,
   [ITEM_TYPES.BULLET]: RenderTool,

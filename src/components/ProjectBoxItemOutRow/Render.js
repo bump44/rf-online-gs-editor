@@ -86,7 +86,7 @@ class ProjectBoxItemOutRender extends React.PureComponent {
     const { item, itemNextValues } = this.getItemData();
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       nextValues,
       boxItemOut,
@@ -138,7 +138,7 @@ class ProjectBoxItemOutRender extends React.PureComponent {
                 </div>
                 <ProjectBoxItemOutInteractingOutputs
                   moneyTypes={moneyTypes}
-                  itemGrades={itemGrades}
+                  itemGradeTypes={itemGradeTypes}
                   weaponTypes={weaponTypes}
                   nextValues={nextValues}
                   boxItemOut={boxItemOut}
@@ -160,7 +160,7 @@ class ProjectBoxItemOutRender extends React.PureComponent {
 
 ProjectBoxItemOutRender.propTypes = {
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   boxItemOut: PropTypes.instanceOf(Map).isRequired,

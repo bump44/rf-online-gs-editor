@@ -52,7 +52,7 @@ class ProjectItemRow extends React.PureComponent {
       itemNextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
     } = this.props;
@@ -104,7 +104,7 @@ class ProjectItemRow extends React.PureComponent {
                 itemNextValues={itemNextValues}
                 itemActions={itemActions}
                 moneyTypes={moneyTypes}
-                itemGrades={itemGrades}
+                itemGradeTypes={itemGradeTypes}
                 weaponTypes={weaponTypes}
               />
             )}
@@ -122,7 +122,7 @@ ProjectItemRow.propTypes = {
   itemActions: PropTypes.object.isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   selectable: PropTypes.bool,
   onClickSelect: PropTypes.func,

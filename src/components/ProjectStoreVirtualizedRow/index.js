@@ -31,7 +31,7 @@ class ProjectStoreVirtualizedRow extends React.PureComponent {
       storeActions,
       nextValues,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       isScrolling,
@@ -62,7 +62,7 @@ class ProjectStoreVirtualizedRow extends React.PureComponent {
           store={store}
           storeNextValues={storeNextValues}
           moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
+          itemGradeTypes={itemGradeTypes}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
         />
@@ -91,7 +91,7 @@ ProjectStoreVirtualizedRow.propTypes = {
   style: PropTypes.object.isRequired,
   stores: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,

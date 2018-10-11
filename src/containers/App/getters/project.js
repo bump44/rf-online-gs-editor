@@ -12,7 +12,7 @@ export const getRefs = (
   { entry = IMMUTABLE_MAP },
 ) => ({
   moneyTypes: getRefMoneyTypes(nextValue, { entry }),
-  itemGrades: getRefItemGrades(nextValue, { entry }),
+  itemGradeTypes: getRefItemGradeTypes(nextValue, { entry }),
   weaponTypes: getRefWeaponTypes(nextValue, { entry }),
   buttonTypes: getRefButtonTypes(nextValue, { entry }),
 });
@@ -26,13 +26,13 @@ export const getRefMoneyTypes = (
     entry.getIn(['moneyTypes', 'items'], IMMUTABLE_LIST),
   );
 
-export const getRefItemGrades = (
+export const getRefItemGradeTypes = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
 ) =>
   nextValue.getIn(
-    ['itemGrades', 'items'],
-    entry.getIn(['itemGrades', 'items'], IMMUTABLE_LIST),
+    ['itemGradeTypes', 'items'],
+    entry.getIn(['itemGradeTypes', 'items'], IMMUTABLE_LIST),
   );
 
 export const getRefWeaponTypes = (

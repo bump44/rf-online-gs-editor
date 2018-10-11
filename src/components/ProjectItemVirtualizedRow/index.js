@@ -32,7 +32,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
       itemActions,
       nextValues,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       isScrolling,
@@ -65,7 +65,7 @@ class ProjectItemVirtualizedRow extends React.PureComponent {
           item={item}
           itemNextValues={itemNextValues}
           moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
+          itemGradeTypes={itemGradeTypes}
           weaponTypes={weaponTypes}
           localSettings={localSettings}
           selectable={selectable}
@@ -96,7 +96,7 @@ ProjectItemVirtualizedRow.propTypes = {
   style: PropTypes.object.isRequired,
   items: PropTypes.instanceOf(List).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,

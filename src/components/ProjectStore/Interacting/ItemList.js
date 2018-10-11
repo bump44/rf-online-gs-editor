@@ -138,7 +138,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       index,
       dragHandle,
       itemActions,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       moneyTypes,
@@ -224,7 +224,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
                   actions={entriesFinderItemsActions}
                   nextValues={nextValues}
                   itemActions={itemActions}
-                  itemGrades={itemGrades}
+                  itemGradeTypes={itemGradeTypes}
                   weaponTypes={weaponTypes}
                   localSettings={localSettings}
                   moneyTypes={moneyTypes}
@@ -258,7 +258,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       itemActions,
       localSettings,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
     } = this.props;
 
@@ -308,7 +308,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
                   itemActions={itemActions}
                   localSettings={localSettings}
                   moneyTypes={moneyTypes}
-                  itemGrades={itemGrades}
+                  itemGradeTypes={itemGradeTypes}
                   weaponTypes={weaponTypes}
                 />
               )}
@@ -352,7 +352,7 @@ ProjectStoreInteractingItemList.propTypes = {
   nextValues: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.object.isRequired,
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,

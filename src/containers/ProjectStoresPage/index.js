@@ -115,8 +115,8 @@ export class ProjectStoresPage extends React.Component {
           ['moneyTypes', 'items'],
           IMMUTABLE_LIST,
         ),
-        itemGrades: currentProject.getIn(
-          ['itemGrades', 'items'],
+        itemGradeTypes: currentProject.getIn(
+          ['itemGradeTypes', 'items'],
           IMMUTABLE_LIST,
         ),
         weaponTypes: currentProject.getIn(
@@ -149,7 +149,7 @@ export class ProjectStoresPage extends React.Component {
     const actionsBindPayload = this.getActionsBindPayload();
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
     } = actionsBindPayload.additionalData;
 
@@ -166,7 +166,7 @@ export class ProjectStoresPage extends React.Component {
         nextValues={nextValues}
         storeActions={storeActions}
         moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
+        itemGradeTypes={itemGradeTypes}
         weaponTypes={weaponTypes}
         localSettings={localSettings}
       />

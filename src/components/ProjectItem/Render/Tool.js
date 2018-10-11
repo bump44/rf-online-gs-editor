@@ -17,7 +17,7 @@ class ProjectItemRenderTool extends React.PureComponent {
       itemNextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
     } = this.props;
 
     return (
@@ -27,7 +27,7 @@ class ProjectItemRenderTool extends React.PureComponent {
           itemNextValues={itemNextValues}
           itemActions={itemActions}
           moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
+          itemGradeTypes={itemGradeTypes}
         />
       </React.Fragment>
     );
@@ -38,7 +38,7 @@ ProjectItemRenderTool.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,

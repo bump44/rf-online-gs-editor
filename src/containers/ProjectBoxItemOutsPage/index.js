@@ -164,7 +164,7 @@ export class ProjectBoxItemOutsPage extends React.Component {
     const actionsBindPayload = this.getActionsBindPayload();
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       buttonTypes,
     } = actionsBindPayload.additionalData;
@@ -191,7 +191,7 @@ export class ProjectBoxItemOutsPage extends React.Component {
         boxItemOutActions={boxItemOutActions}
         itemActions={itemActions}
         moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
+        itemGradeTypes={itemGradeTypes}
         weaponTypes={weaponTypes}
         buttonTypes={buttonTypes}
         localSettings={localSettings}

@@ -7,28 +7,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import { Tab, Segment } from 'semantic-ui-react';
-import { IMMUTABLE_MAP } from '../../../containers/App/constants';
+import { Tab } from 'semantic-ui-react';
 import SegmentBasic from '../Segment/Basic';
-import * as projectItem from '../../../containers/App/getters/projectItem';
-import * as projectBoxItemOut from '../../../containers/App/getters/projectBoxItemOut';
-
-import ProjectBoxItemOutLabelDetail from '../../ProjectBoxItemOutLabelDetail';
-import ProjectBoxItemOutInteractingOutputsProbDetail from '../../ProjectBoxItemOut/Interacting/OutputsProbDetail';
-import ProjectBoxItemOutInteractingOutputs from '../../ProjectBoxItemOut/Interacting/Outputs';
+import SegmentBoxOutputs from '../Segment/BoxOutputs';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
   secondary: true,
   pointing: true,
 };
-// const tabPaneStyle = {
-//   padding: 0,
-//   background: 'none',
-//   border: 0,
-//   boxShadow: 'none',
-//   height: '100%',
-// };
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRenderBox extends React.PureComponent {
@@ -63,51 +50,25 @@ class ProjectItemRenderBox extends React.PureComponent {
       entriesFinderItems,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
     } = this.props;
 
-    const boxItemOut = projectItem.getBoxItemOut(
-      itemNextValues.get('nextValue'),
-      { entry: item },
-    );
-
-    if (!boxItemOut) {
-      return <div>Outputs not defined</div>;
-    }
-
-    const boxItemOutNextValues = nextValues.get(
-      projectBoxItemOut.getId(undefined, { entry: boxItemOut }),
-      IMMUTABLE_MAP,
-    );
-
     return (
-      <Segment>
-        <ProjectBoxItemOutLabelDetail
-          boxItemOut={boxItemOut}
-          boxItemOutNextValues={boxItemOutNextValues}
-        />
-
-        <ProjectBoxItemOutInteractingOutputsProbDetail
-          boxItemOut={boxItemOut}
-          boxItemOutNextValues={boxItemOutNextValues}
-        />
-
-        <ProjectBoxItemOutInteractingOutputs
-          boxItemOut={boxItemOut}
-          boxItemOutNextValues={boxItemOutNextValues}
-          boxItemOutActions={boxItemOutActions}
-          nextValues={nextValues}
-          entriesFinderItemsActions={entriesFinderItemsActions}
-          entriesFinderItems={entriesFinderItems}
-          itemActions={itemActions}
-          moneyTypes={moneyTypes}
-          itemGrades={itemGrades}
-          weaponTypes={weaponTypes}
-          localSettings={localSettings}
-        />
-      </Segment>
+      <SegmentBoxOutputs
+        item={item}
+        itemNextValues={itemNextValues}
+        nextValues={nextValues}
+        boxItemOutActions={boxItemOutActions}
+        entriesFinderItemsActions={entriesFinderItemsActions}
+        entriesFinderItems={entriesFinderItems}
+        itemActions={itemActions}
+        moneyTypes={moneyTypes}
+        itemGradeTypes={itemGradeTypes}
+        weaponTypes={weaponTypes}
+        localSettings={localSettings}
+      />
     );
   }
 
@@ -117,7 +78,7 @@ class ProjectItemRenderBox extends React.PureComponent {
       itemNextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
     } = this.props;
 
     return (
@@ -126,7 +87,7 @@ class ProjectItemRenderBox extends React.PureComponent {
         itemNextValues={itemNextValues}
         itemActions={itemActions}
         moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
+        itemGradeTypes={itemGradeTypes}
       />
     );
   }
@@ -145,7 +106,7 @@ ProjectItemRenderBox.propTypes = {
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   itemActions: PropTypes.object.isRequired,

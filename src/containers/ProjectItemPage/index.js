@@ -96,8 +96,8 @@ export class ProjectItemPage extends React.PureComponent {
           ['moneyTypes', 'items'],
           IMMUTABLE_LIST,
         ),
-        itemGrades: currentProject.getIn(
-          ['itemGrades', 'items'],
+        itemGradeTypes: currentProject.getIn(
+          ['itemGradeTypes', 'items'],
           IMMUTABLE_LIST,
         ),
         weaponTypes: currentProject.getIn(
@@ -152,7 +152,7 @@ export class ProjectItemPage extends React.PureComponent {
 
     const {
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
     } = actionsBindPayload.additionalData;
 
@@ -237,7 +237,7 @@ export class ProjectItemPage extends React.PureComponent {
                       nextValues={nextValues}
                       localSettings={localSettings}
                       moneyTypes={moneyTypes}
-                      itemGrades={itemGrades}
+                      itemGradeTypes={itemGradeTypes}
                       weaponTypes={weaponTypes}
                       itemActions={itemActions}
                       boxItemOutActions={boxItemOutActions}

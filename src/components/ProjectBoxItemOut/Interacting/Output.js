@@ -107,7 +107,7 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
       itemActions,
       entriesFinderItems,
       entriesFinderItemsActions,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       moneyTypes,
@@ -206,7 +206,7 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
                 actions={entriesFinderItemsActions}
                 nextValues={nextValues}
                 itemActions={itemActions}
-                itemGrades={itemGrades}
+                itemGradeTypes={itemGradeTypes}
                 weaponTypes={weaponTypes}
                 localSettings={localSettings}
                 moneyTypes={moneyTypes}
@@ -232,7 +232,7 @@ ProjectBoxItemOutInteractingOutput.propTypes = {
   nextValues: PropTypes.instanceOf(Map).isRequired,
   itemActions: PropTypes.object.isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   entriesFinderItemsActions: PropTypes.object.isRequired,

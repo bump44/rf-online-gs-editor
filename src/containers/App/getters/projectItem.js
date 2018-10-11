@@ -524,10 +524,10 @@ export const getItemGrade = (
 
 export const getItemGradeType = (
   nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, itemGrades = IMMUTABLE_LIST },
+  { entry = IMMUTABLE_MAP, itemGradeTypes = IMMUTABLE_LIST },
 ) => {
   const value = getItemGrade(nextValue, { entry });
-  return itemGrades.find(val => val.get('value') === value);
+  return itemGradeTypes.find(val => val.get('value') === value);
 };
 
 export const getStoragePossible = (

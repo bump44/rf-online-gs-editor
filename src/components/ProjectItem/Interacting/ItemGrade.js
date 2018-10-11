@@ -39,7 +39,7 @@ class ProjectItemInteractingItemGrade extends React.PureComponent {
 
     const type = getItemGradeType(itemNextValues.get('nextValue'), {
       entry: item,
-      itemGrades: types,
+      itemGradeTypes: types,
     });
 
     const isUnknown = !type;

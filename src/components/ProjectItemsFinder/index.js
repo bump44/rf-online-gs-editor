@@ -106,7 +106,7 @@ class ProjectItemsFinder extends React.PureComponent {
       nextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
       weaponTypes,
       localSettings,
       selectable,
@@ -129,7 +129,7 @@ class ProjectItemsFinder extends React.PureComponent {
         nextValues={nextValues}
         itemActions={itemActions}
         moneyTypes={moneyTypes}
-        itemGrades={itemGrades}
+        itemGradeTypes={itemGradeTypes}
         weaponTypes={weaponTypes}
         localSettings={localSettings}
         {...componentProps}
@@ -179,7 +179,7 @@ ProjectItemsFinder.propTypes = {
   nextValues: PropTypes.instanceOf(Map).isRequired,
   itemActions: PropTypes.object.isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
 

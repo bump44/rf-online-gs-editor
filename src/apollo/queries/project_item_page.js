@@ -49,7 +49,7 @@ export default gql`
         }
       }
 
-      itemGrades {
+      itemGradeTypes {
         items {
           title
           value

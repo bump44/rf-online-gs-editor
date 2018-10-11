@@ -36,7 +36,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
       itemNextValues,
       itemActions,
       moneyTypes,
-      itemGrades,
+      itemGradeTypes,
     } = this.props;
 
     return (
@@ -106,7 +106,7 @@ class ProjectItemRowRenderArmor extends React.PureComponent {
                 item={item}
                 itemNextValues={itemNextValues}
                 onChangeValue={itemActions.changeItemGrade}
-                types={itemGrades}
+                types={itemGradeTypes}
                 className="pt-5 pb-10"
               />
               <ProjectItemInteractingStoragePrice
@@ -230,7 +230,7 @@ ProjectItemRowRenderArmor.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
-  itemGrades: PropTypes.instanceOf(List).isRequired,
+  itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,
     changeExchange: PropTypes.func.isRequired,
