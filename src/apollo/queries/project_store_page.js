@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
 import ProjectStoreClientNameParts from '../fragments/ProjectStoreClientNameParts';
 import ProjectStoreServerNameParts from '../fragments/ProjectStoreServerNameParts';
 import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
@@ -40,35 +41,8 @@ export default gql`
         total
       }
 
-      moneyTypes {
-        items {
-          title
-          value
-          fieldName
-          valuation
-        }
-      }
-
-      itemGradeTypes {
-        items {
-          title
-          value
-        }
-      }
-
-      weaponTypes {
-        items {
-          title
-          value
-        }
-      }
-
-      buttonTypes {
-        items {
-          title
-          value
-        }
-      }
+      # include types
+      ...ProjectIncludeAllTypes
     }
 
     projectStore(id: $storeId) {
@@ -96,6 +70,7 @@ export default gql`
   }
 
   # include fragments
+  ${ProjectIncludeAllTypes}
   ${ProjectStoreClientNameParts}
   ${ProjectStoreServerNameParts}
   ${ProjectItemClientNameParts}

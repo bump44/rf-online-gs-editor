@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
 import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
 import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
 import ProjectBoxItemOutNameParts from '../fragments/ProjectBoxItemOutNameParts';
@@ -40,28 +41,8 @@ export default gql`
         total
       }
 
-      moneyTypes {
-        items {
-          title
-          value
-          fieldName
-          valuation
-        }
-      }
-
-      itemGradeTypes {
-        items {
-          title
-          value
-        }
-      }
-
-      weaponTypes {
-        items {
-          title
-          value
-        }
-      }
+      # include types
+      ...ProjectIncludeAllTypes
     }
 
     projectItem(id: $itemId) {
@@ -85,6 +66,7 @@ export default gql`
   }
 
   # include fragments
+  ${ProjectIncludeAllTypes}
   ${ProjectItemClientNameParts}
   ${ProjectItemServerNameParts}
   ${ProjectBoxItemOutNameParts}

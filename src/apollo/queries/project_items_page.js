@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
 
 export default gql`
   query($id: String!) {
@@ -37,28 +38,10 @@ export default gql`
         total
       }
 
-      moneyTypes {
-        items {
-          title
-          value
-          fieldName
-          valuation
-        }
-      }
-
-      itemGradeTypes {
-        items {
-          title
-          value
-        }
-      }
-
-      weaponTypes {
-        items {
-          title
-          value
-        }
-      }
+      # include types
+      ...ProjectIncludeAllTypes
     }
   }
+
+  ${ProjectIncludeAllTypes}
 `;
