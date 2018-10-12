@@ -11,6 +11,10 @@ export default defineMessages({
     id: 'app.components.ProjectItem.header',
     defaultMessage: 'This is the ProjectItem component !',
   },
+  TheseValuesMayBeUseful: {
+    id: 'app.components.ProjectItem.TheseValuesMayBeUseful',
+    defaultMessage: 'These values may be useful',
+  },
   Disabled: {
     id: 'app.components.ProjectItem.Disabled',
     defaultMessage: 'Disabled',
