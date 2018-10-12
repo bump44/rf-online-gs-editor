@@ -15,7 +15,27 @@ export const getRefs = (
   itemGradeTypes: getRefItemGradeTypes(nextValue, { entry }),
   weaponTypes: getRefWeaponTypes(nextValue, { entry }),
   buttonTypes: getRefButtonTypes(nextValue, { entry }),
+  effectTypes: getRefEffectTypes(nextValue, { entry }),
+  expertTypes: getRefExpertTypes(nextValue, { entry }),
 });
+
+export const getRefEffectTypes = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue.getIn(
+    ['effectTypes', 'items'],
+    entry.getIn(['effectTypes', 'items'], IMMUTABLE_LIST),
+  );
+
+export const getRefExpertTypes = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue.getIn(
+    ['expertTypes', 'items'],
+    entry.getIn(['expertTypes', 'items'], IMMUTABLE_LIST),
+  );
 
 export const getRefMoneyTypes = (
   nextValue = IMMUTABLE_MAP,
