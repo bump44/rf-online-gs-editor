@@ -50,13 +50,13 @@ export default gql`
     fDefGap
     fDefFacing
     nEffCode__1
-    nEffUnit__1
+    fEffUnit__1
     nEffCode__2
-    nEffUnit__2
+    fEffUnit__2
     nEffCode__3
-    nEffUnit__3
+    fEffUnit__3
     nEffCode__4
-    nEffUnit__4
+    fEffUnit__4
     nDuration
     bSell
     bExchange
@@ -138,7 +138,7 @@ export default gql`
     nEffUnitMax__3
     nEffUnitMax__4
     nEffCode__5
-    nEffUnit__5
+    fEffUnit__5
     nEffUnitMax__5
     strForceCodeKey
     nFRAType
