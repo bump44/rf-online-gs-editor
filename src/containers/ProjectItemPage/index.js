@@ -12,8 +12,10 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST, ITEM } from '../App/constants';
+import { IMMUTABLE_MAP, ITEM } from '../App/constants';
+
 import * as projectItem from '../App/getters/projectItem';
+import { getRefs } from '../App/getters/project';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
@@ -85,32 +87,18 @@ export class ProjectItemPage extends React.PureComponent {
   }
 
   getActionsBindPayload() {
-    const { dispatch, match, currentProject } = this.props;
-    const additionalData = (() => {
-      if (!currentProject) {
-        return {};
-      }
+    const { dispatch, match, currentProject, projectsNextValues } = this.props;
 
-      return {
-        moneyTypes: currentProject.getIn(
-          ['moneyTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        itemGradeTypes: currentProject.getIn(
-          ['itemGradeTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        weaponTypes: currentProject.getIn(
-          ['weaponTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-      };
-    })();
+    const project = currentProject || IMMUTABLE_MAP;
+    const nextValues = projectsNextValues.getIn(
+      [match.params.id, match.params.id],
+      IMMUTABLE_MAP,
+    );
 
     return {
       dispatch,
       projectId: match.params.id,
-      additionalData,
+      additionalData: getRefs(nextValues.get('nextValue'), { entry: project }),
     };
   }
 
