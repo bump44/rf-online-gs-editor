@@ -17,7 +17,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
   ITEM,
   STORE,
-  BOX_ITEM_OUT,
+  BOXITEMOUT,
 } from '../constants';
 
 import {
@@ -47,7 +47,7 @@ const Workers = {};
 const Resolvers = {
   [ITEM]: itemResolvers,
   [STORE]: storeResolvers,
-  [BOX_ITEM_OUT]: boxItemOutResolvers,
+  [BOXITEMOUT]: boxItemOutResolvers,
 };
 
 const MutationQueries = {

@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import {
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   ANNOUNCE_PROJECT_COUNT_STORES,
-  ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS,
+  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
 } from '../constants';
 
 /**
@@ -27,7 +27,7 @@ export function announceProjectCountStores({ count, id }) {
 
 export function announceProjectCountBoxItemOuts({ count, id }) {
   return {
-    type: ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS,
+    type: ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
     count,
     id,
   };
@@ -46,7 +46,7 @@ export function announceProjectCountHandler(state, action = {}) {
   }
 
   switch (type) {
-    case ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS:
+    case ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS:
       return state.setIn(['boxItemOuts', 'total'], count);
     case ANNOUNCE_PROJECT_COUNT_ITEMS:
       return state.setIn(['items', 'total'], count);

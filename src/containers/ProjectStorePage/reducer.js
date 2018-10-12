@@ -18,7 +18,7 @@ import {
 import {
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   ANNOUNCE_PROJECT_COUNT_STORES,
-  ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS,
+  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
 } from '../App/constants';
 
 export const initialState = fromJS({
@@ -48,7 +48,7 @@ function projectStorePageReducer(state = initialState, action) {
       return state.set('projectStore', fromJS(action.projectStore));
     case ANNOUNCE_PROJECT_COUNT_ITEMS:
     case ANNOUNCE_PROJECT_COUNT_STORES:
-    case ANNOUNCE_PROJECT_COUNT_BOX_ITEM_OUTS:
+    case ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS:
       return state.set(
         'project',
         announceProjectCountHandler(state.get('project'), action),

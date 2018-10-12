@@ -1,5 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
-import { BOX_ITEM_OUT } from '../constants';
+import { BOXITEMOUT } from '../constants';
 import { projectsNextValuesChangePropValue } from './projectsNextValues';
 
 /**
@@ -15,7 +15,7 @@ export const projectsBoxItemOuts = {
       fns[`change${upperFirst(propKey)}`] = args =>
         projectsNextValuesChangePropValue({
           ...args,
-          subType: BOX_ITEM_OUT,
+          subType: BOXITEMOUT,
           propKey,
         });
     });
@@ -24,13 +24,13 @@ export const projectsBoxItemOuts = {
   outputUpdate: args =>
     projectsNextValuesChangePropValue({
       ...args,
-      subType: BOX_ITEM_OUT,
+      subType: BOXITEMOUT,
       propKey: 'outputUpdate',
     }),
   outputDisable: args =>
     projectsNextValuesChangePropValue({
       ...args,
-      subType: BOX_ITEM_OUT,
+      subType: BOXITEMOUT,
       propKey: 'outputDisable',
     }),
 };
