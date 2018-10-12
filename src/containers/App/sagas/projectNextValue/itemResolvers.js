@@ -156,6 +156,14 @@ const Resolvers = {
     item
       .setIn(['server', 'civil_a'], value)
       .setIn(['client', 'civil_a'], value),
+  expertTypeValue: (item, { value, n }) =>
+    item
+      .setIn(['server', `nExpertID${n}`], value)
+      .setIn(['client', `nExpertID${n}`], value),
+  expertValue: (item, { value, n }) =>
+    item
+      .setIn(['server', `nExpertLim${n}`], value)
+      .setIn(['client', `nExpertLim${n}`], value),
 };
 
 export default Resolvers;

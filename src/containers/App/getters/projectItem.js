@@ -627,3 +627,48 @@ export const getBoxItemOut = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
 ) => nextValue.get('boxItemOut') || entry.get('boxItemOut') || undefined;
+
+export const getExpertTypeValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', `nExpertID${n}`], ['client', `nExpertID${n}`]],
+      def: -1,
+      fnc: isInteger,
+    },
+  );
+
+export const getExpertTypeValueIsDisabled = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) => getExpertTypeValue(nextValue, { entry }, { n }) === -1;
+
+export const getExpertType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, expertTypes = IMMUTABLE_LIST },
+  { n = 1 } = {},
+) => {
+  const value = getExpertTypeValue(nextValue, { entry }, { n });
+  return expertTypes.find(expertType => expertType.get('value') === value);
+};
+
+export const getExpertValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', `nExpertLim${n}`], ['client', `nExpertLim${n}`]],
+      def: -1,
+      fnc: isInteger,
+    },
+  );

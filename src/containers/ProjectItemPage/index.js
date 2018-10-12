@@ -142,6 +142,8 @@ export class ProjectItemPage extends React.PureComponent {
       moneyTypes,
       itemGradeTypes,
       weaponTypes,
+      expertTypes,
+      effectTypes,
     } = actionsBindPayload.additionalData;
 
     const itemActions = projectsItemsBindActions(actionsBindPayload);
@@ -227,6 +229,8 @@ export class ProjectItemPage extends React.PureComponent {
                       moneyTypes={moneyTypes}
                       itemGradeTypes={itemGradeTypes}
                       weaponTypes={weaponTypes}
+                      expertTypes={expertTypes}
+                      effectTypes={effectTypes}
                       itemActions={itemActions}
                       boxItemOutActions={boxItemOutActions}
                       entriesFinderItems={entriesFinderItems}

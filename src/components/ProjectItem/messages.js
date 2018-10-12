@@ -11,6 +11,10 @@ export default defineMessages({
     id: 'app.components.ProjectItem.header',
     defaultMessage: 'This is the ProjectItem component !',
   },
+  Disabled: {
+    id: 'app.components.ProjectItem.Disabled',
+    defaultMessage: 'Disabled',
+  },
   RenderNotDefined: {
     id: 'app.components.ProjectItem.RenderNotDefined',
     defaultMessage: 'Render for this element not defined.',
@@ -38,6 +42,14 @@ export default defineMessages({
   UnknownMoneyType: {
     id: 'app.components.ProjectItem.UnknownMoneyType',
     defaultMessage: 'Unknown money type',
+  },
+  UnknownExpertType: {
+    id: 'app.components.ProjectItem.UnknownExpertType',
+    defaultMessage: 'Unknown expert type',
+  },
+  UnknownEffectType: {
+    id: 'app.components.ProjectItem.UnknownEffectType',
+    defaultMessage: 'Unknown effect type',
   },
   UnknownItemGrade: {
     id: 'app.components.ProjectItem.UnknownItemGrade',
