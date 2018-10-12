@@ -149,7 +149,7 @@ ProjectItemInteractingEffectType.propTypes = {
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
   fluid: PropTypes.bool,
-  n: PropTypes.oneOf([1, 2]).isRequired,
+  n: PropTypes.oneOf([1, 2, 3, 4]).isRequired,
   types: PropTypes.instanceOf(List).isRequired,
 };
 

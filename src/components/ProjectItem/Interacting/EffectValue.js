@@ -76,7 +76,7 @@ ProjectItemInteractingEffectValue.propTypes = {
     PropTypes.node,
     PropTypes.number,
   ]),
-  n: PropTypes.oneOf([1, 2]).isRequired,
+  n: PropTypes.oneOf([1, 2, 3, 4]).isRequired,
   fluid: PropTypes.bool,
 };
 
