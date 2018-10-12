@@ -20,7 +20,10 @@ class ProjectItemInteractingEffectValue extends React.PureComponent {
 
     this.changeValue = evt => {
       const { onChangeValue, item, n } = this.props;
-      onChangeValue(item, { value: parseFloat(evt.target.value), n });
+      onChangeValue(item, {
+        value: parseFloat(evt.target.value.replace(/[^0-9,.-]/g, '')) || 0,
+        n,
+      });
     };
   }
 
@@ -56,8 +59,6 @@ class ProjectItemInteractingEffectValue extends React.PureComponent {
         onChange={this.changeValue}
         label={label}
         type="number"
-        min="-1"
-        max="99"
         disabled={isDisabled}
       />
     );

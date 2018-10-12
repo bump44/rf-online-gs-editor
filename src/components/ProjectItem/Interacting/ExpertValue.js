@@ -21,7 +21,7 @@ class ProjectItemInteractingExpertValue extends React.PureComponent {
 
     this.changeValue = evt => {
       const { onChangeValue, item, n } = this.props;
-      onChangeValue(item, { value: parseInt(evt.target.value), n });
+      onChangeValue(item, { value: parseInt(evt.target.value) || -1, n });
     };
   }
 
