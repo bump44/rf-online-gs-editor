@@ -7,11 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { get, uniq } from 'lodash';
 import { Map /* , List */ } from 'immutable';
 import { Input, Popup, Button } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
-import { UPPER, LOWER } from '../../../structs/item_types';
+import * as ITEM_TYPES from '../../../structs/item_types';
+import { getEffect25PresentValue } from '../../../utils/converters';
 
 import {
   getEffectValue,
@@ -19,41 +21,53 @@ import {
   getEffectTypeValue,
   getType,
 } from '../../../containers/App/getters/projectItem';
-import { getEffect25PresentValue } from '../../../utils/converters';
 
-function usefulValue25Content(value) {
-  const pres = getEffect25PresentValue(value);
-  return `${pres.toFixed(2)}: ${pres}`;
-}
-
-const USEFUL_VALUES = {
-  25: [
-    {
-      value: -311,
-      types: [UPPER],
-      content: usefulValue25Content,
-    },
-    {
-      value: -297,
-      types: [LOWER],
-      content: usefulValue25Content,
-    },
-  ],
+const USEFUL_VALUES_CONTENT = {
+  25: value => {
+    const pres = getEffect25PresentValue(value);
+    return `${value} ${pres}: ${pres.toFixed(2)}`;
+  },
+  9: value => ({ 0: 'Disable', 1: 'Enable' }[value] || `Unknown: ${value}`),
 };
 
-function getUsefulValues(effectTypeValue, itemType) {
-  const effUsefulValues = USEFUL_VALUES[effectTypeValue] || [];
-  return effUsefulValues
-    .filter(usefulValue => usefulValue.types.includes(itemType))
-    .map(usefulValue => ({
-      key: usefulValue.key || usefulValue.value,
-      value: usefulValue.value,
-      content:
-        typeof usefulValue.content === 'function'
-          ? usefulValue.content(usefulValue.value)
-          : usefulValue.content || usefulValue.value,
-    }));
+const USEFUL_VALUES = {
+  [ITEM_TYPES.UPPER]: {
+    25: [-311],
+  },
+  [ITEM_TYPES.LOWER]: {
+    25: [-297],
+  },
+};
+
+function injectUsefulValues(itemType, effectType, values) {
+  USEFUL_VALUES[itemType] = USEFUL_VALUES[itemType] || {};
+  USEFUL_VALUES[itemType][effectType] = (
+    USEFUL_VALUES[itemType][effectType] || []
+  ).concat(values);
 }
+
+function getUsefulValues(itemType, effectTypeValue, currentValue) {
+  const fnContent = USEFUL_VALUES_CONTENT[effectTypeValue];
+  const effUsefulValues = uniq(
+    get(USEFUL_VALUES, `${itemType}.${effectTypeValue}`, []).concat(
+      typeof fnContent === 'function' ? [currentValue] : [],
+    ),
+  );
+
+  return effUsefulValues.map(usefulValue => ({
+    key: usefulValue,
+    value: usefulValue,
+    content:
+      typeof fnContent === 'function' ? fnContent(usefulValue) : usefulValue,
+  }));
+}
+
+Object.values(ITEM_TYPES).forEach(itemType => {
+  // accuracy & dodge fast-values
+  injectUsefulValues(itemType, 3, [3, 5, 10, 15, 25, 50]);
+  injectUsefulValues(itemType, 4, [3, 5, 10, 15, 25, 50]);
+  injectUsefulValues(itemType, 9, [0, 1]);
+});
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingEffectValue extends React.PureComponent {
@@ -73,7 +87,7 @@ class ProjectItemInteractingEffectValue extends React.PureComponent {
 
     this.changeValueAtUsefulValue = evt => {
       const { usefulValue } = evt.target.dataset;
-      return this.changeValue({ target: { value: usefulValue.toString() } });
+      return this.changeValue({ target: { value: `${usefulValue}` } });
     };
   }
 
@@ -158,7 +172,13 @@ class ProjectItemInteractingEffectValue extends React.PureComponent {
       { n },
     );
 
-    const usefulValues = getUsefulValues(typeValue, itemType);
+    const value = getEffectValue(
+      itemNextValues.get('nextValue'),
+      { entry: item },
+      { n },
+    );
+
+    const usefulValues = getUsefulValues(itemType, typeValue, value);
 
     if (usefulValues.length <= 0) {
       return this.renderInput();
