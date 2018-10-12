@@ -23,7 +23,7 @@ class ProjectItemInteractingDefence extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, className, size } = this.props;
+    const { item, itemNextValues, className, size, label } = this.props;
     const value = getDefFc(itemNextValues.get('nextValue'), { entry: item });
 
     return (
@@ -34,6 +34,7 @@ class ProjectItemInteractingDefence extends React.PureComponent {
         value={value}
         onChange={this.changeValue}
         className={className}
+        label={label}
       />
     );
   }
@@ -45,11 +46,17 @@ ProjectItemInteractingDefence.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingDefence.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingDefence;

@@ -24,7 +24,7 @@ class ProjectItemInteractingDefenceGap extends React.PureComponent {
   }
 
   render() {
-    const { item, itemNextValues, size, className } = this.props;
+    const { item, itemNextValues, size, className, label } = this.props;
     const value = getDefGap(itemNextValues.get('nextValue'), { entry: item });
 
     return (
@@ -35,6 +35,7 @@ class ProjectItemInteractingDefenceGap extends React.PureComponent {
         value={value}
         onChange={this.changeValue}
         className={className}
+        label={label}
       />
     );
   }
@@ -46,11 +47,17 @@ ProjectItemInteractingDefenceGap.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingDefenceGap.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingDefenceGap;

@@ -36,7 +36,7 @@ class ProjectItemInteractingUpLevelLim extends React.PureComponent {
 
   render() {
     const value = this.getUpLevelLim();
-    const { className, size } = this.props;
+    const { className, size, label } = this.props;
 
     return (
       <Input
@@ -46,6 +46,7 @@ class ProjectItemInteractingUpLevelLim extends React.PureComponent {
         value={value}
         onChange={this.changeValue}
         className={className}
+        label={label}
       />
     );
   }
@@ -57,11 +58,17 @@ ProjectItemInteractingUpLevelLim.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.number,
+  ]),
 };
 
 ProjectItemInteractingUpLevelLim.defaultProps = {
   size: 'mini',
   className: '',
+  label: null,
 };
 
 export default ProjectItemInteractingUpLevelLim;
