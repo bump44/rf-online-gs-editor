@@ -164,6 +164,14 @@ const Resolvers = {
     item
       .setIn(['server', `nExpertLim${n}`], value)
       .setIn(['client', `nExpertLim${n}`], value),
+  effectTypeValue: (item, { value, n }) =>
+    item
+      .setIn(['server', `nEffCode__${n}`], value)
+      .setIn(['client', `nEffCode__${n}`], value),
+  effectValue: (item, { value, n }) =>
+    item
+      .setIn(['server', `fEffUnit__${n}`], value)
+      .setIn(['client', `fEffUnit__${n}`], value),
 };
 
 export default Resolvers;

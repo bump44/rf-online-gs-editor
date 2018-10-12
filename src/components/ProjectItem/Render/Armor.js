@@ -10,6 +10,7 @@ import { Map, List } from 'immutable';
 import { Tab } from 'semantic-ui-react';
 import SegmentBasicArmor from '../Segment/BasicArmor';
 import SegmentExperts from '../Segment/Experts';
+import SegmentEffects from '../Segment/Effects';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
@@ -25,6 +26,7 @@ class ProjectItemRenderArmor extends React.PureComponent {
     this.renderTabs = this.renderTabs.bind(this);
     this.renderBasic = this.renderBasic.bind(this);
     this.renderExperts = this.renderExperts.bind(this);
+    this.renderEffects = this.renderEffects.bind(this);
   }
 
   getTabPanes() {
@@ -39,7 +41,7 @@ class ProjectItemRenderArmor extends React.PureComponent {
       },
       {
         menuItem: { key: 'effects', content: 'Effects' },
-        render: this.renderExperts,
+        render: this.renderEffects,
       },
     ];
   }
@@ -63,6 +65,42 @@ class ProjectItemRenderArmor extends React.PureComponent {
 
     return (
       <SegmentExperts
+        item={item}
+        itemNextValues={itemNextValues}
+        nextValues={nextValues}
+        boxItemOutActions={boxItemOutActions}
+        entriesFinderItemsActions={entriesFinderItemsActions}
+        entriesFinderItems={entriesFinderItems}
+        itemActions={itemActions}
+        moneyTypes={moneyTypes}
+        itemGradeTypes={itemGradeTypes}
+        weaponTypes={weaponTypes}
+        localSettings={localSettings}
+        expertTypes={expertTypes}
+        effectTypes={effectTypes}
+      />
+    );
+  }
+
+  renderEffects() {
+    const {
+      item,
+      itemNextValues,
+      nextValues,
+      boxItemOutActions,
+      entriesFinderItemsActions,
+      entriesFinderItems,
+      itemActions,
+      moneyTypes,
+      itemGradeTypes,
+      weaponTypes,
+      localSettings,
+      expertTypes,
+      effectTypes,
+    } = this.props;
+
+    return (
+      <SegmentEffects
         item={item}
         itemNextValues={itemNextValues}
         nextValues={nextValues}

@@ -37,6 +37,8 @@ export const projectsItems = {
       'civilA',
       'expertTypeValue',
       'expertValue',
+      'effectTypeValue',
+      'effectValue',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

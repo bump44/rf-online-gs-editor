@@ -337,7 +337,7 @@ export const getIndex = (
  * Return vendor button type value
  * @param {Object} nextValue next item values
  * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
+ * @param {Object} props n: cell 1-10
  *
  * @returns Number
  */
@@ -359,7 +359,7 @@ export const getButtonValue = (
  * Return vendor button type
  * @param {Object} nextValue next item values
  * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
+ * @param {Object} props n: cell 1-10
  *
  * @returns Immutable.Map|undefined
  */

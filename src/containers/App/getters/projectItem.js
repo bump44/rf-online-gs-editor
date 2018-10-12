@@ -672,3 +672,48 @@ export const getExpertValue = (
       fnc: isInteger,
     },
   );
+
+export const getEffectTypeValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', `nEffCode__${n}`], ['client', `nEffCode__${n}`]],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getEffectTypeValueIsDisabled = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) => getEffectTypeValue(nextValue, { entry }, { n }) === 0;
+
+export const getEffectType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, effectTypes = IMMUTABLE_LIST },
+  { n = 1 } = {},
+) => {
+  const value = getEffectTypeValue(nextValue, { entry }, { n });
+  return effectTypes.find(effectType => effectType.get('value') === value);
+};
+
+export const getEffectValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 } = {},
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', `fEffUnit__${n}`], ['client', `fEffUnit__${n}`]],
+      def: -1,
+      fnc: isNumber,
+    },
+  );
