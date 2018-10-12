@@ -13,6 +13,9 @@ export default gql`
         project {
           id
         }
+        clientND {
+          strName
+        }
         client {
           ...ProjectItemClientNameParts
         }

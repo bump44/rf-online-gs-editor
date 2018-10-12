@@ -59,6 +59,9 @@ export default gql`
         id
         type
         nIndex
+        clientND {
+          strName
+        }
         client {
           ...ProjectItemClientNameParts
         }

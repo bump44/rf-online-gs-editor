@@ -49,7 +49,9 @@ export default gql`
       id
       type
       nIndex
-      searchTextValue
+      clientND {
+        strName
+      }
       client {
         ...ProjectItemClientNameParts
       }
