@@ -21,6 +21,16 @@ import {
   IMMUTABLE_LIST,
 } from '../constants';
 
+export const getIsRemoved = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['isRemoved']], def: false, fnc: isBoolean },
+  );
+
 /**
  * Return the most important title of the subject
  * @param {Object} nextValue next item values
