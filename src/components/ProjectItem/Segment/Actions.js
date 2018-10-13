@@ -95,7 +95,10 @@ class ProjectItemSegmentActions extends React.PureComponent {
             onCancel={this.onConfirmFullyRemoveCancel}
             content={
               <div style={style.confirmContent}>
-                Item {getName(itemNextValues.get('nextValue'), { entry: item })}{' '}
+                Item{' '}
+                <b>
+                  {getName(itemNextValues.get('nextValue'), { entry: item })}
+                </b>{' '}
                 will be permanently deleted. Are you sure?
               </div>
             }
