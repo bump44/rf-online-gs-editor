@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import {
   CHANGE_CURRENT_USER,
   CHANGE_CURRENT_USER_TOKEN,
@@ -29,6 +29,12 @@ import {
   PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE,
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR,
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED,
+  IMMUTABLE_MAP,
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_REMOVING,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_COPYING,
+  PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
 } from './constants';
 
 import { saveTokenMe } from '../../utils/ls';
@@ -90,6 +96,9 @@ export const initialState = fromJS({
    *      isSaved: false,
    *      isSaving: false,
    *      isError: false,
+   *      isCopying: false,
+   *      isRemoving: false,
+   *      isRestoring: false,
    *      errorMessage: '',
    *      nextValue: {},
    *    }
@@ -248,7 +257,8 @@ function appReducer(state = initialState, action) {
         );
 
     // PROJECTS_NEXT_VALUES
-    case PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE:
+    case PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE:
+    case PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE: // this event takes in saga actions
       return state.setIn(
         ['projectsNextValues', action.projectId, action.keyId, 'nextValue'],
         action.nextValue,
@@ -268,12 +278,37 @@ function appReducer(state = initialState, action) {
         ['projectsNextValues', action.projectId, action.keyId, 'isError'],
         action.isError,
       );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_REMOVING:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isRemoving'],
+        action.isRemoving,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isRestoring'],
+        action.isRestoring,
+      );
+    case PROJECTS_NEXT_VALUES_CHANGE_IS_COPYING:
+      return state.setIn(
+        ['projectsNextValues', action.projectId, action.keyId, 'isCopying'],
+        action.isCopying,
+      );
     case PROJECTS_NEXT_VALUES_CHANGE_ERROR_MESSAGE:
       return state.setIn(
         ['projectsNextValues', action.projectId, action.keyId, 'errorMessage'],
         action.errorMessage,
       );
     // change of values in the saga
+    case PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL:
+      return state.setIn(
+        [
+          'projectsNextValues',
+          action.projectId,
+          action.entry.get('id'),
+          'keyId',
+        ],
+        action.entry.get('id'),
+      );
     case PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE:
       return state
         .setIn(
@@ -308,7 +343,7 @@ function appReducer(state = initialState, action) {
               action.entry.get('id'),
               'nextValue',
             ],
-            Map({}),
+            IMMUTABLE_MAP,
           ),
         );
 

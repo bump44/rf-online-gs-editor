@@ -5,6 +5,12 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_SAVED,
   PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING,
   PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_REMOVING,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_COPYING,
+  PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE,
+  PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
+  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
 } from '../constants';
 
 /**
@@ -59,6 +65,42 @@ export function projectsNextValuesChangeIsError({ projectId, keyId }, isError) {
   };
 }
 
+export function projectsNextValuesChangeIsRemoving(
+  { projectId, keyId },
+  isRemoving,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_REMOVING,
+    projectId,
+    keyId,
+    isRemoving,
+  };
+}
+
+export function projectsNextValuesChangeIsRestoring(
+  { projectId, keyId },
+  isRestoring,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
+    projectId,
+    keyId,
+    isRestoring,
+  };
+}
+
+export function projectsNextValuesChangeIsCopying(
+  { projectId, keyId },
+  isCopying,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_IS_COPYING,
+    projectId,
+    keyId,
+    isCopying,
+  };
+}
+
 export function projectsNextValuesChangeErrorMessage(
   { projectId, keyId },
   errorMessage,
@@ -80,6 +122,57 @@ export function projectsNextValuesChangeNextValue(
     projectId,
     keyId,
     nextValue,
+    subType,
+  };
+}
+
+export function projectsNextValuesChangeNextValueOnlyInState(
+  { projectId, keyId, subType },
+  nextValue,
+) {
+  return {
+    type: PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE,
+    projectId,
+    keyId,
+    nextValue,
+    subType,
+  };
+}
+
+export function projectsNextValuesRemoveVirtual({
+  projectId,
+  entry,
+  propKey,
+  propValue,
+  additionalData = {},
+  subType,
+}) {
+  return {
+    type: PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+    projectId,
+    entry,
+    propKey,
+    propValue,
+    additionalData,
+    subType,
+  };
+}
+
+export function projectsNextValuesRestoreVirtual({
+  projectId,
+  entry,
+  propKey,
+  propValue,
+  additionalData = {},
+  subType,
+}) {
+  return {
+    type: PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+    projectId,
+    entry,
+    propKey,
+    propValue,
+    additionalData,
     subType,
   };
 }

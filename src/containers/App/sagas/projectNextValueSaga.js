@@ -18,6 +18,9 @@ import {
   ITEM,
   STORE,
   BOXITEMOUT,
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  IMMUTABLE_MAP,
+  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
 } from '../constants';
 
 import {
@@ -36,11 +39,18 @@ import {
 import apolloClient from '../../../apollo';
 
 import projectItemUpdate from '../../../apollo/mutations/project_item_update';
+import projectItemRemoveVirtual from '../../../apollo/mutations/project_item_remove_virtual';
+import projectItemRestoreVirtual from '../../../apollo/mutations/project_item_restore_virtual';
 import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
 
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
 import boxItemOutResolvers from './projectNextValue/boxItemOutResolvers';
+import {
+  projectsNextValuesChangeIsRemoving,
+  projectsNextValuesChangeNextValueOnlyInState,
+  projectsNextValuesChangeIsRestoring,
+} from '../actions/projectsNextValues';
 
 const Workers = {};
 
@@ -50,9 +60,17 @@ const Resolvers = {
   [BOXITEMOUT]: boxItemOutResolvers,
 };
 
-const MutationQueries = {
+const MutationUpdateQueries = {
   [ITEM]: projectItemUpdate,
   [STORE]: projectStoreUpdate,
+};
+
+const MutationRemoveVirtualQueries = {
+  [ITEM]: projectItemRemoveVirtual,
+};
+
+const MutationRestoreVirtualQueries = {
+  [ITEM]: projectItemRestoreVirtual,
 };
 
 const PickFields = {
@@ -151,7 +169,7 @@ export function* worker({ projectId, keyId, subType }) {
     yield put(callAction(projectsNextValuesChangeIsError, false));
     yield delay(1500); // delay before mutate
 
-    const typeMutation = MutationQueries[subType];
+    const typeMutation = MutationUpdateQueries[subType];
 
     if (!typeMutation) {
       throw new Error('Value mutation not defined');
@@ -187,6 +205,102 @@ export function* worker({ projectId, keyId, subType }) {
   }
 }
 
+export function* workerRemoveVirtual({ projectId, keyId, subType }) {
+  const callAction = (action, value) => action({ projectId, keyId }, value);
+
+  try {
+    yield put(callAction(projectsNextValuesChangeIsError, false));
+    yield put(callAction(projectsNextValuesChangeIsRemoving, true));
+
+    const typeMutation = MutationRemoveVirtualQueries[subType];
+
+    if (!typeMutation) {
+      throw new Error('Remove virtual mutation not defined');
+    }
+
+    // mutate server state
+    yield apolloClient.mutate({
+      mutation: typeMutation,
+      variables: { id: keyId },
+    });
+
+    const projectsNextValues = yield select(makeSelectProjectsNextValues());
+    const projectNextValue = projectsNextValues.getIn(
+      [projectId, keyId, 'nextValue'],
+      IMMUTABLE_MAP,
+    );
+
+    yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    yield put(
+      projectsNextValuesChangeNextValueOnlyInState(
+        {
+          projectId,
+          keyId,
+          subType,
+        },
+        projectNextValue.set('isRemoved', true),
+      ),
+    );
+  } catch (error) {
+    yield put(callAction(projectsNextValuesChangeIsError, true));
+    yield put(callAction(projectsNextValuesChangeErrorMessage, error.message));
+    yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    console.error(error); // eslint-disable-line
+  } finally {
+    if (yield cancelled()) {
+      yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    }
+  }
+}
+
+export function* workerRestoreVirtual({ projectId, keyId, subType }) {
+  const callAction = (action, value) => action({ projectId, keyId }, value);
+
+  try {
+    yield put(callAction(projectsNextValuesChangeIsError, false));
+    yield put(callAction(projectsNextValuesChangeIsRestoring, true));
+
+    const typeMutation = MutationRestoreVirtualQueries[subType];
+
+    if (!typeMutation) {
+      throw new Error('Restore virtual mutation not defined');
+    }
+
+    // mutate server state
+    yield apolloClient.mutate({
+      mutation: typeMutation,
+      variables: { id: keyId },
+    });
+
+    const projectsNextValues = yield select(makeSelectProjectsNextValues());
+    const projectNextValue = projectsNextValues.getIn(
+      [projectId, keyId, 'nextValue'],
+      IMMUTABLE_MAP,
+    );
+
+    yield put(callAction(projectsNextValuesChangeIsRestoring, false));
+    yield put(
+      projectsNextValuesChangeNextValueOnlyInState(
+        {
+          projectId,
+          keyId,
+          subType,
+        },
+        projectNextValue.set('isRemoved', false),
+      ),
+    );
+  } catch (error) {
+    yield put(callAction(projectsNextValuesChangeIsError, true));
+    yield put(callAction(projectsNextValuesChangeErrorMessage, error.message));
+    yield put(callAction(projectsNextValuesChangeIsRestoring, false));
+    console.error(error); // eslint-disable-line
+  } finally {
+    if (yield cancelled()) {
+      yield put(callAction(projectsNextValuesChangeIsRestoring, false));
+    }
+  }
+}
+
 /**
  * Watch `PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE` action & create fork to change data in nextValue state
  */
@@ -215,6 +329,45 @@ export function* watchChangeValue() {
   }
 }
 
+export function* watchRemoveVirtual() {
+  while (true) {
+    const props = yield take(PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL);
+    props.keyId = props.entry.get('id');
+
+    const { projectId, keyId } = props;
+    const mainKey = `${projectId}:${keyId}:removeVirtual`;
+
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
+    }
+
+    Workers[mainKey] = yield fork(workerRemoveVirtual, props);
+  }
+}
+
+export function* watchRestoreVirtual() {
+  while (true) {
+    const props = yield take(PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL);
+    props.keyId = props.entry.get('id');
+
+    const { projectId, keyId } = props;
+    const mainKey = `${projectId}:${keyId}:restoreVirtual`;
+
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
+    }
+
+    Workers[mainKey] = yield fork(workerRestoreVirtual, props);
+  }
+}
+
 export default function* defaultSaga() {
-  yield all([fork(watchChangeProp), fork(watchChangeValue)]);
+  yield all([
+    fork(watchChangeProp),
+    fork(watchChangeValue),
+    fork(watchRemoveVirtual),
+    fork(watchRestoreVirtual),
+  ]);
 }

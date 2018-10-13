@@ -1,6 +1,10 @@
 import upperFirst from 'lodash/upperFirst';
 import { ITEM } from '../constants';
-import { projectsNextValuesChangePropValue } from './projectsNextValues';
+import {
+  projectsNextValuesChangePropValue,
+  projectsNextValuesRemoveVirtual,
+  projectsNextValuesRestoreVirtual,
+} from './projectsNextValues';
 
 /**
  * ProjectsItems Actions
@@ -51,6 +55,18 @@ export const projectsItems = {
     });
     return fns;
   })(),
+  removeVirtual: args =>
+    projectsNextValuesRemoveVirtual({
+      ...args,
+      subType: ITEM,
+      propKey: 'removeVirtual',
+    }),
+  restoreVirtual: args =>
+    projectsNextValuesRestoreVirtual({
+      ...args,
+      subType: ITEM,
+      propKey: 'restoreVirtual',
+    }),
 };
 
 export const projectsItemsActionNames = Object.keys(projectsItems);
