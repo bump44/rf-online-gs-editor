@@ -49,6 +49,7 @@ export default gql`
       id
       type
       nIndex
+      isRemoved
       clientND {
         strName
       }
