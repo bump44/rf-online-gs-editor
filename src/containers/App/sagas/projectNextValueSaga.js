@@ -21,6 +21,7 @@ import {
   PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
   IMMUTABLE_MAP,
   PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
 } from '../constants';
 
 import {
@@ -40,6 +41,7 @@ import apolloClient from '../../../apollo';
 
 import projectItemUpdate from '../../../apollo/mutations/project_item_update';
 import projectItemRemoveVirtual from '../../../apollo/mutations/project_item_remove_virtual';
+import projectItemRemoveFully from '../../../apollo/mutations/project_item_remove_fully';
 import projectItemRestoreVirtual from '../../../apollo/mutations/project_item_restore_virtual';
 import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
 
@@ -67,6 +69,10 @@ const MutationUpdateQueries = {
 
 const MutationRemoveVirtualQueries = {
   [ITEM]: projectItemRemoveVirtual,
+};
+
+const MutationRemoveFullyQueries = {
+  [ITEM]: projectItemRemoveFully,
 };
 
 const MutationRestoreVirtualQueries = {
@@ -253,6 +259,54 @@ export function* workerRemoveVirtual({ projectId, keyId, subType }) {
   }
 }
 
+export function* workerRemoveFully({ projectId, keyId, subType }) {
+  const callAction = (action, value) => action({ projectId, keyId }, value);
+
+  try {
+    yield put(callAction(projectsNextValuesChangeIsError, false));
+    yield put(callAction(projectsNextValuesChangeIsRemoving, true));
+
+    const typeMutation = MutationRemoveFullyQueries[subType];
+
+    if (!typeMutation) {
+      throw new Error('Remove fully mutation not defined');
+    }
+
+    // mutate server state
+    yield apolloClient.mutate({
+      mutation: typeMutation,
+      variables: { id: keyId },
+    });
+
+    const projectsNextValues = yield select(makeSelectProjectsNextValues());
+    const projectNextValue = projectsNextValues.getIn(
+      [projectId, keyId, 'nextValue'],
+      IMMUTABLE_MAP,
+    );
+
+    yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    yield put(
+      projectsNextValuesChangeNextValueOnlyInState(
+        {
+          projectId,
+          keyId,
+          subType,
+        },
+        projectNextValue.set('isRemovedFully', true),
+      ),
+    );
+  } catch (error) {
+    yield put(callAction(projectsNextValuesChangeIsError, true));
+    yield put(callAction(projectsNextValuesChangeErrorMessage, error.message));
+    yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    console.error(error); // eslint-disable-line
+  } finally {
+    if (yield cancelled()) {
+      yield put(callAction(projectsNextValuesChangeIsRemoving, false));
+    }
+  }
+}
+
 export function* workerRestoreVirtual({ projectId, keyId, subType }) {
   const callAction = (action, value) => action({ projectId, keyId }, value);
 
@@ -346,6 +400,23 @@ export function* watchRemoveVirtual() {
   }
 }
 
+export function* watchRemoveFully() {
+  while (true) {
+    const props = yield take(PROJECTS_NEXT_VALUES_REMOVE_FULLY);
+    props.keyId = props.entry.get('id');
+
+    const { projectId, keyId } = props;
+    const mainKey = `${projectId}:${keyId}:removeFully`;
+
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
+    }
+
+    Workers[mainKey] = yield fork(workerRemoveFully, props);
+  }
+}
+
 export function* watchRestoreVirtual() {
   while (true) {
     const props = yield take(PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL);
@@ -368,6 +439,7 @@ export default function* defaultSaga() {
     fork(watchChangeProp),
     fork(watchChangeValue),
     fork(watchRemoveVirtual),
+    fork(watchRemoveFully),
     fork(watchRestoreVirtual),
   ]);
 }

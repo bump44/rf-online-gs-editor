@@ -4,6 +4,7 @@ import {
   projectsNextValuesChangePropValue,
   projectsNextValuesRemoveVirtual,
   projectsNextValuesRestoreVirtual,
+  projectsNextValuesRemoveFully,
 } from './projectsNextValues';
 
 /**
@@ -60,6 +61,12 @@ export const projectsItems = {
       ...args,
       subType: ITEM,
       propKey: 'removeVirtual',
+    }),
+  removeFully: args =>
+    projectsNextValuesRemoveFully({
+      ...args,
+      subType: ITEM,
+      propKey: 'removeFully',
     }),
   restoreVirtual: args =>
     projectsNextValuesRestoreVirtual({

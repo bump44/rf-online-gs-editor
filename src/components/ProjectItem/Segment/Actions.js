@@ -7,11 +7,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
-import { Segment, Button } from 'semantic-ui-react';
-import { getIsRemoved } from '../../../containers/App/getters/projectItem';
+import { Segment, Button, Confirm } from 'semantic-ui-react';
+import {
+  getIsRemoved,
+  getName,
+} from '../../../containers/App/getters/projectItem';
+
+const style = {
+  confirmContent: {
+    padding: '30px',
+    textAlign: 'center',
+    fontSize: '16px',
+    borderTop: '6px solid #ea0000',
+    borderBottom: '6px solid #ea0000',
+  },
+};
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentActions extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { confirmFullyRemoveIsOpen: false };
+
+    this.onClickFullyRemove = () =>
+      this.setState({ confirmFullyRemoveIsOpen: true });
+    this.onConfirmFullyRemoveCancel = () =>
+      this.setState({ confirmFullyRemoveIsOpen: false });
+    this.onConfirmFullyRemoveConfirm = () => {
+      this.setState({ confirmFullyRemoveIsOpen: false }, () =>
+        // eslint-disable-next-line
+        this.props.itemActions.removeFully(this.props.item),
+      );
+    };
+  }
+
   onClickVirtualRemove = () =>
     // eslint-disable-next-line
     this.props.itemActions.removeVirtual(this.props.item);
@@ -25,6 +54,8 @@ class ProjectItemSegmentActions extends React.PureComponent {
     const isRemoved = getIsRemoved(itemNextValues.get('nextValue'), {
       entry: item,
     });
+
+    const { confirmFullyRemoveIsOpen } = this.state;
 
     return (
       <React.Fragment>
@@ -51,7 +82,25 @@ class ProjectItemSegmentActions extends React.PureComponent {
             </Button>
           )}
 
-          <Button>Fully Remove**</Button>
+          <Button
+            onClick={this.onClickFullyRemove}
+            loading={itemNextValues.get('isRemoving', false)}
+          >
+            Fully Remove**
+          </Button>
+
+          <Confirm
+            open={confirmFullyRemoveIsOpen}
+            onConfirm={this.onConfirmFullyRemoveConfirm}
+            onCancel={this.onConfirmFullyRemoveCancel}
+            content={
+              <div style={style.confirmContent}>
+                Item {getName(itemNextValues.get('nextValue'), { entry: item })}{' '}
+                will be permanently deleted. Are you sure?
+              </div>
+            }
+          />
+
           <Button>Copy</Button>
           <Button>Copy & Redirect</Button>
         </Segment>

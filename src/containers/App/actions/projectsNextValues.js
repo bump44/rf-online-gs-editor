@@ -11,6 +11,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE,
   PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
   PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
 } from '../constants';
 
 /**
@@ -149,6 +150,25 @@ export function projectsNextValuesRemoveVirtual({
 }) {
   return {
     type: PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+    projectId,
+    entry,
+    propKey,
+    propValue,
+    additionalData,
+    subType,
+  };
+}
+
+export function projectsNextValuesRemoveFully({
+  projectId,
+  entry,
+  propKey,
+  propValue,
+  additionalData = {},
+  subType,
+}) {
+  return {
+    type: PROJECTS_NEXT_VALUES_REMOVE_FULLY,
     projectId,
     entry,
     propKey,

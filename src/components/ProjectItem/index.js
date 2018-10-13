@@ -14,6 +14,7 @@ import renderResolvers from './renderResolvers';
 import {
   getIsRemoved,
   getType,
+  getIsRemovedFully,
 } from '../../containers/App/getters/projectItem';
 
 function ProjectItem({
@@ -42,6 +43,20 @@ function ProjectItem({
   const isRemoved = getIsRemoved(itemNextValues.get('nextValue'), {
     entry: item,
   });
+
+  const isRemovedFully = getIsRemovedFully(itemNextValues.get('nextValue'), {
+    entry: item,
+  });
+
+  if (isRemovedFully) {
+    return (
+      <div style={style}>
+        <Segment color="blue" inverted>
+          This item has been deleted.
+        </Segment>
+      </div>
+    );
+  }
 
   return (
     <div style={style}>

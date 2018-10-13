@@ -31,6 +31,16 @@ export const getIsRemoved = (
     { fields: [['isRemoved']], def: false, fnc: isBoolean },
   );
 
+export const getIsRemovedFully = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['isRemovedFully']], def: false, fnc: isBoolean },
+  );
+
 /**
  * Return the most important title of the subject
  * @param {Object} nextValue next item values
