@@ -6,10 +6,15 @@
 
 import React from 'react';
 import { Map, List } from 'immutable';
+import { Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import renderResolvers from './renderResolvers';
+import {
+  getIsRemoved,
+  getType,
+} from '../../containers/App/getters/projectItem';
 
 function ProjectItem({
   item,
@@ -27,11 +32,28 @@ function ProjectItem({
   entriesFinderItemsActions,
   entriesFinderItems,
 }) {
-  const Render = renderResolvers[item.get('type')];
+  const Render =
+    renderResolvers[
+      getType(itemNextValues.get('nextValue'), {
+        entry: item,
+      })
+    ];
+
+  const isRemoved = getIsRemoved(itemNextValues.get('nextValue'), {
+    entry: item,
+  });
 
   return (
     <div style={style}>
+      {isRemoved && (
+        <Segment color="yellow" inverted>
+          This item is marked as deleted, you can change it or use it as a basis
+          for other items, but the item itself will not be exported.
+        </Segment>
+      )}
+
       {!Render && <FormattedMessage {...messages.RenderNotDefined} />}
+
       {Render && (
         <Render
           item={item}
