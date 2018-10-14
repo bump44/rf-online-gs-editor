@@ -44,6 +44,7 @@ import projectItemRemoveVirtual from '../../../apollo/mutations/project_item_rem
 import projectItemRemoveFully from '../../../apollo/mutations/project_item_remove_fully';
 import projectItemRestoreVirtual from '../../../apollo/mutations/project_item_restore_virtual';
 import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
+import projectBoxItemOutUpdate from '../../../apollo/mutations/project_boxItemOut_update';
 
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
@@ -65,6 +66,7 @@ const Resolvers = {
 const MutationUpdateQueries = {
   [ITEM]: projectItemUpdate,
   [STORE]: projectStoreUpdate,
+  [BOXITEMOUT]: projectBoxItemOutUpdate,
 };
 
 const MutationRemoveVirtualQueries = {
