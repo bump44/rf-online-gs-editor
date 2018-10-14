@@ -28,10 +28,15 @@ import clientItemResolve from './projectExport/clientItemResolve';
 // import clientStoreResolve from './projectExport/clientStoreResolve';
 import serverItemResolve from './projectExport/serverItemResolve';
 // import serverStoreResolve from './projectExport/serverStoreResolve';
-// import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
+import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
 // import clientItemNDResolve from './projectExport/clientItemNDResolve';
 
-const Resolvers = { clientItemResolve, serverItemResolve };
+const Resolvers = {
+  clientItemResolve,
+  serverItemResolve,
+  serverBoxItemOutResolve,
+};
+
 const Workers = {};
 
 export function* changeFileStateToCancelled({ projectId, fileKey, actions }) {
