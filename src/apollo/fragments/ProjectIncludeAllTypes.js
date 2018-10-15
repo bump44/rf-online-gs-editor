@@ -38,5 +38,12 @@ export default gql`
         value
       }
     }
+
+    mapNameTypes {
+      items {
+        title
+        value
+      }
+    }
   }
 `;
