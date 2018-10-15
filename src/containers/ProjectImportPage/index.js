@@ -48,12 +48,14 @@ import {
   FILES,
   SERVER_FILES,
   CLIENT_ND_FILES,
+  SERVER_MAP_FILES,
 } from '../../utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImports,
+  makeSelectProjectsImportsServerMaps,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
 } from '../App/selectors';
@@ -63,6 +65,9 @@ import {
   projectsImportsBindActionsWithFileKey,
   projectsImportsStartFileImport,
   projectsImportsCancelFileImport,
+  projectsImportsServerMapsBindActions,
+  projectsImportsServerMapsStartMapImport,
+  projectsImportsServerMapsCancelMapImport,
 } from '../App/actions';
 
 import {
@@ -73,6 +78,7 @@ import {
   FINISHED,
   ERROR,
   CANCELLED,
+  IMMUTABLE_MAP,
 } from '../App/constants';
 
 import Header from '../../components/Header';
@@ -90,6 +96,7 @@ export class ProjectImportPage extends React.Component {
   constructor(props) {
     super(props);
     this.renderFiles = this.renderFiles.bind(this);
+    this.renderServerMaps = this.renderServerMaps.bind(this);
     this.onClickSelectFilePath = this.onClickSelectFilePath.bind(this);
     this.onClickStartAll = this.onClickStartAll.bind(this);
     this.onClickCancelAll = this.onClickCancelAll.bind(this);
@@ -97,6 +104,9 @@ export class ProjectImportPage extends React.Component {
     this.isSomeReadyToStart = this.isSomeReadyToStart.bind(this);
     this.onClickSelectClientFolder = this.onClickSelectClientFolder.bind(this);
     this.onClickSelectServerFolder = this.onClickSelectServerFolder.bind(this);
+    this.onClickSelectServerMapsFolders = this.onClickSelectServerMapsFolders.bind(
+      this,
+    );
   }
 
   componentWillMount() {
@@ -165,6 +175,30 @@ export class ProjectImportPage extends React.Component {
     );
   }
 
+  onClickSelectServerMapsFolders() {
+    const { fnProjectImportsServerMapsActions } = this.props;
+
+    remote.dialog.showOpenDialog(
+      {
+        properties: ['openDirectory', 'multiSelections'],
+      },
+      dirs => {
+        try {
+          dirs.forEach(dir => {
+            const mapName = path.parse(dir).name;
+            if (!mapName) {
+              return;
+            }
+
+            fnProjectImportsServerMapsActions.add(mapName, dir);
+          });
+        } catch (err) {
+          // ignore
+        }
+      },
+    );
+  }
+
   onClickSelectFilePath(fileKey) {
     const { fnProjectsImportsChangeFilePropValue } = this.props;
     const fileActions = fnProjectsImportsChangeFilePropValue[fileKey];
@@ -197,28 +231,51 @@ export class ProjectImportPage extends React.Component {
   }
 
   isSomeStarted() {
-    const { projectsImports, projectImportPage } = this.props;
-    const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id, Map({}));
+    const {
+      projectsImports,
+      projectImportPage,
+      projectsImportsServerMaps,
+    } = this.props;
 
-    return some(FILES, (file, key) => {
-      const fileState = projectImports.get(key, Map({}));
-      const fileStatus = fileState.get('status', WAITING);
-      return fileStatus === PROCESSING;
-    });
+    const { project } = projectImportPage;
+
+    const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
+    const serverMaps = projectsImportsServerMaps.get(project.id, IMMUTABLE_MAP);
+
+    return (
+      some(FILES, (file, key) => {
+        const fileState = projectImports.get(key, IMMUTABLE_MAP);
+        const fileStatus = fileState.get('status', WAITING);
+        return fileStatus === PROCESSING;
+      }) ||
+      serverMaps.some(
+        serverMap => serverMap.get('status', WAITING) === PROCESSING,
+      )
+    );
   }
 
   isSomeReadyToStart() {
-    const { projectsImports, projectImportPage } = this.props;
-    const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id, Map({}));
+    const {
+      projectsImports,
+      projectImportPage,
+      projectsImportsServerMaps,
+    } = this.props;
 
-    return some(FILES, (file, key) => {
-      const fileState = projectImports.get(key, Map({}));
-      const fileStatus = fileState.get('status', WAITING);
-      const filePath = fileState.get('filePath', '').trim();
-      return fileStatus !== PROCESSING && filePath;
-    });
+    const { project } = projectImportPage;
+    const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
+    const serverMaps = projectsImportsServerMaps.get(project.id, IMMUTABLE_MAP);
+
+    return (
+      some(FILES, (file, key) => {
+        const fileState = projectImports.get(key, IMMUTABLE_MAP);
+        const fileStatus = fileState.get('status', WAITING);
+        const filePath = fileState.get('filePath', '').trim();
+        return fileStatus !== PROCESSING && filePath;
+      }) ||
+      serverMaps.some(
+        serverMap => serverMap.get('status', WAITING) !== PROCESSING,
+      )
+    );
   }
 
   onClickStartAll() {
@@ -227,13 +284,16 @@ export class ProjectImportPage extends React.Component {
       fnProjectsImportsStartFileImport,
       projectImportPage,
       importType,
+      projectsImportsServerMaps,
+      fnProjectsImportsServerMapsStartMapImport,
     } = this.props;
 
     const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id, Map({}));
+    const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
+    const serverMaps = projectsImportsServerMaps.get(project.id, IMMUTABLE_MAP);
 
     forEach(FILES, (file, key) => {
-      const fileState = projectImports.get(key, Map({}));
+      const fileState = projectImports.get(key, IMMUTABLE_MAP);
       const fileStatus = fileState.get('status', WAITING);
       const filePath = fileState.get('filePath', '').trim();
 
@@ -245,6 +305,16 @@ export class ProjectImportPage extends React.Component {
         });
       }
     });
+
+    serverMaps.forEach(serverMap => {
+      if (serverMap.get('status', WAITING) !== PROCESSING) {
+        fnProjectsImportsServerMapsStartMapImport({
+          projectId: project.id,
+          mapName: serverMap.get('mapName'),
+          importType,
+        });
+      }
+    });
   }
 
   onClickCancelAll() {
@@ -252,19 +322,31 @@ export class ProjectImportPage extends React.Component {
       projectsImports,
       fnProjectsImportsCancelFileImport,
       projectImportPage,
+      projectsImportsServerMaps,
+      fnProjectsImportsServerMapsCancelMapImport,
     } = this.props;
 
     const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id, Map({}));
+    const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
+    const serverMaps = projectsImportsServerMaps.get(project.id, IMMUTABLE_MAP);
 
     forEach(FILES, (file, key) => {
-      const fileState = projectImports.get(key, Map({}));
+      const fileState = projectImports.get(key, IMMUTABLE_MAP);
       const fileStatus = fileState.get('status', WAITING);
 
       if (fileStatus === PROCESSING) {
         fnProjectsImportsCancelFileImport({
           projectId: project.id,
           fileKey: key,
+        });
+      }
+    });
+
+    serverMaps.forEach(serverMap => {
+      if (serverMap.get('status', WAITING) === PROCESSING) {
+        fnProjectsImportsServerMapsCancelMapImport({
+          projectId: project.id,
+          mapName: serverMap.get('mapName'),
         });
       }
     });
@@ -286,11 +368,11 @@ export class ProjectImportPage extends React.Component {
     };
 
     const { project } = projectImportPage;
-    const projectImports = projectsImports.get(project.id, Map({}));
+    const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
 
     return map(files, (file, key) => {
       const fileActions = fnProjectsImportsChangeFilePropValue[key];
-      const fileState = projectImports.get(key, Map({}));
+      const fileState = projectImports.get(key, IMMUTABLE_MAP);
       const filePath = fileState.get('filePath', '').trim();
       const fileStatus = fileState.get('status', WAITING);
       const fileErrorMessage = fileState.get('errorMessage', '');
@@ -407,6 +489,132 @@ export class ProjectImportPage extends React.Component {
     });
   }
 
+  renderServerMaps(serverMaps = IMMUTABLE_MAP) {
+    const {
+      importType,
+      fnProjectImportsServerMapsActions,
+      fnProjectsImportsServerMapsStartMapImport,
+      fnProjectsImportsServerMapsCancelMapImport,
+    } = this.props;
+
+    const startActions = {
+      fnProjectsImportsServerMapsStartMapImport,
+      fnProjectsImportsServerMapsCancelMapImport,
+    };
+
+    return map(serverMaps.toJS(), (serverMap, mapName) => {
+      const state = serverMaps.get(mapName, IMMUTABLE_MAP);
+      const status = state.get('status', WAITING);
+      const message = state.get('message', '');
+      const mapPath = state.get('mapPath', '');
+      const errorMessage = state.get('errorMessage', '');
+      const countTotal = state.get('countTotal', 0);
+      const countCompleted = state.get('countCompleted', 0);
+
+      const percent = (() => {
+        if (countTotal <= 0) return 0;
+        if (countCompleted >= countTotal) return 100;
+        return ((countCompleted / countTotal) * 100).toFixed(1);
+      })();
+
+      const blockImportType = state.get('importType', importType);
+      const blockChangeImportType = value =>
+        fnProjectImportsServerMapsActions.changeImportType(mapName, value);
+      const blockRemove = () =>
+        fnProjectImportsServerMapsActions.remove(mapName);
+
+      const onClickStartAction =
+        status !== PROCESSING
+          ? 'fnProjectsImportsServerMapsStartMapImport'
+          : 'fnProjectsImportsServerMapsCancelMapImport';
+
+      const onClickStart = () =>
+        startActions[onClickStartAction]({
+          projectId: state.get('projectId'),
+          mapName,
+          importType,
+        });
+
+      return (
+        <Comment key={mapName}>
+          <Comment.Content>
+            <Comment.Author>
+              <Label
+                horizontal
+                color={cx({
+                  teal: status === WAITING,
+                  purple: status === PROCESSING,
+                  green: status === FINISHED,
+                  red: status === ERROR,
+                  yellow: status === CANCELLED,
+                })}
+              >
+                {status}
+              </Label>
+              {mapName}
+            </Comment.Author>
+
+            <Comment.Text>
+              <code>
+                {mapPath.substring(
+                  mapPath.length > 64 ? mapPath.length - 64 : 0,
+                  mapPath.length,
+                )}
+              </code>
+            </Comment.Text>
+            {message && <Comment.Text>{message}</Comment.Text>}
+            {status === ERROR && (
+              <Comment.Text>
+                <Notification type="danger">{errorMessage}</Notification>
+              </Comment.Text>
+            )}
+            {status === PROCESSING && (
+              <Comment.Text>
+                <Progress size="tiny" percent={percent} indicating>
+                  {percent}%
+                </Progress>
+              </Comment.Text>
+            )}
+            <Comment.Actions>
+              <Comment.Action onClick={onClickStart}>
+                <Icon
+                  name={cx({
+                    play: [WAITING, FINISHED, CANCELLED, ERROR].includes(
+                      status,
+                    ),
+                    times: status === PROCESSING,
+                  })}
+                />
+                {status !== PROCESSING && (
+                  <FormattedMessage {...messages.Start} />
+                )}
+                {status === PROCESSING && (
+                  <FormattedMessage {...messages.Cancel} />
+                )}
+              </Comment.Action>
+              <Comment.Action onClick={blockRemove}>
+                <Icon name="times" />
+              </Comment.Action>
+              <Comment.Action
+                onClick={() =>
+                  blockChangeImportType(
+                    blockImportType === REPLACE ? SKIP : REPLACE,
+                  )
+                }
+              >
+                {blockImportType === REPLACE ? (
+                  <FormattedMessage {...messages.RewriteItems} />
+                ) : (
+                  <FormattedMessage {...messages.SkipItems} />
+                )}
+              </Comment.Action>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
+      );
+    });
+  }
+
   render() {
     const {
       isLoggedIn,
@@ -418,6 +626,7 @@ export class ProjectImportPage extends React.Component {
       importType,
       fnChangeImportType,
       projectImportsProcessingData,
+      projectsImportsServerMaps,
     } = this.props;
 
     const {
@@ -428,6 +637,8 @@ export class ProjectImportPage extends React.Component {
       isLoading,
       id,
     } = projectImportPage;
+
+    const serverMaps = projectsImportsServerMaps.get(id, IMMUTABLE_MAP);
 
     return (
       <div>
@@ -537,6 +748,29 @@ export class ProjectImportPage extends React.Component {
                             {this.renderFiles(CLIENT_ND_FILES)}
                           </Comment.Group>
                         </SegmentComments>
+
+                        <PageHeader>
+                          <FormattedMessage {...messages.ServerMapFiles} />
+                        </PageHeader>
+                        <SegmentComments>
+                          <Comment.Group>
+                            {this.renderFiles(SERVER_MAP_FILES)}
+                          </Comment.Group>
+                        </SegmentComments>
+
+                        <Button
+                          size="mini"
+                          onClick={this.onClickSelectServerMapsFolders}
+                        >
+                          <FormattedMessage {...messages.SelectMaps} />
+                        </Button>
+                        {serverMaps.count() > 0 && (
+                          <SegmentComments>
+                            <Comment.Group>
+                              {this.renderServerMaps(serverMaps)}
+                            </Comment.Group>
+                          </SegmentComments>
+                        )}
                       </Grid.Column>
                       <Grid.Column>
                         <PageHeader>
@@ -591,6 +825,7 @@ const mapStateToProps = createStructuredSelector({
   currentUser: makeSelectCurrentUser(),
   importType: makeSelectImportType(),
   projectsImports: makeSelectProjectsImports(),
+  projectsImportsServerMaps: makeSelectProjectsImportsServerMaps(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
   projectImportsProcessingData: (
     state,
@@ -615,12 +850,23 @@ function mapDispatchToProps(dispatch, props) {
     dispatch,
     fnChangeId: id => dispatch(changeId(id)),
     fnLogoutCurrentUser: () => dispatch(logoutCurrentUser()),
+
     fnProjectsImportsStartFileImport: args =>
       dispatch(projectsImportsStartFileImport(args)),
     fnProjectsImportsCancelFileImport: args =>
       dispatch(projectsImportsCancelFileImport(args)),
+
+    fnProjectsImportsServerMapsStartMapImport: args =>
+      dispatch(projectsImportsServerMapsStartMapImport(args)),
+    fnProjectsImportsServerMapsCancelMapImport: args =>
+      dispatch(projectsImportsServerMapsCancelMapImport(args)),
+
     fnProjectsImportsChangeFilePropValue,
     fnChangeImportType: (evt, owns) => dispatch(changeImportType(owns.value)),
+    fnProjectImportsServerMapsActions: projectsImportsServerMapsBindActions({
+      projectId,
+      dispatch,
+    }),
   };
 }
 

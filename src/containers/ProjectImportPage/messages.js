@@ -31,6 +31,14 @@ export default defineMessages({
     id: 'app.containers.ProjectImportPage.ServerFiles',
     defaultMessage: 'Server Files',
   },
+  ServerMapFiles: {
+    id: 'app.containers.ProjectImportPage.ServerMapFiles',
+    defaultMessage: 'Server Map Files',
+  },
+  SelectMaps: {
+    id: 'app.containers.ProjectImportPage.SelectMaps',
+    defaultMessage: 'Select map(s)',
+  },
   RewriteItems: {
     id: 'app.containers.ProjectImportPage.RewriteItems',
     defaultMessage: 'Rewrite items if they already exist',
