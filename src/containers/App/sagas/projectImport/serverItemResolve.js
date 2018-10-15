@@ -82,4 +82,6 @@ export default function* defaultSaga({
     yield put(actions.changeCountCompleted(countCompleted));
     t += 1;
   }
+
+  return sections;
 }

@@ -36,6 +36,10 @@ import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
 import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
 import clientItemNDResolve from './projectImport/clientItemNDResolve';
+import serverMapSptResolve from './projectImport/serverMapSptResolve';
+import serverMapBlockResolve from './projectImport/serverMapBlockResolve';
+import serverMapActiveResolve from './projectImport/serverMapActiveResolve';
+import serverMapPortalResolve from './projectImport/serverMapPortalResolve';
 
 import apolloClient from '../../../apollo';
 
@@ -46,6 +50,10 @@ const Resolvers = {
   serverItemResolve,
   serverStoreResolve,
   serverBoxItemOutResolve,
+  serverMapSptResolve,
+  serverMapBlockResolve,
+  serverMapActiveResolve,
+  serverMapPortalResolve,
 };
 
 const Workers = {};

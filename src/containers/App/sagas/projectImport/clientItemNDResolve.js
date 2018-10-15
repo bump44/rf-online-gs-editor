@@ -71,4 +71,6 @@ export default function* defaultSaga({
     }
     i += 1;
   }
+
+  return sections;
 }

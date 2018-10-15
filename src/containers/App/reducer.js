@@ -35,6 +35,8 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_COPYING,
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE_ONLY_IN_STATE,
   PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
+  PROJECTS_IMPORTS_SERVER_MAPS_CHANGE_PROP_VALUE,
+  PROJECTS_IMPORTS_SERVER_MAPS_REMOVE,
 } from './constants';
 
 import { saveTokenMe } from '../../utils/ls';
@@ -71,6 +73,24 @@ export const initialState = fromJS({
   projectsImports: {},
 
   /**
+   * Projects ImportsServerMaps Operations
+   * {
+   *  [project.id]: {
+   *    [mapName]: {
+   *      mapPath: 'C:/...',
+   *      status: WAITING/PROCESSING/FINISHED/ERROR/CANCELLED,
+   *      errorMessage: '',
+   *      projectId: '',
+   *      mapName: '',
+   *      countTotal: 0,
+   *      countCompleted: 0,
+   *      importType: SKIP/REPLACE,
+   *    }
+   *  }
+   */
+  projectsImportsServerMaps: {},
+
+  /**
    * Projects Exports Operations
    * {
    *  [project.id]: {
@@ -78,6 +98,7 @@ export const initialState = fromJS({
    *      fileKey: '',
    *      status: WAITING/PROCESSING/FINISHED/ERROR/CANCELLED,
    *      errorMessage: '',
+   *      message: '',
    *      loaded: 0,
    *      total: 0,
    *    }
@@ -349,19 +370,17 @@ function appReducer(state = initialState, action) {
 
     // PROJECTS_IMPORTS
     case PROJECTS_IMPORTS_CHANGE_PROP_VALUE:
-      return state
-        .setIn(
-          ['projectsImports', action.projectId, action.fileKey, action.propKey],
-          action.propValue,
-        )
-        .setIn(
-          ['projectsImports', action.projectId, action.fileKey, 'projectId'],
-          action.projectId,
-        )
-        .setIn(
-          ['projectsImports', action.projectId, action.fileKey, 'fileKey'],
-          action.fileKey,
-        );
+      return logicProjectsImportsChangePropValue(state, action);
+
+    // PROJECTS_IMPORTS_SERVER_MAPS
+    case PROJECTS_IMPORTS_SERVER_MAPS_CHANGE_PROP_VALUE:
+      return logicProjectsImportsServerMapsChangePropValue(state, action);
+    case PROJECTS_IMPORTS_SERVER_MAPS_REMOVE:
+      return state.removeIn([
+        'projectsImportsServerMaps',
+        action.projectId,
+        action.mapName,
+      ]);
 
     // PROJECTS_EXPORTS
     case PROJECTS_EXPORTS_CHANGE_PROP_VALUE:
@@ -398,3 +417,50 @@ function appReducer(state = initialState, action) {
 }
 
 export default appReducer;
+
+function logicProjectsImportsChangePropValue(state, action) {
+  return state
+    .setIn(
+      ['projectsImports', action.projectId, action.fileKey, action.propKey],
+      action.propValue,
+    )
+    .setIn(
+      ['projectsImports', action.projectId, action.fileKey, 'projectId'],
+      action.projectId,
+    )
+    .setIn(
+      ['projectsImports', action.projectId, action.fileKey, 'fileKey'],
+      action.fileKey,
+    );
+}
+
+function logicProjectsImportsServerMapsChangePropValue(state, action) {
+  return state
+    .setIn(
+      [
+        'projectsImportsServerMaps',
+        action.projectId,
+        action.mapName,
+        action.propKey,
+      ],
+      action.propValue,
+    )
+    .setIn(
+      [
+        'projectsImportsServerMaps',
+        action.projectId,
+        action.mapName,
+        'projectId',
+      ],
+      action.projectId,
+    )
+    .setIn(
+      [
+        'projectsImportsServerMaps',
+        action.projectId,
+        action.mapName,
+        'mapName',
+      ],
+      action.mapName,
+    );
+}

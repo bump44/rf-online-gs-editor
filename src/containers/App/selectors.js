@@ -20,6 +20,11 @@ const makeSelectProjectsImports = () =>
     globalState.get('projectsImports'),
   );
 
+const makeSelectProjectsImportsServerMaps = () =>
+  createSelector(selectGlobal, globalState =>
+    globalState.get('projectsImportsServerMaps'),
+  );
+
 const makeSelectProjectsExports = () =>
   createSelector(selectGlobal, globalState =>
     globalState.get('projectsExports'),
@@ -150,6 +155,7 @@ export {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsImports,
+  makeSelectProjectsImportsServerMaps,
   makeSelectProjectsExports,
   makeSelectProjectsImportsIsProcessing,
   makeSelectProjectsImportsProcessingData,
