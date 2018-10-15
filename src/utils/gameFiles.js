@@ -13,6 +13,12 @@ export const FILE_TYPE_SERVER = 'SERVER';
 // Server DataLocaleFiles
 export const FILE_TYPE_SERVER_STR = 'SERVER_STR';
 
+// Server DataMapSptFiles
+export const FILE_TYPE_SERVER_MAP_SPT = 'SERVER_MAP_SPT';
+export const FILE_TYPE_SERVER_MAP_PORTAL = 'SERVER_MAP_PORTAL';
+export const FILE_TYPE_SERVER_MAP_BLOCK = 'SERVER_MAP_BLOCK';
+export const FILE_TYPE_SERVER_MAP_ACTIVE = 'SERVER_MAP_ACTIVE';
+
 // All Of File Types
 export const FILE_TYPES = {
   FILE_TYPE_CLIENT,
@@ -29,10 +35,38 @@ export const RESOLVERS = {
   SERVER_ITEM: 'serverItemResolve',
   SERVER_STORE: 'serverStoreResolve',
   SERVER_BOXITEMOUT: 'serverBoxItemOutResolve',
+  SERVER_MAPSPT: 'serverMapSptResolve',
+  SERVER_MAPPORTAL: 'serverMapPortalResolve',
+  SERVER_MAPBLOCK: 'serverMapBlockResolve',
+  SERVER_MAPACTIVE: 'serverMapActiveResolve',
 };
 
 // All of resolved files
 export const FILES = {
+  'Map/[mapname]/[mapname].spt': {
+    path: 'Map/[mapname]/[mapname].spt',
+    resolve: RESOLVERS.SERVER_MAPSPT,
+    type: FILE_TYPE_SERVER_MAP_SPT,
+    extensions: ['spt'],
+  },
+  'Map/[mapname]/[mapname]-PORTAL.dat': {
+    path: 'Map/[mapname]/[mapname]-PORTAL.dat',
+    resolve: RESOLVERS.SERVER_MAPPORTAL,
+    type: FILE_TYPE_SERVER_MAP_PORTAL,
+    extensions: ['dat'],
+  },
+  'Map/[mapname]/[mapname]-BLOCK.dat': {
+    path: 'Map/[mapname]/[mapname]-BLOCK.dat',
+    resolve: RESOLVERS.SERVER_MAPBLOCK,
+    type: FILE_TYPE_SERVER_MAP_BLOCK,
+    extensions: ['dat'],
+  },
+  'Map/[mapname]/[activename].dat': {
+    path: 'Map/[mapname]/[activename].dat',
+    resolve: RESOLVERS.SERVER_MAPACTIVE,
+    type: FILE_TYPE_SERVER_MAP_ACTIVE,
+    extensions: ['dat'],
+  },
   'DataTable/Item.edf': {
     path: 'DataTable/Item.edf',
     resolve: RESOLVERS.CLIENT_ITEM,
@@ -51,7 +85,6 @@ export const FILES = {
     type: FILE_TYPE_CLIENT_ND,
     extensions: ['dat', 'edf'],
   },
-  // example
   'Script/StoreList.dat': {
     path: 'Script/StoreList.dat',
     resolve: RESOLVERS.SERVER_STORE,
@@ -218,4 +251,14 @@ export const SERVER_FILES = pickBy(
 export const SERVER_STR_FILES = pickBy(
   FILES,
   file => file.type === FILE_TYPE_SERVER_STR,
+);
+
+// All of resolved server map spt files
+export const SERVER_MAP_FILES = pickBy(FILES, file =>
+  [
+    FILE_TYPE_SERVER_MAP_SPT,
+    FILE_TYPE_SERVER_MAP_PORTAL,
+    FILE_TYPE_SERVER_MAP_BLOCK,
+    FILE_TYPE_SERVER_MAP_ACTIVE,
+  ].includes(file.type),
 );
