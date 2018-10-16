@@ -19,13 +19,15 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
+import { getRefs } from '../App/getters/project';
 import * as projectStore from '../App/getters/projectStore';
-import { IMMUTABLE_MAP, ITEM, IMMUTABLE_LIST } from '../App/constants';
+import { IMMUTABLE_MAP, ITEM } from '../App/constants';
 
 import {
   projectsStoresBindActions,
   projectsItemsBindActions,
   projectsEntriesFinderItemsBindActions,
+  projectsMapSptsBindActions,
   logoutCurrentUser,
 } from '../App/actions';
 
@@ -101,42 +103,24 @@ export class ProjectStorePage extends React.PureComponent {
         'nextValue',
       ]),
       {
-        item: currentProjectStore,
+        entry: currentProjectStore,
       },
     );
   }
 
   getActionsBindPayload() {
-    const { dispatch, match, currentProject } = this.props;
-    const additionalData = (() => {
-      if (!currentProject) {
-        return {};
-      }
+    const { dispatch, match, currentProject, projectsNextValues } = this.props;
 
-      return {
-        moneyTypes: currentProject.getIn(
-          ['moneyTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        itemGradeTypes: currentProject.getIn(
-          ['itemGradeTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        weaponTypes: currentProject.getIn(
-          ['weaponTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        buttonTypes: currentProject.getIn(
-          ['buttonTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-      };
-    })();
+    const project = currentProject || IMMUTABLE_MAP;
+    const nextValues = projectsNextValues.getIn(
+      [match.params.id, match.params.id],
+      IMMUTABLE_MAP,
+    );
 
     return {
       dispatch,
       projectId: match.params.id,
-      additionalData,
+      additionalData: getRefs(nextValues.get('nextValue'), { entry: project }),
     };
   }
 
@@ -164,10 +148,14 @@ export class ProjectStorePage extends React.PureComponent {
       itemGradeTypes,
       weaponTypes,
       buttonTypes,
+      mapNameTypes,
     } = actionsBindPayload.additionalData;
 
     const fnProjectItemsActions = projectsItemsBindActions(actionsBindPayload);
     const fnProjectStoresActions = projectsStoresBindActions(
+      actionsBindPayload,
+    );
+    const fnProjectMapSptsActions = projectsMapSptsBindActions(
       actionsBindPayload,
     );
 
@@ -248,12 +236,14 @@ export class ProjectStorePage extends React.PureComponent {
                       storeNextValues={storeNextValues}
                       storeActions={fnProjectStoresActions}
                       itemActions={fnProjectItemsActions}
+                      mapSptActions={fnProjectMapSptsActions}
                       entriesFinderItemsActions={entriesFinderItemsActions}
                       localSettings={localSettings}
                       moneyTypes={moneyTypes}
                       itemGradeTypes={itemGradeTypes}
                       weaponTypes={weaponTypes}
                       buttonTypes={buttonTypes}
+                      mapNameTypes={mapNameTypes}
                       entriesFinderItems={entriesFinderItems}
                       nextValues={nextValues}
                     />

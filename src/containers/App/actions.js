@@ -71,6 +71,12 @@ import {
   projectsBoxItemOutsBindActions,
 } from './actions/projectsBoxItemOuts';
 
+import {
+  projectsMapSpts,
+  projectsMapSptsActionNames,
+  projectsMapSptsBindActions,
+} from './actions/projectsMapSpts';
+
 export {
   announceProjectCountItems,
   announceProjectCountStores,
@@ -120,6 +126,11 @@ export {
   projectsBoxItemOuts,
   projectsBoxItemOutsActionNames,
   projectsBoxItemOutsBindActions,
+};
+export {
+  projectsMapSpts,
+  projectsMapSptsActionNames,
+  projectsMapSptsBindActions,
 };
 
 /**
