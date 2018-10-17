@@ -25,6 +25,13 @@ export default gql`
       }
     }
 
+    buttonTypes {
+      items {
+        title
+        value
+      }
+    }
+
     effectTypes {
       items {
         title
