@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment ProjectBoxItemOutNameParts on ProjectBoxItemOut {
+  fragment BoxItemOutNameParts on BoxItemOut {
     strCode
     strItemCode__1_1
     nItemCount__1_2

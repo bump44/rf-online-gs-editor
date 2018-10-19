@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment ProjectItemClientNameParts on ProjectItemClient {
+  fragment ItemClientNameParts on ItemClient {
     civil_bm
     civil_bf
     civil_cm
@@ -171,7 +171,7 @@ export default gql`
     nEffType
     nUIPrint
     nItemUiTip
-    strForceCodekey
+    strForceCodeKey
     nFRAType
     fUnkFloat_1
     fUnkFloat_2
@@ -224,11 +224,11 @@ export default gql`
     strItemCode__3
     strItemCode__4
     strItemCode__5
-    strItemCount__1
-    strItemCount__2
-    strItemCount__3
-    strItemCount__4
-    strItemCount__5
+    nItemCount__1
+    nItemCount__2
+    nItemCount__3
+    nItemCount__4
+    nItemCount__5
     nExpLim
     nExpTimeSec
     bIsUseEffect
@@ -247,9 +247,6 @@ export default gql`
     fEquipSpeed
     nSucPro
     nDuration
-    nItemCount__1
-    nItemCount__2
-    nItemCount__3
     nUnkInt8
     strNpc
     nButton__1
