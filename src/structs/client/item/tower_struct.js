@@ -59,7 +59,7 @@ export default new Struct().fromSchema1([
     repeat: 5,
   },
   {
-    child: { type: Number, name: 'strItemCount', len: 32 },
+    child: { type: Number, name: 'nItemCount', len: 32 },
     repeat: 5,
   },
   { child: { type: Number, name: 'nAttEffType', len: 32 } },

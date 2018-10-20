@@ -26,7 +26,7 @@ export function* changeId({ id, itemId }) {
     });
 
     yield put(changeProject(result.data.project));
-    yield put(changeProjectItem(result.data.projectItem));
+    yield put(changeProjectItem(result.data.item));
     yield put(changeIsLoaded(true));
   } catch (err) {
     yield put(changeIsError(true));

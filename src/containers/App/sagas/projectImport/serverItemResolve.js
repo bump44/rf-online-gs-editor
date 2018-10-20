@@ -3,7 +3,7 @@ import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
 import apolloClient from '../../../../apollo';
-import projectItemImportServerMutation from '../../../../apollo/mutations/project_item_import_server';
+import ItemImportServerMutation from '../../../../apollo/mutations/item_import_server';
 import { announceProjectCountItems } from '../../actions';
 import * as ITEM_TYPES from '../../../../structs/item_types';
 
@@ -62,7 +62,7 @@ export default function* defaultSaga({
   let t = 0;
   while (chunks.length > t) {
     const result = yield apolloClient.mutate({
-      mutation: projectItemImportServerMutation,
+      mutation: ItemImportServerMutation,
       variables: {
         projectId,
         type,
@@ -73,7 +73,7 @@ export default function* defaultSaga({
 
     yield put(
       announceProjectCountItems({
-        count: result.data.projectItemImportServer.total,
+        count: result.data.itemImportServer.total,
         id: projectId,
       }),
     );

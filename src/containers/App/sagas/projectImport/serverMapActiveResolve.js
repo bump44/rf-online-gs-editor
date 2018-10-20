@@ -5,7 +5,7 @@ import { call, put } from 'redux-saga/effects';
 import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
 import ServerMapactiveReader from '../../../../structs/server/map/active_reader';
 import apolloClient from '../../../../apollo';
-import projectMapActiveImportServerMutation from '../../../../apollo/mutations/project_mapactive_import_server';
+import MapActiveImportServerMutation from '../../../../apollo/mutations/mapactive_import_server';
 
 /**
  * Import Server MapActives Resolver
@@ -53,7 +53,7 @@ export default function* defaultSaga({
   let t = 0;
   while (chunks.length > t) {
     yield apolloClient.mutate({
-      mutation: projectMapActiveImportServerMutation,
+      mutation: MapActiveImportServerMutation,
       variables: {
         projectId,
         blocks: chunks[t],

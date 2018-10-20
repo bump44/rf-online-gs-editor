@@ -1,7 +1,9 @@
+import { isString } from 'lodash';
 import { isNullOrUndefined, isNumber } from 'util';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 import { getTypeNameByFinite } from '../../../structs/item_types_utils';
 import * as projectItem from './projectItem';
+import { getValue } from './nextValue';
 
 /**
  * Return the most important title of the subject
@@ -22,6 +24,68 @@ export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
         'priorStrName',
     ),
   ) || '';
+
+export const getSdCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'strCode']],
+      def: '',
+      fnc: isString,
+    },
+  );
+
+export const getBindingSd = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(nextValue, { entry }, { fields: [['bindingSd']], def: undefined });
+
+export const getBindingBd = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(nextValue, { entry }, { fields: [['bindingBd']], def: undefined });
+
+export const getBdCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'strBindingDummyName']],
+      def: '',
+      fnc: isString,
+    },
+  );
+
+export const getMapCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'strStoreMAPcode']],
+      def: '',
+      fnc: isString,
+    },
+  );
+
+export const getMapNameType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, mapNameTypes = IMMUTABLE_LIST },
+) => {
+  const value = getMapCode(nextValue, { entry });
+  return mapNameTypes.find(mapNameType => mapNameType.get('value') === value);
+};
 
 /**
  * Return the most important last title of the subject

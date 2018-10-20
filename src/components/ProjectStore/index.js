@@ -7,10 +7,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
-import { Grid, Transition, Label, Tab } from 'semantic-ui-react';
+import {
+  Grid,
+  Transition,
+  Label,
+  Tab,
+  Header,
+  Divider,
+} from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { IMMUTABLE_MAP } from '../../containers/App/constants';
 import * as projectStore from '../../containers/App/getters/projectStore';
 
 import ProjectStoreInteractingName from './Interacting/Name';
@@ -22,6 +30,9 @@ import ProjectStoreInteractingAngle from './Interacting/Angle';
 import ProjectStoreInteractingItemsList from './Interacting/ItemsList';
 import ProjectStoreInteractingItemsListCount from './Interacting/ItemsListCount';
 import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
+import ProjectStoreInteractingMapNameType from './Interacting/MapNameType';
+
+import ProjectMapSptSegmentBasic from '../ProjectMapSpt/Segment/Basic';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
@@ -45,6 +56,7 @@ class ProjectStore extends React.PureComponent {
     this.renderBasic = this.renderBasic.bind(this);
     this.renderItemsList = this.renderItemsList.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
+    this.renderBindings = this.renderBindings.bind(this);
   }
 
   getTabPanes() {
@@ -64,6 +76,13 @@ class ProjectStore extends React.PureComponent {
           content: <FormattedMessage {...messages.Buttons} />,
         },
         render: this.renderButtons,
+      },
+      {
+        menuItem: {
+          key: 'binding',
+          content: <FormattedMessage {...messages.Binding} />,
+        },
+        render: this.renderBindings,
       },
       {
         menuItem: {
@@ -188,6 +207,80 @@ class ProjectStore extends React.PureComponent {
     );
   }
 
+  renderBindings() {
+    const {
+      store,
+      storeNextValues,
+      nextValues,
+      mapNameTypes,
+      storeActions,
+      mapSptActions,
+    } = this.props;
+    const storeNextValue = storeNextValues.get('nextValue');
+    const sdCode = projectStore.getSdCode(storeNextValue, { entry: store });
+    const bdCode = projectStore.getBdCode(storeNextValue, { entry: store });
+    const mapCode = projectStore.getMapCode(storeNextValue, { entry: store });
+
+    const bindingSd = projectStore.getBindingSd(storeNextValue, {
+      entry: store,
+    });
+    const bindingSdNextValues = bindingSd
+      ? nextValues.get(bindingSd.get('id'), IMMUTABLE_MAP)
+      : IMMUTABLE_MAP;
+
+    const bindingBd = projectStore.getBindingBd(storeNextValue, {
+      entry: store,
+    });
+    const bindingBdNextValues = bindingBd
+      ? nextValues.get(bindingBd.get('id'), IMMUTABLE_MAP)
+      : IMMUTABLE_MAP;
+
+    return (
+      <Tab.Pane attached={false}>
+        <Label color="green">{sdCode}</Label>
+        <Label color="blue">{bdCode}</Label>
+        <Label color="black">{mapCode}</Label>
+
+        <Divider />
+
+        <ProjectStoreInteractingMapNameType
+          store={store}
+          storeNextValues={storeNextValues}
+          types={mapNameTypes}
+          onChangeValue={storeActions.changeMapCode}
+        />
+
+        <Header size="tiny">
+          <FormattedMessage {...messages.PositionBinding} />
+          <Label color="green">{sdCode}</Label>
+        </Header>
+
+        {bindingSd && (
+          <ProjectMapSptSegmentBasic
+            mapSpt={bindingSd}
+            mapSptNextValues={bindingSdNextValues}
+            nextValues={nextValues}
+            mapSptActions={mapSptActions}
+          />
+        )}
+
+        <Header size="tiny">
+          <FormattedMessage {...messages.SpawnBinding} />
+          <Label color="blue">{bdCode}</Label>
+        </Header>
+
+        {bindingBd && (
+          <ProjectMapSptSegmentBasic
+            mapSpt={bindingBd}
+            mapSptNextValues={bindingBdNextValues}
+            nextValues={nextValues}
+            mapSptActions={mapSptActions}
+          />
+        )}
+      </Tab.Pane>
+    );
+  }
+
   renderItemsList() {
     const {
       store,
@@ -257,12 +350,15 @@ ProjectStore.propTypes = {
   }).isRequired,
 
   itemActions: PropTypes.object.isRequired,
+  mapSptActions: PropTypes.object.isRequired,
+
   entriesFinderItemsActions: PropTypes.object.isRequired,
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
+  mapNameTypes: PropTypes.instanceOf(List).isRequired,
 };
 
 export default ProjectStore;

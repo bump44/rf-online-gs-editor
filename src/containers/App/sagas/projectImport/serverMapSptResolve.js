@@ -5,7 +5,7 @@ import { call, put } from 'redux-saga/effects';
 import { COUNT } from '../../../../classes/constants';
 import ServerMapsptReader from '../../../../structs/server/map/spt_reader';
 import apolloClient from '../../../../apollo';
-import projectMapSptImportServerMutation from '../../../../apollo/mutations/project_mapspt_import_server';
+import MapSptImportServerMutation from '../../../../apollo/mutations/mapspt_import_server';
 
 /**
  * Import Server MapSpts Resolver
@@ -42,7 +42,7 @@ export default function* defaultSaga({
   let t = 0;
   while (chunks.length > t) {
     yield apolloClient.mutate({
-      mutation: projectMapSptImportServerMutation,
+      mutation: MapSptImportServerMutation,
       variables: {
         projectId,
         blocks: chunks[t],

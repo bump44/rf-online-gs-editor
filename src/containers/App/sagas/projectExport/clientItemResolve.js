@@ -15,7 +15,7 @@ import BufferGenerator from '../../../../classes/BufferGenerator';
 import readerStruct from '../../../../structs/client/item/reader_struct';
 import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
 import apolloClient from '../../../../apollo';
-import projectItemsTotalQuery from '../../../../apollo/queries/sub/project_items_total';
+import projectItemsTotalQuery from '../../../../apollo/queries/sub/items_total';
 import { getReleaseFilesPath } from '../../../../utils/path';
 import { mkdirSync, writeFile } from '../../../../utils/fs';
 import { enCryptByBuf } from '../../../../utils/edf';
@@ -59,12 +59,12 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
       },
     });
 
-    objects.push(...result.data.projectItems.items);
-    nextLoaded += result.data.projectItems.items.length;
+    objects.push(...result.data.items.items);
+    nextLoaded += result.data.items.items.length;
 
     yield put(changeLoaded(nextLoaded));
 
-    if (result.data.projectItems.items.length <= 0) {
+    if (result.data.items.items.length <= 0) {
       break;
     }
   }
@@ -95,7 +95,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
     variables: { where: { projectId } },
   });
 
-  yield put(actions.changeTotal(total.data.projectItems.total));
+  yield put(actions.changeTotal(total.data.items.total));
 
   let i = 0;
   let offset = 0;

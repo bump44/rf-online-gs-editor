@@ -17,7 +17,17 @@ export const getRefs = (
   buttonTypes: getRefButtonTypes(nextValue, { entry }),
   effectTypes: getRefEffectTypes(nextValue, { entry }),
   expertTypes: getRefExpertTypes(nextValue, { entry }),
+  mapNameTypes: getRefMapNameTypes(nextValue, { entry }),
 });
+
+export const getRefMapNameTypes = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue.getIn(
+    ['mapNameTypes', 'items'],
+    entry.getIn(['mapNameTypes', 'items'], IMMUTABLE_LIST),
+  );
 
 export const getRefEffectTypes = (
   nextValue = IMMUTABLE_MAP,

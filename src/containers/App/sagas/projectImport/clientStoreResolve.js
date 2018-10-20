@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import { COUNT } from '../../../../classes/constants';
 import ClientStoreReader from '../../../../structs/client/store/reader';
 import apolloClient from '../../../../apollo';
-import projectStoreImportClientMutation from '../../../../apollo/mutations/project_store_import_client';
+import StoreImportClientMutation from '../../../../apollo/mutations/store_import_client';
 import { announceProjectCountStores } from '../../actions';
 
 /**
@@ -38,7 +38,7 @@ export default function* defaultSaga({
   let t = 0;
   while (chunks.length > t) {
     const result = yield apolloClient.mutate({
-      mutation: projectStoreImportClientMutation,
+      mutation: StoreImportClientMutation,
       variables: {
         projectId,
         blocks: chunks[t],
@@ -48,7 +48,7 @@ export default function* defaultSaga({
 
     yield put(
       announceProjectCountStores({
-        count: result.data.projectStoreImportClient.total,
+        count: result.data.storeImportClient.total,
         id: projectId,
       }),
     );

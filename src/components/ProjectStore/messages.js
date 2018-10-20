@@ -11,6 +11,18 @@ export default defineMessages({
     id: 'app.components.ProjectStore.header',
     defaultMessage: 'This is the ProjectStore component !',
   },
+  Binding: {
+    id: 'app.components.ProjectStore.Binding',
+    defaultMessage: 'Binding',
+  },
+  PositionBinding: {
+    id: 'app.components.ProjectStore.PositionBinding',
+    defaultMessage: 'Position binding',
+  },
+  SpawnBinding: {
+    id: 'app.components.ProjectStore.SpawnBinding',
+    defaultMessage: 'Spawn binding',
+  },
   UseAngle: {
     id: 'app.components.ProjectStore.UseAngle',
     defaultMessage: 'Use angle',
@@ -75,6 +87,10 @@ export default defineMessages({
   UnknownButtonType: {
     id: 'app.components.ProjectStore.UnknownButtonType',
     defaultMessage: 'Unknown button type',
+  },
+  UnknownMapNameType: {
+    id: 'app.components.ProjectStore.UnknownMapNameType',
+    defaultMessage: 'Unknown mapName type',
   },
   Basic: {
     id: 'app.components.ProjectStore.Basic',

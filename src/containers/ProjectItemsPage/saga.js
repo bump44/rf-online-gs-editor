@@ -22,7 +22,7 @@ import {
 } from './constants';
 import apolloClient from '../../apollo';
 import projectItemsPageQuery from '../../apollo/queries/project_items_page';
-import projectItemsSubQuery from '../../apollo/queries/sub/project_items';
+import itemsSubQuery from '../../apollo/queries/sub/items';
 import {
   makeSelectFilter,
   makeSelectResultItems,
@@ -71,7 +71,7 @@ export function* changeFilter() {
     const filterJS = filter.toJS();
 
     const result = yield call(apolloClient.query, {
-      query: projectItemsSubQuery,
+      query: itemsSubQuery,
       variables: {
         ...pick(filterJS, ['take', 'skip']),
         where: {
@@ -84,7 +84,7 @@ export function* changeFilter() {
       },
     });
 
-    const { items, total } = result.data.projectItems;
+    const { items, total } = result.data.items;
     let nextItems = yield select(makeSelectResultItems());
 
     items.forEach((item, index) => {

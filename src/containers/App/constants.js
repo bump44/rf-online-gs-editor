@@ -98,6 +98,7 @@ export const PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE =
 export const ITEM = 'ITEM';
 export const STORE = 'STORE';
 export const BOXITEMOUT = 'BOXITEMOUT';
+export const MAPSPT = 'MAPSPT';
 
 // Immutable BaseObjects
 export const IMMUTABLE_MAP = Map({});

@@ -3,8 +3,8 @@ import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import ClientItemNDReader from '../../../../structs/client/itemnd/reader';
 import apolloClient from '../../../../apollo';
-import projectItemImportClientNDMutation from '../../../../apollo/mutations/project_item_import_client_nd';
-import projectItemClientNDDescriptionImportBlocksMutation from '../../../../apollo/mutations/project_item_client_nd_description_import_blocks';
+import ItemImportClientNDMutation from '../../../../apollo/mutations/item_import_client_nd';
+import ItemClientNDDescriptionImportBlocksMutation from '../../../../apollo/mutations/item_client_nd_description_import_blocks';
 import { announceProjectCountItems } from '../../actions';
 import { BLOCK_SIZE } from '../../../../classes/constants';
 
@@ -44,8 +44,8 @@ export default function* defaultSaga({
     while (chunks.length > t) {
       const result = yield apolloClient.mutate({
         mutation: !isDescription
-          ? projectItemImportClientNDMutation
-          : projectItemClientNDDescriptionImportBlocksMutation,
+          ? ItemImportClientNDMutation
+          : ItemClientNDDescriptionImportBlocksMutation,
         variables: {
           projectId,
           type: !isDescription
@@ -59,7 +59,7 @@ export default function* defaultSaga({
       if (!isDescription) {
         yield put(
           announceProjectCountItems({
-            count: result.data.projectItemImportClientND.total,
+            count: result.data.itemImportClientND.total,
             id: projectId,
           }),
         );

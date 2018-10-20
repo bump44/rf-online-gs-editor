@@ -18,6 +18,7 @@ export const projectsStores = {
       'angle',
       'itemsListCount',
       'npcClass',
+      'mapCode',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

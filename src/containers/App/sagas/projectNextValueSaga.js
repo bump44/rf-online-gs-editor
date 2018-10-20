@@ -39,12 +39,12 @@ import {
 
 import apolloClient from '../../../apollo';
 
-import projectItemUpdate from '../../../apollo/mutations/project_item_update';
-import projectItemRemoveVirtual from '../../../apollo/mutations/project_item_remove_virtual';
-import projectItemRemoveFully from '../../../apollo/mutations/project_item_remove_fully';
-import projectItemRestoreVirtual from '../../../apollo/mutations/project_item_restore_virtual';
-import projectStoreUpdate from '../../../apollo/mutations/project_store_update';
-import projectBoxItemOutUpdate from '../../../apollo/mutations/project_boxItemOut_update';
+import projectItemUpdate from '../../../apollo/mutations/item_update';
+import projectItemRemoveVirtual from '../../../apollo/mutations/item_remove_virtual';
+import projectItemRemoveFully from '../../../apollo/mutations/item_remove_fully';
+import projectItemRestoreVirtual from '../../../apollo/mutations/item_restore_virtual';
+import projectStoreUpdate from '../../../apollo/mutations/store_update';
+import projectBoxItemOutUpdate from '../../../apollo/mutations/boxItemOut_update';
 
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';

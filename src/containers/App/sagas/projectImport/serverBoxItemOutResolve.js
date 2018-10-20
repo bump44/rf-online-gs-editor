@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import { COUNT } from '../../../../classes/constants';
 import ServerBoxItemOutReader from '../../../../structs/server/boxItemOut/reader';
 import apolloClient from '../../../../apollo';
-import projectBoxItemOutImportServerMutation from '../../../../apollo/mutations/project_boxItemOut_import_server';
+import BoxItemOutImportServerMutation from '../../../../apollo/mutations/boxItemOut_import_server';
 import { announceProjectCountBoxItemOuts } from '../../actions';
 
 /**
@@ -38,7 +38,7 @@ export default function* defaultSaga({
   let t = 0;
   while (chunks.length > t) {
     const result = yield apolloClient.mutate({
-      mutation: projectBoxItemOutImportServerMutation,
+      mutation: BoxItemOutImportServerMutation,
       variables: {
         projectId,
         blocks: chunks[t],
@@ -48,7 +48,7 @@ export default function* defaultSaga({
 
     yield put(
       announceProjectCountBoxItemOuts({
-        count: result.data.projectBoxItemOutImportServer.total,
+        count: result.data.boxItemOutImportServer.total,
         id: projectId,
       }),
     );

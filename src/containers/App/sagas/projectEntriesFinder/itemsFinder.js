@@ -32,7 +32,7 @@ import {
 import { makeSelectProjectsEntriesFinder } from '../../selectors';
 
 import apolloClient from '../../../../apollo';
-import projectItemsSubQuery from '../../../../apollo/queries/sub/project_items';
+import projectItemsSubQuery from '../../../../apollo/queries/sub/items';
 
 export function* changeFilter(props) {
   const { projectId } = props;

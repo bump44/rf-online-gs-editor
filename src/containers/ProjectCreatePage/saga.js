@@ -5,7 +5,7 @@ import { SUBMIT } from './constants';
 import { changeIsLoading, changeIsError, changeErrorMessage } from './actions';
 import makeSelectProjectCreatePage from './selectors';
 import apolloClient from '../../apollo';
-import projectCreateMutation from '../../apollo/mutations/project_create';
+import CreateMutation from '../../apollo/mutations/project_create';
 
 // Individual exports for testing
 export function* submit() {
@@ -19,7 +19,7 @@ export function* submit() {
     yield delay(300);
 
     const result = yield call(apolloClient.mutate, {
-      mutation: projectCreateMutation,
+      mutation: CreateMutation,
       variables: {
         title: projectCreatePage.title,
         description: projectCreatePage.description,

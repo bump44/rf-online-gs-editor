@@ -15,7 +15,7 @@ import { getReleaseFilesPath } from '../../../../utils/path';
 import { mkdirSync, writeFile } from '../../../../utils/fs';
 import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
 import apolloClient from '../../../../apollo';
-import projectBoxItemOutsTotalQuery from '../../../../apollo/queries/sub/project_boxItemOuts_total';
+import projectBoxItemOutsTotalQuery from '../../../../apollo/queries/sub/boxItemOuts_total';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`
@@ -48,12 +48,12 @@ function* loadObjects({ projectId, fieldNames, loaded, changeLoaded }) {
       },
     });
 
-    objects.push(...result.data.projectBoxItemOuts.items);
-    nextLoaded += result.data.projectBoxItemOuts.items.length;
+    objects.push(...result.data.boxItemOuts.items);
+    nextLoaded += result.data.boxItemOuts.items.length;
 
     yield put(changeLoaded(nextLoaded));
 
-    if (result.data.projectBoxItemOuts.items.length <= 0) {
+    if (result.data.boxItemOuts.items.length <= 0) {
       break;
     }
   }
@@ -106,7 +106,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
     variables: { where: { projectId } },
   });
 
-  yield put(actions.changeTotal(total.data.projectBoxItemOuts.total));
+  yield put(actions.changeTotal(total.data.boxItemOuts.total));
 
   let i = 0;
   let loaded = 0;

@@ -26,6 +26,6 @@ export default new Struct().fromSchema1([
   { child: { type: Boolean, name: 'bIsCash', len: 32 } },
   { child: { type: Boolean, name: 'bIsTime', len: 32 } },
   { child: { type: Number, name: 'nUpLevelLim', len: 32 } },
-  { child: { type: String, name: 'strForceCodekey', len: 32, as: 'hex' } },
+  { child: { type: String, name: 'strForceCodeKey', len: 32, as: 'hex' } },
   { child: { type: Number, name: 'nUnkInt32', len: 32 } },
 ]);
