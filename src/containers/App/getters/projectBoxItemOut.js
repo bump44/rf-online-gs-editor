@@ -3,7 +3,7 @@
  */
 
 import { isNumber, max } from 'lodash';
-import { IMMUTABLE_MAP } from '../constants';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 
 /**
  * Return id
@@ -55,6 +55,11 @@ export const getProjectId = (
 export const getItem = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
   nextValue.get('item', entry.get('item')) || undefined;
 
+export const getItems = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) => nextValue.get('items', entry.get('items')) || IMMUTABLE_LIST;
+
 export const getOutput = (...props) => ({
   code: getOutputCode(...props),
   count: getOutputCount(...props),
@@ -68,9 +73,11 @@ export const getOutputItem = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
   { n = 1 } = {},
-) =>
-  nextValue.getIn([`itemList__${n}`], entry.getIn([`itemList__${n}`])) ||
-  undefined;
+) => {
+  const strCode = getOutputCode(nextValue, { entry }, { n });
+  const items = getItems(nextValue, { entry });
+  return items.find(item => item.getIn(['server', 'strCode']) === strCode);
+};
 
 export const getOutputCode = (
   nextValue = IMMUTABLE_MAP,

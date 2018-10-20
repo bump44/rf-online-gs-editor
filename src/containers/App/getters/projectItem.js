@@ -646,7 +646,15 @@ export const getRouteLink = (
 export const getBoxItemOut = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
-) => nextValue.get('boxItemOut') || entry.get('boxItemOut') || undefined;
+) => {
+  const boxItemOuts =
+    nextValue
+      .get('boxItemOuts', IMMUTABLE_LIST)
+      .concat(entry.get('boxItemOuts')) || IMMUTABLE_LIST;
+
+  const strCode = getServerCode(nextValue, { entry });
+  return boxItemOuts.find(boxItemOut => boxItemOut.get('strCode') === strCode);
+};
 
 export const getExpertTypeValue = (
   nextValue = IMMUTABLE_MAP,
