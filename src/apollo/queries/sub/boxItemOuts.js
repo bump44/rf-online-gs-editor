@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
-import ProjectBoxItemOutNameParts from '../../fragments/ProjectBoxItemOutNameParts';
+import BoxItemOutNameParts from '../../fragments/BoxItemOutNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
-    projectBoxItemOuts(take: $take, skip: $skip, sort: $sort, where: $where) {
+    boxItemOuts(take: $take, skip: $skip, sort: $sort, where: $where) {
       items {
         id
         nIndex
@@ -25,12 +25,12 @@ export default gql`
           }
         }
 
-        ...ProjectBoxItemOutNameParts
+        ...BoxItemOutNameParts
       }
       total
     }
   }
 
   # include fragments
-  ${ProjectBoxItemOutNameParts}
+  ${BoxItemOutNameParts}
 `;

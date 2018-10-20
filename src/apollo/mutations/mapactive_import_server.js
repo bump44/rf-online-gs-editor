@@ -1,17 +1,19 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation ProjectItemClientNDDescriptionImportBlocks(
+  mutation MapActiveImportServer(
     $projectId: String!
-    $type: String!
     $blocks: JSON
     $importType: String
+    $mapName: String!
+    $activeName: String!
   ) {
-    projectItemClientNDDescriptionImportBlocks(
+    mapActiveImportServer(
       projectId: $projectId
-      type: $type
       blocks: $blocks
       importType: $importType
+      mapName: $mapName
+      activeName: $activeName
     ) {
       total
     }

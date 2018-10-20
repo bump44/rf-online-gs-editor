@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
-import ProjectStoreClientNameParts from '../fragments/ProjectStoreClientNameParts';
-import ProjectStoreServerNameParts from '../fragments/ProjectStoreServerNameParts';
-import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
-import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
+import StoreClientNameParts from '../fragments/StoreClientNameParts';
+import StoreServerNameParts from '../fragments/StoreServerNameParts';
+import ItemClientNameParts from '../fragments/ItemClientNameParts';
+import ItemServerNameParts from '../fragments/ItemServerNameParts';
+import MapSptNameParts from '../fragments/MapSptNameParts';
 
 export default gql`
   query($id: String!, $storeId: String!) {
@@ -45,15 +46,23 @@ export default gql`
       ...ProjectIncludeAllTypes
     }
 
-    projectStore(id: $storeId) {
+    store(id: $storeId) {
       id
       nIndex
       searchTextValue
       client {
-        ...ProjectStoreClientNameParts
+        ...StoreClientNameParts
       }
       server {
-        ...ProjectStoreServerNameParts
+        ...StoreServerNameParts
+      }
+      bindingSd {
+        id
+        ...MapSptNameParts
+      }
+      bindingBd {
+        id
+        ...MapSptNameParts
       }
       arrayItems {
         id
@@ -63,10 +72,10 @@ export default gql`
           strName
         }
         client {
-          ...ProjectItemClientNameParts
+          ...ItemClientNameParts
         }
         server {
-          ...ProjectItemServerNameParts
+          ...ItemServerNameParts
         }
       }
     }
@@ -74,8 +83,9 @@ export default gql`
 
   # include fragments
   ${ProjectIncludeAllTypes}
-  ${ProjectStoreClientNameParts}
-  ${ProjectStoreServerNameParts}
-  ${ProjectItemClientNameParts}
-  ${ProjectItemServerNameParts}
+  ${StoreClientNameParts}
+  ${StoreServerNameParts}
+  ${ItemClientNameParts}
+  ${ItemServerNameParts}
+  ${MapSptNameParts}
 `;

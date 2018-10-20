@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
-import ProjectItemClientNameParts from '../../fragments/ProjectItemClientNameParts';
-import ProjectItemServerNameParts from '../../fragments/ProjectItemServerNameParts';
+import ItemClientNameParts from '../../fragments/ItemClientNameParts';
+import ItemServerNameParts from '../../fragments/ItemServerNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
-    projectItems(take: $take, skip: $skip, sort: $sort, where: $where) {
+    items(take: $take, skip: $skip, sort: $sort, where: $where) {
       items {
         id
         type
@@ -17,10 +17,10 @@ export default gql`
           strName
         }
         client {
-          ...ProjectItemClientNameParts
+          ...ItemClientNameParts
         }
         server {
-          ...ProjectItemServerNameParts
+          ...ItemServerNameParts
         }
         stores {
           total
@@ -39,6 +39,6 @@ export default gql`
   }
 
   # include fragments
-  ${ProjectItemClientNameParts}
-  ${ProjectItemServerNameParts}
+  ${ItemClientNameParts}
+  ${ItemServerNameParts}
 `;

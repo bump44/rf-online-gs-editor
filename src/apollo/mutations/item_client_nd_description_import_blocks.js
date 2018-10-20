@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation ProjectItemImportServer(
+  mutation ItemClientNDDescriptionImportBlocks(
     $projectId: String!
     $type: String!
     $blocks: JSON
     $importType: String
   ) {
-    projectItemImportServer(
+    itemClientNDDescriptionImportBlocks(
       projectId: $projectId
       type: $type
       blocks: $blocks

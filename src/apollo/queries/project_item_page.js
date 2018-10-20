@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
-import ProjectItemClientNameParts from '../fragments/ProjectItemClientNameParts';
-import ProjectItemServerNameParts from '../fragments/ProjectItemServerNameParts';
-import ProjectBoxItemOutNameParts from '../fragments/ProjectBoxItemOutNameParts';
-import ProjectBoxItemOutItemListNameParts from '../fragments/ProjectBoxItemOutItemListNameParts';
+import ItemClientNameParts from '../fragments/ItemClientNameParts';
+import ItemServerNameParts from '../fragments/ItemServerNameParts';
+import BoxItemOutNameParts from '../fragments/BoxItemOutNameParts';
+import BoxItemOutItemListNameParts from '../fragments/BoxItemOutItemListNameParts';
 
 export default gql`
   query($id: String!, $itemId: String!) {
@@ -45,7 +45,7 @@ export default gql`
       ...ProjectIncludeAllTypes
     }
 
-    projectItem(id: $itemId) {
+    item(id: $itemId) {
       id
       type
       nIndex
@@ -54,24 +54,24 @@ export default gql`
         strName
       }
       client {
-        ...ProjectItemClientNameParts
+        ...ItemClientNameParts
       }
       server {
-        ...ProjectItemServerNameParts
+        ...ItemServerNameParts
       }
       boxItemOut {
         id
         nIndex
-        ...ProjectBoxItemOutNameParts
-        ...ProjectBoxItemOutItemListNameParts
+        ...BoxItemOutNameParts
+        ...BoxItemOutItemListNameParts
       }
     }
   }
 
   # include fragments
   ${ProjectIncludeAllTypes}
-  ${ProjectItemClientNameParts}
-  ${ProjectItemServerNameParts}
-  ${ProjectBoxItemOutNameParts}
-  ${ProjectBoxItemOutItemListNameParts}
+  ${ItemClientNameParts}
+  ${ItemServerNameParts}
+  ${BoxItemOutNameParts}
+  ${BoxItemOutItemListNameParts}
 `;
