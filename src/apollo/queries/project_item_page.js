@@ -3,7 +3,6 @@ import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
 import ItemClientNameParts from '../fragments/ItemClientNameParts';
 import ItemServerNameParts from '../fragments/ItemServerNameParts';
 import BoxItemOutNameParts from '../fragments/BoxItemOutNameParts';
-import BoxItemOutItemListNameParts from '../fragments/BoxItemOutItemListNameParts';
 
 export default gql`
   query($id: String!, $itemId: String!) {
@@ -15,6 +14,7 @@ export default gql`
       createdAt
       updatedAt
       isPublic
+
       owner {
         id
         login
@@ -50,20 +50,59 @@ export default gql`
       type
       nIndex
       isRemoved
+
       clientND {
         strName
       }
+
       client {
         ...ItemClientNameParts
       }
+
       server {
         ...ItemServerNameParts
       }
-      boxItemOut {
+
+      items {
         id
+        type
         nIndex
+        isRemoved
+
+        clientND {
+          strName
+        }
+
+        client {
+          ...ItemClientNameParts
+        }
+
+        server {
+          ...ItemServerNameParts
+        }
+      }
+
+      boxItemOuts {
+        id
         ...BoxItemOutNameParts
-        ...BoxItemOutItemListNameParts
+        items {
+          id
+          type
+          nIndex
+          isRemoved
+
+          clientND {
+            strName
+          }
+
+          client {
+            ...ItemClientNameParts
+          }
+
+          server {
+            ...ItemServerNameParts
+          }
+        }
       }
     }
   }
@@ -73,5 +112,4 @@ export default gql`
   ${ItemClientNameParts}
   ${ItemServerNameParts}
   ${BoxItemOutNameParts}
-  ${BoxItemOutItemListNameParts}
 `;

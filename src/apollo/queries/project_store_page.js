@@ -49,31 +49,28 @@ export default gql`
     store(id: $storeId) {
       id
       nIndex
-      searchTextValue
+
       client {
         ...StoreClientNameParts
       }
+
       server {
         ...StoreServerNameParts
       }
-      bindingSd {
-        id
-        ...MapSptNameParts
-      }
-      bindingBd {
-        id
-        ...MapSptNameParts
-      }
-      arrayItems {
+
+      items {
         id
         type
         nIndex
+
         clientND {
           strName
         }
+
         client {
           ...ItemClientNameParts
         }
+
         server {
           ...ItemServerNameParts
         }

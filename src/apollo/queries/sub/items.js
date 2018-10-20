@@ -9,7 +9,6 @@ export default gql`
         id
         type
         nIndex
-        searchTextValue
         project {
           id
         }
@@ -21,17 +20,6 @@ export default gql`
         }
         server {
           ...ItemServerNameParts
-        }
-        stores {
-          total
-          items {
-            id
-            client {
-              strStoreNPCname
-              strStoreNPClastName
-              strCode
-            }
-          }
         }
       }
       total
