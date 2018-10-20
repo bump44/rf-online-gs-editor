@@ -32,7 +32,7 @@ import {
 import { makeSelectProjectsEntriesFinder } from '../../selectors';
 
 import apolloClient from '../../../../apollo';
-import projectItemsSubQuery from '../../../../apollo/queries/sub/items';
+import itemsSubQuery from '../../../../apollo/queries/sub/items';
 
 export function* changeFilter(props) {
   const { projectId } = props;
@@ -64,7 +64,7 @@ export function* changeFilter(props) {
     const filterJS = projectEntriesFinderFilter.toJS();
 
     const result = yield apolloClient.query({
-      query: projectItemsSubQuery,
+      query: itemsSubQuery,
       variables: {
         ...pick(filterJS, ['take', 'skip']),
         where: {
@@ -77,7 +77,7 @@ export function* changeFilter(props) {
       },
     });
 
-    const { items, total } = result.data.projectItems;
+    const { items, total } = result.data.items;
 
     // reselect because state could change
     const projectsEntriesFinderStateAfter = yield select(
