@@ -17,7 +17,6 @@ import Code from '../Code';
 import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
 import renderResolvers from './renderResolvers';
 import ProjectItemLabelDetail from '../ProjectItemLabelDetail';
-import ProjectItemLabelDetailStores from '../ProjectItemLabelDetailStores';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {
@@ -91,10 +90,6 @@ class ProjectItemRow extends React.PureComponent {
                   {serverStrCode || clientStrCodeReversed}
                 </Code>
               )}
-              <ProjectItemLabelDetailStores
-                item={item}
-                itemNextValues={itemNextValues}
-              />
             </div>
           </Grid.Column>
           <Grid.Column largeScreen={13} widescreen={14}>
