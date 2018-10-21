@@ -20,7 +20,7 @@ import projectBoxItemOutsTotalQuery from '../../../../apollo/queries/sub/boxItem
 function buildQueryObjects(fieldNames = []) {
   return gql`
     query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
-      projectBoxItemOuts(take: $take, skip: $skip, sort: $sort, where: $where) {
+      boxItemOuts(take: $take, skip: $skip, sort: $sort, where: $where) {
         items {
           id
           ${fieldNames instanceof Array ? fieldNames.join('\n') : fieldNames}

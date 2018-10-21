@@ -27,7 +27,7 @@ import {
 function buildQueryObjects(fieldNames = []) {
   return gql`
     query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
-      projectItems(take: $take, skip: $skip, sort: $sort, where: $where) {
+      items(take: $take, skip: $skip, sort: $sort, where: $where) {
         items {
           id
           type

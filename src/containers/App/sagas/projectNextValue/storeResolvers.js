@@ -25,7 +25,6 @@ const Resolvers = {
   itemListUpdate: (
     store,
     { n, clientCode = '', clientType = 0, serverCode = '', itemList } = {},
-    { entry },
   ) => {
     let nextStore = store
       .setIn(['server', `strItemCode__${n}`], serverCode)
@@ -34,8 +33,8 @@ const Resolvers = {
 
     if (itemList instanceof Map) {
       nextStore = nextStore.set(
-        'arrayItems',
-        entry.get('arrayItems', IMMUTABLE_LIST).push(itemList),
+        'items',
+        nextStore.get('items', IMMUTABLE_LIST).push(itemList),
       );
     }
 
