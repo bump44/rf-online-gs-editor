@@ -184,10 +184,13 @@ export const getAngle = (
     ),
   ) || 0;
 
-export const getArrayItems = (
+export const getItems = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
-) => nextValue.get('arrayItems', entry.get('arrayItems')) || IMMUTABLE_LIST;
+) =>
+  nextValue
+    .get('items', IMMUTABLE_LIST)
+    .concat(entry.get('items', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
 
 /**
  * Return vendor list item type from client cell
@@ -241,12 +244,13 @@ export const getItemListClient = (
   const finite = getItemListClientType(nextValue, { entry }, { n });
   const typeName = getTypeNameByFinite(finite);
   const code = getItemListClientCode(nextValue, { entry }, { n });
+
   if (!typeName || !code) {
     return undefined;
   }
 
-  const arrayItems = getArrayItems(nextValue, { entry });
-  const arrayItem = arrayItems.find(
+  const items = getItems(nextValue, { entry });
+  const item = items.find(
     value =>
       projectItem.getClientCode(nextValues.get(value.get('id')), {
         entry: value,
@@ -257,7 +261,7 @@ export const getItemListClient = (
         }),
   );
 
-  return arrayItem;
+  return item;
 };
 
 /**
@@ -278,11 +282,12 @@ export const getItemListServer = (
     return undefined;
   }
 
-  const arrayItems = getArrayItems(nextValue, { entry });
-  return arrayItems.find(
-    arrayItem =>
-      projectItem.getServerCode(nextValues.get(arrayItem.get('id')), {
-        entry: arrayItem,
+  const items = getItems(nextValue, { entry });
+
+  return items.find(
+    item =>
+      projectItem.getServerCode(nextValues.get(item.get('id')), {
+        entry: item,
       }) === code,
   );
 };
