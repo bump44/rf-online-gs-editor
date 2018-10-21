@@ -8,6 +8,7 @@ import {
   getStoragePricePercent,
   getMoneyValueByPercent,
 } from '../../getters/projectItem';
+import { getClientCodeAvoidError } from '../../../../utils/converters';
 
 const calcStoragePrice = (
   nextValue,
@@ -172,6 +173,11 @@ const Resolvers = {
     item
       .setIn(['server', `fEffUnit__${n}`], value)
       .setIn(['client', `fEffUnit__${n}`], value),
+  serverCode: (item, value) =>
+    item
+      .setIn(['server', 'strCode'], value)
+      .setIn(['client', 'strCode'], getClientCodeAvoidError(value)),
+  clientCode: (item, value) => item.setIn(['client', 'strCode'], value),
 };
 
 export default Resolvers;

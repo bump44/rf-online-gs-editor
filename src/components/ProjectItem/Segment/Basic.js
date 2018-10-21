@@ -10,6 +10,8 @@ import { Map, List } from 'immutable';
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import ProjectItemInteractingName from '../Interacting/Name';
+import ProjectItemInteractingServerCode from '../Interacting/ServerCode';
+import ProjectItemInteractingClientCode from '../Interacting/ClientCode';
 import ProjectItemInteractingExchange from '../Interacting/Exchange';
 import ProjectItemInteractingSell from '../Interacting/Sell';
 import ProjectItemInteractingGround from '../Interacting/Ground';
@@ -31,17 +33,43 @@ import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBasic extends React.PureComponent {
   render() {
-    const { item, itemNextValues, itemActions, moneyTypes } = this.props;
+    const {
+      item,
+      itemNextValues,
+      itemActions,
+      moneyTypes,
+      localSettings,
+    } = this.props;
 
     return (
       <Segment>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column width={1} verticalAlign="top">
+              <Header sub>Code(s)</Header>
               <Header sub>Name</Header>
               <Header sub>Transfer & Civil permissions</Header>
             </Grid.Column>
             <Grid.Column width={6} verticalAlign="top">
+              <Grid columns="equal">
+                <Grid.Column>
+                  <ProjectItemInteractingServerCode
+                    item={item}
+                    itemNextValues={itemNextValues}
+                    onChangeValue={itemActions.changeServerCode}
+                    className="mb-15"
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <ProjectItemInteractingClientCode
+                    item={item}
+                    itemNextValues={itemNextValues}
+                    onChangeValue={itemActions.changeClientCode}
+                    localSettings={localSettings}
+                    className="mb-15"
+                  />
+                </Grid.Column>
+              </Grid>
               <ProjectItemInteractingName
                 item={item}
                 itemNextValues={itemNextValues}
@@ -178,6 +206,7 @@ class ProjectItemSegmentBasic extends React.PureComponent {
 ProjectItemSegmentBasic.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
+  localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.shape({
     changeName: PropTypes.func.isRequired,

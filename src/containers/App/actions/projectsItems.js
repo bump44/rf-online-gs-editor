@@ -44,6 +44,8 @@ export const projectsItems = {
       'expertValue',
       'effectTypeValue',
       'effectValue',
+      'serverCode',
+      'clientCode',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

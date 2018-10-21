@@ -110,3 +110,11 @@ export const getClientCode = (code = '') => {
     .join('')
     .toUpperCase();
 };
+
+export const getClientCodeAvoidError = code => {
+  try {
+    return getClientCode(code);
+  } catch (err) {
+    return null;
+  }
+};
