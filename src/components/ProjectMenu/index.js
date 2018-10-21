@@ -54,15 +54,6 @@ function ProjectMenuIsOwnerItems({
         </Label>
       </Menu.Item>
       <Menu.Item header>
-        <FormattedMessage {...messages.Administration} />
-      </Menu.Item>
-      <Menu.Item as={NavLink} to={`/project/${projectId}/details`} exact>
-        <FormattedMessage {...messages.UpdateDetails} />
-      </Menu.Item>
-      <Menu.Item as={NavLink} to={`/project/${projectId}/remove`} exact>
-        <FormattedMessage {...messages.RemoveProject} />
-      </Menu.Item>
-      <Menu.Item header>
         <FormattedMessage {...messages.ImportExportFiles} />
       </Menu.Item>
       <Menu.Item as={NavLink} to={`/project/${projectId}/import`} exact>
