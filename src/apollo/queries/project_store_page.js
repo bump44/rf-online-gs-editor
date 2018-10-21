@@ -4,7 +4,6 @@ import StoreClientNameParts from '../fragments/StoreClientNameParts';
 import StoreServerNameParts from '../fragments/StoreServerNameParts';
 import ItemClientNameParts from '../fragments/ItemClientNameParts';
 import ItemServerNameParts from '../fragments/ItemServerNameParts';
-import MapSptNameParts from '../fragments/MapSptNameParts';
 
 export default gql`
   query($id: String!, $storeId: String!) {
@@ -84,5 +83,4 @@ export default gql`
   ${StoreServerNameParts}
   ${ItemClientNameParts}
   ${ItemServerNameParts}
-  ${MapSptNameParts}
 `;
