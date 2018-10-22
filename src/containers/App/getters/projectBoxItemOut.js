@@ -4,6 +4,7 @@
 
 import { isNumber, max } from 'lodash';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import { getValue } from './nextValue';
 
 /**
  * Return id
@@ -25,10 +26,12 @@ export const getId = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
 export const getIndex = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
-) => {
-  const value = nextValue.get('nIndex', entry.get('nIndex'));
-  return isNumber(value) ? value : undefined;
-};
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['nIndex']], def: undefined, fnc: isNumber },
+  );
 
 /**
  * Return project id

@@ -84,7 +84,9 @@ export default gql`
 
       boxItemOuts {
         id
+        nIndex
         ...BoxItemOutNameParts
+
         items {
           id
           type
