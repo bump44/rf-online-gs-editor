@@ -126,7 +126,7 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
     return (
       <SortableAutoSizeList
         ref={this.createRef}
-        rowHeight={75}
+        rowHeight={85}
         rowCount={min([200, max([1, listCount])])}
         rowRenderer={this.renderItemList}
         useDragHandle

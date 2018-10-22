@@ -21,13 +21,21 @@ import {
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
+import {
+  getClientCode,
+  getClientCodeAvoidError,
+} from '../../../utils/converters';
+
+import {
+  getTypeNameByFinite,
+  getFiniteByTypeName,
+  getTypeNamesByPrefix,
+} from '../../../structs/item_types_utils';
 
 import {
   IMMUTABLE_MAP,
   AUTO_REVERSE_CLIENT_CODES,
 } from '../../../containers/App/constants';
-
-import { getClientCode } from '../../../utils/converters';
 
 import * as projectStore from '../../../containers/App/getters/projectStore';
 import * as projectItem from '../../../containers/App/getters/projectItem';
@@ -35,6 +43,7 @@ import * as projectItem from '../../../containers/App/getters/projectItem';
 import ProjectItemsFinder from '../../ProjectItemsFinder';
 import ProjectItemLabelDetail from '../../ProjectItemLabelDetail';
 import projectItemSegmentBasicResolvers from '../../ProjectItem/segmentBasicResolvers';
+import ProjectItemTypeSelect from '../../ProjectItemTypeSelect';
 
 const modalSelectItemStyle = {
   main: { height: 'calc(100% - 60px)', left: 'initial !important' },
@@ -59,6 +68,43 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       this.setState(prevState => ({
         selectItemModalOpen: !prevState.selectItemModalOpen,
       }));
+
+    this.selectClientType = value => {
+      const { storeActions, store, index } = this.props;
+      storeActions.changeItemListClientType(store, {
+        n: index + 1,
+        value: getFiniteByTypeName(value),
+      });
+    };
+
+    this.changeServerCode = evt => {
+      const { storeActions, store, index } = this.props;
+      storeActions.changeItemListServerCode(store, {
+        n: index + 1,
+        value: evt.target.value,
+      });
+
+      this.changeClientCode({
+        target: {
+          value: getClientCodeAvoidError(evt.target.value),
+        },
+      });
+
+      const prefix = evt.target.value.substring(0, 2);
+      const typeNames = getTypeNamesByPrefix(prefix);
+
+      if (typeNames.length > 0) {
+        this.selectClientType(typeNames[0]);
+      }
+    };
+
+    this.changeClientCode = evt => {
+      const { storeActions, store, index } = this.props;
+      storeActions.changeItemListClientCode(store, {
+        n: index + 1,
+        value: evt.target.value,
+      });
+    };
 
     this.state = { selectItemModalOpen: false };
   }
@@ -182,12 +228,18 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
           <Comment.Text>
             <Label size="mini">{itemList.clientType}</Label>
+            <ProjectItemTypeSelect
+              value={getTypeNameByFinite(itemList.clientType)}
+              onChangeValue={this.selectClientType}
+              addOptionAll={false}
+            />
             <Input
               className="ml-5 mr-10"
               size="mini"
-              value={clientCode}
+              title={clientCode}
+              value={itemList.clientCode}
               error={convClientCode !== itemList.clientCode}
-              disabled
+              onChange={this.changeClientCode}
             />
             <Icon
               name={
@@ -199,7 +251,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
               size="mini"
               value={itemList.serverCode}
               error={convClientCode !== itemList.clientCode}
-              disabled
+              onChange={this.changeServerCode}
             />
           </Comment.Text>
 
