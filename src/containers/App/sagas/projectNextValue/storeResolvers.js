@@ -114,6 +114,12 @@ const Resolvers = {
       .setIn(['client', `nNpcClass__${n}`], value),
 
   mapCode: (store, value) => store.setIn(['server', 'strStoreMAPcode'], value),
+  itemListClientType: (store, { value, n }) =>
+    store.setIn(['client', `nItemListType__${n}_1`], value),
+  itemListClientCode: (store, { value, n }) =>
+    store.setIn(['client', `strItemList__${n}_2`], value),
+  itemListServerCode: (store, { value, n }) =>
+    store.setIn(['server', `strItemCode__${n}`], value),
 };
 
 export default Resolvers;

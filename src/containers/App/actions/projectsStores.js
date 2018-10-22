@@ -19,6 +19,9 @@ export const projectsStores = {
       'itemsListCount',
       'npcClass',
       'mapCode',
+      'itemListServerCode',
+      'itemListClientCode',
+      'itemListClientType',
     ];
     const fns = {};
     propKeys.forEach(propKey => {
