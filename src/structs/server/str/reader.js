@@ -1,11 +1,11 @@
 import FileReader from '../../../classes/FileReader';
 import readerStruct from './reader_struct';
 
-export default class ServerItemstrReader extends FileReader {
+export default class ServerStrReader extends FileReader {
   constructor(props = {}) {
     super({
       ...props,
-      name: 'ServerItemstrReader',
+      name: 'ServerStrReader',
       struct: readerStruct,
     });
   }
