@@ -305,10 +305,11 @@ export const getItemListServerCode = (
   { entry = IMMUTABLE_MAP },
   { n = 1 },
 ) =>
-  nextValue.getIn(
-    ['server', `strItemCode__${n}`],
-    entry.getIn(['server', `strItemCode__${n}`]),
-  ) || '';
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', `strItemCode__${n}`]], def: '', fnc: isString },
+  );
 
 /**
  * Return vendor list item all data
