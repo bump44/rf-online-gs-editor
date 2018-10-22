@@ -12,42 +12,26 @@ import {
 
 import Struct from '../../../../classes/Struct';
 import BufferGenerator from '../../../../classes/BufferGenerator';
-import * as ITEM_TYPES from '../../../../structs/item_types';
-import serverStrReaderStruct from '../../../../structs/server/str/reader_struct';
-import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
+import clientStoreReaderStruct from '../../../../structs/client/store/reader_struct';
 import { getReleaseFilesPath } from '../../../../utils/path';
 import { mkdirSync, writeFile } from '../../../../utils/fs';
-import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
+import { enCryptByBuf } from '../../../../utils/edf';
+import {
+  RELEASE_FILES_CLIENT_FOLDER,
+  RELEASE_FILES_CLIENTDAT_FOLDER,
+} from '../../../../utils/constants';
+
 import apolloClient from '../../../../apollo';
-import projectItemsTotalQuery from '../../../../apollo/queries/sub/items_total';
-
-const TypeToReaderStruct = {};
-
-// generate readers
-pull(
-  Object.values(ITEM_TYPES),
-  ITEM_TYPES.COMBINEDATA,
-  ITEM_TYPES.MAKEDATA,
-  ITEM_TYPES.UNK3,
-).forEach(type => {
-  try {
-    TypeToReaderStruct[
-      type
-    ] = require(`../../../../structs/server/item/${type}_reader`).struct; // eslint-disable-line
-  } catch (err) {
-    console.warn(err); // eslint-disable-line
-  }
-});
+import storesTotalQuery from '../../../../apollo/queries/sub/stores_total';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`
     query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {
-      items(take: $take, skip: $skip, sort: $sort, where: $where) {
+      stores(take: $take, skip: $skip, sort: $sort, where: $where) {
         items {
           id
-          type
           nIndex
-          server {
+          client {
             ${fieldNames instanceof Array ? fieldNames.join('\n') : fieldNames}
           }
         }
@@ -57,7 +41,7 @@ function buildQueryObjects(fieldNames = []) {
   `;
 }
 
-function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
+function* loadObjects({ projectId, fieldNames, loaded, changeLoaded }) {
   let nextLoaded = loaded;
   const objects = [];
   const QUERY_OBJECTS = buildQueryObjects(fieldNames);
@@ -70,16 +54,16 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
         skip: objects.length,
         take: 100,
         sort: { nIndex: 1 },
-        where: { type, projectId },
+        where: { projectId },
       },
     });
 
-    objects.push(...result.data.items.items);
-    nextLoaded += result.data.items.items.length;
+    objects.push(...result.data.stores.items);
+    nextLoaded += result.data.stores.items.length;
 
     yield put(changeLoaded(nextLoaded));
 
-    if (result.data.items.items.length <= 0) {
+    if (result.data.stores.items.length <= 0) {
       break;
     }
   }
@@ -121,86 +105,57 @@ function fillBuffer(
 }
 
 /**
- * Export Server Items Resolver
+ * Export Client Stores Resolver
  */
 export default function* defaultSaga({ projectId, actions, fileData }) {
   yield delay(1000);
-  const { type } = fileData.args;
+  const parsePath = path.parse(fileData.path);
+  const fileName = parsePath.name;
+  const fileDir = parsePath.dir;
+  const bufferGenerator = new BufferGenerator();
 
-  const readerStruct = TypeToReaderStruct[type];
+  const readerStruct = clientStoreReaderStruct;
   const total = yield apolloClient.query({
-    query: projectItemsTotalQuery,
-    variables: { where: { projectId, type } },
+    query: storesTotalQuery,
+    variables: { where: { projectId } },
   });
 
-  yield put(actions.changeTotal(total.data.items.total));
+  yield put(actions.changeTotal(total.data.stores.total));
 
   let i = 0;
   let loaded = 0;
 
-  const bufferGenerator = new BufferGenerator();
-  const strBufferGenerator = new BufferGenerator();
-
   while (readerStruct.length > i) {
     const objects = yield loadObjects({
-      type,
       projectId,
-      fieldNames: pull(
-        readerStruct[i].block.getFieldNames(),
-        'nIndex',
-        'nType',
-      ),
+      fieldNames: pull(readerStruct[i].block.getFieldNames(), 'nIndex'),
       loaded,
       changeLoaded: actions.changeLoaded,
     });
 
     loaded += objects.length;
-
-    // item
     fillBuffer(bufferGenerator, readerStruct[i], objects, object => ({
-      ...object.server,
-      nType: getFiniteByTypeName(object.type),
+      ...object.client,
       nIndex: object.nIndex,
     }));
-
-    // itemstr
-    fillBuffer(
-      strBufferGenerator,
-      serverStrReaderStruct[i],
-      objects,
-      object => ({
-        nIndex: object.nIndex,
-        strCode: object.server.strCode,
-        strKo: '-',
-        strBr: '-',
-        strCh: '-',
-        strEn: '-',
-        strIn: '-',
-        strJa: '-',
-        strPh: '-',
-        strRu: '-',
-        strTa: '-',
-        strVi: '-',
-        strGlobal: object.server.strName,
-      }),
-    );
 
     i += 1;
   }
 
-  const parsePath = path.parse(fileData.path);
-  const fileDir = parsePath.dir;
+  yield mkdirSync(
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
+  );
 
   yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_SERVER_FOLDER, fileDir),
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
   );
 
   yield writeFile(
     getReleaseFilesPath(
       projectId,
-      RELEASE_FILES_SERVER_FOLDER,
+      RELEASE_FILES_CLIENTDAT_FOLDER,
       fileDir,
-      parsePath.base,
+      `${fileName}.dat`,
     ),
     bufferGenerator.getBuffer(),
   );
@@ -208,10 +163,10 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   yield writeFile(
     getReleaseFilesPath(
       projectId,
-      RELEASE_FILES_SERVER_FOLDER,
+      RELEASE_FILES_CLIENT_FOLDER,
       fileDir,
-      `${parsePath.name}_str${parsePath.ext || '.dat'}`,
+      `${fileName}.edf`,
     ),
-    strBufferGenerator.getBuffer(),
+    yield enCryptByBuf(bufferGenerator.getBuffer()),
   );
 }

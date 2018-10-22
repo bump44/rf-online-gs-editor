@@ -80,16 +80,8 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   const parsePath = path.parse(fileData.path);
   const fileName = parsePath.name;
   const fileDir = parsePath.dir;
-
-  yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
-  );
-
-  yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
-  );
-
   const bufferGenerator = new BufferGenerator();
+
   const total = yield apolloClient.query({
     query: projectItemsTotalQuery,
     variables: { where: { projectId } },
@@ -162,6 +154,14 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
     offset += headerWeight + headerValues[TOTAL_SIZE] - 8;
     i += 1;
   }
+
+  yield mkdirSync(
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
+  );
+
+  yield mkdirSync(
+    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
+  );
 
   yield writeFile(
     getReleaseFilesPath(
