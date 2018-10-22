@@ -25,9 +25,9 @@ import { makeSelectProjectsExports } from '../selectors';
 import { FILES } from '../../../utils/gameFiles';
 
 import clientItemResolve from './projectExport/clientItemResolve';
-// import clientStoreResolve from './projectExport/clientStoreResolve';
+import clientStoreResolve from './projectExport/clientStoreResolve';
 import serverItemResolve from './projectExport/serverItemResolve';
-// import serverStoreResolve from './projectExport/serverStoreResolve';
+import serverStoreResolve from './projectExport/serverStoreResolve';
 import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
 // import clientItemNDResolve from './projectExport/clientItemNDResolve';
 
@@ -35,6 +35,8 @@ const Resolvers = {
   clientItemResolve,
   serverItemResolve,
   serverBoxItemOutResolve,
+  serverStoreResolve,
+  clientStoreResolve,
 };
 
 const Workers = {};
