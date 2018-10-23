@@ -4,23 +4,24 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { max, min } from 'lodash';
-import { Map, List } from 'immutable';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { getItemsListCount } from 'containers/App/getters/projectStore';
+import { Map, List } from 'immutable';
+import { max, min } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
-} from '../../../containers/App/constants';
+} from 'containers/App/constants';
 
 import SortableAutoSizeList, {
   CreateDragHangle,
   DragHangleDefault,
-} from '../../SortableAutoSizeList';
+} from '../../../SortableAutoSizeList';
 
 import ProjectStoreInteractingItemList from './ItemList';
-import { getItemsListCount } from '../../../containers/App/getters/projectStore';
 
 const DragHandle = CreateDragHangle(DragHangleDefault);
 

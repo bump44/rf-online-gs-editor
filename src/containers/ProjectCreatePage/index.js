@@ -4,31 +4,35 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import { Card, Grid, Header as PageHeader } from 'semantic-ui-react';
 import { compose } from 'redux';
-import { push } from 'react-router-redux';
-import { Header as PageHeader, Grid, Card } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
+import {
+  makeSelectCurrentUser,
+  makeSelectIsLoggedIn,
+} from 'containers/App/selectors';
+
+import { makeSelectProject } from 'containers/ProjectPage/selectors';
+import { Map } from 'immutable';
+import { push } from 'react-router-redux';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import Notification from 'components/Notification';
+import ProjectCreateForm from 'components/ProjectCreateForm';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import * as actions from './actions';
 import makeSelectProjectCreatePage from './selectors';
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-import * as actions from './actions';
-import { makeSelectProject } from '../ProjectPage/selectors';
-
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
-import ProjectCreateForm from '../../components/ProjectCreateForm';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectCreatePage extends React.PureComponent {

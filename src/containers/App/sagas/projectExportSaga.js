@@ -1,4 +1,6 @@
+import { FILES } from 'utils/gameFiles';
 import { Map } from 'immutable';
+
 import {
   take,
   call,
@@ -22,7 +24,6 @@ import {
 
 import { projectsExportsBindActionsWithFileKey } from '../actions';
 import { makeSelectProjectsExports } from '../selectors';
-import { FILES } from '../../../utils/gameFiles';
 
 import clientItemResolve from './projectExport/clientItemResolve';
 import clientStoreResolve from './projectExport/clientStoreResolve';

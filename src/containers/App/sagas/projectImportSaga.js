@@ -1,4 +1,7 @@
+import { FILES } from 'utils/gameFiles';
 import { Map } from 'immutable';
+import apolloClient from 'apollo';
+
 import {
   take,
   call,
@@ -27,9 +30,6 @@ import {
 } from '../actions';
 
 import { makeSelectProjectsImports } from '../selectors';
-
-import { FILES } from '../../../utils/gameFiles';
-
 import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
@@ -40,8 +40,6 @@ import serverMapSptResolve from './projectImport/serverMapSptResolve';
 import serverMapBlockResolve from './projectImport/serverMapBlockResolve';
 import serverMapActiveResolve from './projectImport/serverMapActiveResolve';
 import serverMapPortalResolve from './projectImport/serverMapPortalResolve';
-
-import apolloClient from '../../../apollo';
 
 const Resolvers = {
   clientItemResolve,

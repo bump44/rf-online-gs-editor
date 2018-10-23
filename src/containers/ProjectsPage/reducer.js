@@ -5,6 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
+
 import {
   DEFAULT_ACTION,
   CHANGE_FIELD_VALUE,

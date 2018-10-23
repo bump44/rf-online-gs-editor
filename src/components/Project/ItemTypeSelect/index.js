@@ -4,16 +4,15 @@
  *
  */
 
-import map from 'lodash/map';
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Dropdown } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import map from 'lodash/map';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
-import * as itemTypes from '../../structs/item_types';
+import * as itemTypes from '../../../structs/item_types';
+import messages from './messages';
+import ProjectItemTypeLocaleMessage from '../ItemTypeLocaleMessage';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemTypeSelect extends React.PureComponent {

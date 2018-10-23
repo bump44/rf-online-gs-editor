@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Promise from 'bluebird';
 import { Map, List } from 'immutable';
+import Promise from 'bluebird';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -17,11 +17,11 @@ import {
   ITEM,
   IMMUTABLE_MAP,
   IMMUTABLE_LIST,
-} from '../../containers/App/constants';
+} from 'containers/App/constants';
 
-import ProjectItemsFilters from '../ProjectItemsFilters';
-import InfiniteAutoSizeList from '../InfiniteAutoSizeList';
-import ProjectItemVirtualizedRow from '../ProjectItemVirtualizedRow';
+import ProjectItemsFilters from '../ItemsFilters';
+import InfiniteAutoSizeList from '../../InfiniteAutoSizeList';
+import ProjectItemVirtualizedRow from '../ItemVirtualizedRow';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemsFinder extends React.PureComponent {

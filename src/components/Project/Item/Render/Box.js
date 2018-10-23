@@ -4,10 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { Tab } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import SegmentBasic from '../Segment/Basic';
 import SegmentBoxOutputs from '../Segment/BoxOutputs';
 

@@ -4,10 +4,9 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { InfiniteLoader, AutoSizer, List } from 'react-virtualized';
-// import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* eslint-disable react/prefer-stateless-function */
 class InfiniteAutoSizeList extends React.PureComponent {

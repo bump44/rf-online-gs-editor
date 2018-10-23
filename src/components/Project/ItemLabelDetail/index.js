@@ -4,20 +4,21 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
-import { Label, Icon } from 'semantic-ui-react';
-import ProjectItemTypeLocaleMessage from '../ProjectItemTypeLocaleMessage';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   getIndex,
   getId,
   getProjectId,
   getType,
-} from '../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
+
+import ProjectItemTypeLocaleMessage from '../ItemTypeLocaleMessage';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemLabelDetail extends React.PureComponent {

@@ -1,10 +1,10 @@
 import chunk from 'lodash/chunk';
 import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { COUNT } from '../../../../classes/constants';
-import ServerStoreReader from '../../../../structs/server/store/reader';
-import apolloClient from '../../../../apollo';
-import StoreImportServerMutation from '../../../../apollo/mutations/store_import_server';
+import { COUNT } from 'classes/constants';
+import ServerStoreReader from 'structs/server/store/reader';
+import apolloClient from 'apollo';
+import StoreImportServerMutation from 'apollo/mutations/store_import_server';
 import { announceProjectCountStores } from '../../actions';
 
 /**

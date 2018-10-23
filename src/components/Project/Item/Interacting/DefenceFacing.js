@@ -4,12 +4,13 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { isFinite } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-import { getDefFacing } from '../../../containers/App/getters/projectItem';
+import { getDefFacing } from 'containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefenceFacing extends React.PureComponent {

@@ -4,12 +4,13 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { parseInt } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-import { getDefFc } from '../../../containers/App/getters/projectItem';
+import { getDefFc } from 'containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingDefence extends React.PureComponent {

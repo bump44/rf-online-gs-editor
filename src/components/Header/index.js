@@ -4,16 +4,16 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { Icon, Popup, Button, Dropdown, Flag } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
-import { Icon, Popup, Button, Dropdown, Flag } from 'semantic-ui-react';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import i18n from '../../i18n';
+import messages from './messages';
+
 import packagejson from '../../../package.json';
 
 import Menu, {

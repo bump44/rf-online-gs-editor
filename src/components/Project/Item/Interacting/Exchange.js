@@ -4,13 +4,14 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
+import { getExchange } from 'containers/App/getters/projectItem';
 import messages from '../messages';
-import { getExchange } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingExchange extends React.PureComponent {

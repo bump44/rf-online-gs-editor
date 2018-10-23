@@ -1,5 +1,7 @@
 import upperFirst from 'lodash/upperFirst';
+
 import { ITEM } from '../constants';
+
 import {
   projectsNextValuesChangePropValue,
   projectsNextValuesRemoveVirtual,

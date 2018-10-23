@@ -4,23 +4,26 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
+import {
+  makeSelectCurrentUser,
+  makeSelectIsLoggedIn,
+} from 'containers/App/selectors';
+
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { logoutCurrentUser } from 'containers/App/actions';
+import { makeSelectProject } from 'containers/ProjectPage/selectors';
+import { Map } from 'immutable';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import Notification from 'components/Notification';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import messages from './messages';
-import { logoutCurrentUser } from '../App/actions';
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
-import { makeSelectProject } from '../ProjectPage/selectors';
-
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NotFoundPage extends React.PureComponent {

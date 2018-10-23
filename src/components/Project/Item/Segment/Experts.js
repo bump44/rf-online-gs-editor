@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { Segment, Grid } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import ProjectItemInteractingExpertType from '../Interacting/ExpertType';
 import ProjectItemInteractingExpertValue from '../Interacting/ExpertValue';

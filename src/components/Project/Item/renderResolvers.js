@@ -1,7 +1,8 @@
-import * as ITEM_TYPES from '../../structs/item_types';
-import RenderTool from './Render/Tool';
+import * as ITEM_TYPES from 'structs/item_types';
+
 import RenderArmor from './Render/Armor';
 import RenderBox from './Render/Box';
+import RenderTool from './Render/Tool';
 
 // want help in writing specific components ;)
 export default {

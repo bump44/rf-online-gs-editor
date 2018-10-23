@@ -4,31 +4,26 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { getRefs } from 'containers/App/getters/project';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
-import { IMMUTABLE_MAP, ITEM } from '../App/constants';
-
-import * as projectItem from '../App/getters/projectItem';
-import { getRefs } from '../App/getters/project';
-
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+import { Helmet } from 'react-helmet';
+import { IMMUTABLE_MAP, ITEM } from 'containers/App/constants';
+import * as projectItem from 'containers/App/getters/projectItem';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   projectsItemsBindActions,
   projectsBoxItemOutsBindActions,
   projectsEntriesFinderItemsBindActions,
   logoutCurrentUser,
-} from '../App/actions';
+} from 'containers/App/actions';
 
 import {
   makeSelectCurrentUser,
@@ -38,25 +33,32 @@ import {
   makeSelectProjectsEntriesFinder,
   makeSelectProjectImportsProcessingData,
   makeSelectProjectsImportsProcessingData,
-} from '../App/selectors';
+} from 'containers/App/selectors';
+
+import Header from 'components/Header';
+import Container from 'components/Container';
+
+import FullheightColumn, {
+  FullheightThis,
+  FullheightAutoSizer,
+} from 'components/FullheightColumn';
+
+import Notification from 'components/Notification';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+import ProjectItem from 'components/Project/Item';
+import ProjectItemLabelDetail from 'components/Project/ItemLabelDetail';
 
 import { changeId } from './actions';
+
 import makeSelectProjectItemPage, {
   makeSelectProject,
   makeSelectProjectItem,
 } from './selectors';
 
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import FullheightColumn, {
-  FullheightThis,
-  FullheightAutoSizer,
-} from '../../components/FullheightColumn';
-import Notification from '../../components/Notification';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
-import ProjectItem from '../../components/ProjectItem';
-import ProjectItemLabelDetail from '../../components/ProjectItemLabelDetail';
+import messages from './messages';
+import reducer from './reducer';
+import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemPage extends React.PureComponent {

@@ -1,5 +1,5 @@
+import BoxItemOutNameParts from 'apollo/fragments/BoxItemOutNameParts';
 import gql from 'graphql-tag';
-import BoxItemOutNameParts from '../../fragments/BoxItemOutNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {

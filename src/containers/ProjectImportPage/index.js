@@ -4,20 +4,21 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { Map } from 'immutable';
 import { map, forEach, some } from 'lodash';
-import styled from 'styled-components';
+import { remote } from 'electron';
+import { statSync } from 'fs';
 import cx from 'classnames';
 import path from 'path';
-import { statSync } from 'fs';
-import { remote } from 'electron';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import {
   Grid,
   Header as PageHeader,
@@ -30,18 +31,8 @@ import {
   Select,
 } from 'semantic-ui-react';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-
-import makeSelectProjectImportPage, {
-  makeSelectProject,
-  makeSelectImportType,
-} from './selectors';
-
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { changeId, changeImportType } from './actions';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import {
   CLIENT_FILES,
@@ -49,7 +40,7 @@ import {
   SERVER_FILES,
   CLIENT_ND_FILES,
   SERVER_MAP_FILES,
-} from '../../utils/gameFiles';
+} from 'utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
@@ -58,7 +49,7 @@ import {
   makeSelectProjectsImportsServerMaps,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
-} from '../App/selectors';
+} from 'containers/App/selectors';
 
 import {
   logoutCurrentUser,
@@ -68,7 +59,7 @@ import {
   projectsImportsServerMapsBindActions,
   projectsImportsServerMapsStartMapImport,
   projectsImportsServerMapsCancelMapImport,
-} from '../App/actions';
+} from 'containers/App/actions';
 
 import {
   REPLACE,
@@ -79,17 +70,28 @@ import {
   ERROR,
   CANCELLED,
   IMMUTABLE_MAP,
-} from '../App/constants';
+} from 'containers/App/constants';
 
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
+import Header from 'components/Header';
+import Container from 'components/Container';
+import Notification from 'components/Notification';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+
 import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
-} from '../../components/FullheightColumn';
+} from 'components/FullheightColumn';
+
+import makeSelectProjectImportPage, {
+  makeSelectProject,
+  makeSelectImportType,
+} from './selectors';
+
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+import { changeId, changeImportType } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectImportPage extends React.Component {

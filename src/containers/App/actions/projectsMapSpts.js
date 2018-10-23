@@ -1,5 +1,7 @@
 import upperFirst from 'lodash/upperFirst';
+
 import { MAPSPT } from '../constants';
+
 import {
   projectsNextValuesChangePropValue,
   projectsNextValuesRemoveFully,

@@ -4,14 +4,14 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Map } from 'immutable';
-import { NavLink } from 'react-router-dom';
-import { Menu, Label, Progress } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
+import { Map } from 'immutable';
+import { Menu, Label, Progress } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import messages from './messages';
 
 function ProjectMenuIsOwnerItems({

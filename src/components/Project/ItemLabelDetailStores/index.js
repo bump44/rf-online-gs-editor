@@ -4,12 +4,12 @@
  *
  */
 
-import React from 'react';
-import { Map } from 'immutable';
-import { Label, Icon, Popup } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-
 import { FormattedMessage } from 'react-intl';
+import { Label, Icon, Popup } from 'semantic-ui-react';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import messages from './messages';
 
 function ProjectItemLabelDetailStores({ item, itemNextValues, size }) {

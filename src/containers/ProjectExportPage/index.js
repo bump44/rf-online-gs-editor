@@ -4,19 +4,20 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { Map } from 'immutable';
 import { map, some, forEach } from 'lodash';
-import styled from 'styled-components';
-import cx from 'classnames';
 import { remote } from 'electron';
 import { statSync } from 'fs';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import {
   Grid,
   Header as PageHeader,
@@ -28,34 +29,28 @@ import {
   Button,
 } from 'semantic-ui-react';
 
-import { getReleaseFilesPath } from '../../utils/path';
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import makeSelectProjectExportPage, { makeSelectProject } from './selectors';
-import { changeId } from './actions';
-
+import { getReleaseFilesPath } from 'utils/path';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import {
   CLIENT_FILES,
   FILES,
   SERVER_FILES,
   CLIENT_ND_FILES,
-} from '../../utils/gameFiles';
+} from 'utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsExports,
-} from '../App/selectors';
+} from 'containers/App/selectors';
 
 import {
   logoutCurrentUser,
   projectsExportsBindActionsWithFileKey,
   projectsExportsStartFileExport,
   projectsExportsCancelFileExport,
-} from '../App/actions';
+} from 'containers/App/actions';
 
 import {
   WAITING,
@@ -64,17 +59,24 @@ import {
   ERROR,
   CANCELLED,
   IMMUTABLE_MAP,
-} from '../App/constants';
+} from 'containers/App/constants';
 
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
+import Header from 'components/Header';
+import Container from 'components/Container';
+import Notification from 'components/Notification';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+
 import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
-} from '../../components/FullheightColumn';
+} from 'components/FullheightColumn';
+
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+import makeSelectProjectExportPage, { makeSelectProject } from './selectors';
+import { changeId } from './actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectExportPage extends React.Component {

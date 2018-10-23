@@ -1,4 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
+
 import { projectsNextValuesChangePropValue } from './projectsNextValues';
 import { STORE } from '../constants';
 

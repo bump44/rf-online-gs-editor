@@ -6,12 +6,12 @@
 
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
-import SegmentBuilder from './SegmentBuilder';
 
-import SegmentBasicArmor from '../Segment/BasicArmor';
-import SegmentExperts from '../Segment/Experts';
-import SegmentEffects from '../Segment/Effects';
 import SegmentActions from '../Segment/Actions';
+import SegmentBasicArmor from '../Segment/BasicArmor';
+import SegmentBuilder from './SegmentBuilder';
+import SegmentEffects from '../Segment/Effects';
+import SegmentExperts from '../Segment/Experts';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRenderArmor extends SegmentBuilder {

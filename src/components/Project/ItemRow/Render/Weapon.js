@@ -4,27 +4,26 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
-import { Grid, Popup } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Grid, Popup } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
-import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
-import ProjectItemInteractingSell from '../../ProjectItem/Interacting/Sell';
-import ProjectItemInteractingGround from '../../ProjectItem/Interacting/Ground';
-import ProjectItemInteractingStoragePossible from '../../ProjectItem/Interacting/StoragePossible';
-import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/MoneyType';
-import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
-import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
-import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
-import ProjectItemInteractingLevelLim from '../../ProjectItem/Interacting/LevelLim';
-import ProjectItemInteractingUpLevelLim from '../../ProjectItem/Interacting/UpLevelLim';
-import ProjectItemInteractingWPType from '../../ProjectItem/Interacting/WPType';
-import ProjectItemInteractingSubType from '../../ProjectItem/Interacting/SubType';
+import messages from '../messages';
+import ProjectItemInteractingExchange from '../../Item/Interacting/Exchange';
+import ProjectItemInteractingGround from '../../Item/Interacting/Ground';
+import ProjectItemInteractingItemGrade from '../../Item/Interacting/ItemGrade';
+import ProjectItemInteractingLevelLim from '../../Item/Interacting/LevelLim';
+import ProjectItemInteractingMoneyType from '../../Item/Interacting/MoneyType';
+import ProjectItemInteractingMoneyValue from '../../Item/Interacting/MoneyValue';
+import ProjectItemInteractingName from '../../Item/Interacting/Name';
+import ProjectItemInteractingSell from '../../Item/Interacting/Sell';
+import ProjectItemInteractingStoragePossible from '../../Item/Interacting/StoragePossible';
+import ProjectItemInteractingStoragePrice from '../../Item/Interacting/StoragePrice';
+import ProjectItemInteractingSubType from '../../Item/Interacting/SubType';
+import ProjectItemInteractingUpLevelLim from '../../Item/Interacting/UpLevelLim';
+import ProjectItemInteractingWPType from '../../Item/Interacting/WPType';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderWeapon extends React.PureComponent {

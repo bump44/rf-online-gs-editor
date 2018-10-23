@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus, no-unneeded-ternary, default-case, no-fallthrough, no-console */
+import { deCryptByPath } from 'utils/edf';
 import fs from 'fs';
 import iconv from 'iconv-lite';
-import { deCryptByPath } from '../utils/edf';
 
 export default class Reader {
   constructor({ path, completedBuffer, fileBuffer, needDecrypt }) {

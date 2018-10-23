@@ -1,6 +1,7 @@
-import Promise from 'bluebird';
 import { forEach, map } from 'lodash';
-import Reader from './Reader';
+import Promise from 'bluebird';
+import Reader from 'classes/Reader';
+
 import {
   COUNT,
   OFFSET,

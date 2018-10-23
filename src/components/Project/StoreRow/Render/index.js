@@ -4,22 +4,21 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Map /* , List */ } from 'immutable';
 import { Grid, Label, Transition } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
+import * as projectStore from 'containers/App/getters/projectStore';
+
 import messages from '../messages';
-
-import * as projectStore from '../../../containers/App/getters/projectStore';
-
-import ProjectStoreInteractingName from '../../ProjectStore/Interacting/Name';
-import ProjectStoreInteractingLastName from '../../ProjectStore/Interacting/LastName';
-import ProjectStoreInteractingTrade from '../../ProjectStore/Interacting/Trade';
-import ProjectStoreInteractingUseAngle from '../../ProjectStore/Interacting/UseAngle';
-import ProjectStoreInteractingSize from '../../ProjectStore/Interacting/Size';
-import ProjectStoreInteractingAngle from '../../ProjectStore/Interacting/Angle';
+import ProjectStoreInteractingName from '../../Store/Interacting/Name';
+import ProjectStoreInteractingLastName from '../../Store/Interacting/LastName';
+import ProjectStoreInteractingTrade from '../../Store/Interacting/Trade';
+import ProjectStoreInteractingUseAngle from '../../Store/Interacting/UseAngle';
+import ProjectStoreInteractingSize from '../../Store/Interacting/Size';
+import ProjectStoreInteractingAngle from '../../Store/Interacting/Angle';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRender extends React.PureComponent {

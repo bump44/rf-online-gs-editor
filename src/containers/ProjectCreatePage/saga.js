@@ -1,11 +1,12 @@
-import { delay } from 'redux-saga';
 import { all, take, call, put, select } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import { push } from 'react-router-redux';
-import { SUBMIT } from './constants';
+import apolloClient from 'apollo';
+import CreateMutation from 'apollo/mutations/project_create';
+
 import { changeIsLoading, changeIsError, changeErrorMessage } from './actions';
+import { SUBMIT } from './constants';
 import makeSelectProjectCreatePage from './selectors';
-import apolloClient from '../../apollo';
-import CreateMutation from '../../apollo/mutations/project_create';
 
 // Individual exports for testing
 export function* submit() {

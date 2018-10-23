@@ -4,11 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Grid } from 'semantic-ui-react';
 import { AutoSizer } from 'react-virtualized';
+import { Grid } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 class FullheightColumn extends React.PureComponent {
   render() {

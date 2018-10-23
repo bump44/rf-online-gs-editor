@@ -4,20 +4,21 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, concat } from 'lodash';
-import { Map, List } from 'immutable';
-import styled from 'styled-components';
-import { Input, Button, Popup, Label } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Input, Button, Popup, Label } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import { parseInt, concat } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 import {
   getStoragePrice,
   getMoneyValueByMoneyType,
   getMoneyType,
-} from '../../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
+
+import messages from '../messages';
 
 const PERCENTS = [1, 3, 5, 9, 15, 25, 50, 75];
 

@@ -19,6 +19,13 @@ module.exports = {
       jsx: true,
     },
   },
+  settings: {
+    'import/resolver': {
+      'babel-module': {
+        root: ['./src'],
+      },
+    },
+  },
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'arrow-body-style': [2, 'as-needed'],
@@ -30,7 +37,7 @@ module.exports = {
     'import/no-dynamic-require': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-named-as-default': 0,
-    'import/no-unresolved': [2, { 'ignore': ['electron'] }],
+    'import/no-unresolved': [2, { ignore: ['electron'] }],
     'import/extensions': 0,
     'import/no-webpack-loader-syntax': 0,
     'import/prefer-default-export': 0,
@@ -66,5 +73,5 @@ module.exports = {
     'redux-saga/no-yield-in-race': 2,
     'redux-saga/yield-effects': 2,
     'require-yield': 0,
-  }
+  },
 };

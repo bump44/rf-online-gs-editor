@@ -1,4 +1,5 @@
 import { isString, isInteger, isBoolean, isNumber } from 'lodash';
+
 import { getValue } from './nextValue';
 import { IMMUTABLE_MAP } from '../constants';
 

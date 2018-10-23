@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { Tab } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {

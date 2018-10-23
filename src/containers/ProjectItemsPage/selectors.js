@@ -1,5 +1,6 @@
-import { List } from 'immutable';
 import { createSelector } from 'reselect';
+import { List } from 'immutable';
+
 import { initialState } from './reducer';
 
 /**

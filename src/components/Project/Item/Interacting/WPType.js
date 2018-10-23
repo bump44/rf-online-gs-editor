@@ -4,15 +4,16 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, isNumber } from 'lodash';
-import { Map, List } from 'immutable';
 import { Dropdown as DropdownUI } from 'semantic-ui-react';
-import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
+import { getWP, getWPType } from 'containers/App/getters/projectItem';
+import { Map, List } from 'immutable';
+import { parseInt, isNumber } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import messages from '../messages';
-import { getWP, getWPType } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingWPType extends React.PureComponent {

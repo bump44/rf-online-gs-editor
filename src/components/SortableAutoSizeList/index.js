@@ -4,9 +4,9 @@
  *
  */
 
-import React from 'react';
 import { AutoSizer, List } from 'react-virtualized';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   SortableContainer,

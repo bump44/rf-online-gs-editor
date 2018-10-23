@@ -1,6 +1,6 @@
-import pick from 'lodash/pick';
 import { delay } from 'redux-saga';
 import { fromJS } from 'immutable';
+import pick from 'lodash/pick';
 
 import {
   take,
@@ -11,6 +11,9 @@ import {
   select,
   cancelled,
 } from 'redux-saga/effects';
+
+import apolloClient from 'apollo';
+import itemsSubQuery from 'apollo/queries/sub/items';
 
 import {
   PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE,
@@ -30,9 +33,6 @@ import {
 } from '../../actions';
 
 import { makeSelectProjectsEntriesFinder } from '../../selectors';
-
-import apolloClient from '../../../../apollo';
-import itemsSubQuery from '../../../../apollo/queries/sub/items';
 
 export function* changeFilter(props) {
   const { projectId } = props;

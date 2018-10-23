@@ -1,4 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
+
 import { BOXITEMOUT } from '../constants';
 import { projectsNextValuesChangePropValue } from './projectsNextValues';
 

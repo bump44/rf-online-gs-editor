@@ -4,21 +4,18 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Promise from 'bluebird';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 import { Grid, Label, Header as PageHeader } from 'semantic-ui-react';
-
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+import { Helmet } from 'react-helmet';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from 'containers/App/constants';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import Promise from 'bluebird';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   makeSelectIsLoggedIn,
@@ -27,9 +24,27 @@ import {
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
   makeSelectProjectImportsProcessingData,
-} from '../App/selectors';
+} from 'containers/App/selectors';
 
-import { logoutCurrentUser, projectsStoresBindActions } from '../App/actions';
+import {
+  logoutCurrentUser,
+  projectsStoresBindActions,
+} from 'containers/App/actions';
+
+import Header from 'components/Header';
+import Container from 'components/Container';
+import Notification from 'components/Notification';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+import FullheightColumn, { FullheightThis } from 'components/FullheightColumn';
+import InfiniteAutoSizeList from 'components/InfiniteAutoSizeList';
+import ProjectStoreVirtualizedRow from 'components/Project/StoreVirtualizedRow';
+import ProjectStoresFilters from 'components/Project/StoresFilters';
+
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+
 import {
   changeId,
   resetResult,
@@ -44,19 +59,6 @@ import makeSelectProjectStoresPage, {
   makeSelectResult,
   makeSelectFilter,
 } from './selectors';
-
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
-import FullheightColumn, {
-  FullheightThis,
-} from '../../components/FullheightColumn';
-import InfiniteAutoSizeList from '../../components/InfiniteAutoSizeList';
-import ProjectStoreVirtualizedRow from '../../components/ProjectStoreVirtualizedRow';
-import ProjectStoresFilters from '../../components/ProjectStoresFilters';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStoresPage extends React.Component {

@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 import { Map } from 'immutable';
-import { PROCESSING, FINISHED } from './constants';
+
 import { initialState } from './reducer';
+import { PROCESSING, FINISHED } from './constants';
 
 const selectRoute = state => state.get('route');
 const selectGlobal = state => state.get('global');

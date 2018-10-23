@@ -4,18 +4,18 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
-import { Label, Icon } from 'semantic-ui-react';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   getIndex,
   getProjectId,
   getId,
-} from '../../containers/App/getters/projectStore';
+} from 'containers/App/getters/projectStore';
 
 function ProjectStoreLabelDetail(props) {
   const { store, storeNextValues, link } = props;

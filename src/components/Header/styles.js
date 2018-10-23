@@ -1,6 +1,6 @@
+import { Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Menu } from 'semantic-ui-react';
 
 export default styled(Menu)`
   -webkit-app-region: drag;

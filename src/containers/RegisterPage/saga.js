@@ -1,11 +1,16 @@
-import { delay } from 'redux-saga';
 import { all, take, call, put, select } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
+import apolloClient from 'apollo';
+import userRegisterMutation from 'apollo/mutations/user_register';
+
+import {
+  changeCurrentUser,
+  changeCurrentUserToken,
+} from 'containers/App/actions';
+
 import { SUBMIT } from './constants';
 import { changeIsLoading, changeIsError, changeErrorMessage } from './actions';
 import makeSelectRegisterPage from './selectors';
-import apolloClient from '../../apollo';
-import userRegisterMutation from '../../apollo/mutations/user_register';
-import { changeCurrentUser, changeCurrentUserToken } from '../App/actions';
 
 // Individual exports for testing
 export function* submit() {

@@ -4,24 +4,24 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Grid } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
-import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
-import ProjectItemInteractingSell from '../../ProjectItem/Interacting/Sell';
-import ProjectItemInteractingGround from '../../ProjectItem/Interacting/Ground';
-import ProjectItemInteractingStoragePossible from '../../ProjectItem/Interacting/StoragePossible';
-import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/MoneyType';
-import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
-import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
-import ProjectItemInteractingCivilBM from '../../ProjectItem/Interacting/CivilBM';
-import ProjectItemInteractingCivilBF from '../../ProjectItem/Interacting/CivilBF';
-import ProjectItemInteractingCivilCM from '../../ProjectItem/Interacting/CivilCM';
-import ProjectItemInteractingCivilCF from '../../ProjectItem/Interacting/CivilCF';
-import ProjectItemInteractingCivilA from '../../ProjectItem/Interacting/CivilA';
+import ProjectItemInteractingCivilA from '../../Item/Interacting/CivilA';
+import ProjectItemInteractingCivilBF from '../../Item/Interacting/CivilBF';
+import ProjectItemInteractingCivilBM from '../../Item/Interacting/CivilBM';
+import ProjectItemInteractingCivilCF from '../../Item/Interacting/CivilCF';
+import ProjectItemInteractingCivilCM from '../../Item/Interacting/CivilCM';
+import ProjectItemInteractingExchange from '../../Item/Interacting/Exchange';
+import ProjectItemInteractingGround from '../../Item/Interacting/Ground';
+import ProjectItemInteractingMoneyType from '../../Item/Interacting/MoneyType';
+import ProjectItemInteractingMoneyValue from '../../Item/Interacting/MoneyValue';
+import ProjectItemInteractingName from '../../Item/Interacting/Name';
+import ProjectItemInteractingSell from '../../Item/Interacting/Sell';
+import ProjectItemInteractingStoragePossible from '../../Item/Interacting/StoragePossible';
+import ProjectItemInteractingStoragePrice from '../../Item/Interacting/StoragePrice';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderTool extends React.PureComponent {

@@ -1,7 +1,9 @@
 import { take, call, put, all, fork } from 'redux-saga/effects';
+import apolloClient from 'apollo';
+import projectImportPageQuery from 'apollo/queries/project_import_page';
+
 import { CHANGE_ID } from './constants';
-import apolloClient from '../../apollo';
-import projectImportPageQuery from '../../apollo/queries/project_import_page';
+
 import {
   changeErrorMessage,
   changeIsError,

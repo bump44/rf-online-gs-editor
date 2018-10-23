@@ -1,6 +1,6 @@
 /* eslint-disable default-case, no-fallthrough */
-import invariant from 'invariant';
 import { isInteger } from 'lodash';
+import invariant from 'invariant';
 
 class Field {
   constructor({ type, name, len, as, schemaProps = {} } = {}) {

@@ -1,28 +1,33 @@
-import path from 'path';
-import gql from 'graphql-tag';
-import { pull } from 'lodash';
 import { delay } from 'redux-saga';
+import { pull } from 'lodash';
 import { put } from 'redux-saga/effects';
+import gql from 'graphql-tag';
+import path from 'path';
+
 import {
   ORDER,
   TOTAL_SIZE,
   BLOCK_SIZE,
   OFFSET,
   COUNT,
-} from '../../../../classes/constants';
-import Struct from '../../../../classes/Struct';
-import BufferGenerator from '../../../../classes/BufferGenerator';
-import readerStruct from '../../../../structs/client/item/reader_struct';
-import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
-import apolloClient from '../../../../apollo';
-import projectItemsTotalQuery from '../../../../apollo/queries/sub/items_total';
-import { getReleaseFilesPath } from '../../../../utils/path';
-import { mkdirSync, writeFile } from '../../../../utils/fs';
-import { enCryptByBuf } from '../../../../utils/edf';
+} from 'classes/constants';
+
+import Struct from 'classes/Struct';
+import BufferGenerator from 'classes/BufferGenerator';
+import readerStruct from 'structs/client/item/reader_struct';
+import { getFiniteByTypeName } from 'structs/item_types_utils';
+
+import apolloClient from 'apollo';
+import projectItemsTotalQuery from 'apollo/queries/sub/items_total';
+
+import { getReleaseFilesPath } from 'utils/path';
+import { mkdirSync, writeFile } from 'utils/fs';
+import { enCryptByBuf } from 'utils/edf';
+
 import {
   RELEASE_FILES_CLIENT_FOLDER,
   RELEASE_FILES_CLIENTDAT_FOLDER,
-} from '../../../../utils/constants';
+} from 'utils/constants';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`

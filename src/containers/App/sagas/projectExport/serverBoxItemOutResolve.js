@@ -1,21 +1,22 @@
-import path from 'path';
-import gql from 'graphql-tag';
 import { delay } from 'redux-saga';
 import { put } from 'redux-saga/effects';
+import gql from 'graphql-tag';
+import path from 'path';
+
 import {
   TOTAL_SIZE,
   BLOCK_SIZE,
   COUNT,
   COUNT_COLUMNS,
-} from '../../../../classes/constants';
-import Struct from '../../../../classes/Struct';
-import BufferGenerator from '../../../../classes/BufferGenerator';
-import serverBoxItemOutReaderStruct from '../../../../structs/server/boxItemOut/reader_struct';
-import { getReleaseFilesPath } from '../../../../utils/path';
-import { mkdirSync, writeFile } from '../../../../utils/fs';
-import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
-import apolloClient from '../../../../apollo';
-import projectBoxItemOutsTotalQuery from '../../../../apollo/queries/sub/boxItemOuts_total';
+} from 'classes/constants';
+import Struct from 'classes/Struct';
+import BufferGenerator from 'classes/BufferGenerator';
+import serverBoxItemOutReaderStruct from 'structs/server/boxItemOut/reader_struct';
+import { getReleaseFilesPath } from 'utils/path';
+import { mkdirSync, writeFile } from 'utils/fs';
+import { RELEASE_FILES_SERVER_FOLDER } from 'utils/constants';
+import apolloClient from 'apollo';
+import projectBoxItemOutsTotalQuery from 'apollo/queries/sub/boxItemOuts_total';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`

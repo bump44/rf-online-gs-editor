@@ -1,9 +1,10 @@
-import { isString } from 'lodash';
 import { isNullOrUndefined, isNumber } from 'util';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import { isString } from 'lodash';
+
 import { getTypeNameByFinite } from '../../../structs/item_types_utils';
-import * as projectItem from './projectItem';
 import { getValue } from './nextValue';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import * as projectItem from './projectItem';
 
 /**
  * Return the most important title of the subject

@@ -4,18 +4,20 @@
  *
  */
 
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Map, List } from 'immutable';
 import { Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import renderResolvers from './renderResolvers';
+import React from 'react';
+
 import {
   getIsRemoved,
   getType,
   getIsRemovedFully,
-} from '../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
+
+import messages from './messages';
+import renderResolvers from './renderResolvers';
 
 function ProjectItem({
   item,

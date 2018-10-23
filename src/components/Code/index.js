@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Label } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 class Code extends React.PureComponent {
   static propTypes = {

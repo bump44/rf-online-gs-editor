@@ -4,21 +4,21 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, isNumber } from 'lodash';
-import { Map, List } from 'immutable';
 import { Dropdown as DropdownUI } from 'semantic-ui-react';
-import styled from 'styled-components';
-
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Map, List } from 'immutable';
+import { parseInt, isNumber } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 import {
   getMoneyType,
   getMoney,
   getMoneyValueByMoneyType,
-} from '../../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
+
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingMoneyType extends React.PureComponent {

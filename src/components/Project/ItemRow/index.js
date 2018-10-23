@@ -4,19 +4,18 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
-import { Grid } from 'semantic-ui-react';
-
+import { AUTO_REVERSE_CLIENT_CODES } from 'containers/App/constants';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { Grid } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import Row from './styles';
-import Code from '../Code';
-import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
+import Code from '../../Code';
+import messages from './messages';
+import ProjectItemLabelDetail from '../ItemLabelDetail';
 import renderResolvers from './renderResolvers';
-import ProjectItemLabelDetail from '../ProjectItemLabelDetail';
+import Row from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRow extends React.PureComponent {

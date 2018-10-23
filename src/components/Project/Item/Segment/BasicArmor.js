@@ -4,36 +4,36 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemInteractingName from '../Interacting/Name';
-import ProjectItemInteractingExchange from '../Interacting/Exchange';
-import ProjectItemInteractingSell from '../Interacting/Sell';
-import ProjectItemInteractingGround from '../Interacting/Ground';
-import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
-import ProjectItemInteractingMoneyType from '../Interacting/MoneyType';
-import ProjectItemInteractingMoneyValue from '../Interacting/MoneyValue';
-import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
-import ProjectItemInteractingCivilBM from '../Interacting/CivilBM';
-import ProjectItemInteractingCivilBF from '../Interacting/CivilBF';
-import ProjectItemInteractingCivilCM from '../Interacting/CivilCM';
-import ProjectItemInteractingCivilCF from '../Interacting/CivilCF';
 import ProjectItemInteractingCivilA from '../Interacting/CivilA';
-import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
-import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
-import ProjectItemInteractingGoldPoint from '../Interacting/GoldPoint';
-import ProjectItemInteractingProcPoint from '../Interacting/ProcPoint';
-import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
-import ProjectItemInteractingItemGrade from '../Interacting/ItemGrade';
-import ProjectItemInteractingLevelLim from '../Interacting/LevelLim';
-import ProjectItemInteractingUpLevelLim from '../Interacting/UpLevelLim';
+import ProjectItemInteractingCivilBF from '../Interacting/CivilBF';
+import ProjectItemInteractingCivilBM from '../Interacting/CivilBM';
+import ProjectItemInteractingCivilCF from '../Interacting/CivilCF';
+import ProjectItemInteractingCivilCM from '../Interacting/CivilCM';
 import ProjectItemInteractingDefence from '../Interacting/Defence';
-import ProjectItemInteractingDefenceGap from '../Interacting/DefenceGap';
 import ProjectItemInteractingDefenceFacing from '../Interacting/DefenceFacing';
 import ProjectItemInteractingDefenceFacingPresent from '../Interacting/DefenceFacingPresent';
+import ProjectItemInteractingDefenceGap from '../Interacting/DefenceGap';
+import ProjectItemInteractingExchange from '../Interacting/Exchange';
+import ProjectItemInteractingGoldPoint from '../Interacting/GoldPoint';
+import ProjectItemInteractingGround from '../Interacting/Ground';
+import ProjectItemInteractingItemGrade from '../Interacting/ItemGrade';
+import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
+import ProjectItemInteractingLevelLim from '../Interacting/LevelLim';
+import ProjectItemInteractingMoneyType from '../Interacting/MoneyType';
+import ProjectItemInteractingMoneyValue from '../Interacting/MoneyValue';
+import ProjectItemInteractingName from '../Interacting/Name';
+import ProjectItemInteractingProcPoint from '../Interacting/ProcPoint';
+import ProjectItemInteractingSell from '../Interacting/Sell';
+import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
+import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
+import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
+import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
+import ProjectItemInteractingUpLevelLim from '../Interacting/UpLevelLim';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBasicArmor extends React.PureComponent {

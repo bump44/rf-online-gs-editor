@@ -1,5 +1,5 @@
 import { forEach, isFinite } from 'lodash';
-import Field from './Field';
+import Field from 'classes/Field';
 
 function generateFieldsFromSchema1(schema1 = []) {
   if (!(schema1 instanceof Array)) {

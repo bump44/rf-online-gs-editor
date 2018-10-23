@@ -4,29 +4,28 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
-import { Grid, Popup } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Grid, Popup } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemInteractingName from '../../ProjectItem/Interacting/Name';
-import ProjectItemInteractingExchange from '../../ProjectItem/Interacting/Exchange';
-import ProjectItemInteractingSell from '../../ProjectItem/Interacting/Sell';
-import ProjectItemInteractingGround from '../../ProjectItem/Interacting/Ground';
-import ProjectItemInteractingStoragePossible from '../../ProjectItem/Interacting/StoragePossible';
-import ProjectItemInteractingMoneyType from '../../ProjectItem/Interacting/MoneyType';
-import ProjectItemInteractingMoneyValue from '../../ProjectItem/Interacting/MoneyValue';
-import ProjectItemInteractingStoragePrice from '../../ProjectItem/Interacting/StoragePrice';
-import ProjectItemInteractingItemGrade from '../../ProjectItem/Interacting/ItemGrade';
-import ProjectItemInteractingLevelLim from '../../ProjectItem/Interacting/LevelLim';
-import ProjectItemInteractingDefence from '../../ProjectItem/Interacting/Defence';
-import ProjectItemInteractingDefenceGap from '../../ProjectItem/Interacting/DefenceGap';
-import ProjectItemInteractingDefenceFacing from '../../ProjectItem/Interacting/DefenceFacing';
-import ProjectItemInteractingDefenceFacingPresent from '../../ProjectItem/Interacting/DefenceFacingPresent';
-import ProjectItemInteractingUpLevelLim from '../../ProjectItem/Interacting/UpLevelLim';
+import messages from '../messages';
+import ProjectItemInteractingDefence from '../../Item/Interacting/Defence';
+import ProjectItemInteractingDefenceFacing from '../../Item/Interacting/DefenceFacing';
+import ProjectItemInteractingDefenceFacingPresent from '../../Item/Interacting/DefenceFacingPresent';
+import ProjectItemInteractingDefenceGap from '../../Item/Interacting/DefenceGap';
+import ProjectItemInteractingExchange from '../../Item/Interacting/Exchange';
+import ProjectItemInteractingGround from '../../Item/Interacting/Ground';
+import ProjectItemInteractingItemGrade from '../../Item/Interacting/ItemGrade';
+import ProjectItemInteractingLevelLim from '../../Item/Interacting/LevelLim';
+import ProjectItemInteractingMoneyType from '../../Item/Interacting/MoneyType';
+import ProjectItemInteractingMoneyValue from '../../Item/Interacting/MoneyValue';
+import ProjectItemInteractingName from '../../Item/Interacting/Name';
+import ProjectItemInteractingSell from '../../Item/Interacting/Sell';
+import ProjectItemInteractingStoragePossible from '../../Item/Interacting/StoragePossible';
+import ProjectItemInteractingStoragePrice from '../../Item/Interacting/StoragePrice';
+import ProjectItemInteractingUpLevelLim from '../../Item/Interacting/UpLevelLim';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemRowRenderArmor extends React.PureComponent {

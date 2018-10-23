@@ -17,7 +17,10 @@
         "plugins": [
           "transform-async-to-generator",
           "styled-components",
-          "react-hot-loader/babel"
+          "react-hot-loader/babel",
+          ["module-resolver", {
+            "root": ["./src"]
+          }]
         ],
         "sourceMaps": "inline"
       }
@@ -42,7 +45,10 @@
           "transform-react-remove-prop-types",
           "transform-react-inline-elements",
           "transform-async-to-generator",
-          "styled-components"
+          "styled-components",
+          ["module-resolver", {
+            "root": ["./src"]
+          }]
         ],
         "sourceMaps": "none"
       }

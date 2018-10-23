@@ -4,35 +4,34 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-import { Header as PageHeader, Grid, Label } from 'semantic-ui-react';
+import { Grid, Label, Header as PageHeader } from 'semantic-ui-react';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
+import {
+  makeSelectCurrentUser,
+  makeSelectIsLoggedIn,
+  makeSelectProjectsImportsProcessingData,
+} from 'containers/App/selectors';
+
+import Container from 'components/Container';
+import { FormattedMessage } from 'react-intl';
+import Header from 'components/Header';
+import { Helmet } from 'react-helmet';
+import { Map } from 'immutable';
+import ProjectsMediaItems from 'components/ProjectsMediaItems';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import { logoutCurrentUser } from 'containers/App/actions';
+import { makeSelectProject } from 'containers/ProjectPage/selectors';
 import makeSelectProjectsPage from './selectors';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
-
 import { loadingStart } from './actions';
-import {
-  makeSelectIsLoggedIn,
-  makeSelectCurrentUser,
-  makeSelectProjectsImportsProcessingData,
-} from '../App/selectors';
-import { logoutCurrentUser } from '../App/actions';
-import { makeSelectProject } from '../ProjectPage/selectors';
-
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import ProjectsMediaItems from '../../components/ProjectsMediaItems';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectsPage extends React.PureComponent {

@@ -4,10 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { Item } from 'semantic-ui-react';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 // import styled from 'styled-components';
 
 import ProjectsMediaItem from '../ProjectsMediaItem';

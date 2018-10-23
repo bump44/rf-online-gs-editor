@@ -4,14 +4,14 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
+import { getCivilBM } from 'containers/App/getters/projectItem';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import messages from '../messages';
-import { getCivilBM } from '../../../containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingCivilBM extends React.PureComponent {

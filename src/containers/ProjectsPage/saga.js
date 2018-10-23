@@ -1,5 +1,14 @@
 import { fork, take, call, all, put, select } from 'redux-saga/effects';
+import { makeSelectIsLoggedIn } from 'containers/App/selectors';
+import apolloClient from 'apollo';
+
+import {
+  AuthorizedQuery,
+  NonAuthorizedQuery,
+} from 'apollo/queries/projects_page';
+
 import { LOADING_START } from './constants';
+
 import {
   changeErrorMessage,
   changeIsError,
@@ -7,12 +16,6 @@ import {
   changeIsLoading,
   loadingSuccess,
 } from './actions';
-import {
-  AuthorizedQuery,
-  NonAuthorizedQuery,
-} from '../../apollo/queries/projects_page';
-import { makeSelectIsLoggedIn } from '../App/selectors';
-import apolloClient from '../../apollo';
 
 // Individual exports for testing
 export function* loadingStart() {

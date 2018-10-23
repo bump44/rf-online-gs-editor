@@ -1,11 +1,11 @@
-import chunk from 'lodash/chunk';
-import path from 'path';
-import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
-import ServerMapactiveReader from '../../../../structs/server/map/active_reader';
-import apolloClient from '../../../../apollo';
-import MapActiveImportServerMutation from '../../../../apollo/mutations/mapactive_import_server';
+import { COUNT, BLOCK_SIZE } from 'classes/constants';
+import { delay } from 'redux-saga';
+import apolloClient from 'apollo';
+import chunk from 'lodash/chunk';
+import MapActiveImportServerMutation from 'apollo/mutations/mapactive_import_server';
+import path from 'path';
+import ServerMapactiveReader from 'structs/server/map/active_reader';
 
 /**
  * Import Server MapActives Resolver

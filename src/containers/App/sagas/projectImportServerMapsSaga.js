@@ -1,6 +1,7 @@
-import path from 'path';
 import { flatten } from 'lodash';
 import { Map } from 'immutable';
+import path from 'path';
+
 import {
   take,
   call,
@@ -12,8 +13,9 @@ import {
   select,
 } from 'redux-saga/effects';
 
-import { isExists } from '../../../utils/fs';
-import { normalize } from '../../../utils/string';
+import apolloClient from 'apollo';
+import { isExists } from 'utils/fs';
+import { normalize } from 'utils/string';
 
 import {
   PROJECTS_IMPORTS_SERVER_MAPS_START_MAP_IMPORT,
@@ -33,7 +35,6 @@ import serverMapPortalResolve from './projectImport/serverMapPortalResolve';
 
 import { projectsImportsServerMapsBindActionsWithMapName } from '../actions';
 import { makeSelectProjectsImportsServerMaps } from '../selectors';
-import apolloClient from '../../../apollo';
 
 const Workers = {};
 

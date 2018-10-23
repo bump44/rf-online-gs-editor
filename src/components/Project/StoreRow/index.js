@@ -4,16 +4,16 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
+import { AUTO_REVERSE_CLIENT_CODES } from 'containers/App/constants';
 import { Grid } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { AUTO_REVERSE_CLIENT_CODES } from '../../containers/App/constants';
-import ProjectStoreLabelDetail from '../ProjectStoreLabelDetail';
+import Code from '../../Code';
+import ProjectStoreLabelDetail from '../StoreLabelDetail';
 import Render from './Render';
 import Row from './styles';
-import Code from '../Code';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreRow extends React.PureComponent {

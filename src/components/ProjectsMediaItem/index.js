@@ -4,13 +4,13 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { Map } from 'immutable';
 import { Item, Icon } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Map } from 'immutable';
+import { NavLink } from 'react-router-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
 function ProjectsMediaItem({ item, currentUser }) {
   const { title, description, name, id, createdAt, owner, isPublic } = item;

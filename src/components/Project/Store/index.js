@@ -4,9 +4,10 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import {
   Grid,
   Transition,
@@ -17,10 +18,10 @@ import {
 } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import { IMMUTABLE_MAP } from '../../containers/App/constants';
-import * as projectStore from '../../containers/App/getters/projectStore';
+import { IMMUTABLE_MAP } from 'containers/App/constants';
+import * as projectStore from 'containers/App/getters/projectStore';
 
+import messages from './messages';
 import ProjectStoreInteractingName from './Interacting/Name';
 import ProjectStoreInteractingLastName from './Interacting/LastName';
 import ProjectStoreInteractingTrade from './Interacting/Trade';
@@ -32,7 +33,7 @@ import ProjectStoreInteractingItemsListCount from './Interacting/ItemsListCount'
 import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
 import ProjectStoreInteractingMapNameType from './Interacting/MapNameType';
 
-import ProjectMapSptSegmentBasic from '../ProjectMapSpt/Segment/Basic';
+import ProjectMapSptSegmentBasic from '../MapSpt/Segment/Basic';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {

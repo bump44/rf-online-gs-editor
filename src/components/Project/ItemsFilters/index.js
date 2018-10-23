@@ -4,15 +4,16 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 // import styled from 'styled-components';
 import { Dropdown, Button, Input, Grid, Icon } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-import ProjectItemTypeSelect from '../ProjectItemTypeSelect';
+import ProjectItemTypeSelect from '../ItemTypeSelect';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemsFilters extends React.PureComponent {

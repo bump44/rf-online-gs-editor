@@ -4,12 +4,12 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, isFinite } from 'lodash';
-import { Map } from 'immutable';
+import { getUpLevel } from 'containers/App/getters/projectItem';
 import { Input } from 'semantic-ui-react';
-import { getUpLevel } from '../../../containers/App/getters/projectItem';
+import { Map } from 'immutable';
+import { parseInt, isFinite } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingUpLevelLim extends React.PureComponent {

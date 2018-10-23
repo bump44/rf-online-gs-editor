@@ -4,23 +4,26 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { get, uniq } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import { Map /* , List */ } from 'immutable';
 import { Input, Popup, Button } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
-import * as ITEM_TYPES from '../../../structs/item_types';
-import { getEffect25PresentValue } from '../../../utils/converters';
+import { getEffect25PresentValue } from 'utils/converters';
 
 import {
   getEffectValue,
   getEffectTypeValueIsDisabled,
   getEffectTypeValue,
   getType,
-} from '../../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
+
+import * as ITEM_TYPES from 'structs/item_types';
+
+import messages from '../messages';
 
 const USEFUL_VALUES_CONTENT = {
   25: value => {

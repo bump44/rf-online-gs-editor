@@ -4,14 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { getIsRemoved, getName } from 'containers/App/getters/projectItem';
 import { Map } from 'immutable';
 import { Segment, Button, Confirm } from 'semantic-ui-react';
-import {
-  getIsRemoved,
-  getName,
-} from '../../../containers/App/getters/projectItem';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const style = {
   confirmContent: {

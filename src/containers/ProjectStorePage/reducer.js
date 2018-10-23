@@ -4,8 +4,14 @@
  *
  */
 
+import { announceProjectCountHandler } from 'containers/App/actions';
 import { fromJS } from 'immutable';
-import { announceProjectCountHandler } from '../App/actions';
+
+import {
+  ANNOUNCE_PROJECT_COUNT_ITEMS,
+  ANNOUNCE_PROJECT_COUNT_STORES,
+  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
+} from 'containers/App/constants';
 
 import {
   DEFAULT_ACTION,
@@ -14,12 +20,6 @@ import {
   CHANGE_PROJECT,
   CHANGE_PROJECT_STORE,
 } from './constants';
-
-import {
-  ANNOUNCE_PROJECT_COUNT_ITEMS,
-  ANNOUNCE_PROJECT_COUNT_STORES,
-  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
-} from '../App/constants';
 
 export const initialState = fromJS({
   id: '',

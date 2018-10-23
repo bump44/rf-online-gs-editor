@@ -4,17 +4,17 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { IMMUTABLE_MAP } from 'containers/App/constants';
 import { Map, List } from 'immutable';
 import { Segment } from 'semantic-ui-react';
-import { IMMUTABLE_MAP } from '../../../containers/App/constants';
-import * as projectItem from '../../../containers/App/getters/projectItem';
-import * as projectBoxItemOut from '../../../containers/App/getters/projectBoxItemOut';
+import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
+import * as projectItem from 'containers/App/getters/projectItem';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectBoxItemOutLabelDetail from '../../ProjectBoxItemOutLabelDetail';
-import ProjectBoxItemOutInteractingOutputsProbDetail from '../../ProjectBoxItemOut/Interacting/OutputsProbDetail';
-import ProjectBoxItemOutInteractingOutputs from '../../ProjectBoxItemOut/Interacting/Outputs';
+import ProjectBoxItemOutInteractingOutputs from '../../BoxItemOut/Interacting/Outputs';
+import ProjectBoxItemOutInteractingOutputsProbDetail from '../../BoxItemOut/Interacting/OutputsProbDetail';
+import ProjectBoxItemOutLabelDetail from '../../BoxItemOutLabelDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBoxOutputs extends React.PureComponent {

@@ -4,13 +4,13 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { getIndex } from 'containers/App/getters/projectBoxItemOut';
+import { Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
-import { Label, Icon } from 'semantic-ui-react';
-import { getIndex } from '../../containers/App/getters/projectBoxItemOut';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutLabelDetail extends React.PureComponent {

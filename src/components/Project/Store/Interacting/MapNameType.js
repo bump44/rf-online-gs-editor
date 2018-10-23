@@ -4,14 +4,14 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
-import { Input, Dropdown } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Input, Dropdown } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import * as projectStore from 'containers/App/getters/projectStore';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as projectStore from '../../../containers/App/getters/projectStore';
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingMapNameType extends React.PureComponent {

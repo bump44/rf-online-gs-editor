@@ -1,4 +1,5 @@
 import { isNullOrUndefined } from 'util';
+
 import { IMMUTABLE_MAP } from '../constants';
 
 function isNotNullOrUndefined(value) {

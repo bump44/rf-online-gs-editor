@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
-import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
-import ItemClientNameParts from '../fragments/ItemClientNameParts';
-import ItemServerNameParts from '../fragments/ItemServerNameParts';
-import BoxItemOutNameParts from '../fragments/BoxItemOutNameParts';
+
+import BoxItemOutNameParts from 'apollo/fragments/BoxItemOutNameParts';
+import ItemClientNameParts from 'apollo/fragments/ItemClientNameParts';
+import ItemServerNameParts from 'apollo/fragments/ItemServerNameParts';
+import ProjectIncludeAllTypes from 'apollo/fragments/ProjectIncludeAllTypes';
 
 export default gql`
   query($id: String!, $itemId: String!) {

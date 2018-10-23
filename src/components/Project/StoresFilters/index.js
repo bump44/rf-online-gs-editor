@@ -4,11 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Dropdown, Button, Input, Grid, Icon } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */

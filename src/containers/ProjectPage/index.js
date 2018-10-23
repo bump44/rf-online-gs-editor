@@ -4,37 +4,38 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 import { Grid, Header as PageHeader, Statistic } from 'semantic-ui-react';
+import { Helmet } from 'react-helmet';
+import { Map } from 'immutable';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import makeSelectProjectPage, { makeSelectProject } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { changeId } from './actions';
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
-} from '../App/selectors';
+} from 'containers/App/selectors';
 
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Notification from '../../components/Notification';
-import ProjectsMediaItems from '../../components/ProjectsMediaItems';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
-import { logoutCurrentUser } from '../App/actions';
+import Header from 'components/Header';
+import Container from 'components/Container';
+import Notification from 'components/Notification';
+import ProjectsMediaItems from 'components/ProjectsMediaItems';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+import { logoutCurrentUser } from 'containers/App/actions';
+
+import { changeId } from './actions';
+import makeSelectProjectPage, { makeSelectProject } from './selectors';
+import messages from './messages';
+import reducer from './reducer';
+import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectPage extends React.PureComponent {

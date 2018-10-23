@@ -4,12 +4,11 @@
  *
  */
 
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Icon, Button, Checkbox, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 function ProjectCreateForm({

@@ -4,23 +4,21 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { Grid, Label, Icon, Modal, Button } from 'semantic-ui-react';
+import { IMMUTABLE_MAP } from 'containers/App/constants';
 import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
-import { Grid, Label, Icon, Modal, Button } from 'semantic-ui-react';
+import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
+import * as projectItem from 'containers/App/getters/projectItem';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-
-import { IMMUTABLE_MAP } from '../../containers/App/constants';
-import * as projectItem from '../../containers/App/getters/projectItem';
-import * as projectBoxItemOut from '../../containers/App/getters/projectBoxItemOut';
-
-import ProjectBoxItemOutLabelDetail from '../ProjectBoxItemOutLabelDetail';
-import ProjectItemInteractingName from '../ProjectItem/Interacting/Name';
-import ProjectBoxItemOutInteractingOutputs from '../ProjectBoxItemOut/Interacting/Outputs';
-import ProjectBoxItemOutInteractingOutputsProbDetail from '../ProjectBoxItemOut/Interacting/OutputsProbDetail';
+import ProjectBoxItemOutInteractingOutputs from '../BoxItemOut/Interacting/Outputs';
+import ProjectBoxItemOutInteractingOutputsProbDetail from '../BoxItemOut/Interacting/OutputsProbDetail';
+import ProjectBoxItemOutLabelDetail from '../BoxItemOutLabelDetail';
+import ProjectItemInteractingName from '../Item/Interacting/Name';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutRender extends React.PureComponent {

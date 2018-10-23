@@ -4,20 +4,19 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Grid } from 'semantic-ui-react';
+import { IMMUTABLE_MAP } from 'containers/App/constants';
+import { Map, List } from 'immutable';
+import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
+import * as projectItem from 'containers/App/getters/projectItem';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { IMMUTABLE_MAP } from '../../containers/App/constants';
-import * as projectItem from '../../containers/App/getters/projectItem';
-import * as projectBoxItemOut from '../../containers/App/getters/projectBoxItemOut';
-
-import Row from './styles';
-import Code from '../Code';
+import Code from '../../Code';
+import ProjectBoxItemOutLabelDetail from '../BoxItemOutLabelDetail';
+import ProjectItemLabelDetail from '../ItemLabelDetail';
 import Render from './Render';
-import ProjectItemLabelDetail from '../ProjectItemLabelDetail';
-import ProjectBoxItemOutLabelDetail from '../ProjectBoxItemOutLabelDetail';
+import Row from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutRow extends React.PureComponent {

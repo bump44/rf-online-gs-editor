@@ -1,25 +1,26 @@
-import path from 'path';
-import gql from 'graphql-tag';
-import { pull } from 'lodash';
 import { delay } from 'redux-saga';
+import { pull } from 'lodash';
 import { put } from 'redux-saga/effects';
+import gql from 'graphql-tag';
+import path from 'path';
+
 import {
   TOTAL_SIZE,
   BLOCK_SIZE,
   COUNT,
   COUNT_COLUMNS,
-} from '../../../../classes/constants';
+} from 'classes/constants';
 
-import Struct from '../../../../classes/Struct';
-import BufferGenerator from '../../../../classes/BufferGenerator';
-import * as ITEM_TYPES from '../../../../structs/item_types';
-import serverStrReaderStruct from '../../../../structs/server/str/reader_struct';
-import { getFiniteByTypeName } from '../../../../structs/item_types_utils';
-import { getReleaseFilesPath } from '../../../../utils/path';
-import { mkdirSync, writeFile } from '../../../../utils/fs';
-import { RELEASE_FILES_SERVER_FOLDER } from '../../../../utils/constants';
-import apolloClient from '../../../../apollo';
-import projectItemsTotalQuery from '../../../../apollo/queries/sub/items_total';
+import Struct from 'classes/Struct';
+import BufferGenerator from 'classes/BufferGenerator';
+import * as ITEM_TYPES from 'structs/item_types';
+import serverStrReaderStruct from 'structs/server/str/reader_struct';
+import { getFiniteByTypeName } from 'structs/item_types_utils';
+import { getReleaseFilesPath } from 'utils/path';
+import { mkdirSync, writeFile } from 'utils/fs';
+import { RELEASE_FILES_SERVER_FOLDER } from 'utils/constants';
+import apolloClient from 'apollo';
+import projectItemsTotalQuery from 'apollo/queries/sub/items_total';
 
 const TypeToReaderStruct = {};
 

@@ -1,11 +1,12 @@
-import { chunk, pull } from 'lodash';
-import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { COUNT, BLOCK_SIZE } from '../../../../classes/constants';
-import apolloClient from '../../../../apollo';
-import ItemImportServerMutation from '../../../../apollo/mutations/item_import_server';
+import { chunk, pull } from 'lodash';
+import { COUNT, BLOCK_SIZE } from 'classes/constants';
+import { delay } from 'redux-saga';
+import * as ITEM_TYPES from 'structs/item_types';
+import apolloClient from 'apollo';
+import ItemImportServerMutation from 'apollo/mutations/item_import_server';
+
 import { announceProjectCountItems } from '../../actions';
-import * as ITEM_TYPES from '../../../../structs/item_types';
 
 const TypeToReader = {};
 
@@ -17,9 +18,7 @@ pull(
   ITEM_TYPES.UNK3,
 ).forEach(type => {
   try {
-    TypeToReader[
-      type
-    ] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
+    TypeToReader[type] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
   } catch (err) {
     console.warn(err); // eslint-disable-line
   }

@@ -4,11 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { getName } from 'containers/App/getters/projectItem';
 import { Input } from 'semantic-ui-react';
-import { getName } from '../../../containers/App/getters/projectItem';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingName extends React.PureComponent {

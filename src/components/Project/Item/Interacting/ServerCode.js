@@ -4,15 +4,16 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { getClientCodeAvoidError } from 'utils/converters';
 import { Input } from 'semantic-ui-react';
-import { getClientCodeAvoidError } from '../../../utils/converters';
+import { Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import {
   getServerCode,
   getClientCode,
-} from '../../../containers/App/getters/projectItem';
+} from 'containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingServerCode extends React.PureComponent {

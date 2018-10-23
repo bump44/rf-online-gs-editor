@@ -4,15 +4,14 @@
  *
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
+import * as projectStore from 'containers/App/getters/projectStore';
 import messages from '../messages';
-
-import * as projectStore from '../../../containers/App/getters/projectStore';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingUseAngle extends React.PureComponent {

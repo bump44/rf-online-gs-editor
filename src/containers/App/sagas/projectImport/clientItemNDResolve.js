@@ -1,12 +1,13 @@
-import chunk from 'lodash/chunk';
-import { delay } from 'redux-saga';
+import { BLOCK_SIZE } from 'classes/constants';
 import { call, put } from 'redux-saga/effects';
-import ClientItemNDReader from '../../../../structs/client/itemnd/reader';
-import apolloClient from '../../../../apollo';
-import ItemImportClientNDMutation from '../../../../apollo/mutations/item_import_client_nd';
-import ItemClientNDDescriptionImportBlocksMutation from '../../../../apollo/mutations/item_client_nd_description_import_blocks';
+import { delay } from 'redux-saga';
+import apolloClient from 'apollo';
+import chunk from 'lodash/chunk';
+import ClientItemNDReader from 'structs/client/itemnd/reader';
+import ItemClientNDDescriptionImportBlocksMutation from 'apollo/mutations/item_client_nd_description_import_blocks';
+import ItemImportClientNDMutation from 'apollo/mutations/item_import_client_nd';
+
 import { announceProjectCountItems } from '../../actions';
-import { BLOCK_SIZE } from '../../../../classes/constants';
 
 /**
  * Import Client Items Resolver

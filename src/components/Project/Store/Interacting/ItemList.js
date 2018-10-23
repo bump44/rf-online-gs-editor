@@ -4,10 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
+
 import {
   Comment,
   Input,
@@ -20,30 +21,27 @@ import {
 } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
-import {
-  getClientCode,
-  getClientCodeAvoidError,
-} from '../../../utils/converters';
+import { getClientCode, getClientCodeAvoidError } from 'utils/converters';
 
 import {
   getTypeNameByFinite,
   getFiniteByTypeName,
   getTypeNamesByPrefix,
-} from '../../../structs/item_types_utils';
+} from 'structs/item_types_utils';
+
+import * as projectStore from 'containers/App/getters/projectStore';
+import * as projectItem from 'containers/App/getters/projectItem';
 
 import {
   IMMUTABLE_MAP,
   AUTO_REVERSE_CLIENT_CODES,
-} from '../../../containers/App/constants';
+} from 'containers/App/constants';
 
-import * as projectStore from '../../../containers/App/getters/projectStore';
-import * as projectItem from '../../../containers/App/getters/projectItem';
-
-import ProjectItemsFinder from '../../ProjectItemsFinder';
-import ProjectItemLabelDetail from '../../ProjectItemLabelDetail';
-import projectItemSegmentBasicResolvers from '../../ProjectItem/segmentBasicResolvers';
-import ProjectItemTypeSelect from '../../ProjectItemTypeSelect';
+import messages from '../messages';
+import ProjectItemsFinder from '../../ItemsFinder';
+import ProjectItemLabelDetail from '../../ItemLabelDetail';
+import projectItemSegmentBasicResolvers from '../../Item/segmentBasicResolvers';
+import ProjectItemTypeSelect from '../../ItemTypeSelect';
 
 const modalSelectItemStyle = {
   main: { height: 'calc(100% - 60px)', left: 'initial !important' },

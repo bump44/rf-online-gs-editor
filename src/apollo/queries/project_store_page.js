@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
-import ProjectIncludeAllTypes from '../fragments/ProjectIncludeAllTypes';
-import StoreClientNameParts from '../fragments/StoreClientNameParts';
-import StoreServerNameParts from '../fragments/StoreServerNameParts';
-import ItemClientNameParts from '../fragments/ItemClientNameParts';
-import ItemServerNameParts from '../fragments/ItemServerNameParts';
+import ItemClientNameParts from 'apollo/fragments/ItemClientNameParts';
+import ItemServerNameParts from 'apollo/fragments/ItemServerNameParts';
+import ProjectIncludeAllTypes from 'apollo/fragments/ProjectIncludeAllTypes';
+import StoreClientNameParts from 'apollo/fragments/StoreClientNameParts';
+import StoreServerNameParts from 'apollo/fragments/StoreServerNameParts';
 
 export default gql`
   query($id: String!, $storeId: String!) {

@@ -46,12 +46,12 @@ import {
   MAKEDATA,
   COMBINEDATA,
   UNK3,
-} from '../../structs/item_types';
+} from 'structs/item_types';
 
-import RenderTool from './Render/Tool';
 import RenderArmor from './Render/Armor';
-import RenderWeapon from './Render/Weapon';
 import RenderJewelry from './Render/Jewelry';
+import RenderTool from './Render/Tool';
+import RenderWeapon from './Render/Weapon';
 
 // want help in writing specific components ;)
 export default {

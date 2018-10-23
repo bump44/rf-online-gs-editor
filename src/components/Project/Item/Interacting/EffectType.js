@@ -4,16 +4,19 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, isNumber } from 'lodash';
-import { Map, List } from 'immutable';
-import { Input, Dropdown } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Input, Dropdown } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import { parseInt, isNumber } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as projectItem from '../../../containers/App/getters/projectItem';
+import {
+  getEffectTypeValue,
+  getEffectType,
+} from 'containers/App/getters/projectItem';
+
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingEffectType extends React.PureComponent {
@@ -37,13 +40,13 @@ class ProjectItemInteractingEffectType extends React.PureComponent {
       types,
     } = this.props;
 
-    const value = projectItem.getEffectTypeValue(
+    const value = getEffectTypeValue(
       itemNextValues.get('nextValue'),
       { entry: item },
       { n },
     );
 
-    const type = projectItem.getEffectType(
+    const type = getEffectType(
       itemNextValues.get('nextValue'),
       { entry: item, effectTypes: types },
       { n },

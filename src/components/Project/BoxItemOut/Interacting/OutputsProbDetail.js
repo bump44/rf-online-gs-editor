@@ -4,14 +4,14 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { Label } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Label } from 'semantic-ui-react';
+import { Map } from 'immutable';
+import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as projectBoxItemOut from '../../../containers/App/getters/projectBoxItemOut';
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectBoxItemOutInteractingOutputsProbDetail extends React.PureComponent {

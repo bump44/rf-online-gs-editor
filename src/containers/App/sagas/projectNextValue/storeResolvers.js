@@ -1,4 +1,5 @@
 import { Map } from 'immutable';
+
 import { getItemList } from '../../getters/projectStore';
 import { IMMUTABLE_LIST } from '../../constants';
 

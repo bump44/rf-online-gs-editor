@@ -1,4 +1,6 @@
 import { fromJS } from 'immutable';
+import { saveTokenMe } from 'utils/ls';
+
 import {
   CHANGE_CURRENT_USER,
   CHANGE_CURRENT_USER_TOKEN,
@@ -38,8 +40,6 @@ import {
   PROJECTS_IMPORTS_SERVER_MAPS_CHANGE_PROP_VALUE,
   PROJECTS_IMPORTS_SERVER_MAPS_REMOVE,
 } from './constants';
-
-import { saveTokenMe } from '../../utils/ls';
 
 // The initial state of the App
 export const initialState = fromJS({

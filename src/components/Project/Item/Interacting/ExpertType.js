@@ -4,16 +4,19 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { parseInt, isNumber } from 'lodash';
-import { Map, List } from 'immutable';
-import { Input, Dropdown } from 'semantic-ui-react';
-
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import { Input, Dropdown } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import { parseInt, isNumber } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import * as projectItem from '../../../containers/App/getters/projectItem';
+import {
+  getExpertTypeValue,
+  getExpertType,
+} from 'containers/App/getters/projectItem';
+
+import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingExpertType extends React.PureComponent {
@@ -37,13 +40,13 @@ class ProjectItemInteractingExpertType extends React.PureComponent {
       types,
     } = this.props;
 
-    const value = projectItem.getExpertTypeValue(
+    const value = getExpertTypeValue(
       itemNextValues.get('nextValue'),
       { entry: item },
       { n },
     );
 
-    const type = projectItem.getExpertType(
+    const type = getExpertType(
       itemNextValues.get('nextValue'),
       { entry: item, expertTypes: types },
       { n },

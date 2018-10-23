@@ -12,15 +12,15 @@ export default defineMessages({
     defaultMessage: 'Submit',
   },
   Title: {
-    id: 'app.containers.ProjectCreateForm.Title',
+    id: 'app.components.ProjectCreateForm.Title',
     defaultMessage: 'Title',
   },
   Description: {
-    id: 'app.containers.ProjectCreateForm.Description',
+    id: 'app.components.ProjectCreateForm.Description',
     defaultMessage: 'Description',
   },
   IsPublicProject: {
-    id: 'app.containers.ProjectCreateForm.IsPublicProject',
+    id: 'app.components.ProjectCreateForm.IsPublicProject',
     defaultMessage: 'Is public project',
   },
 });

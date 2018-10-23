@@ -4,24 +4,17 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
-
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-
-import { getRefs } from '../App/getters/project';
-import * as projectStore from '../App/getters/projectStore';
-import { IMMUTABLE_MAP, ITEM } from '../App/constants';
+import { Helmet } from 'react-helmet';
+import { IMMUTABLE_MAP, ITEM } from 'containers/App/constants';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   projectsStoresBindActions,
@@ -29,7 +22,7 @@ import {
   projectsEntriesFinderItemsBindActions,
   projectsMapSptsBindActions,
   logoutCurrentUser,
-} from '../App/actions';
+} from 'containers/App/actions';
 
 import {
   makeSelectCurrentUser,
@@ -39,7 +32,27 @@ import {
   makeSelectProjectsEntriesFinder,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
-} from '../App/selectors';
+} from 'containers/App/selectors';
+
+import { getRefs } from 'containers/App/getters/project';
+import * as projectStore from 'containers/App/getters/projectStore';
+
+import Header from 'components/Header';
+import Container from 'components/Container';
+import FullheightColumn, {
+  FullheightThis,
+  FullheightAutoSizer,
+} from 'components/FullheightColumn';
+
+import Notification from 'components/Notification';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ProjectMenu from 'components/ProjectMenu';
+import ProjectStore from 'components/Project/Store';
+import ProjectStoreLabelDetail from 'components/Project/StoreLabelDetail';
+
+import messages from './messages';
+import reducer from './reducer';
+import saga from './saga';
 
 import { changeId } from './actions';
 
@@ -47,19 +60,6 @@ import makeSelectProjectStorePage, {
   makeSelectProject,
   makeSelectProjectStore,
 } from './selectors';
-
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import FullheightColumn, {
-  FullheightThis,
-  FullheightAutoSizer,
-} from '../../components/FullheightColumn';
-
-import Notification from '../../components/Notification';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import ProjectMenu from '../../components/ProjectMenu';
-import ProjectStore from '../../components/ProjectStore';
-import ProjectStoreLabelDetail from '../../components/ProjectStoreLabelDetail';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStorePage extends React.PureComponent {

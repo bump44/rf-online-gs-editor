@@ -1,6 +1,13 @@
-import { Map } from 'immutable';
 import { delay } from 'redux-saga';
+import { Map } from 'immutable';
 import { pick, omit } from 'lodash';
+import apolloClient from 'apollo';
+import projectBoxItemOutUpdate from 'apollo/mutations/boxItemOut_update';
+import projectItemRemoveFully from 'apollo/mutations/item_remove_fully';
+import projectItemRemoveVirtual from 'apollo/mutations/item_remove_virtual';
+import projectItemRestoreVirtual from 'apollo/mutations/item_restore_virtual';
+import projectItemUpdate from 'apollo/mutations/item_update';
+import projectStoreUpdate from 'apollo/mutations/store_update';
 
 import {
   take,
@@ -37,18 +44,10 @@ import {
   makeSelectLocalSettings,
 } from '../selectors';
 
-import apolloClient from '../../../apollo';
-
-import projectItemUpdate from '../../../apollo/mutations/item_update';
-import projectItemRemoveVirtual from '../../../apollo/mutations/item_remove_virtual';
-import projectItemRemoveFully from '../../../apollo/mutations/item_remove_fully';
-import projectItemRestoreVirtual from '../../../apollo/mutations/item_restore_virtual';
-import projectStoreUpdate from '../../../apollo/mutations/store_update';
-import projectBoxItemOutUpdate from '../../../apollo/mutations/boxItemOut_update';
-
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
 import boxItemOutResolvers from './projectNextValue/boxItemOutResolvers';
+
 import {
   projectsNextValuesChangeIsRemoving,
   projectsNextValuesChangeNextValueOnlyInState,

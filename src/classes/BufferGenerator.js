@@ -4,8 +4,8 @@
   no-fallthrough,
 */
 
-import iconv from 'iconv-lite';
 import { parseInt } from 'lodash';
+import iconv from 'iconv-lite';
 
 class BufferGenerator {
   constructor() {

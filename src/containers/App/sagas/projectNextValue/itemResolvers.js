@@ -1,3 +1,5 @@
+import { getClientCodeAvoidError } from 'utils/converters';
+
 import {
   PROJECT_ITEM_NAME_FIELDS,
   AUTO_RECALC_STORAGE_PRICE_IF_MONEY_VALUE_CHANGED,
@@ -8,7 +10,6 @@ import {
   getStoragePricePercent,
   getMoneyValueByPercent,
 } from '../../getters/projectItem';
-import { getClientCodeAvoidError } from '../../../../utils/converters';
 
 const calcStoragePrice = (
   nextValue,

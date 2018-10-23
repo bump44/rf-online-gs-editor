@@ -4,29 +4,33 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Helmet } from 'react-helmet';
+import { Map } from 'immutable';
 import { push } from 'react-router-redux';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import injectSaga from '../../utils/injectSaga';
-import injectReducer from '../../utils/injectReducer';
+import {
+  makeSelectIsLoggedIn,
+  makeSelectCurrentUser,
+} from 'containers/App/selectors';
+
+import Header from 'components/Header';
+import Button from 'components/Button';
+import Notification from 'components/Notification';
+
 import makeSelectRegisterPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import * as actions from './actions';
 
-import { makeSelectIsLoggedIn, makeSelectCurrentUser } from '../App/selectors';
-
-import Header from '../../components/Header';
-import Button from '../../components/Button';
-import Notification from '../../components/Notification';
 import FormWrapper from './FormWrapper';
 
 /* eslint-disable react/prefer-stateless-function */

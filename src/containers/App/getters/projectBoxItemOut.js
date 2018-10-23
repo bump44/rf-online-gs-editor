@@ -3,8 +3,9 @@
  */
 
 import { isNumber, max } from 'lodash';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+
 import { getValue } from './nextValue';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 
 /**
  * Return id

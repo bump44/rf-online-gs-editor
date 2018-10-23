@@ -12,6 +12,7 @@ import {
 } from 'lodash';
 
 import { isNullOrUndefined } from 'util';
+
 import { getFiniteByTypeName } from '../../../structs/item_types_utils';
 import { getValue } from './nextValue';
 

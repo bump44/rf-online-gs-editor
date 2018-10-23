@@ -4,31 +4,31 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import ProjectItemInteractingName from '../Interacting/Name';
-import ProjectItemInteractingServerCode from '../Interacting/ServerCode';
+import ProjectItemInteractingCivilA from '../Interacting/CivilA';
+import ProjectItemInteractingCivilBF from '../Interacting/CivilBF';
+import ProjectItemInteractingCivilBM from '../Interacting/CivilBM';
+import ProjectItemInteractingCivilCF from '../Interacting/CivilCF';
+import ProjectItemInteractingCivilCM from '../Interacting/CivilCM';
 import ProjectItemInteractingClientCode from '../Interacting/ClientCode';
 import ProjectItemInteractingExchange from '../Interacting/Exchange';
-import ProjectItemInteractingSell from '../Interacting/Sell';
+import ProjectItemInteractingGoldPoint from '../Interacting/GoldPoint';
 import ProjectItemInteractingGround from '../Interacting/Ground';
-import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
+import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
 import ProjectItemInteractingMoneyType from '../Interacting/MoneyType';
 import ProjectItemInteractingMoneyValue from '../Interacting/MoneyValue';
-import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
-import ProjectItemInteractingCivilBM from '../Interacting/CivilBM';
-import ProjectItemInteractingCivilBF from '../Interacting/CivilBF';
-import ProjectItemInteractingCivilCM from '../Interacting/CivilCM';
-import ProjectItemInteractingCivilCF from '../Interacting/CivilCF';
-import ProjectItemInteractingCivilA from '../Interacting/CivilA';
-import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
-import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
-import ProjectItemInteractingGoldPoint from '../Interacting/GoldPoint';
+import ProjectItemInteractingName from '../Interacting/Name';
 import ProjectItemInteractingProcPoint from '../Interacting/ProcPoint';
-import ProjectItemInteractingKillPoint from '../Interacting/KillPoint';
+import ProjectItemInteractingSell from '../Interacting/Sell';
+import ProjectItemInteractingServerCode from '../Interacting/ServerCode';
+import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
+import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
+import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
+import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBasic extends React.PureComponent {

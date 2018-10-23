@@ -5,6 +5,15 @@
  */
 
 import { fromJS } from 'immutable';
+
+import {
+  ANNOUNCE_PROJECT_COUNT_ITEMS,
+  ANNOUNCE_PROJECT_COUNT_STORES,
+  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
+} from 'containers/App/constants';
+
+import { announceProjectCountHandler } from 'containers/App/actions';
+
 import {
   DEFAULT_ACTION,
   CHANGE_FILTER_TAKE_SKIP,
@@ -19,14 +28,6 @@ import {
   CHANGE_FIELD_VALUE,
   CHANGE_PROJECT,
 } from './constants';
-
-import {
-  ANNOUNCE_PROJECT_COUNT_ITEMS,
-  ANNOUNCE_PROJECT_COUNT_STORES,
-  ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
-} from '../App/constants';
-
-import { announceProjectCountHandler } from '../App/actions';
 
 export const initialState = fromJS({
   id: '',

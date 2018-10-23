@@ -4,17 +4,16 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import { getMoneyType } from 'containers/App/getters/projectItem';
 import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import StdPrice from './StdPrice';
-import StdPoint from './StdPoint';
 import GoldPoint from './GoldPoint';
-import ProcPoint from './ProcPoint';
 import KillPoint from './KillPoint';
-
-import { getMoneyType } from '../../../containers/App/getters/projectItem';
+import ProcPoint from './ProcPoint';
+import StdPoint from './StdPoint';
+import StdPrice from './StdPrice';
 
 const InteractingComponents = {
   nStdPrice: StdPrice,

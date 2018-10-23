@@ -4,14 +4,14 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Grid, Header, Segment } from 'semantic-ui-react';
-import * as projectMapSpt from '../../../containers/App/getters/projectMapSpt';
+import { Map, List } from 'immutable';
+import * as projectMapSpt from 'containers/App/getters/projectMapSpt';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import FieldInteger from '../Interacting/FieldInteger';
 import FieldFloat from '../Interacting/FieldFloat';
+import FieldInteger from '../Interacting/FieldInteger';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectMapSptSegmentBasic extends React.PureComponent {

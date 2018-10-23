@@ -4,10 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
 import { Comment } from 'semantic-ui-react';
+import { Map, List } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import ProjectBoxItemOutInteractingOutput from './Output';
 
 const groupStyle = { maxWidth: '100%' };

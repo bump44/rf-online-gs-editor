@@ -4,11 +4,11 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { Input } from 'semantic-ui-react';
-import * as projectStore from '../../../containers/App/getters/projectStore';
+import { Map } from 'immutable';
+import * as projectStore from 'containers/App/getters/projectStore';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingLastName extends React.PureComponent {

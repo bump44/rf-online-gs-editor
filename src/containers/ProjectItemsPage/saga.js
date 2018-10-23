@@ -1,5 +1,6 @@
-import pick from 'lodash/pick';
 import { delay } from 'redux-saga';
+import pick from 'lodash/pick';
+
 import {
   take,
   call,
@@ -12,6 +13,11 @@ import {
 } from 'redux-saga/effects';
 
 import { fromJS } from 'immutable';
+
+import apolloClient from 'apollo';
+import projectItemsPageQuery from 'apollo/queries/project_items_page';
+import itemsSubQuery from 'apollo/queries/sub/items';
+
 import {
   CHANGE_ID,
   CHANGE_FILTER_TAKE_SKIP,
@@ -20,9 +26,7 @@ import {
   CHANGE_FILTER_WHERE_SEARCH,
   CHANGE_FILTER_WHERE_TYPE,
 } from './constants';
-import apolloClient from '../../apollo';
-import projectItemsPageQuery from '../../apollo/queries/project_items_page';
-import itemsSubQuery from '../../apollo/queries/sub/items';
+
 import {
   makeSelectFilter,
   makeSelectResultItems,

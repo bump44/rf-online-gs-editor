@@ -4,19 +4,19 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
 import { Dimmer, Loader } from 'semantic-ui-react';
-
-import Row from '../ProjectItemRow/styles';
-import ProjectItemRow from '../ProjectItemRow';
+import { List, Map } from 'immutable';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
   IMMUTABLE_MAP,
-} from '../../containers/App/constants';
+} from 'containers/App/constants';
+
+import Row from '../ItemRow/styles';
+import ProjectItemRow from '../ItemRow';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemVirtualizedRow extends React.PureComponent {
