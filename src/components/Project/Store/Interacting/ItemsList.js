@@ -5,11 +5,15 @@
  */
 
 import { Dimmer, Loader } from 'semantic-ui-react';
-import { getItemsListCount } from '~/containers/App/getters/projectStore';
 import { Map, List } from 'immutable';
 import { max, min } from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import {
+  getItemsListCount,
+  getLimItemsListCount,
+} from '~/containers/App/getters/projectStore';
 
 import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
@@ -22,6 +26,7 @@ import SortableAutoSizeList, {
 } from '../../../SortableAutoSizeList';
 
 import ProjectStoreInteractingItemList from './ItemList';
+import ProjectStoreInteractingLimItemList from './LimItemList';
 
 const DragHandle = CreateDragHangle(DragHangleDefault);
 
@@ -78,6 +83,7 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
       weaponTypes,
       entriesFinderItems,
       entriesFinderItemsActions,
+      isLimitedList,
     } = this.props;
 
     const disableRenderItemsIsScrolling = localSettings.get(
@@ -92,9 +98,13 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
       return null;
     }
 
+    const Component = isLimitedList
+      ? ProjectStoreInteractingLimItemList
+      : ProjectStoreInteractingItemList;
+
     if (!(disableRenderItemsIsScrolling && isScrolling)) {
       return (
-        <ProjectStoreInteractingItemList
+        <Component
           store={store}
           storeNextValues={storeNextValues}
           storeActions={storeActions}
@@ -120,15 +130,19 @@ class ProjectStoreInteractingItemsList extends React.PureComponent {
   }
 
   render() {
-    const { store, storeNextValues } = this.props;
+    const { store, storeNextValues, isLimitedList } = this.props;
     const nextValue = storeNextValues.get('nextValue');
-    const listCount = getItemsListCount(nextValue, { entry: store }) + 1;
+
+    const listCount =
+      (isLimitedList
+        ? getLimItemsListCount(nextValue, { entry: store })
+        : getItemsListCount(nextValue, { entry: store })) + 1;
 
     return (
       <SortableAutoSizeList
         ref={this.createRef}
         rowHeight={85}
-        rowCount={min([200, max([1, listCount])])}
+        rowCount={min([isLimitedList ? 16 : 200, max([1, listCount])])}
         rowRenderer={this.renderItemList}
         useDragHandle
         onSortEnd={this.onSortEnd}
@@ -149,8 +163,11 @@ ProjectStoreInteractingItemsList.propTypes = {
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   entriesFinderItemsActions: PropTypes.object.isRequired,
+  isLimitedList: PropTypes.bool,
 };
 
-ProjectStoreInteractingItemsList.defaultProps = {};
+ProjectStoreInteractingItemsList.defaultProps = {
+  isLimitedList: false,
+};
 
 export default ProjectStoreInteractingItemsList;

@@ -101,7 +101,11 @@ export default defineMessages({
     defaultMessage: 'Buttons',
   },
   ItemsList: {
-    id: 'app.components.ProjectStore.Items list',
+    id: 'app.components.ProjectStore.ItemsList',
     defaultMessage: 'Items list',
+  },
+  LimItemsList: {
+    id: 'app.components.ProjectStore.LimItemsList',
+    defaultMessage: 'Limited Items list',
   },
 });

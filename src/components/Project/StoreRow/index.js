@@ -5,7 +5,7 @@
  */
 
 import { AUTO_REVERSE_CLIENT_CODES } from '~/containers/App/constants';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Label } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -14,6 +14,11 @@ import Code from '../../Code';
 import ProjectStoreLabelDetail from '../StoreLabelDetail';
 import Render from './Render';
 import Row from './styles';
+
+import {
+  getMapNameType,
+  getMapCode,
+} from '~/containers/App/getters/projectStore';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreRow extends React.PureComponent {
@@ -45,6 +50,7 @@ class ProjectStoreRow extends React.PureComponent {
       itemGradeTypes,
       weaponTypes,
       localSettings,
+      mapNameTypes,
     } = this.props;
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
@@ -61,6 +67,14 @@ class ProjectStoreRow extends React.PureComponent {
     /* eslint-enable indent */
 
     const isShowStrCode = !!(serverStrCode || clientStrCodeReversed);
+    const mapNameType = getMapNameType(storeNextValues.get('nextValue'), {
+      entry: store,
+      mapNameTypes,
+    });
+
+    const mapNameRaw = getMapCode(storeNextValues.get('nextValue'), {
+      entry: store,
+    });
 
     return (
       <Row>
@@ -68,19 +82,25 @@ class ProjectStoreRow extends React.PureComponent {
           <Grid.Column largeScreen={3} widescreen={2}>
             {this.renderTagIndexWithNextState()}
 
-            <div className="mt-5">
-              {isShowStrCode && (
-                <Code
-                  title={
-                    serverStrCode && clientStrCodeReversed
-                      ? clientStrCodeReversed
-                      : undefined
-                  }
-                >
-                  {serverStrCode || clientStrCodeReversed}
-                </Code>
-              )}
-            </div>
+            {isShowStrCode && (
+              <Code
+                title={
+                  serverStrCode && clientStrCodeReversed
+                    ? clientStrCodeReversed
+                    : undefined
+                }
+              >
+                {serverStrCode || clientStrCodeReversed}
+              </Code>
+            )}
+
+            {(mapNameType || mapNameRaw) && (
+              <div className="mt-10">
+                <Label color="black">
+                  {mapNameType ? mapNameType.get('title') : mapNameRaw}
+                </Label>
+              </div>
+            )}
           </Grid.Column>
           <Grid.Column largeScreen={13} widescreen={14}>
             {Render && (
@@ -92,6 +112,7 @@ class ProjectStoreRow extends React.PureComponent {
                 itemGradeTypes={itemGradeTypes}
                 weaponTypes={weaponTypes}
                 localSettings={localSettings}
+                mapNameTypes={mapNameTypes}
               />
             )}
           </Grid.Column>
@@ -108,6 +129,7 @@ ProjectStoreRow.propTypes = {
   moneyTypes: PropTypes.instanceOf(List).isRequired,
   itemGradeTypes: PropTypes.instanceOf(List).isRequired,
   weaponTypes: PropTypes.instanceOf(List).isRequired,
+  mapNameTypes: PropTypes.instanceOf(List).isRequired,
   storeActions: PropTypes.object.isRequired,
 };
 

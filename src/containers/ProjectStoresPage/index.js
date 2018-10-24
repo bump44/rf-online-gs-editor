@@ -11,7 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { Grid, Label, Header as PageHeader } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
 
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '~/containers/App/constants';
+import { IMMUTABLE_MAP } from '~/containers/App/constants';
 import injectReducer from '~/utils/injectReducer';
 import injectSaga from '~/utils/injectSaga';
 import Promise from 'bluebird';
@@ -64,6 +64,7 @@ import makeSelectProjectStoresPage, {
   makeSelectResult,
   makeSelectFilter,
 } from './selectors';
+import { getRefs } from '../App/getters/project';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectStoresPage extends React.Component {
@@ -111,32 +112,18 @@ export class ProjectStoresPage extends React.Component {
   }
 
   getActionsBindPayload() {
-    const { dispatch, match, currentProject } = this.props;
-    const additionalData = (() => {
-      if (!currentProject) {
-        return {};
-      }
+    const { dispatch, match, currentProject, projectsNextValues } = this.props;
 
-      return {
-        moneyTypes: currentProject.getIn(
-          ['moneyTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        itemGradeTypes: currentProject.getIn(
-          ['itemGradeTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-        weaponTypes: currentProject.getIn(
-          ['weaponTypes', 'items'],
-          IMMUTABLE_LIST,
-        ),
-      };
-    })();
+    const project = currentProject || IMMUTABLE_MAP;
+    const nextValues = projectsNextValues.getIn(
+      [match.params.id, match.params.id],
+      IMMUTABLE_MAP,
+    );
 
     return {
       dispatch,
       projectId: match.params.id,
-      additionalData,
+      additionalData: getRefs(nextValues.get('nextValue'), { entry: project }),
     };
   }
 
@@ -158,6 +145,8 @@ export class ProjectStoresPage extends React.Component {
       moneyTypes,
       itemGradeTypes,
       weaponTypes,
+      buttonTypes,
+      mapNameTypes,
     } = actionsBindPayload.additionalData;
 
     const storeActions = projectsStoresBindActions(actionsBindPayload);
@@ -176,6 +165,8 @@ export class ProjectStoresPage extends React.Component {
         itemGradeTypes={itemGradeTypes}
         weaponTypes={weaponTypes}
         localSettings={localSettings}
+        buttonTypes={buttonTypes}
+        mapNameTypes={mapNameTypes}
       />
     );
   }

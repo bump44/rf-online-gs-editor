@@ -1,6 +1,6 @@
 /**
  *
- * ProjectStoreInteractingItemList
+ * ProjectStoreInteractingLimItemList
  *
  */
 
@@ -22,7 +22,7 @@ import {
 } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
-import { getClientCode, getClientCodeAvoidError } from '~/utils/converters';
+import { getClientCodeAvoidError } from '~/utils/converters';
 
 import {
   getTypeNameByFinite,
@@ -50,7 +50,7 @@ const modalSelectItemStyle = {
 };
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectStoreInteractingItemList extends React.PureComponent {
+class ProjectStoreInteractingLimItemList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.renderLabels = this.renderLabels.bind(this);
@@ -70,7 +70,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
     this.selectClientType = value => {
       const { storeActions, store, index } = this.props;
-      storeActions.changeItemListClientType(store, {
+      storeActions.changeLimItemListClientType(store, {
         n: index + 1,
         value: getFiniteByTypeName(value),
       });
@@ -78,7 +78,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
     this.changeServerCode = evt => {
       const { storeActions, store, index } = this.props;
-      storeActions.changeItemListServerCode(store, {
+      storeActions.changeLimItemListServerCode(store, {
         n: index + 1,
         value: evt.target.value,
       });
@@ -97,18 +97,18 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
       }
     };
 
-    this.changeClientCode = evt => {
-      const { storeActions, store, index } = this.props;
-      storeActions.changeItemListClientCode(store, {
-        n: index + 1,
-        value: evt.target.value,
-      });
-    };
-
     this.changeClientType = evt => {
       this.selectClientType(
         getTypeNameByFinite(parseInt(evt.target.value, 10)),
       );
+    };
+
+    this.changeClientCode = evt => {
+      const { storeActions, store, index } = this.props;
+      storeActions.changeLimItemListClientCode(store, {
+        n: index + 1,
+        value: evt.target.value,
+      });
     };
 
     this.state = { selectItemModalOpen: false };
@@ -118,18 +118,21 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
     this.setState({ selectItemModalOpen: false });
     const itemNextValue = itemNextValues.get('nextValue');
     const { store, storeActions, index } = this.props;
+
     const serverCode = projectItem.getServerCode(itemNextValue, {
       entry: item,
     });
+
     const clientCode =
       projectItem.getClientCode(itemNextValue, {
         entry: item,
-      }) || this.getConvClientCode(serverCode);
+      }) || getClientCodeAvoidError(serverCode);
+
     const clientType = projectItem.getClientTypeFinite(itemNextValue, {
       entry: item,
     });
 
-    storeActions.itemListUpdate(store, {
+    storeActions.limItemListUpdate(store, {
       n: index + 1,
       clientCode,
       clientType,
@@ -140,31 +143,22 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
   itemListRemove() {
     const { store, storeActions, index } = this.props;
-    storeActions.itemListRemove(store, index + 1);
+    storeActions.limItemListRemove(store, index + 1);
   }
 
   itemsListReshuffle() {
     const { store, storeActions } = this.props;
-    storeActions.itemsListReshuffle(store);
+    storeActions.limItemsListReshuffle(store);
   }
 
   itemsListCountNextN() {
     const { store, index, storeActions } = this.props;
-    storeActions.changeItemsListCount(store, index + 1);
+    storeActions.changeLimItemsListCount(store, index + 1);
   }
 
   itemsListCountNextIndex() {
     const { store, index, storeActions } = this.props;
-    storeActions.changeItemsListCount(store, index);
-  }
-
-  getConvClientCode(code) {
-    try {
-      return getClientCode(code);
-    } catch (err) {
-      // ignore
-      return undefined;
-    }
+    storeActions.changeLimItemsListCount(store, index);
   }
 
   renderDimmer() {
@@ -201,7 +195,8 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
     const nextValue = storeNextValues.get('nextValue');
-    const itemList = projectStore.getItemList(
+
+    const itemList = projectStore.getLimItemList(
       nextValue,
       { entry: store, nextValues },
       { n: index + 1 },
@@ -217,14 +212,9 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
         : itemList.clientCode;
     /* eslint-enable indent */
 
-    const convClientCode = this.getConvClientCode(itemList.serverCode);
+    const convClientCode = getClientCodeAvoidError(itemList.serverCode);
     const itemReal = itemList.server || itemList.client;
     const n = index + 1;
-
-    const limListCount = projectStore.getLimItemsListCount(
-      storeNextValues.get('nextValue'),
-      { entry: store },
-    );
 
     return (
       <React.Fragment>
@@ -232,7 +222,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
         <Comment.Content>
           <Comment.Author>
-            <Label color={limListCount >= n ? 'red' : 'grey'}>№{n}</Label>
+            <Label>№{n}</Label>
             {itemReal && this.renderLabels(itemReal)}
             <Label>
               <ContentEditable
@@ -334,6 +324,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
     const id = projectItem.getId(undefined, { entry: item });
     const itemNextValues = nextValues.get(id, IMMUTABLE_MAP);
     const itemNextValue = itemNextValues.get('nextValue');
+
     const ProjectItemSegmentBasicResolver =
       projectItemSegmentBasicResolvers[
         projectItem.getType(itemNextValue, { entry: item })
@@ -391,11 +382,9 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
     const { store, storeNextValues, index } = this.props;
     const n = index + 1;
 
-    const listCount = projectStore.getItemsListCount(
+    const listCount = projectStore.getLimItemsListCount(
       storeNextValues.get('nextValue'),
-      {
-        entry: store,
-      },
+      { entry: store },
     );
 
     return (
@@ -408,7 +397,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
   }
 }
 
-ProjectStoreInteractingItemList.propTypes = {
+ProjectStoreInteractingLimItemList.propTypes = {
   store: PropTypes.instanceOf(Map).isRequired,
   storeNextValues: PropTypes.instanceOf(Map).isRequired,
   storeActions: PropTypes.object.isRequired,
@@ -424,11 +413,11 @@ ProjectStoreInteractingItemList.propTypes = {
   entriesFinderItemsActions: PropTypes.object.isRequired,
 };
 
-ProjectStoreInteractingItemList.defaultProps = {
+ProjectStoreInteractingLimItemList.defaultProps = {
   dragHandle: undefined,
 };
 
-export default ProjectStoreInteractingItemList;
+export default ProjectStoreInteractingLimItemList;
 
 const CommentGroup = styled(Comment.Group)`
   &.ui.comments {

@@ -4,23 +4,21 @@
  *
  */
 
-import { FormattedMessage } from 'react-intl';
-import { Input, Dropdown } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
-import * as projectStore from '~/containers/App/getters/projectStore';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import messages from '../messages';
+import { getMapCode } from '~/containers/App/getters/projectStore';
+import ProjectInteractingMapNameType from '../../Interacting/MapNameType';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingMapNameType extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.changeValue = (evt, owns) => {
+    this.changeValue = value => {
       const { onChangeValue, store } = this.props;
-      onChangeValue(store, owns.value);
+      onChangeValue(store, value);
     };
   }
 
@@ -34,75 +32,18 @@ class ProjectStoreInteractingMapNameType extends React.PureComponent {
       types,
     } = this.props;
 
-    const value = projectStore.getMapCode(storeNextValues.get('nextValue'), {
+    const value = getMapCode(storeNextValues.get('nextValue'), {
       entry: store,
     });
-
-    const type = projectStore.getMapNameType(storeNextValues.get('nextValue'), {
-      entry: store,
-      mapNameTypes: types,
-    });
-
-    const isUnknown = !type;
-
-    const dropdownText = (() => {
-      if (isUnknown) {
-        return (
-          <span>
-            {`${value}: `}
-            <FormattedMessage {...messages.UnknownMapNameType} />
-          </span>
-        );
-      }
-
-      return `${type.get('value')}: ${type.get('title')}`;
-    })();
 
     return (
-      <Input
-        size={size}
-        fluid={fluid}
+      <ProjectInteractingMapNameType
         value={value}
-        onChange={this.changeValue}
+        onChangeValue={this.changeValue}
+        types={types}
+        size={size}
         className={className}
-        label={
-          <Dropdown
-            text={dropdownText}
-            inline
-            labeled
-            scrolling
-            item
-            value={value}
-          >
-            <Dropdown.Menu>
-              {isUnknown && (
-                <Dropdown.Item
-                  selected
-                  text={
-                    <span>
-                      {`${value}: `}
-                      <FormattedMessage {...messages.UnknownMapNameType} />
-                    </span>
-                  }
-                />
-              )}
-
-              {types.map(val => (
-                <Dropdown.Item
-                  onClick={this.changeValue}
-                  selected={val.get('value') === value}
-                  key={val.get('value')}
-                  value={val.get('value')}
-                  text={
-                    <span>
-                      {val.get('value')}: {val.get('title')}
-                    </span>
-                  }
-                />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        }
+        fluid={fluid}
       />
     );
   }

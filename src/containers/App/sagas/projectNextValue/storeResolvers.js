@@ -1,6 +1,7 @@
+import { isInteger } from 'lodash';
 import { Map } from 'immutable';
 
-import { getItemList } from '../../getters/projectStore';
+import { getItemList, getLimItemList } from '../../getters/projectStore';
 import { IMMUTABLE_LIST } from '../../constants';
 
 const Resolvers = {
@@ -18,6 +19,20 @@ const Resolvers = {
   useAngle: (store, value) => store.setIn(['client', 'bSetNPCangle'], !!value),
   size: (store, value) => store.setIn(['client', 'fStoreNPCsize'], value),
   angle: (store, value) => store.setIn(['client', 'fStoreNPCangle'], value),
+  npcClass: (store, { value, n }) =>
+    store
+      .setIn(['server', `nNpcClass__${n}`], value)
+      .setIn(['client', `nNpcClass__${n}`], value),
+
+  mapCode: (store, value) => store.setIn(['server', 'strStoreMAPcode'], value),
+
+  // items list
+  itemListClientType: (store, { value, n }) =>
+    store.setIn(['client', `nItemListType__${n}_1`], value),
+  itemListClientCode: (store, { value, n }) =>
+    store.setIn(['client', `strItemList__${n}_2`], value),
+  itemListServerCode: (store, { value, n }) =>
+    store.setIn(['server', `strItemCode__${n}`], value),
   itemListRemove: (store, n) =>
     store
       .setIn(['server', `strItemCode__${n}`], '')
@@ -42,8 +57,6 @@ const Resolvers = {
     return nextStore;
   },
   itemsListReshuffle: (store, value, { entry }) => {
-    const itemsList = [];
-
     let setToN = 1;
     let nextStore = store;
 
@@ -61,8 +74,6 @@ const Resolvers = {
         (serverCode && serverCode.length > 1) ||
         (clientCode && clientCode.length > 1 && clientCode !== '00000000')
       ) {
-        itemsList.push({ serverCode, clientCode, clientType });
-
         nextStore = Resolvers.itemListUpdate(nextStore, {
           n: setToN,
           serverCode,
@@ -109,18 +120,126 @@ const Resolvers = {
     return nextStore;
   },
 
-  npcClass: (store, { value, n }) =>
+  // limited items list
+  limItemListClientType: (store, { value, n }) =>
+    store.setIn(['client', `nLimItemType__${n}_1`], value),
+  limItemListClientCode: (store, { value, n }) =>
+    store.setIn(['client', `strLimItemCode__${n}_2`], value),
+  limItemListServerCode: (store, { value, n }) =>
+    store.setIn(['server', `strLimItemCode__${n}_1`], value),
+  limItemListRemove: (store, n) =>
     store
-      .setIn(['server', `nNpcClass__${n}`], value)
-      .setIn(['client', `nNpcClass__${n}`], value),
+      .setIn(['server', `strLimItemCode__${n}_1`], '')
+      .setIn(['client', `strLimItemCode__${n}_2`], '')
+      .setIn(['client', `nLimItemType__${n}_1`], 0),
+  limItemListUpdate: (
+    store,
+    {
+      n,
+      clientCode = '',
+      clientType = 0,
+      serverCode = '',
+      serverCount,
+      clientCount,
+      itemList,
+    } = {},
+  ) => {
+    let nextStore = store
+      .setIn(['server', `strItemCode__${n}`], serverCode)
+      .setIn(['client', `strItemList__${n}_2`], clientCode)
+      .setIn(['client', `nItemListType__${n}_1`], clientType);
 
-  mapCode: (store, value) => store.setIn(['server', 'strStoreMAPcode'], value),
-  itemListClientType: (store, { value, n }) =>
-    store.setIn(['client', `nItemListType__${n}_1`], value),
-  itemListClientCode: (store, { value, n }) =>
-    store.setIn(['client', `strItemList__${n}_2`], value),
-  itemListServerCode: (store, { value, n }) =>
-    store.setIn(['server', `strItemCode__${n}`], value),
+    if (isInteger(serverCount) || isInteger(clientCount)) {
+      nextStore = nextStore
+        .setIn(
+          ['server', `nLimMaxCount__${n}_2`],
+          isInteger(serverCount) ? serverCount : clientCount,
+        )
+        .setIn(
+          ['client', `nLimMaxCount__${n}_3`],
+          isInteger(serverCount) ? serverCount : clientCount,
+        );
+    }
+
+    if (itemList instanceof Map) {
+      nextStore = nextStore.set(
+        'items',
+        nextStore.get('items', IMMUTABLE_LIST).push(itemList),
+      );
+    }
+
+    return nextStore;
+  },
+  limItemsListReshuffle: (store, value, { entry }) => {
+    let setToN = 1;
+    let nextStore = store;
+
+    Array.from(Array(16)).forEach((_, index) => {
+      const n = index + 1;
+
+      const {
+        serverCode,
+        serverCount,
+        clientCode,
+        clientType,
+        clientCount,
+        client,
+        server,
+      } = getLimItemList(nextStore, { entry }, { n });
+
+      if (
+        (serverCode && serverCode.length > 1) ||
+        (clientCode && clientCode.length > 1 && clientCode !== '00000000')
+      ) {
+        nextStore = Resolvers.itemListUpdate(nextStore, {
+          n: setToN,
+          serverCode,
+          clientCode,
+          clientType,
+          serverCount,
+          clientCount,
+          itemList: server || client,
+        });
+
+        setToN += 1;
+      }
+    });
+
+    Array.from(Array(16 - setToN - 1)).forEach((_, index) => {
+      const n = index + setToN;
+      nextStore = Resolvers.limItemListRemove(nextStore, n);
+    });
+
+    return nextStore;
+  },
+
+  limItemsListCount: (store, value) =>
+    store
+      .setIn(['server', `nLimitListCount`], value)
+      .setIn(['client', `nLimitLISTcount`], value),
+
+  limItemsListResort: (store, nextIndexes, { entry }) => {
+    let nextStore = store;
+
+    nextIndexes.forEach((nextIndex, index) => {
+      if (nextIndex + 1 === index + 1) {
+        return;
+      }
+
+      const itemList = getLimItemList(store, { entry }, { n: nextIndex + 1 });
+      nextStore = Resolvers.limItemListUpdate(nextStore, {
+        n: index + 1,
+        clientCode: itemList.clientCode,
+        clientType: itemList.clientType,
+        clientCount: itemList.clientCount,
+        serverCode: itemList.serverCode,
+        serverCount: itemList.serverCount,
+        itemList: itemList.server || itemList.client,
+      });
+    });
+
+    return nextStore;
+  },
 };
 
 export default Resolvers;

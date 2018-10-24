@@ -1,5 +1,5 @@
 import { isNullOrUndefined, isNumber } from 'util';
-import { isString } from 'lodash';
+import { isString, isInteger } from 'lodash';
 
 import { getTypeNameByFinite } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
@@ -202,10 +202,22 @@ export const getItemListClientType = (
   { entry = IMMUTABLE_MAP },
   { n = 1 },
 ) =>
-  nextValue.getIn(
-    ['client', `nItemListType__${n}_1`],
-    entry.getIn(['client', `nItemListType__${n}_1`]),
-  ) || 0;
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', `nItemListType__${n}_1`]], def: 0, fnc: isInteger },
+  );
+
+export const getLimItemListClientType = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', `nLimItemType__${n}_1`]], def: 0, fnc: isInteger },
+  );
 
 /**
  * Return vendor list item code from client cell
@@ -220,10 +232,33 @@ export const getItemListClientCode = (
   { entry = IMMUTABLE_MAP },
   { n = 1 },
 ) =>
-  nextValue.getIn(
-    ['client', `strItemList__${n}_2`],
-    entry.getIn(['client', `strItemList__${n}_2`]),
-  ) || '';
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', `strItemList__${n}_2`]], def: '', fnc: isString },
+  );
+
+export const getLimItemListClientCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', `strLimItemCode__${n}_2`]], def: '', fnc: isString },
+  );
+
+export const getLimItemListClientCount = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', `nLimMaxCount__${n}_3`]], def: '', fnc: isString },
+  );
 
 /**
  * Return vendor list item from client cell
@@ -246,8 +281,39 @@ export const getItemListClient = (
     return undefined;
   }
 
-  const items = getItems(nextValue, { entry });
-  const item = items.find(
+  return getItemByClientCode(
+    nextValue,
+    { entry, nextValues },
+    { code, typeName },
+  );
+};
+
+export const getLimItemListClient = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const finite = getLimItemListClientType(nextValue, { entry }, { n });
+  const typeName = getTypeNameByFinite(finite);
+  const code = getLimItemListClientCode(nextValue, { entry }, { n });
+
+  if (!typeName || !code) {
+    return undefined;
+  }
+
+  return getItemByClientCode(
+    nextValue,
+    { entry, nextValues },
+    { code, typeName },
+  );
+};
+
+export const getItemByClientCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  { code, typeName } = {},
+) =>
+  getItems(nextValue, { entry }).find(
     value =>
       projectItem.getClientCode(nextValues.get(value.get('id')), {
         entry: value,
@@ -257,9 +323,6 @@ export const getItemListClient = (
           entry: value,
         }),
   );
-
-  return item;
-};
 
 /**
  * Return vendor list item from server cell
@@ -278,16 +341,32 @@ export const getItemListServer = (
   if (!code) {
     return undefined;
   }
+  return getItemByServerCode(nextValue, { entry, nextValues }, { code });
+};
 
-  const items = getItems(nextValue, { entry });
+export const getLimItemListServer = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  { n = 1 },
+) => {
+  const code = getLimItemListServerCode(nextValue, { entry }, { n });
+  if (!code) {
+    return undefined;
+  }
+  return getItemByServerCode(nextValue, { entry, nextValues }, { code });
+};
 
-  return items.find(
+export const getItemByServerCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  { code } = {},
+) =>
+  getItems(nextValue, { entry }).find(
     item =>
       projectItem.getServerCode(nextValues.get(item.get('id')), {
         entry: item,
       }) === code,
   );
-};
 
 /**
  * Return vendor list item code from server cell
@@ -308,6 +387,28 @@ export const getItemListServerCode = (
     { fields: [['server', `strItemCode__${n}`]], def: '', fnc: isString },
   );
 
+export const getLimItemListServerCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', `strLimItemCode__${n}_1`]], def: '', fnc: isString },
+  );
+
+export const getLimItemListServerCount = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { n = 1 },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', `nLimMaxCount__${n}_2`]], def: '', fnc: isString },
+  );
+
 /**
  * Return vendor list item all data
  * @param {Object} nextValue next item values
@@ -325,6 +426,17 @@ export const getItemList = (...props) => ({
   n: props[2].n,
 });
 
+export const getLimItemList = (...props) => ({
+  client: getLimItemListClient(...props),
+  server: getLimItemListServer(...props),
+  clientType: getLimItemListClientType(...props),
+  clientCode: getLimItemListClientCode(...props),
+  clientCount: getLimItemListClientCount(...props),
+  serverCode: getLimItemListServerCode(...props),
+  serverCount: getLimItemListServerCount(...props),
+  n: props[2].n,
+});
+
 /**
  * Return vendor list items all data
  * @param {Object} nextValue next item values
@@ -338,6 +450,14 @@ export const getItemsList = (
 ) =>
   Array.from(Array(200)).map((_, index) =>
     getItemList(nextValue, { entry, nextValues }, { n: index + 1 }),
+  );
+
+export const getLimItemsList = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+) =>
+  Array.from(Array(16)).map((_, index) =>
+    getLimItemList(nextValue, { entry, nextValues }, { n: index + 1 }),
   );
 
 /**
@@ -359,6 +479,20 @@ export const getItemsListCount = (
       ) || ['server', 'nStoreListCount'],
     ),
   ) || 0;
+
+export const getLimItemsListCount = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nLimitListCount'], ['client', 'nLimitLISTcount']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
 
 /**
  * Return id

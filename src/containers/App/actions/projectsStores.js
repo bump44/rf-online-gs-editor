@@ -17,12 +17,16 @@ export const projectsStores = {
       'useAngle',
       'size',
       'angle',
-      'itemsListCount',
       'npcClass',
       'mapCode',
+      'itemsListCount',
       'itemListServerCode',
       'itemListClientCode',
       'itemListClientType',
+      'limItemsListCount',
+      'limItemListServerCode',
+      'limItemListClientCode',
+      'limItemListClientType',
     ];
     const fns = {};
     propKeys.forEach(propKey => {
@@ -58,6 +62,30 @@ export const projectsStores = {
       ...args,
       subType: STORE,
       propKey: 'itemsListReshuffle',
+    }),
+  limItemListUpdate: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'limItemListUpdate',
+    }),
+  limItemListRemove: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'limItemListRemove',
+    }),
+  limItemsListResort: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'limItemsListResort',
+    }),
+  limItemsListReshuffle: args =>
+    projectsNextValuesChangePropValue({
+      ...args,
+      subType: STORE,
+      propKey: 'limItemsListReshuffle',
     }),
 };
 

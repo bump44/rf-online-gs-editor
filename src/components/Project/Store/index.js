@@ -48,6 +48,7 @@ class ProjectStore extends React.PureComponent {
     this.renderTabs = this.renderTabs.bind(this);
     this.renderBasic = this.renderBasic.bind(this);
     this.renderItemsList = this.renderItemsList.bind(this);
+    this.renderLimItemsList = this.renderLimItemsList.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
     this.renderBindings = this.renderBindings.bind(this);
   }
@@ -93,6 +94,23 @@ class ProjectStore extends React.PureComponent {
           ),
         },
         render: this.renderItemsList,
+      },
+      {
+        menuItem: {
+          key: 'limItemsList',
+          content: (
+            <span>
+              <FormattedMessage {...messages.LimItemsList} />{' '}
+              <u>
+                {projectStore.getLimItemsListCount(
+                  storeNextValues.get('nextValue'),
+                  { entry: store },
+                )}
+              </u>
+            </span>
+          ),
+        },
+        render: this.renderLimItemsList,
       },
     ];
   }
@@ -209,6 +227,7 @@ class ProjectStore extends React.PureComponent {
       storeActions,
       mapSptActions,
     } = this.props;
+
     const storeNextValue = storeNextValues.get('nextValue');
     const sdCode = projectStore.getSdCode(storeNextValue, { entry: store });
     const bdCode = projectStore.getBdCode(storeNextValue, { entry: store });
@@ -236,6 +255,7 @@ class ProjectStore extends React.PureComponent {
             mapSptNextValues={nextValues.get(mapSpt.get('id'), IMMUTABLE_MAP)}
             nextValues={nextValues}
             mapSptActions={mapSptActions}
+            mapNameTypes={mapNameTypes}
           />
         ))}
       </Tab.Pane>
@@ -284,6 +304,55 @@ class ProjectStore extends React.PureComponent {
           weaponTypes={weaponTypes}
           entriesFinderItems={entriesFinderItems}
           entriesFinderItemsActions={entriesFinderItemsActions}
+        />
+      </Tab.Pane>
+    );
+  }
+
+  renderLimItemsList() {
+    const {
+      store,
+      storeNextValues,
+      nextValues,
+      storeActions,
+      itemActions,
+      localSettings,
+      moneyTypes,
+      itemGradeTypes,
+      weaponTypes,
+      entriesFinderItems,
+      entriesFinderItemsActions,
+    } = this.props;
+
+    return (
+      <Tab.Pane attached={false} style={tabPaneStyle}>
+        <ProjectStoreInteractingItemsListCount
+          store={store}
+          storeNextValues={storeNextValues}
+          onChangeValue={storeActions.changeLimItemsListCount}
+          label={
+            <Label>
+              <FormattedMessage {...messages.VendorItemsListCount} />
+            </Label>
+          }
+          fluid={false}
+          className="mb-15"
+          isLimitedList
+        />
+
+        <ProjectStoreInteractingItemsList
+          store={store}
+          storeNextValues={storeNextValues}
+          storeActions={storeActions}
+          nextValues={nextValues}
+          itemActions={itemActions}
+          localSettings={localSettings}
+          moneyTypes={moneyTypes}
+          itemGradeTypes={itemGradeTypes}
+          weaponTypes={weaponTypes}
+          entriesFinderItems={entriesFinderItems}
+          entriesFinderItemsActions={entriesFinderItemsActions}
+          isLimitedList
         />
       </Tab.Pane>
     );

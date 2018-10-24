@@ -7,7 +7,12 @@
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import { min, max, parseInt } from 'lodash';
-import * as projectStore from '~/containers/App/getters/projectStore';
+
+import {
+  getItemsListCount,
+  getLimItemsListCount,
+} from '~/containers/App/getters/projectStore';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -17,9 +22,9 @@ class ProjectStoreInteractingItemsListCount extends React.PureComponent {
     super(props);
 
     this.changeValue = evt => {
-      const { onChangeValue, store } = this.props;
+      const { onChangeValue, store, isLimitedList } = this.props;
       const value = parseInt(evt.target.value) || 0;
-      onChangeValue(store, min([max([0, value]), 200]));
+      onChangeValue(store, min([max([0, value]), isLimitedList ? 16 : 200]));
     };
   }
 
@@ -31,14 +36,12 @@ class ProjectStoreInteractingItemsListCount extends React.PureComponent {
       className,
       label,
       fluid,
+      isLimitedList,
     } = this.props;
 
-    const value = projectStore.getItemsListCount(
-      storeNextValues.get('nextValue'),
-      {
-        entry: store,
-      },
-    );
+    const value = isLimitedList
+      ? getLimItemsListCount(storeNextValues.get('nextValue'), { entry: store })
+      : getItemsListCount(storeNextValues.get('nextValue'), { entry: store });
 
     return (
       <Input
@@ -66,6 +69,7 @@ ProjectStoreInteractingItemsListCount.propTypes = {
     PropTypes.number,
   ]),
   fluid: PropTypes.bool,
+  isLimitedList: PropTypes.bool,
 };
 
 ProjectStoreInteractingItemsListCount.defaultProps = {
@@ -73,6 +77,7 @@ ProjectStoreInteractingItemsListCount.defaultProps = {
   className: '',
   label: null,
   fluid: true,
+  isLimitedList: false,
 };
 
 export default ProjectStoreInteractingItemsListCount;
