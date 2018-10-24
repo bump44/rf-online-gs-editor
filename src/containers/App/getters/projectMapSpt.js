@@ -3,6 +3,16 @@ import { isString, isInteger, isBoolean, isNumber } from 'lodash';
 import { getValue } from './nextValue';
 import { IMMUTABLE_MAP } from '../constants';
 
+export const getMapName = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['mapName']], def: '', fnc: isString },
+  );
+
 export const getAnchor = (
   nextValue = IMMUTABLE_MAP,
   { entry = IMMUTABLE_MAP },
