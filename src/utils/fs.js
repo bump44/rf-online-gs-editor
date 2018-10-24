@@ -1,6 +1,6 @@
-import Promise from 'bluebird';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
+import Promise from 'bluebird';
 import rimraf from 'rimraf';
 
 export const isExists = path =>

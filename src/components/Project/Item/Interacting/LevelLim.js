@@ -4,7 +4,7 @@
  *
  */
 
-import { getLevel } from 'containers/App/getters/projectItem';
+import { getLevel } from '~/containers/App/getters/projectItem';
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import { parseInt } from 'lodash';

@@ -6,7 +6,7 @@
 
 import { Checkbox } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import { getCivilBF } from 'containers/App/getters/projectItem';
+import { getCivilBF } from '~/containers/App/getters/projectItem';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';

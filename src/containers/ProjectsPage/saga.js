@@ -1,11 +1,11 @@
 import { fork, take, call, all, put, select } from 'redux-saga/effects';
-import { makeSelectIsLoggedIn } from 'containers/App/selectors';
-import apolloClient from 'apollo';
+import { makeSelectIsLoggedIn } from '~/containers/App/selectors';
+import apolloClient from '~/apollo';
 
 import {
   AuthorizedQuery,
   NonAuthorizedQuery,
-} from 'apollo/queries/projects_page';
+} from '~/apollo/queries/projects_page';
 
 import { LOADING_START } from './constants';
 

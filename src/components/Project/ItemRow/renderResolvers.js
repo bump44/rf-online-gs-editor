@@ -46,7 +46,7 @@ import {
   MAKEDATA,
   COMBINEDATA,
   UNK3,
-} from 'structs/item_types';
+} from '~/structs/item_types';
 
 import RenderArmor from './Render/Armor';
 import RenderJewelry from './Render/Jewelry';

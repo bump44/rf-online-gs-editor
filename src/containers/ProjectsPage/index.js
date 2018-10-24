@@ -10,23 +10,23 @@ import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
   makeSelectProjectsImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import Container from 'components/Container';
+import Container from '~/components/Container';
 import { FormattedMessage } from 'react-intl';
-import Header from 'components/Header';
+import Header from '~/components/Header';
 import { Helmet } from 'react-helmet';
 import { Map } from 'immutable';
-import ProjectsMediaItems from 'components/ProjectsMediaItems';
+import ProjectsMediaItems from '~/components/ProjectsMediaItems';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import { logoutCurrentUser } from 'containers/App/actions';
-import { makeSelectProject } from 'containers/ProjectPage/selectors';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
+import { logoutCurrentUser } from '~/containers/App/actions';
+import { makeSelectProject } from '~/containers/ProjectPage/selectors';
 import makeSelectProjectsPage from './selectors';
 import messages from './messages';
 import reducer from './reducer';

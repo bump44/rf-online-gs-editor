@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { DUNGEONKEY } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { DUNGEONKEY } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import dungeonkeyStruct from './dungeonkey_struct';
 

@@ -4,7 +4,7 @@
  *
  */
 
-import { getSubType } from 'containers/App/getters/projectItem';
+import { getSubType } from '~/containers/App/getters/projectItem';
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import { parseInt } from 'lodash';

@@ -7,19 +7,19 @@
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { logoutCurrentUser } from 'containers/App/actions';
-import { makeSelectProject } from 'containers/ProjectPage/selectors';
+import { logoutCurrentUser } from '~/containers/App/actions';
+import { makeSelectProject } from '~/containers/ProjectPage/selectors';
 import { Map } from 'immutable';
-import Container from 'components/Container';
-import Header from 'components/Header';
-import Notification from 'components/Notification';
+import Container from '~/components/Container';
+import Header from '~/components/Header';
+import Notification from '~/components/Notification';
 import PropTypes from 'prop-types';
 import React from 'react';
 

@@ -4,7 +4,7 @@
  *
  */
 
-import { getMoneyType } from 'containers/App/getters/projectItem';
+import { getMoneyType } from '~/containers/App/getters/projectItem';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';

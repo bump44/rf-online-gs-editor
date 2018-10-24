@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { FIRECRACKER } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { FIRECRACKER } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import firecrackerStruct from './firecracker_struct';
 

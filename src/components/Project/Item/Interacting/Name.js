@@ -4,7 +4,7 @@
  *
  */
 
-import { getName } from 'containers/App/getters/projectItem';
+import { getName } from '~/containers/App/getters/projectItem';
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';

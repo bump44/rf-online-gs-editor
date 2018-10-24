@@ -4,22 +4,14 @@
  *
  */
 
+import { FormattedMessage } from 'react-intl';
+import { Grid, Transition, Label, Tab, Divider } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {
-  Grid,
-  Transition,
-  Label,
-  Tab,
-  Header,
-  Divider,
-} from 'semantic-ui-react';
-
-import { FormattedMessage } from 'react-intl';
-import { IMMUTABLE_MAP } from 'containers/App/constants';
-import * as projectStore from 'containers/App/getters/projectStore';
+import { IMMUTABLE_MAP } from '~/containers/App/constants';
+import * as projectStore from '~/containers/App/getters/projectStore';
 
 import messages from './messages';
 import ProjectStoreInteractingName from './Interacting/Name';
@@ -221,20 +213,7 @@ class ProjectStore extends React.PureComponent {
     const sdCode = projectStore.getSdCode(storeNextValue, { entry: store });
     const bdCode = projectStore.getBdCode(storeNextValue, { entry: store });
     const mapCode = projectStore.getMapCode(storeNextValue, { entry: store });
-
-    const bindingSd = projectStore.getBindingSd(storeNextValue, {
-      entry: store,
-    });
-    const bindingSdNextValues = bindingSd
-      ? nextValues.get(bindingSd.get('id'), IMMUTABLE_MAP)
-      : IMMUTABLE_MAP;
-
-    const bindingBd = projectStore.getBindingBd(storeNextValue, {
-      entry: store,
-    });
-    const bindingBdNextValues = bindingBd
-      ? nextValues.get(bindingBd.get('id'), IMMUTABLE_MAP)
-      : IMMUTABLE_MAP;
+    const mapSpts = projectStore.getMapSpts(storeNextValue, { entry: store });
 
     return (
       <Tab.Pane attached={false}>
@@ -251,33 +230,14 @@ class ProjectStore extends React.PureComponent {
           onChangeValue={storeActions.changeMapCode}
         />
 
-        <Header size="tiny">
-          <FormattedMessage {...messages.PositionBinding} />
-          <Label color="green">{sdCode}</Label>
-        </Header>
-
-        {bindingSd && (
+        {mapSpts.map(mapSpt => (
           <ProjectMapSptSegmentBasic
-            mapSpt={bindingSd}
-            mapSptNextValues={bindingSdNextValues}
+            mapSpt={mapSpt}
+            mapSptNextValues={nextValues.get(mapSpt.get('id'), IMMUTABLE_MAP)}
             nextValues={nextValues}
             mapSptActions={mapSptActions}
           />
-        )}
-
-        <Header size="tiny">
-          <FormattedMessage {...messages.SpawnBinding} />
-          <Label color="blue">{bdCode}</Label>
-        </Header>
-
-        {bindingBd && (
-          <ProjectMapSptSegmentBasic
-            mapSpt={bindingBd}
-            mapSptNextValues={bindingBdNextValues}
-            nextValues={nextValues}
-            mapSptActions={mapSptActions}
-          />
-        )}
+        ))}
       </Tab.Pane>
     );
   }

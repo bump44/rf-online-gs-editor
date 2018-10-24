@@ -12,7 +12,7 @@ import React from 'react';
 import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import Row from '../StoreRow/styles';
 import ProjectStoreRow from '../StoreRow';

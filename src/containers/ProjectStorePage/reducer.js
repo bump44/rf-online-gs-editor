@@ -4,14 +4,14 @@
  *
  */
 
-import { announceProjectCountHandler } from 'containers/App/actions';
+import { announceProjectCountHandler } from '~/containers/App/actions';
 import { fromJS } from 'immutable';
 
 import {
   ANNOUNCE_PROJECT_COUNT_ITEMS,
   ANNOUNCE_PROJECT_COUNT_STORES,
   ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import {
   DEFAULT_ACTION,

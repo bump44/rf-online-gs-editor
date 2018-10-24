@@ -14,9 +14,9 @@ import {
 
 import { fromJS } from 'immutable';
 
-import apolloClient from 'apollo';
-import projectItemsPageQuery from 'apollo/queries/project_items_page';
-import itemsSubQuery from 'apollo/queries/sub/items';
+import apolloClient from '~/apollo';
+import projectItemsPageQuery from '~/apollo/queries/project_items_page';
+import itemsSubQuery from '~/apollo/queries/sub/items';
 
 import {
   CHANGE_ID,

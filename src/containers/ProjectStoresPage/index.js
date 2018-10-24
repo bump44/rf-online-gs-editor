@@ -10,9 +10,10 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Label, Header as PageHeader } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from 'containers/App/constants';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '~/containers/App/constants';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
 import Promise from 'bluebird';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -24,22 +25,26 @@ import {
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
   makeSelectProjectImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
 import {
   logoutCurrentUser,
   projectsStoresBindActions,
-} from 'containers/App/actions';
+} from '~/containers/App/actions';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import ProjectMenu from 'components/ProjectMenu';
-import FullheightColumn, { FullheightThis } from 'components/FullheightColumn';
-import InfiniteAutoSizeList from 'components/InfiniteAutoSizeList';
-import ProjectStoreVirtualizedRow from 'components/Project/StoreVirtualizedRow';
-import ProjectStoresFilters from 'components/Project/StoresFilters';
+import Header from '~/components/Header';
+import Container from '~/components/Container';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import ProjectMenu from '~/components/ProjectMenu';
+
+import FullheightColumn, {
+  FullheightThis,
+} from '~/components/FullheightColumn';
+
+import InfiniteAutoSizeList from '~/components/InfiniteAutoSizeList';
+import ProjectStoreVirtualizedRow from '~/components/Project/StoreVirtualizedRow';
+import ProjectStoresFilters from '~/components/Project/StoresFilters';
 
 import reducer from './reducer';
 import saga from './saga';

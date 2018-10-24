@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { TRAP } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { TRAP } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import trapStruct from './trap_struct';
 

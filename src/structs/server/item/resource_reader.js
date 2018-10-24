@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { RESOURCE } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { RESOURCE } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import resourceStruct from './resource_struct';
 

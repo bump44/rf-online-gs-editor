@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { UNITKEY } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { UNITKEY } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import unitkeyStruct from './unitkey_struct';
 

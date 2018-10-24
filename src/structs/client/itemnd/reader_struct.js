@@ -1,4 +1,4 @@
-import * as ITEM_TYPES from '../../item_types';
+import * as ITEM_TYPES from '~/structs/item_types';
 import defaultHeader from './default_header';
 import upperDescrHeader from './upper_descr_header';
 import struct from './struct';

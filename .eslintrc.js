@@ -22,7 +22,9 @@ module.exports = {
   settings: {
     'import/resolver': {
       'babel-module': {
-        root: ['./src'],
+        alias: {
+          '~': './src',
+        },
       },
     },
   },

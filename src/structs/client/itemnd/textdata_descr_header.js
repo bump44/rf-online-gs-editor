@@ -1,5 +1,5 @@
-import Field from '../../../classes/Field';
-import { COUNT } from '../../../classes/constants';
+import Field from '~/classes/Field';
+import { COUNT } from '~/classes/constants';
 
 export default [
   new Field({ name: '__unknown_skip__', type: String, len: 36 }),

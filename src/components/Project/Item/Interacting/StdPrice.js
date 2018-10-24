@@ -10,7 +10,7 @@ import React from 'react';
 
 import { Map /* , List */ } from 'immutable';
 import { Input } from 'semantic-ui-react';
-import { getStdPrice } from 'containers/App/getters/projectItem';
+import { getStdPrice } from '~/containers/App/getters/projectItem';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemInteractingStdPrice extends React.PureComponent {

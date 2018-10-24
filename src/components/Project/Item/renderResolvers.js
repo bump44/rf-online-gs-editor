@@ -1,4 +1,4 @@
-import * as ITEM_TYPES from 'structs/item_types';
+import * as ITEM_TYPES from '~/structs/item_types';
 
 import RenderArmor from './Render/Armor';
 import RenderBox from './Render/Box';

@@ -1,8 +1,9 @@
+import { execFile } from 'child_process';
 import path from 'path';
 import Promise from 'bluebird';
-import { execFile } from 'child_process';
-import { mkdir, readFile, writeFile } from './fs';
+
 import { getRandomTmpPath } from './path';
+import { mkdir, readFile, writeFile } from './fs';
 import { words } from './random';
 
 const cloneExe = (tmpPath, exePath) =>

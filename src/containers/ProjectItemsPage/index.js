@@ -4,27 +4,18 @@
  *
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Promise from 'bluebird';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 import { Grid, Header as PageHeader, Label } from 'semantic-ui-react';
+import { Helmet } from 'react-helmet';
+import Promise from 'bluebird';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-
-import makeSelectProjectItemsPage, {
-  makeSelectProject,
-  makeSelectResult,
-  makeSelectFilter,
-  makeSelectProjectMoneyTypes,
-  makeSelectProjectItemGradeTypes,
-  makeSelectProjectWeaponTypes,
-} from './selectors';
+import injectSaga from '~/utils/injectSaga';
+import injectReducer from '~/utils/injectReducer';
 
 import {
   makeSelectProjectsImportsProcessingData,
@@ -33,12 +24,13 @@ import {
   makeSelectProjectsNextValues,
   makeSelectLocalSettings,
   makeSelectProjectImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
-import { projectsItemsBindActions, logoutCurrentUser } from 'containers/App/actions';
+import {
+  projectsItemsBindActions,
+  logoutCurrentUser,
+} from '~/containers/App/actions';
+
 import {
   changeId,
   changeFilterTakeSkip,
@@ -49,18 +41,33 @@ import {
   changeFilterWhereType,
 } from './actions';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
+import makeSelectProjectItemsPage, {
+  makeSelectProject,
+  makeSelectResult,
+  makeSelectFilter,
+  makeSelectProjectMoneyTypes,
+  makeSelectProjectItemGradeTypes,
+  makeSelectProjectWeaponTypes,
+} from './selectors';
+
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+
+import Header from '~/components/Header';
+import Container from '~/components/Container';
+
 import FullheightColumn, {
   FullheightThis,
-} from 'components/FullheightColumn';
-import ProjectMenu from 'components/ProjectMenu';
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import InfiniteAutoSizeList from 'components/InfiniteAutoSizeList';
-import ProjectItemVirtualizedRow from 'components/Project/ItemVirtualizedRow';
-import ProjectItemsFilters from 'components/Project/ItemsFilters';
-import { IMMUTABLE_LIST, IMMUTABLE_MAP } from 'containers/App/constants';
+} from '~/components/FullheightColumn';
+
+import ProjectMenu from '~/components/ProjectMenu';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import InfiniteAutoSizeList from '~/components/InfiniteAutoSizeList';
+import ProjectItemVirtualizedRow from '~/components/Project/ItemVirtualizedRow';
+import ProjectItemsFilters from '~/components/Project/ItemsFilters';
+import { IMMUTABLE_LIST, IMMUTABLE_MAP } from '~/containers/App/constants';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ProjectItemsPage extends React.PureComponent {

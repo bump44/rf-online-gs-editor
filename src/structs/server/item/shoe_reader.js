@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { SHOE } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { SHOE } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import armorStruct from './armor_struct';
 

@@ -1,8 +1,9 @@
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { loadTokenMe } from 'utils/ls';
 import { setContext } from 'apollo-link-context';
+
+import { loadTokenMe } from '~/utils/ls';
 
 import config from '../config';
 

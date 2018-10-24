@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { MAUBULLET } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { MAUBULLET } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import maubulletStruct from './maubullet_struct';
 

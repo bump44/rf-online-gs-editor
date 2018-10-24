@@ -1,4 +1,4 @@
-import { FILES } from 'utils/gameFiles';
+import { FILES } from '~/utils/gameFiles';
 import { Map } from 'immutable';
 
 import {

@@ -4,7 +4,7 @@
  *
  */
 
-import { announceProjectCountHandler } from 'containers/App/actions';
+import { announceProjectCountHandler } from '~/containers/App/actions';
 import { fromJS } from 'immutable';
 
 import {
@@ -12,7 +12,7 @@ import {
   SKIP,
   ANNOUNCE_PROJECT_COUNT_STORES,
   ANNOUNCE_PROJECT_COUNT_BOXITEMOUTS,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import {
   DEFAULT_ACTION,

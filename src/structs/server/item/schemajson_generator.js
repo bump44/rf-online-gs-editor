@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { pull } from 'lodash';
-import * as ITEM_TYPES from '../../item_types';
+import * as ITEM_TYPES from '~/structs/item_types';
 
 const readerStructs = [];
 

@@ -11,19 +11,19 @@ import { FormattedMessage } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { Map } from 'immutable';
 import { push } from 'react-router-redux';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import Header from 'components/Header';
-import Button from 'components/Button';
-import Notification from 'components/Notification';
+import Header from '~/components/Header';
+import Button from '~/components/Button';
+import Notification from '~/components/Notification';
 
 import makeSelectRegisterPage from './selectors';
 import reducer from './reducer';

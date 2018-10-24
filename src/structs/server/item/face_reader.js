@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { FACE } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { FACE } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import faceStruct from './face_struct';
 

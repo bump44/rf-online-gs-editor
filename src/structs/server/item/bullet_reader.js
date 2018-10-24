@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { BULLET } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { BULLET } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import bulletStruct from './bullet_struct';
 

@@ -1,7 +1,7 @@
-import FileReader from '../../../classes/FileReader';
-import { ANIMUS } from '../../item_types';
-import defaultHeader from './default_header';
+import FileReader from '~/classes/FileReader';
+import { ANIMUS } from '~/structs/item_types';
 import animusStruct from './animus_struct';
+import defaultHeader from './default_header';
 
 export default class ServerItemAnimusReader extends FileReader {
   constructor(props = {}) {

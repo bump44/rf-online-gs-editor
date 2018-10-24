@@ -4,7 +4,7 @@
  *
  */
 
-import { AUTO_REVERSE_CLIENT_CODES } from 'containers/App/constants';
+import { AUTO_REVERSE_CLIENT_CODES } from '~/containers/App/constants';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from 'semantic-ui-react';
 import { Map, List } from 'immutable';

@@ -8,13 +8,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import { getRefs } from 'containers/App/getters/project';
+import { getRefs } from '~/containers/App/getters/project';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { IMMUTABLE_MAP, ITEM } from 'containers/App/constants';
-import * as projectItem from 'containers/App/getters/projectItem';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import { IMMUTABLE_MAP, ITEM } from '~/containers/App/constants';
+import * as projectItem from '~/containers/App/getters/projectItem';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,7 +23,7 @@ import {
   projectsBoxItemOutsBindActions,
   projectsEntriesFinderItemsBindActions,
   logoutCurrentUser,
-} from 'containers/App/actions';
+} from '~/containers/App/actions';
 
 import {
   makeSelectCurrentUser,
@@ -33,21 +33,21 @@ import {
   makeSelectProjectsEntriesFinder,
   makeSelectProjectImportsProcessingData,
   makeSelectProjectsImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
+import Header from '~/components/Header';
+import Container from '~/components/Container';
 
 import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
-} from 'components/FullheightColumn';
+} from '~/components/FullheightColumn';
 
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import ProjectMenu from 'components/ProjectMenu';
-import ProjectItem from 'components/Project/Item';
-import ProjectItemLabelDetail from 'components/Project/ItemLabelDetail';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import ProjectMenu from '~/components/ProjectMenu';
+import ProjectItem from '~/components/Project/Item';
+import ProjectItemLabelDetail from '~/components/Project/ItemLabelDetail';
 
 import { changeId } from './actions';
 

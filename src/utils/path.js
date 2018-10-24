@@ -1,7 +1,8 @@
-import path from 'path';
 import { compact } from 'lodash';
-import { words } from './random';
+import path from 'path';
+
 import { TMP_FOLDER, RELEASE_FILES_FOLDER } from './constants';
+import { words } from './random';
 
 const getTmpPath = () => path.resolve('./', TMP_FOLDER);
 const getReleaseFilesPath = (...subfolders) =>

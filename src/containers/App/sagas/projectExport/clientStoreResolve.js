@@ -9,21 +9,21 @@ import {
   BLOCK_SIZE,
   COUNT,
   COUNT_COLUMNS,
-} from 'classes/constants';
+} from '~/classes/constants';
 
-import Struct from 'classes/Struct';
-import BufferGenerator from 'classes/BufferGenerator';
-import clientStoreReaderStruct from 'structs/client/store/reader_struct';
-import { getReleaseFilesPath } from 'utils/path';
-import { mkdirSync, writeFile } from 'utils/fs';
-import { enCryptByBuf } from 'utils/edf';
+import Struct from '~/classes/Struct';
+import BufferGenerator from '~/classes/BufferGenerator';
+import clientStoreReaderStruct from '~/structs/client/store/reader_struct';
+import { getReleaseFilesPath } from '~/utils/path';
+import { mkdirSync, writeFile } from '~/utils/fs';
+import { enCryptByBuf } from '~/utils/edf';
 import {
   RELEASE_FILES_CLIENT_FOLDER,
   RELEASE_FILES_CLIENTDAT_FOLDER,
-} from 'utils/constants';
+} from '~/utils/constants';
 
-import apolloClient from 'apollo';
-import storesTotalQuery from 'apollo/queries/sub/stores_total';
+import apolloClient from '~/apollo';
+import storesTotalQuery from '~/apollo/queries/sub/stores_total';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`

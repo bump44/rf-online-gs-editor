@@ -12,16 +12,16 @@ import styled from 'styled-components';
 import { Map /* , List */ } from 'immutable';
 import { Input, Popup, Button } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import { getEffect25PresentValue } from 'utils/converters';
+import { getEffect25PresentValue } from '~/utils/converters';
 
 import {
   getEffectValue,
   getEffectTypeValueIsDisabled,
   getEffectTypeValue,
   getType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
-import * as ITEM_TYPES from 'structs/item_types';
+import * as ITEM_TYPES from '~/structs/item_types';
 
 import messages from '../messages';
 

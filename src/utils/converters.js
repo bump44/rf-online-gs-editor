@@ -1,8 +1,9 @@
 import { isFinite, isString } from 'lodash';
+
 import {
   getTypeNamesByPrefix,
   getConvDecimalByTypeName,
-} from '../structs/item_types_utils';
+} from '~/structs/item_types_utils';
 
 import { getNumberOfLetter } from './string';
 

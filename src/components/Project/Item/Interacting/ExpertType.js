@@ -14,7 +14,7 @@ import React from 'react';
 import {
   getExpertTypeValue,
   getExpertType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import messages from '../messages';
 

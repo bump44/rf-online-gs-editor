@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { POTION } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { POTION } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import potionStruct from './potion_struct';
 

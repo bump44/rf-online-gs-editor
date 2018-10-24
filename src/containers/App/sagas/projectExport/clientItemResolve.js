@@ -10,24 +10,24 @@ import {
   BLOCK_SIZE,
   OFFSET,
   COUNT,
-} from 'classes/constants';
+} from '~/classes/constants';
 
-import Struct from 'classes/Struct';
-import BufferGenerator from 'classes/BufferGenerator';
-import readerStruct from 'structs/client/item/reader_struct';
-import { getFiniteByTypeName } from 'structs/item_types_utils';
+import Struct from '~/classes/Struct';
+import BufferGenerator from '~/classes/BufferGenerator';
+import readerStruct from '~/structs/client/item/reader_struct';
+import { getFiniteByTypeName } from '~/structs/item_types_utils';
 
-import apolloClient from 'apollo';
-import projectItemsTotalQuery from 'apollo/queries/sub/items_total';
+import apolloClient from '~/apollo';
+import projectItemsTotalQuery from '~/apollo/queries/sub/items_total';
 
-import { getReleaseFilesPath } from 'utils/path';
-import { mkdirSync, writeFile } from 'utils/fs';
-import { enCryptByBuf } from 'utils/edf';
+import { getReleaseFilesPath } from '~/utils/path';
+import { mkdirSync, writeFile } from '~/utils/fs';
+import { enCryptByBuf } from '~/utils/edf';
 
 import {
   RELEASE_FILES_CLIENT_FOLDER,
   RELEASE_FILES_CLIENTDAT_FOLDER,
-} from 'utils/constants';
+} from '~/utils/constants';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`

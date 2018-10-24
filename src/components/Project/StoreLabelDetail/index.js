@@ -15,7 +15,7 @@ import {
   getIndex,
   getProjectId,
   getId,
-} from 'containers/App/getters/projectStore';
+} from '~/containers/App/getters/projectStore';
 
 function ProjectStoreLabelDetail(props) {
   const { store, storeNextValues, link } = props;

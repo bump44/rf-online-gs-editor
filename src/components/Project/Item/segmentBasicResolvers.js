@@ -1,4 +1,4 @@
-import * as ITEM_TYPES from 'structs/item_types';
+import * as ITEM_TYPES from '~/structs/item_types';
 
 import SegmentBasic from './Segment/Basic';
 import SegmentBasicArmor from './Segment/BasicArmor';

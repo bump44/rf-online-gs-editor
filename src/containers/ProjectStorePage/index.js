@@ -10,9 +10,9 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Header as PageHeader } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
-import { IMMUTABLE_MAP, ITEM } from 'containers/App/constants';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import { IMMUTABLE_MAP, ITEM } from '~/containers/App/constants';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -22,7 +22,7 @@ import {
   projectsEntriesFinderItemsBindActions,
   projectsMapSptsBindActions,
   logoutCurrentUser,
-} from 'containers/App/actions';
+} from '~/containers/App/actions';
 
 import {
   makeSelectCurrentUser,
@@ -32,23 +32,23 @@ import {
   makeSelectProjectsEntriesFinder,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import { getRefs } from 'containers/App/getters/project';
-import * as projectStore from 'containers/App/getters/projectStore';
+import { getRefs } from '~/containers/App/getters/project';
+import * as projectStore from '~/containers/App/getters/projectStore';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
+import Header from '~/components/Header';
+import Container from '~/components/Container';
 import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
-} from 'components/FullheightColumn';
+} from '~/components/FullheightColumn';
 
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import ProjectMenu from 'components/ProjectMenu';
-import ProjectStore from 'components/Project/Store';
-import ProjectStoreLabelDetail from 'components/Project/StoreLabelDetail';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import ProjectMenu from '~/components/ProjectMenu';
+import ProjectStore from '~/components/Project/Store';
+import ProjectStoreLabelDetail from '~/components/Project/StoreLabelDetail';
 
 import messages from './messages';
 import reducer from './reducer';

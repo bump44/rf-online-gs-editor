@@ -14,17 +14,17 @@ import { Helmet } from 'react-helmet';
 import {
   makeSelectCurrentUser,
   makeSelectIsLoggedIn,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import { makeSelectProject } from 'containers/ProjectPage/selectors';
+import { makeSelectProject } from '~/containers/ProjectPage/selectors';
 import { Map } from 'immutable';
 import { push } from 'react-router-redux';
-import Container from 'components/Container';
-import Header from 'components/Header';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import Notification from 'components/Notification';
-import ProjectCreateForm from 'components/ProjectCreateForm';
+import Container from '~/components/Container';
+import Header from '~/components/Header';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
+import Notification from '~/components/Notification';
+import ProjectCreateForm from '~/components/ProjectCreateForm';
 import PropTypes from 'prop-types';
 import React from 'react';
 

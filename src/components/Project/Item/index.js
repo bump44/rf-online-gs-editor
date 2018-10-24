@@ -14,7 +14,7 @@ import {
   getIsRemoved,
   getType,
   getIsRemovedFully,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import messages from './messages';
 import renderResolvers from './renderResolvers';

@@ -13,7 +13,7 @@ import {
 
 import { isNullOrUndefined } from 'util';
 
-import { getFiniteByTypeName } from '../../../structs/item_types_utils';
+import { getFiniteByTypeName } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
 
 import {

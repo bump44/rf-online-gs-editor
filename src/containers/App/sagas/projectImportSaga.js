@@ -1,6 +1,6 @@
-import { FILES } from 'utils/gameFiles';
+import { FILES } from '~/utils/gameFiles';
 import { Map } from 'immutable';
-import apolloClient from 'apollo';
+import apolloClient from '~/apollo';
 
 import {
   take,

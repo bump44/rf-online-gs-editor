@@ -1,7 +1,7 @@
 import { isNullOrUndefined, isNumber } from 'util';
 import { isString } from 'lodash';
 
-import { getTypeNameByFinite } from '../../../structs/item_types_utils';
+import { getTypeNameByFinite } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 import * as projectItem from './projectItem';
@@ -39,18 +39,6 @@ export const getSdCode = (
       fnc: isString,
     },
   );
-
-export const getBindingSd = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  getValue(nextValue, { entry }, { fields: [['bindingSd']], def: undefined });
-
-export const getBindingBd = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  getValue(nextValue, { entry }, { fields: [['bindingBd']], def: undefined });
 
 export const getBdCode = (
   nextValue = IMMUTABLE_MAP,
@@ -184,6 +172,14 @@ export const getAngle = (
       ) || ['client', 'fStoreNPCangle'],
     ),
   ) || 0;
+
+export const getMapSpts = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue
+    .get('mapSpts', IMMUTABLE_LIST)
+    .concat(entry.get('mapSpts', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
 
 export const getItems = (
   nextValue = IMMUTABLE_MAP,

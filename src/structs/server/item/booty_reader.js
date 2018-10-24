@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { BOOTY } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { BOOTY } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import bootyStruct from './booty_struct';
 

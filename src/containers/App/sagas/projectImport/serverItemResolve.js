@@ -1,10 +1,10 @@
 import { call, put } from 'redux-saga/effects';
 import { chunk, pull } from 'lodash';
-import { COUNT, BLOCK_SIZE } from 'classes/constants';
+import { COUNT, BLOCK_SIZE } from '~/classes/constants';
 import { delay } from 'redux-saga';
-import * as ITEM_TYPES from 'structs/item_types';
-import apolloClient from 'apollo';
-import ItemImportServerMutation from 'apollo/mutations/item_import_server';
+import * as ITEM_TYPES from '~/structs/item_types';
+import apolloClient from '~/apollo';
+import ItemImportServerMutation from '~/apollo/mutations/item_import_server';
 
 import { announceProjectCountItems } from '../../actions';
 

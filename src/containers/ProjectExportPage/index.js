@@ -29,28 +29,28 @@ import {
   Button,
 } from 'semantic-ui-react';
 
-import { getReleaseFilesPath } from 'utils/path';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
+import { getReleaseFilesPath } from '~/utils/path';
+import injectSaga from '~/utils/injectSaga';
+import injectReducer from '~/utils/injectReducer';
 import {
   CLIENT_FILES,
   FILES,
   SERVER_FILES,
   CLIENT_ND_FILES,
-} from 'utils/gameFiles';
+} from '~/utils/gameFiles';
 
 import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsExports,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
 import {
   logoutCurrentUser,
   projectsExportsBindActionsWithFileKey,
   projectsExportsStartFileExport,
   projectsExportsCancelFileExport,
-} from 'containers/App/actions';
+} from '~/containers/App/actions';
 
 import {
   WAITING,
@@ -59,18 +59,18 @@ import {
   ERROR,
   CANCELLED,
   IMMUTABLE_MAP,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import ProjectMenu from 'components/ProjectMenu';
+import Header from '~/components/Header';
+import Container from '~/components/Container';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import ProjectMenu from '~/components/ProjectMenu';
 
 import FullheightColumn, {
   FullheightThis,
   FullheightAutoSizer,
-} from 'components/FullheightColumn';
+} from '~/components/FullheightColumn';
 
 import reducer from './reducer';
 import saga from './saga';

@@ -1,11 +1,11 @@
 import { call, put } from 'redux-saga/effects';
-import { COUNT } from 'classes/constants';
+import { COUNT } from '~/classes/constants';
 import { delay } from 'redux-saga';
-import apolloClient from 'apollo';
+import apolloClient from '~/apollo';
 import chunk from 'lodash/chunk';
-import MapBlockImportServerMutation from 'apollo/mutations/mapportal_import_server';
+import MapBlockImportServerMutation from '~/apollo/mutations/mapportal_import_server';
 import path from 'path';
-import ServerMapportalReader from 'structs/server/map/portal_reader';
+import ServerMapportalReader from '~/structs/server/map/portal_reader';
 
 /**
  * Import Server MapBlocks Resolver

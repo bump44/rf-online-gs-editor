@@ -13,9 +13,9 @@ import {
   select,
 } from 'redux-saga/effects';
 
-import apolloClient from 'apollo';
-import projectBoxItemOutsPageQuery from 'apollo/queries/project_boxItemOuts_page';
-import boxItemOutsSubQuery from 'apollo/queries/sub/boxItemOuts';
+import apolloClient from '~/apollo';
+import projectBoxItemOutsPageQuery from '~/apollo/queries/project_boxItemOuts_page';
+import boxItemOutsSubQuery from '~/apollo/queries/sub/boxItemOuts';
 
 import {
   CHANGE_ID,

@@ -10,7 +10,7 @@ import React from 'react';
 import { Map /* , List */ } from 'immutable';
 import { Checkbox } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import { getStoragePossible } from 'containers/App/getters/projectItem';
+import { getStoragePossible } from '~/containers/App/getters/projectItem';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */

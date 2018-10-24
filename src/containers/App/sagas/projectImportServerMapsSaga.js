@@ -13,9 +13,9 @@ import {
   select,
 } from 'redux-saga/effects';
 
-import apolloClient from 'apollo';
-import { isExists } from 'utils/fs';
-import { normalize } from 'utils/string';
+import apolloClient from '~/apollo';
+import { isExists } from '~/utils/fs';
+import { normalize } from '~/utils/string';
 
 import {
   PROJECTS_IMPORTS_SERVER_MAPS_START_MAP_IMPORT,

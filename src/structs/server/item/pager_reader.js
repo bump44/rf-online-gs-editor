@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { PAGER } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { PAGER } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import pagerStruct from './pager_struct';
 

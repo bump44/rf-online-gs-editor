@@ -46,7 +46,7 @@ import {
   MAKEDATA,
   COMBINEDATA,
   UNK3,
-} from '../../item_types';
+} from '~/structs/item_types';
 
 import defaultHeader from './default_header';
 import unk3Header from './unk3_header';

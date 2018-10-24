@@ -16,7 +16,7 @@ import styled from 'styled-components';
 import {
   getItemGrade,
   getItemGradeType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import messages from '../messages';
 

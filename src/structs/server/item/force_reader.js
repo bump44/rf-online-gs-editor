@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { FORCE } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { FORCE } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import forceStruct from './force_struct';
 

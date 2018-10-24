@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { saveTokenMe } from 'utils/ls';
+import { saveTokenMe } from '~/utils/ls';
 
 import {
   CHANGE_CURRENT_USER,

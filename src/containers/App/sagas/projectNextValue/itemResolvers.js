@@ -1,4 +1,4 @@
-import { getClientCodeAvoidError } from 'utils/converters';
+import { getClientCodeAvoidError } from '~/utils/converters';
 
 import {
   PROJECT_ITEM_NAME_FIELDS,

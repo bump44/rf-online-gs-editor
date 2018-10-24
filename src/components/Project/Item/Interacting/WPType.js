@@ -6,7 +6,7 @@
 
 import { Dropdown as DropdownUI } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import { getWP, getWPType } from 'containers/App/getters/projectItem';
+import { getWP, getWPType } from '~/containers/App/getters/projectItem';
 import { Map, List } from 'immutable';
 import { parseInt, isNumber } from 'lodash';
 import PropTypes from 'prop-types';

@@ -4,7 +4,7 @@
  *
  */
 
-import { getIndex } from 'containers/App/getters/projectBoxItemOut';
+import { getIndex } from '~/containers/App/getters/projectBoxItemOut';
 import { Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Map } from 'immutable';

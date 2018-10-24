@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
-import ItemClientNameParts from 'apollo/fragments/ItemClientNameParts';
-import ItemServerNameParts from 'apollo/fragments/ItemServerNameParts';
-import ProjectIncludeAllTypes from 'apollo/fragments/ProjectIncludeAllTypes';
-import StoreClientNameParts from 'apollo/fragments/StoreClientNameParts';
-import StoreServerNameParts from 'apollo/fragments/StoreServerNameParts';
+import ItemClientNameParts from '~/apollo/fragments/ItemClientNameParts';
+import ItemServerNameParts from '~/apollo/fragments/ItemServerNameParts';
+import MapSptNameParts from '~/apollo/fragments/MapSptNameParts';
+import ProjectIncludeAllTypes from '~/apollo/fragments/ProjectIncludeAllTypes';
+import StoreClientNameParts from '~/apollo/fragments/StoreClientNameParts';
+import StoreServerNameParts from '~/apollo/fragments/StoreServerNameParts';
 
 export default gql`
   query($id: String!, $storeId: String!) {
@@ -48,6 +49,7 @@ export default gql`
     store(id: $storeId) {
       id
       nIndex
+      projectId
 
       client {
         ...StoreClientNameParts
@@ -57,10 +59,17 @@ export default gql`
         ...StoreServerNameParts
       }
 
+      mapSpts {
+        id
+        projectId
+        ...MapSptNameParts
+      }
+
       items {
         id
         type
         nIndex
+        projectId
 
         clientND {
           strName
@@ -83,4 +92,5 @@ export default gql`
   ${StoreServerNameParts}
   ${ItemClientNameParts}
   ${ItemServerNameParts}
+  ${MapSptNameParts}
 `;

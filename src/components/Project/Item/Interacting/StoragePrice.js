@@ -16,7 +16,7 @@ import {
   getStoragePrice,
   getMoneyValueByMoneyType,
   getMoneyType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import messages from '../messages';
 

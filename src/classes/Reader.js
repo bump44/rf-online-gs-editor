@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus, no-unneeded-ternary, default-case, no-fallthrough, no-console */
-import { deCryptByPath } from 'utils/edf';
+import { deCryptByPath } from '~/utils/edf';
 import fs from 'fs';
 import iconv from 'iconv-lite';
 

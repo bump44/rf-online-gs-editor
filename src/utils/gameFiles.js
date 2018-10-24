@@ -1,5 +1,6 @@
 import { pickBy, upperFirst } from 'lodash';
-import * as ITEM_TYPES from '../structs/item_types';
+
+import * as ITEM_TYPES from '~/structs/item_types';
 
 // Client DataFiles
 export const FILE_TYPE_CLIENT = 'CLIENT';

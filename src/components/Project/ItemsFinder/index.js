@@ -17,7 +17,7 @@ import {
   ITEM,
   IMMUTABLE_MAP,
   IMMUTABLE_LIST,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import ProjectItemsFilters from '../ItemsFilters';
 import InfiniteAutoSizeList from '../../InfiniteAutoSizeList';

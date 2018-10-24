@@ -19,7 +19,9 @@
           "styled-components",
           "react-hot-loader/babel",
           ["module-resolver", {
-            "root": ["./src"]
+            "alias": {
+              "~": "./src"
+            }
           }]
         ],
         "sourceMaps": "inline"
@@ -47,7 +49,9 @@
           "transform-async-to-generator",
           "styled-components",
           ["module-resolver", {
-            "root": ["./src"]
+            "alias": {
+              "~": "./src"
+            }
           }]
         ],
         "sourceMaps": "none"

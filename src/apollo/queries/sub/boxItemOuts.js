@@ -1,4 +1,4 @@
-import BoxItemOutNameParts from 'apollo/fragments/BoxItemOutNameParts';
+import BoxItemOutNameParts from '~/apollo/fragments/BoxItemOutNameParts';
 import gql from 'graphql-tag';
 
 export default gql`

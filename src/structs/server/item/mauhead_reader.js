@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { MAUHEAD } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { MAUHEAD } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import maupartStruct from './maupart_struct';
 

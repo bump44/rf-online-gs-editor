@@ -13,9 +13,9 @@ import {
   select,
 } from 'redux-saga/effects';
 
-import apolloClient from 'apollo';
-import projectStoresPageQuery from 'apollo/queries/project_stores_page';
-import storesSubQuery from 'apollo/queries/sub/stores';
+import apolloClient from '~/apollo';
+import projectStoresPageQuery from '~/apollo/queries/project_stores_page';
+import storesSubQuery from '~/apollo/queries/sub/stores';
 
 import {
   CHANGE_ID,

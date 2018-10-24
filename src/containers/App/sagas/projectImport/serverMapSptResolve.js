@@ -2,10 +2,10 @@ import chunk from 'lodash/chunk';
 import path from 'path';
 import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import { COUNT } from 'classes/constants';
-import ServerMapsptReader from 'structs/server/map/spt_reader';
-import apolloClient from 'apollo';
-import MapSptImportServerMutation from 'apollo/mutations/mapspt_import_server';
+import { COUNT } from '~/classes/constants';
+import ServerMapsptReader from '~/structs/server/map/spt_reader';
+import apolloClient from '~/apollo';
+import MapSptImportServerMutation from '~/apollo/mutations/mapspt_import_server';
 
 /**
  * Import Server MapSpts Resolver

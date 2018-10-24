@@ -6,11 +6,11 @@
 
 import { FormattedMessage } from 'react-intl';
 import { Grid, Label, Icon, Modal, Button } from 'semantic-ui-react';
-import { IMMUTABLE_MAP } from 'containers/App/constants';
+import { IMMUTABLE_MAP } from '~/containers/App/constants';
 import { Link } from 'react-router-dom';
 import { Map, List } from 'immutable';
-import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
-import * as projectItem from 'containers/App/getters/projectItem';
+import * as projectBoxItemOut from '~/containers/App/getters/projectBoxItemOut';
+import * as projectItem from '~/containers/App/getters/projectItem';
 import PropTypes from 'prop-types';
 import React from 'react';
 

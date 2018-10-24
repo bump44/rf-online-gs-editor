@@ -6,7 +6,7 @@
 
 import { Grid, Header, Segment } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
-import * as projectMapSpt from 'containers/App/getters/projectMapSpt';
+import * as projectMapSpt from '~/containers/App/getters/projectMapSpt';
 import PropTypes from 'prop-types';
 import React from 'react';
 

@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { COUNT, COUNT_COLUMNS, BLOCK_SIZE } from '../../../classes/constants';
+import FileReader from '~/classes/FileReader';
+import { COUNT, COUNT_COLUMNS, BLOCK_SIZE } from '~/classes/constants';
 
 export default class ServerMapsptReader extends FileReader {
   constructor(props = {}) {

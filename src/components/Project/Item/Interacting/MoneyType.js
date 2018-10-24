@@ -16,7 +16,7 @@ import {
   getMoneyType,
   getMoney,
   getMoneyValueByMoneyType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import messages from '../messages';
 

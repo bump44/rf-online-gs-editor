@@ -10,7 +10,7 @@ import React from 'react';
 import { Map /* , List */ } from 'immutable';
 import { Grid, Label, Transition } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
-import * as projectStore from 'containers/App/getters/projectStore';
+import * as projectStore from '~/containers/App/getters/projectStore';
 
 import messages from '../messages';
 import ProjectStoreInteractingName from '../../Store/Interacting/Name';

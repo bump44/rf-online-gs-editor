@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { Input, Dropdown } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import { parseInt, isNumber } from 'lodash';
-import * as projectStore from 'containers/App/getters/projectStore';
+import * as projectStore from '~/containers/App/getters/projectStore';
 import PropTypes from 'prop-types';
 import React from 'react';
 

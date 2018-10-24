@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import StoreClientNameParts from 'apollo/fragments/StoreClientNameParts';
-import StoreServerNameParts from 'apollo/fragments/StoreServerNameParts';
+import StoreClientNameParts from '~/apollo/fragments/StoreClientNameParts';
+import StoreServerNameParts from '~/apollo/fragments/StoreServerNameParts';
 
 export default gql`
   query($take: Int, $skip: Int, $sort: JSON, $where: JSON) {

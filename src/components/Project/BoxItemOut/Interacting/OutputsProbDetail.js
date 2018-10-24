@@ -7,7 +7,7 @@
 import { FormattedMessage } from 'react-intl';
 import { Label } from 'semantic-ui-react';
 import { Map } from 'immutable';
-import * as projectBoxItemOut from 'containers/App/getters/projectBoxItemOut';
+import * as projectBoxItemOut from '~/containers/App/getters/projectBoxItemOut';
 import PropTypes from 'prop-types';
 import React from 'react';
 

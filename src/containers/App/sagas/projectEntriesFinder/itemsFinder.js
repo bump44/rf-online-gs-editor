@@ -12,8 +12,8 @@ import {
   cancelled,
 } from 'redux-saga/effects';
 
-import apolloClient from 'apollo';
-import itemsSubQuery from 'apollo/queries/sub/items';
+import apolloClient from '~/apollo';
+import itemsSubQuery from '~/apollo/queries/sub/items';
 
 import {
   PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE,

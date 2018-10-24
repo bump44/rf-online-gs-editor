@@ -1,0 +1,7 @@
+{
+  "path-intellisense.mappings": {
+    "~": "${workspaceRoot}/src"
+  },
+  "typescript.validate.enable": false,
+  "javascript.suggestionActions.enabled": false,
+}

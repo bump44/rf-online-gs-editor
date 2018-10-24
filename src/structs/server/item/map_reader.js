@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { MAP } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { MAP } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import mapStruct from './map_struct';
 

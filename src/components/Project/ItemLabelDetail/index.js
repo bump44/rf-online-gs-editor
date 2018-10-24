@@ -16,7 +16,7 @@ import {
   getId,
   getProjectId,
   getType,
-} from 'containers/App/getters/projectItem';
+} from '~/containers/App/getters/projectItem';
 
 import ProjectItemTypeLocaleMessage from '../ItemTypeLocaleMessage';
 

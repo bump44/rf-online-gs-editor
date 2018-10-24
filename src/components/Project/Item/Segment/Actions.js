@@ -4,7 +4,7 @@
  *
  */
 
-import { getIsRemoved, getName } from 'containers/App/getters/projectItem';
+import { getIsRemoved, getName } from '~/containers/App/getters/projectItem';
 import { Map } from 'immutable';
 import { Segment, Button, Confirm } from 'semantic-ui-react';
 import PropTypes from 'prop-types';

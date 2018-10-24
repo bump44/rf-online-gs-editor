@@ -1,4 +1,4 @@
-import FileReader from '../../../classes/FileReader';
+import FileReader from '~/classes/FileReader';
 import defaultHeader from './default_header';
 import portalStruct from './portal_struct';
 

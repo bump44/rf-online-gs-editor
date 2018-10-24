@@ -21,21 +21,21 @@ import {
 } from 'semantic-ui-react';
 
 import { FormattedMessage } from 'react-intl';
-import { getClientCode, getClientCodeAvoidError } from 'utils/converters';
+import { getClientCode, getClientCodeAvoidError } from '~/utils/converters';
 
 import {
   getTypeNameByFinite,
   getFiniteByTypeName,
   getTypeNamesByPrefix,
-} from 'structs/item_types_utils';
+} from '~/structs/item_types_utils';
 
-import * as projectStore from 'containers/App/getters/projectStore';
-import * as projectItem from 'containers/App/getters/projectItem';
+import * as projectStore from '~/containers/App/getters/projectStore';
+import * as projectItem from '~/containers/App/getters/projectItem';
 
 import {
   IMMUTABLE_MAP,
   AUTO_REVERSE_CLIENT_CODES,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import messages from '../messages';
 import ProjectItemsFinder from '../../ItemsFinder';

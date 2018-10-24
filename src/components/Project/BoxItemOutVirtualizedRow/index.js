@@ -13,7 +13,7 @@ import {
   DISABLE_RENDER_ITEMS_IS_SCROLLING,
   DISABLE_RENDER_ITEMS_IS_NOT_VISIBLE,
   IMMUTABLE_MAP,
-} from 'containers/App/constants';
+} from '~/containers/App/constants';
 
 import Row from '../ItemRow/styles';
 import ProjectBoxItemOutRow from '../BoxItemOutRow';

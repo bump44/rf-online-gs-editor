@@ -1,12 +1,12 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import apolloClient from 'apollo';
-import userRegisterMutation from 'apollo/mutations/user_register';
+import apolloClient from '~/apollo';
+import userRegisterMutation from '~/apollo/mutations/user_register';
 
 import {
   changeCurrentUser,
   changeCurrentUserToken,
-} from 'containers/App/actions';
+} from '~/containers/App/actions';
 
 import { SUBMIT } from './constants';
 import { changeIsLoading, changeIsError, changeErrorMessage } from './actions';

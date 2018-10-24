@@ -1,11 +1,11 @@
-import Field from '../../../classes/Field';
+import Field from '~/classes/Field';
 import {
   ORDER,
   TOTAL_SIZE,
   OFFSET,
   COUNT,
   BLOCK_SIZE,
-} from '../../../classes/constants';
+} from '~/classes/constants';
 
 export default [
   new Field({ name: ORDER, type: Number, len: 16 }),

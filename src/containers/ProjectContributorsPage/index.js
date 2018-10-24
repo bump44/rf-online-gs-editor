@@ -11,8 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import { Grid, Header as PageHeader, Segment, Label } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
 import { Map } from 'immutable';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import injectReducer from '~/utils/injectReducer';
+import injectSaga from '~/utils/injectSaga';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,15 +21,15 @@ import {
   makeSelectCurrentUser,
   makeSelectProjectsImportsProcessingData,
   makeSelectProjectImportsProcessingData,
-} from 'containers/App/selectors';
+} from '~/containers/App/selectors';
 
-import { logoutCurrentUser } from 'containers/App/actions';
+import { logoutCurrentUser } from '~/containers/App/actions';
 
-import Header from 'components/Header';
-import Container from 'components/Container';
-import Notification from 'components/Notification';
-import LoadingIndicator from 'components/LoadingIndicator';
-import ProjectMenu from 'components/ProjectMenu';
+import Header from '~/components/Header';
+import Container from '~/components/Container';
+import Notification from '~/components/Notification';
+import LoadingIndicator from '~/components/LoadingIndicator';
+import ProjectMenu from '~/components/ProjectMenu';
 
 import makeSelectProjectContributorsPage, {
   makeSelectProject,

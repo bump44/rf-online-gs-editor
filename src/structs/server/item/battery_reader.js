@@ -1,5 +1,5 @@
-import FileReader from '../../../classes/FileReader';
-import { BATTERY } from '../../item_types';
+import FileReader from '~/classes/FileReader';
+import { BATTERY } from '~/structs/item_types';
 import defaultHeader from './default_header';
 import batteryStruct from './battery_struct';
 

@@ -7,7 +7,7 @@
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
 import { min, max, parseInt } from 'lodash';
-import * as projectStore from 'containers/App/getters/projectStore';
+import * as projectStore from '~/containers/App/getters/projectStore';
 import PropTypes from 'prop-types';
 import React from 'react';
 
