@@ -7,9 +7,13 @@
 import { Label, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
-import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import {
+  getStatusColor,
+  getIconName,
+} from '~/containers/App/getters/nextValues';
 
 import {
   getIndex,
@@ -38,28 +42,14 @@ class ProjectItemLabelDetail extends React.PureComponent {
 
     const nextValue = itemNextValues.get('nextValue');
 
-    const isSaved = itemNextValues.getIn(['isSaved'], true);
     const isSaving = itemNextValues.getIn(['isSaving'], false);
     const isError = itemNextValues.getIn(['isError'], false);
     const errorMessage = itemNextValues.getIn(['errorMessage'], '');
     const nIndex = getIndex(nextValue, { entry: item });
 
-    const isShowStatus =
-      (!isSaving && !isSaved && !isError) || isSaving || isError;
-
     const componentProps = {
       title: isError ? errorMessage : undefined,
-      color: cx({
-        teal:
-          !isError &&
-          !(itemNextValues.getIn(['isSaved']) !== undefined && isSaved) &&
-          !isSaving &&
-          !(isShowStatus && !isSaving && !isSaved && !isError),
-        red: isError,
-        green: itemNextValues.getIn(['isSaved']) !== undefined && isSaved,
-        yellow: isSaving,
-        pink: isShowStatus && !isSaving && !isSaved && !isError,
-      }),
+      color: getStatusColor(itemNextValues),
       image: true,
     };
 
@@ -79,15 +69,7 @@ class ProjectItemLabelDetail extends React.PureComponent {
 
     return (
       <Label {...componentProps} size={size}>
-        <Icon
-          loading={isShowStatus && isSaving}
-          name={cx({
-            check: !isShowStatus,
-            pencil: isShowStatus && !isSaving && !isSaved && !isError,
-            times: isShowStatus && isError,
-            spinner: isShowStatus && isSaving,
-          })}
-        />
+        <Icon loading={isSaving} name={getIconName(itemNextValues)} />
         {nIndex}
         <Label.Detail>
           <ProjectItemTypeLocaleMessage messageKey={type} tagName="small" />
