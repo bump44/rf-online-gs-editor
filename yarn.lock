@@ -180,6 +180,10 @@
   version "8.10.30"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.30.tgz#2c82cbed5f79d72280c131d2acffa88fbd8dd353"
 
+"@types/prop-types@^15.5.4":
+  version "15.5.6"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.6.tgz#9c03d3fed70a8d517c191b7734da2879b50ca26c"
+
 "@types/zen-observable@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
@@ -7196,6 +7200,13 @@ react-apollo@^2.1.11:
     invariant "^2.2.2"
     lodash "^4.17.10"
     prop-types "^15.6.0"
+
+react-contenteditable@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.1.1.tgz#a76d620e04627e43770c23ef5ec3c39b7f75db9d"
+  dependencies:
+    "@types/prop-types" "^15.5.4"
+    fast-deep-equal "^2.0.1"
 
 react-dom@^16.5.0:
   version "16.5.2"
