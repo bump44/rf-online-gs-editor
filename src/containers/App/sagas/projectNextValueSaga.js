@@ -1,13 +1,14 @@
 import { delay } from 'redux-saga';
 import { Map } from 'immutable';
 import { pick, omit } from 'lodash';
+
 import apolloClient from '~/apollo';
-import projectBoxItemOutUpdate from '~/apollo/mutations/boxItemOut_update';
-import projectItemRemoveFully from '~/apollo/mutations/item_remove_fully';
-import projectItemRemoveVirtual from '~/apollo/mutations/item_remove_virtual';
-import projectItemRestoreVirtual from '~/apollo/mutations/item_restore_virtual';
-import projectItemUpdate from '~/apollo/mutations/item_update';
-import projectStoreUpdate from '~/apollo/mutations/store_update';
+import boxItemOutUpdate from '~/apollo/mutations/boxItemOut_update';
+import itemRemoveFully from '~/apollo/mutations/item_remove_fully';
+import itemRemoveVirtual from '~/apollo/mutations/item_remove_virtual';
+import itemRestoreVirtual from '~/apollo/mutations/item_restore_virtual';
+import itemUpdate from '~/apollo/mutations/item_update';
+import storeUpdate from '~/apollo/mutations/store_update';
 
 import {
   take,
@@ -22,13 +23,14 @@ import {
 import {
   PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
   PROJECTS_NEXT_VALUES_CHANGE_NEXT_VALUE,
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
+  IMMUTABLE_MAP,
+  MAPSPT,
   ITEM,
   STORE,
   BOXITEMOUT,
-  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
-  IMMUTABLE_MAP,
-  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
-  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
 } from '../constants';
 
 import {
@@ -47,6 +49,7 @@ import {
 import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
 import boxItemOutResolvers from './projectNextValue/boxItemOutResolvers';
+import mapSptResolvers from './projectNextValue/mapSptResolvers';
 
 import {
   projectsNextValuesChangeIsRemoving,
@@ -60,24 +63,25 @@ const Resolvers = {
   [ITEM]: itemResolvers,
   [STORE]: storeResolvers,
   [BOXITEMOUT]: boxItemOutResolvers,
+  [MAPSPT]: mapSptResolvers,
 };
 
 const MutationUpdateQueries = {
-  [ITEM]: projectItemUpdate,
-  [STORE]: projectStoreUpdate,
-  [BOXITEMOUT]: projectBoxItemOutUpdate,
+  [ITEM]: itemUpdate,
+  [STORE]: storeUpdate,
+  [BOXITEMOUT]: boxItemOutUpdate,
 };
 
 const MutationRemoveVirtualQueries = {
-  [ITEM]: projectItemRemoveVirtual,
+  [ITEM]: itemRemoveVirtual,
 };
 
 const MutationRemoveFullyQueries = {
-  [ITEM]: projectItemRemoveFully,
+  [ITEM]: itemRemoveFully,
 };
 
 const MutationRestoreVirtualQueries = {
-  [ITEM]: projectItemRestoreVirtual,
+  [ITEM]: itemRestoreVirtual,
 };
 
 const PickFields = {
