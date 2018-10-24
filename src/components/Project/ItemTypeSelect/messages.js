@@ -23,4 +23,8 @@ export default defineMessages({
     id: 'app.components.ProjectItemTypeSelect.AllItemTypes',
     defaultMessage: 'All types',
   },
+  WrongItemType: {
+    id: 'app.components.ProjectItemTypeSelect.WrongItemType',
+    defaultMessage: 'Wrong type',
+  },
 });
