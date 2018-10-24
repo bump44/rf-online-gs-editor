@@ -63,14 +63,17 @@ class ProjectItemTypeSelect extends React.PureComponent {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, addOptionAll } = this.props;
 
     const MessageComponent = !value
       ? FormattedMessage
       : ProjectItemTypeLocaleMessage;
 
+    // eslint-disable-next-line
     const MessageComponentProps = !value
-      ? messages.AllItemTypes
+      ? addOptionAll
+        ? messages.AllItemTypes
+        : messages.WrongItemType
       : { messageKey: value, upperFirst: true };
 
     return (
