@@ -4,7 +4,7 @@
  *
  */
 
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Segment, Label, Icon } from 'semantic-ui-react';
 import { Map } from 'immutable';
 
 import * as projectMapSpt from '~/containers/App/getters/projectMapSpt';
@@ -14,16 +14,19 @@ import React from 'react';
 import FieldFloat from '../Interacting/FieldFloat';
 import FieldInteger from '../Interacting/FieldInteger';
 
+import {
+  getIconName,
+  getStatusColor,
+} from '~/containers/App/getters/nextValues';
+
+import Notification from '~/components/Notification';
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectMapSptSegmentBasic extends React.PureComponent {
   render() {
     const { mapSptActions, mapSptNextValues, mapSpt } = this.props;
 
     const mapSptNextValue = mapSptNextValues.get('nextValue');
-
-    const mapName = projectMapSpt.getMapName(mapSptNextValue, {
-      entry: mapSpt,
-    });
     const anchor = projectMapSpt.getAnchor(mapSptNextValue, { entry: mapSpt });
 
     const a1 = projectMapSpt.getA1(mapSptNextValue, { entry: mapSpt });
@@ -55,11 +58,21 @@ class ProjectMapSptSegmentBasic extends React.PureComponent {
 
     return (
       <Segment color="yellow">
+        {mapSptNextValues.get('isError') && (
+          <Notification type="danger">
+            {mapSptNextValues.get('errorMessage')}
+          </Notification>
+        )}
         <Grid>
-          <Grid.Column>{mapName}</Grid.Column>
-        </Grid>
-        <Grid>
-          <Grid.Column width={4}>{anchor}</Grid.Column>
+          <Grid.Column width={4}>
+            <Label color={getStatusColor(mapSptNextValues)}>
+              <Icon
+                loading={mapSptNextValues.get('isSaving')}
+                name={getIconName(mapSptNextValues)}
+              />
+              <Label.Detail>{anchor}</Label.Detail>
+            </Label>
+          </Grid.Column>
           <Grid.Column width={2}>
             <FieldInteger
               value={a1}
