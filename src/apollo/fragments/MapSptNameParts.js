@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export default gql`
   fragment MapSptNameParts on MapSpt {
+    mapName
     strAnchor
     bExcludeNodeTm
     a1

@@ -4,8 +4,9 @@
  *
  */
 
-import { Grid, Header, Segment } from 'semantic-ui-react';
-import { Map, List } from 'immutable';
+import { Grid, Segment } from 'semantic-ui-react';
+import { Map } from 'immutable';
+
 import * as projectMapSpt from '~/containers/App/getters/projectMapSpt';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -17,7 +18,12 @@ import FieldInteger from '../Interacting/FieldInteger';
 class ProjectMapSptSegmentBasic extends React.PureComponent {
   render() {
     const { mapSptActions, mapSptNextValues, mapSpt } = this.props;
+
     const mapSptNextValue = mapSptNextValues.get('nextValue');
+
+    const mapName = projectMapSpt.getMapName(mapSptNextValue, {
+      entry: mapSpt,
+    });
     const anchor = projectMapSpt.getAnchor(mapSptNextValue, { entry: mapSpt });
 
     const a1 = projectMapSpt.getA1(mapSptNextValue, { entry: mapSpt });
@@ -50,80 +56,171 @@ class ProjectMapSptSegmentBasic extends React.PureComponent {
     return (
       <Segment color="yellow">
         <Grid>
+          <Grid.Column>{mapName}</Grid.Column>
+        </Grid>
+        <Grid>
           <Grid.Column width={4}>{anchor}</Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a1} />
+            <FieldInteger
+              value={a1}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA1}
+            />
           </Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a2} />
+            <FieldInteger
+              value={a2}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA2}
+            />
           </Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a3} />
+            <FieldInteger
+              value={a3}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA3}
+            />
           </Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a4} />
+            <FieldInteger
+              value={a4}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA4}
+            />
           </Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a5} />
+            <FieldInteger
+              value={a5}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA5}
+            />
           </Grid.Column>
           <Grid.Column width={2}>
-            <FieldInteger value={a6} />
+            <FieldInteger
+              value={a6}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeA6}
+            />
           </Grid.Column>
         </Grid>
         <Grid columns="equal">
           <Grid.Column>
-            <FieldFloat value={b1} />
+            <FieldFloat
+              value={b1}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeB1}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={b2} />
+            <FieldFloat
+              value={b2}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeB2}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={b3} />
+            <FieldFloat
+              value={b3}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeB3}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={b4} />
-          </Grid.Column>
-        </Grid>
-        <Grid columns="equal">
-          <Grid.Column>
-            <FieldFloat value={c1} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={c2} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={c3} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={c4} />
-          </Grid.Column>
-        </Grid>
-        <Grid columns="equal">
-          <Grid.Column>
-            <FieldFloat value={d1} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={d2} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={d3} />
-          </Grid.Column>
-          <Grid.Column>
-            <FieldFloat value={d4} />
+            <FieldFloat
+              value={b4}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeB4}
+            />
           </Grid.Column>
         </Grid>
         <Grid columns="equal">
           <Grid.Column>
-            <FieldFloat value={e1} />
+            <FieldFloat
+              value={c1}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeC1}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={e2} />
+            <FieldFloat
+              value={c2}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeC2}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={e3} />
+            <FieldFloat
+              value={c3}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeC3}
+            />
           </Grid.Column>
           <Grid.Column>
-            <FieldFloat value={e4} />
+            <FieldFloat
+              value={c4}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeC4}
+            />
+          </Grid.Column>
+        </Grid>
+        <Grid columns="equal">
+          <Grid.Column>
+            <FieldFloat
+              value={d1}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeD1}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={d2}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeD2}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={d3}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeD3}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={d4}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeD4}
+            />
+          </Grid.Column>
+        </Grid>
+        <Grid columns="equal">
+          <Grid.Column>
+            <FieldFloat
+              value={e1}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeE1}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={e2}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeE2}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={e3}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeE3}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <FieldFloat
+              value={e4}
+              mapSpt={mapSpt}
+              onChangeValue={mapSptActions.changeE4}
+            />
           </Grid.Column>
         </Grid>
       </Segment>

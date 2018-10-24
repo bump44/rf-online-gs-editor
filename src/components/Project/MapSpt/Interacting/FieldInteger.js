@@ -18,7 +18,7 @@ class ProjectMapSptInteractingFieldInteger extends React.PureComponent {
 
     this.changeValue = evt => {
       const { onChangeValue, mapSpt } = this.props;
-      onChangeValue(mapSpt, parseInt(evt.target.value.replace(/[^0-9]/g, '')));
+      onChangeValue(mapSpt, parseInt(evt.target.value.replace(/[^-0-9]/g, '')));
     };
   }
 
