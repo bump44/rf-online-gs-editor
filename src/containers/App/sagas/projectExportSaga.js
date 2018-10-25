@@ -1,5 +1,5 @@
 import { FILES } from '~/utils/gameFiles';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import {
   take,
@@ -24,6 +24,8 @@ import {
 
 import { projectsExportsBindActionsWithFileKey } from '../actions';
 import { makeSelectProjectsExports } from '../selectors';
+import apolloClient from '~/apollo';
+import projectWithAllTypes from '~/apollo/queries/sub/projectWithAllTypes';
 
 import clientItemResolve from './projectExport/clientItemResolve';
 import clientStoreResolve from './projectExport/clientStoreResolve';
@@ -116,6 +118,13 @@ export function* worker({ projectId, fileKey }) {
       throw new Error('Export file resolver not defined');
     }
 
+    const projectQuery = yield apolloClient.query({
+      query: projectWithAllTypes,
+      variables: { id: projectId },
+    });
+
+    const project = fromJS(projectQuery.data.project);
+
     // call resolver
     yield call(resolver, {
       fileData,
@@ -123,6 +132,7 @@ export function* worker({ projectId, fileKey }) {
       fileKey,
       actions,
       projectExportState,
+      projectDetails: project,
     });
 
     yield call(changeFileStateToFinished, { actions });

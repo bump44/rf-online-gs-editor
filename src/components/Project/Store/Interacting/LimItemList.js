@@ -111,13 +111,28 @@ class ProjectStoreInteractingLimItemList extends React.PureComponent {
       });
     };
 
+    this.changeCount = evt => {
+      const { storeActions, store, index } = this.props;
+      storeActions.changeLimItemListMaxCount(store, {
+        n: index + 1,
+        value: parseInt(evt.target.value, 10) || 0,
+      });
+    };
+
     this.state = { selectItemModalOpen: false };
   }
 
   itemListSelected(item, itemNextValues) {
     this.setState({ selectItemModalOpen: false });
     const itemNextValue = itemNextValues.get('nextValue');
-    const { store, storeActions, index } = this.props;
+
+    const {
+      store,
+      storeActions,
+      storeNextValues,
+      index,
+      nextValues,
+    } = this.props;
 
     const serverCode = projectItem.getServerCode(itemNextValue, {
       entry: item,
@@ -132,11 +147,19 @@ class ProjectStoreInteractingLimItemList extends React.PureComponent {
       entry: item,
     });
 
+    const itemList = projectStore.getLimItemList(
+      storeNextValues.get('nextValue'),
+      { entry: store, nextValues },
+      { n: index + 1 },
+    );
+
     storeActions.limItemListUpdate(store, {
       n: index + 1,
       clientCode,
       clientType,
       serverCode,
+      serverCount: itemList.serverCount,
+      clientCount: itemList.clientCount,
       itemList: item,
     });
   }
@@ -254,12 +277,26 @@ class ProjectStoreInteractingLimItemList extends React.PureComponent {
               }
             />
             <Input
-              className="ml-5"
+              className="ml-5 mr-10"
               size="tiny"
               value={itemList.serverCode}
               error={convClientCode !== itemList.clientCode}
               onChange={this.changeServerCode}
             />
+            <Label>
+              Count:
+              <Label.Detail>
+                <ContentEditable
+                  onChange={this.changeCount}
+                  html={(
+                    itemList.serverCount ||
+                    itemList.clientCount ||
+                    0
+                  ).toString()}
+                  tagName="span"
+                />
+              </Label.Detail>
+            </Label>
           </Comment.Text>
 
           <Comment.Actions>

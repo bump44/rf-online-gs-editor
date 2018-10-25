@@ -101,11 +101,48 @@ function fillBuffer(
   bufferGenerator.concat(...buffers);
 }
 
+function filtrateData(obj = {}, { mapNameTypeCaseSens } = {}) {
+  const itemCodeFields = Array.from(Array(216)).map(
+    (_, index) =>
+      index >= 200
+        ? `strLimItemCode__${index - 200 + 1}_1`
+        : `strItemCode__${index + 1}`,
+  );
+
+  const nextObject = {};
+
+  itemCodeFields.forEach(code => {
+    if (!obj[code] || obj[code].length !== 7) {
+      nextObject[code] = '0'; // server must contain zero if item is not specified
+    }
+  });
+
+  nextObject.strStoreMAPcode =
+    mapNameTypeCaseSens[obj.strStoreMAPcode] || obj.strStoreMAPcode;
+
+  return Object.assign({}, obj, nextObject);
+}
+
 /**
  * Export Server Stores Resolver
  */
-export default function* defaultSaga({ projectId, actions, fileData }) {
+export default function* defaultSaga({
+  projectId,
+  actions,
+  fileData,
+  projectDetails,
+}) {
   yield delay(1000);
+
+  const mapNameTypeCaseSens = {};
+
+  projectDetails
+    .get('mapNameTypes')
+    .get('items')
+    .forEach(mapNameType => {
+      mapNameTypeCaseSens[mapNameType.get('value')] =
+        mapNameType.get('caseSens') || mapNameType.get('value');
+    });
 
   const readerStruct = serverStoreReaderStruct;
   const total = yield apolloClient.query({
@@ -131,7 +168,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
 
     loaded += objects.length;
     fillBuffer(bufferGenerator, readerStruct[i], objects, object => ({
-      ...object.server,
+      ...filtrateData(object.server, { mapNameTypeCaseSens }),
       nIndex: object.nIndex,
     }));
 

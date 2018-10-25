@@ -127,6 +127,10 @@ const Resolvers = {
     store.setIn(['client', `strLimItemCode__${n}_2`], value),
   limItemListServerCode: (store, { value, n }) =>
     store.setIn(['server', `strLimItemCode__${n}_1`], value),
+  limItemListMaxCount: (store, { value, n }) =>
+    store
+      .setIn(['server', `nLimMaxCount__${n}_2`], value)
+      .setIn(['client', `nLimMaxCount__${n}_3`], value),
   limItemListRemove: (store, n) =>
     store
       .setIn(['server', `strLimItemCode__${n}_1`], '')
@@ -140,14 +144,14 @@ const Resolvers = {
       clientType = 0,
       serverCode = '',
       serverCount,
-      clientCount,
+      clientCount = 0,
       itemList,
     } = {},
   ) => {
     let nextStore = store
-      .setIn(['server', `strItemCode__${n}`], serverCode)
-      .setIn(['client', `strItemList__${n}_2`], clientCode)
-      .setIn(['client', `nItemListType__${n}_1`], clientType);
+      .setIn(['server', `strLimItemCode__${n}_1`], serverCode)
+      .setIn(['client', `strLimItemCode__${n}_2`], clientCode)
+      .setIn(['client', `nLimItemType__${n}_1`], clientType);
 
     if (isInteger(serverCount) || isInteger(clientCount)) {
       nextStore = nextStore

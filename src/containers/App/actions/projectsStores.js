@@ -27,6 +27,7 @@ export const projectsStores = {
       'limItemListServerCode',
       'limItemListClientCode',
       'limItemListClientType',
+      'limItemListMaxCount',
     ];
     const fns = {};
     propKeys.forEach(propKey => {

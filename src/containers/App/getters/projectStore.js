@@ -257,7 +257,7 @@ export const getLimItemListClientCount = (
   getValue(
     nextValue,
     { entry },
-    { fields: [['client', `nLimMaxCount__${n}_3`]], def: '', fnc: isString },
+    { fields: [['client', `nLimMaxCount__${n}_3`]], def: 0, fnc: isInteger },
   );
 
 /**
@@ -406,7 +406,7 @@ export const getLimItemListServerCount = (
   getValue(
     nextValue,
     { entry },
-    { fields: [['server', `nLimMaxCount__${n}_2`]], def: '', fnc: isString },
+    { fields: [['server', `nLimMaxCount__${n}_2`]], def: 0, fnc: isInteger },
   );
 
 /**
