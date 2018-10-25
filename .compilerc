@@ -42,17 +42,18 @@
           "stage-0"
         ],
         "plugins": [
+          ["module-resolver", {
+            "alias": {
+              "~": "./src"
+            },
+            "cwd": "packagejson"
+          }],
           "transform-react-constant-elements",
           "transform-react-pure-class-to-function",
           "transform-react-remove-prop-types",
           "transform-react-inline-elements",
           "transform-async-to-generator",
-          "styled-components",
-          ["module-resolver", {
-            "alias": {
-              "~": "./src"
-            }
-          }]
+          "styled-components"
         ],
         "sourceMaps": "none"
       }
