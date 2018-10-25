@@ -14,15 +14,18 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { ApolloProvider } from 'react-apollo';
+import { writeFileSync } from 'fs';
 import createHistory from 'history/createMemoryHistory';
 import throttle from 'lodash/throttle';
 import pick from 'lodash/pick';
+import path from 'path';
+import unhandled from 'electron-unhandled';
 
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
 import { translationMessages } from './i18n';
-import { loadState, saveState } from './utils/ls';
+import { loadState, saveState } from '~/utils/ls';
 import { initialState as appInitialState } from './containers/App/reducer';
 
 // Import CSS reset and Global Styles
@@ -33,6 +36,7 @@ const initialState = loadState() || {};
 const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+const unhandledErrorLogPath = path.resolve('./', 'unhandled_error_log.txt');
 
 store.subscribe(
   throttle(
@@ -81,3 +85,16 @@ if (module.hot) {
 }
 
 render(translationMessages);
+
+// Handle unhandled error/unhandledrejection
+unhandled({
+  logger: error =>
+    writeFileSync(
+      unhandledErrorLogPath,
+      `${error.message}\r\n
+\r\n
+Stack:\r\n
+${error.stack}
+`,
+    ),
+});
