@@ -50,6 +50,7 @@ export default gql`
       items {
         title
         value
+        caseSens
       }
     }
   }
