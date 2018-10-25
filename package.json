@@ -1,7 +1,7 @@
 {
   "name": "rf-online-gs-editor",
   "productName": "RF-GSE",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "RF-Online Game Server Editor",
   "main": "src/index.js",
   "scripts": {
