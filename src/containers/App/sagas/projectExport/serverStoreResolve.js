@@ -190,7 +190,7 @@ export default function* defaultSaga({
         strRu: '-',
         strTa: '-',
         strVi: '-',
-        strGlobal: object.server.strName,
+        strGlobal: object.server.strStoreNPCname,
       }),
     );
 
