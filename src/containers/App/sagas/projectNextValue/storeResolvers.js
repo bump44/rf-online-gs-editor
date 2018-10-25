@@ -27,12 +27,36 @@ const Resolvers = {
   mapCode: (store, value) => store.setIn(['server', 'strStoreMAPcode'], value),
 
   // items list
-  itemListClientType: (store, { value, n }) =>
-    store.setIn(['client', `nItemListType__${n}_1`], value),
-  itemListClientCode: (store, { value, n }) =>
-    store.setIn(['client', `strItemList__${n}_2`], value),
-  itemListServerCode: (store, { value, n }) =>
-    store.setIn(['server', `strItemCode__${n}`], value),
+  itemListClientType: (store, { value, n }) => {
+    let nextStore = store.setIn(['client', `nItemListType__${n}_1`], value);
+
+    if (n <= 16) {
+      nextStore = Resolvers.limItemListRemove(nextStore, n);
+      nextStore = Resolvers.limItemsListCount(nextStore, n - 1);
+    }
+
+    return nextStore;
+  },
+  itemListClientCode: (store, { value, n }) => {
+    let nextStore = store.setIn(['client', `strItemList__${n}_2`], value);
+
+    if (n <= 16) {
+      nextStore = Resolvers.limItemListRemove(nextStore, n);
+      nextStore = Resolvers.limItemsListCount(nextStore, n - 1);
+    }
+
+    return nextStore;
+  },
+  itemListServerCode: (store, { value, n }) => {
+    let nextStore = store.setIn(['server', `strItemCode__${n}`], value);
+
+    if (n <= 16) {
+      nextStore = Resolvers.limItemListRemove(nextStore, n);
+      nextStore = Resolvers.limItemsListCount(nextStore, n - 1);
+    }
+
+    return nextStore;
+  },
   itemListRemove: (store, n) =>
     store
       .setIn(['server', `strItemCode__${n}`], '')
@@ -52,6 +76,10 @@ const Resolvers = {
         'items',
         nextStore.get('items', IMMUTABLE_LIST).push(itemList),
       );
+    }
+
+    if (n <= 16) {
+      nextStore = Resolvers.limItemListUpdate(nextStore, { n });
     }
 
     return nextStore;
@@ -135,7 +163,9 @@ const Resolvers = {
     store
       .setIn(['server', `strLimItemCode__${n}_1`], '')
       .setIn(['client', `strLimItemCode__${n}_2`], '')
-      .setIn(['client', `nLimItemType__${n}_1`], 0),
+      .setIn(['client', `nLimItemType__${n}_1`], 0)
+      .setIn(['server', `nLimMaxCount__${n}_2`], 0)
+      .setIn(['client', `nLimMaxCount__${n}_3`], 0),
   limItemListUpdate: (
     store,
     {

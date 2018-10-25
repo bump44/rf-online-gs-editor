@@ -26,6 +26,7 @@ import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
 import ProjectStoreInteractingMapNameType from './Interacting/MapNameType';
 
 import ProjectMapSptSegmentBasic from '../MapSpt/Segment/Basic';
+import ProjectStoreInteractingItemsListContentTxt from './Interacting/ItemsListContentTxt';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
@@ -291,7 +292,14 @@ class ProjectStore extends React.PureComponent {
           fluid={false}
           className="mb-15"
         />
-
+        &nbsp;&nbsp;
+        <ProjectStoreInteractingItemsListContentTxt
+          store={store}
+          storeNextValues={storeNextValues}
+          nextValues={nextValues}
+          storeActions={storeActions}
+          localSettings={localSettings}
+        />
         <ProjectStoreInteractingItemsList
           store={store}
           storeNextValues={storeNextValues}
