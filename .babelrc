@@ -14,7 +14,18 @@
   "plugins": ["styled-components"],
   "env": {
     "test": {
-      "plugins": ["transform-es2015-modules-commonjs", "dynamic-import-node"]
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node",
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "~": "./src"
+            }
+          }
+        ]
+      ]
     }
   }
 }

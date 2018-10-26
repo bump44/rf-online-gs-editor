@@ -394,7 +394,7 @@ export function* workerCopyAndRedirect({ projectId, keyId, subType }) {
 
     yield put(callAction(projectsNextValuesChangeIsCopying, false));
     // TODO: redirect
-    console.log('well done, redirect to edit page');
+    // console.log('well done, redirect to edit page');
   } catch (error) {
     yield put(callAction(projectsNextValuesChangeIsError, true));
     yield put(callAction(projectsNextValuesChangeErrorMessage, error.message));

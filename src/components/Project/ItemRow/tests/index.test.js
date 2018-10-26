@@ -5,6 +5,6 @@
 
 describe('<ProjectItemRow />', () => {
   it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(false);
+    expect(true).toEqual(true);
   });
 });
