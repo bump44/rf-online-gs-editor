@@ -4,7 +4,6 @@
  *
  */
 
-import { AUTO_REVERSE_CLIENT_CODES } from '~/containers/App/constants';
 import { Grid, Label } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
@@ -18,6 +17,7 @@ import Row from './styles';
 import {
   getMapNameType,
   getMapCode,
+  getCode,
 } from '~/containers/App/getters/projectStore';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -53,20 +53,7 @@ class ProjectStoreRow extends React.PureComponent {
       mapNameTypes,
     } = this.props;
 
-    const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
-    const serverStrCode = store.getIn(['server', 'strCode']) || '';
-    const clientStrCode = store.getIn(['client', 'strCode']) || '';
-
-    /* eslint-disable indent */
-    const clientStrCodeReversed = autoReverseClientCodes
-      ? clientStrCode
-          .split(/(.{2})/g)
-          .reverse()
-          .join('')
-      : clientStrCode;
-    /* eslint-enable indent */
-
-    const isShowStrCode = !!(serverStrCode || clientStrCodeReversed);
+    const code = getCode(storeNextValues.get('nextValue'), { entry: store });
     const mapNameType = getMapNameType(storeNextValues.get('nextValue'), {
       entry: store,
       mapNameTypes,
@@ -82,17 +69,7 @@ class ProjectStoreRow extends React.PureComponent {
           <Grid.Column largeScreen={3} widescreen={2}>
             {this.renderTagIndexWithNextState()}
 
-            {isShowStrCode && (
-              <Code
-                title={
-                  serverStrCode && clientStrCodeReversed
-                    ? clientStrCodeReversed
-                    : undefined
-                }
-              >
-                {serverStrCode || clientStrCodeReversed}
-              </Code>
-            )}
+            {code && <Code>{code}</Code>}
 
             {(mapNameType || mapNameRaw) && (
               <div className="mt-10">

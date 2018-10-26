@@ -5,7 +5,16 @@
  */
 
 import { FormattedMessage } from 'react-intl';
-import { Grid, Transition, Label, Tab, Divider } from 'semantic-ui-react';
+
+import {
+  Grid,
+  Transition,
+  Label,
+  Tab,
+  Divider,
+  Button,
+} from 'semantic-ui-react';
+
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -27,6 +36,9 @@ import ProjectStoreInteractingMapNameType from './Interacting/MapNameType';
 
 import ProjectMapSptSegmentBasic from '../MapSpt/Segment/Basic';
 import ProjectStoreInteractingItemsListContentTxt from './Interacting/ItemsListContentTxt';
+import ProjectStoreInteractingCode from './Interacting/Code';
+import ProjectStoreInteractingModel from './Interacting/Model';
+import Notification from '~/components/Notification';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
@@ -52,6 +64,11 @@ class ProjectStore extends React.PureComponent {
     this.renderLimItemsList = this.renderLimItemsList.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
     this.renderBindings = this.renderBindings.bind(this);
+
+    this.copyAndRedirect = () => {
+      const { store, storeActions } = this.props;
+      storeActions.copyAndRedirect(store);
+    };
   }
 
   getTabPanes() {
@@ -121,7 +138,7 @@ class ProjectStore extends React.PureComponent {
 
     const bUseAngle = projectStore.getUseAngle(
       storeNextValues.get('nextValue'),
-      { store },
+      { entry: store },
     );
 
     return (
@@ -195,6 +212,49 @@ class ProjectStore extends React.PureComponent {
             </Grid>
           </Grid.Column>
         </Grid>
+
+        <Grid columns="equal">
+          <Grid.Column>
+            <ProjectStoreInteractingCode
+              store={store}
+              storeNextValues={storeNextValues}
+              onChangeValue={storeActions.changeCode}
+              label={
+                <Label>
+                  <FormattedMessage {...messages.Code} />
+                </Label>
+              }
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <ProjectStoreInteractingModel
+              store={store}
+              storeNextValues={storeNextValues}
+              onChangeValue={storeActions.changeModel}
+              label={
+                <Label>
+                  <FormattedMessage {...messages.Model} />
+                </Label>
+              }
+            />
+          </Grid.Column>
+        </Grid>
+
+        <Divider />
+
+        {storeNextValues.get('isError') && (
+          <Notification type="danger">
+            {storeNextValues.get('errorMessage')}
+          </Notification>
+        )}
+
+        <Button
+          primary
+          onClick={this.copyAndRedirect}
+          loading={storeNextValues.get('isCopying')}
+        >
+          Copy & Redirect
+        </Button>
       </Tab.Pane>
     );
   }

@@ -1,5 +1,5 @@
 import { isNullOrUndefined, isNumber } from 'util';
-import { isString, isInteger } from 'lodash';
+import { isString, isInteger, trimStart } from 'lodash';
 
 import { getTypeNameByFinite } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
@@ -75,6 +75,38 @@ export const getMapNameType = (
   const value = getMapCode(nextValue, { entry });
   return mapNameTypes.find(mapNameType => mapNameType.get('value') === value);
 };
+
+export const getModel = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['client', 'strModel']],
+      def: '',
+      fnc: isString,
+    },
+  );
+
+export const getCode = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', 'strStoreNPCcode']], def: '', fnc: isString },
+  ) ||
+  trimStart(
+    getValue(
+      nextValue,
+      { entry },
+      { fields: [['client', 'strCode']], def: '', fnc: isString },
+    )
+      .split(/(.{2})/g)
+      .reverse()
+      .join(''),
+    '0',
+  );
 
 /**
  * Return the most important last title of the subject

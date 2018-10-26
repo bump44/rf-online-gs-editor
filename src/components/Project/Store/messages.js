@@ -11,6 +11,14 @@ export default defineMessages({
     id: 'app.components.ProjectStore.header',
     defaultMessage: 'This is the ProjectStore component !',
   },
+  Code: {
+    id: 'app.components.ProjectStore.Code',
+    defaultMessage: 'Code',
+  },
+  Model: {
+    id: 'app.components.ProjectStore.Model',
+    defaultMessage: 'Model',
+  },
   Binding: {
     id: 'app.components.ProjectStore.Binding',
     defaultMessage: 'Binding',
