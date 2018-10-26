@@ -1,6 +1,9 @@
 import upperFirst from 'lodash/upperFirst';
 
-import { projectsNextValuesChangePropValue } from './projectsNextValues';
+import {
+  projectsNextValuesChangePropValue,
+  projectsNextValuesCopyAndRedirect,
+} from './projectsNextValues';
 import { STORE } from '../constants';
 
 /**
@@ -87,6 +90,12 @@ export const projectsStores = {
       ...args,
       subType: STORE,
       propKey: 'limItemsListReshuffle',
+    }),
+  copyAndRedirect: args =>
+    projectsNextValuesCopyAndRedirect({
+      ...args,
+      subType: STORE,
+      propKey: 'copyAndRedirect',
     }),
 };
 

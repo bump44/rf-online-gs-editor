@@ -9,6 +9,7 @@ import itemRemoveVirtual from '~/apollo/mutations/item_remove_virtual';
 import itemRestoreVirtual from '~/apollo/mutations/item_restore_virtual';
 import itemUpdate from '~/apollo/mutations/item_update';
 import storeUpdate from '~/apollo/mutations/store_update';
+import storeCopy from '~/apollo/mutations/store_copy';
 
 import {
   take,
@@ -31,6 +32,7 @@ import {
   ITEM,
   STORE,
   BOXITEMOUT,
+  PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
 } from '../constants';
 
 import {
@@ -55,6 +57,7 @@ import {
   projectsNextValuesChangeIsRemoving,
   projectsNextValuesChangeNextValueOnlyInState,
   projectsNextValuesChangeIsRestoring,
+  projectsNextValuesChangeIsCopying,
 } from '../actions/projectsNextValues';
 
 const Workers = {};
@@ -82,6 +85,10 @@ const MutationRemoveFullyQueries = {
 
 const MutationRestoreVirtualQueries = {
   [ITEM]: itemRestoreVirtual,
+};
+
+const MutationCopyQueries = {
+  [STORE]: storeCopy,
 };
 
 const PickFields = {
@@ -360,6 +367,46 @@ export function* workerRestoreVirtual({ projectId, keyId, subType }) {
   }
 }
 
+export function* workerCopyAndRedirect({ projectId, keyId, subType }) {
+  const callAction = (action, value) => action({ projectId, keyId }, value);
+
+  try {
+    yield put(callAction(projectsNextValuesChangeIsError, false));
+    yield put(callAction(projectsNextValuesChangeIsCopying, true));
+
+    const typeMutation = MutationCopyQueries[subType];
+
+    if (!typeMutation) {
+      throw new Error('Copy mutation not defined');
+    }
+
+    // mutate server state
+    yield apolloClient.mutate({
+      mutation: typeMutation,
+      variables: { id: keyId },
+    });
+
+    // const projectsNextValues = yield select(makeSelectProjectsNextValues());
+    // const projectNextValue = projectsNextValues.getIn(
+    //   [projectId, keyId, 'nextValue'],
+    //   IMMUTABLE_MAP,
+    // );
+
+    yield put(callAction(projectsNextValuesChangeIsCopying, false));
+    // TODO: redirect
+    console.log('well done, redirect to edit page');
+  } catch (error) {
+    yield put(callAction(projectsNextValuesChangeIsError, true));
+    yield put(callAction(projectsNextValuesChangeErrorMessage, error.message));
+    yield put(callAction(projectsNextValuesChangeIsCopying, false));
+    console.error(error); // eslint-disable-line
+  } finally {
+    if (yield cancelled()) {
+      yield put(callAction(projectsNextValuesChangeIsCopying, false));
+    }
+  }
+}
+
 /**
  * Watch `PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE` action & create fork to change data in nextValue state
  */
@@ -439,6 +486,23 @@ export function* watchRestoreVirtual() {
   }
 }
 
+export function* watchCopyAndRedirect() {
+  while (true) {
+    const props = yield take(PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT);
+    props.keyId = props.entry.get('id');
+
+    const { projectId, keyId } = props;
+    const mainKey = `${projectId}:${keyId}:copyAndRedirect`;
+
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
+    }
+
+    Workers[mainKey] = yield fork(workerCopyAndRedirect, props);
+  }
+}
+
 export default function* defaultSaga() {
   yield all([
     fork(watchChangeProp),
@@ -446,5 +510,6 @@ export default function* defaultSaga() {
     fork(watchRemoveVirtual),
     fork(watchRemoveFully),
     fork(watchRestoreVirtual),
+    fork(watchCopyAndRedirect),
   ]);
 }

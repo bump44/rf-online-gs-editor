@@ -12,6 +12,7 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
   PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
   PROJECTS_NEXT_VALUES_REMOVE_FULLY,
+  PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
 } from '../constants';
 
 /**
@@ -188,6 +189,25 @@ export function projectsNextValuesRestoreVirtual({
 }) {
   return {
     type: PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+    projectId,
+    entry,
+    propKey,
+    propValue,
+    additionalData,
+    subType,
+  };
+}
+
+export function projectsNextValuesCopyAndRedirect({
+  projectId,
+  entry,
+  propKey,
+  propValue,
+  additionalData = {},
+  subType,
+}) {
+  return {
+    type: PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
     projectId,
     entry,
     propKey,
