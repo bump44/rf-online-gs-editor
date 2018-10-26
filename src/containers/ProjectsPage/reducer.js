@@ -19,12 +19,10 @@ export const initialState = fromJS({
   errorMessage: '',
   result: {
     projectsMy: {
-      // latest my projects
       items: [],
       total: 0,
     },
     projectsNew: {
-      // latest new projects
       items: [],
       total: 0,
     },
