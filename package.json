@@ -102,7 +102,7 @@
     "reselect": "^4.0.0",
     "sanitize-html": "^1.19.1",
     "sanitize.css": "^7.0.3",
-    "semantic-ui-css": "^2.4.0",
+    "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
     "styled-components": "^4.0.2",
     "unfetch": "^4.0.1"
