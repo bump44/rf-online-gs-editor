@@ -1,6 +1,6 @@
 /**
  *
- * RegisterPage
+ * LoginPage
  *
  */
 
@@ -27,7 +27,7 @@ import {
 import Header from '~/components/Header';
 import Notification from '~/components/Notification';
 
-import makeSelectRegisterPage from './selectors';
+import makeSelectLoginPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
@@ -36,7 +36,7 @@ import * as actions from './actions';
 import FormWrapper from './FormWrapper';
 
 /* eslint-disable react/prefer-stateless-function */
-export class RegisterPage extends React.PureComponent {
+export class LoginPage extends React.PureComponent {
   componentDidMount() {
     this.redirectToMainPageIfIsLoggedIn(this.props);
   }
@@ -66,9 +66,8 @@ export class RegisterPage extends React.PureComponent {
 
   render() {
     const {
-      registerPage,
-      changeLogin,
-      changeEmail,
+      loginPage,
+      changeIndent,
       changePassword,
       submit,
       isLoggedIn,
@@ -76,20 +75,13 @@ export class RegisterPage extends React.PureComponent {
       projectsImportsProcessingData,
     } = this.props;
 
-    const {
-      login,
-      email,
-      password,
-      isLoading,
-      isError,
-      errorMessage,
-    } = registerPage;
+    const { indent, password, isLoading, isError, errorMessage } = loginPage;
 
     return (
       <div>
         <Helmet>
-          <title>RegisterPage</title>
-          <meta name="description" content="Description of RegisterPage" />
+          <title>LoginPage</title>
+          <meta name="description" content="Description of LoginPage" />
         </Helmet>
 
         <Header
@@ -108,14 +100,9 @@ export class RegisterPage extends React.PureComponent {
 
             <Form size="small" loading={isLoading}>
               {this.renderField({
-                label: <FormattedMessage {...messages.Login} />,
-                value: login,
-                onChange: changeLogin,
-              })}
-              {this.renderField({
-                label: <FormattedMessage {...messages.Email} />,
-                value: email,
-                onChange: changeEmail,
+                label: <FormattedMessage {...messages.Indent} />,
+                value: indent,
+                onChange: changeIndent,
               })}
               {this.renderField({
                 label: <FormattedMessage {...messages.Password} />,
@@ -125,7 +112,7 @@ export class RegisterPage extends React.PureComponent {
               })}
 
               <Button onClick={submit} loading={isLoading} primary>
-                <FormattedMessage {...messages.SubmitRegisterForm} />
+                <FormattedMessage {...messages.SubmitLoginForm} />
               </Button>
             </Form>
           </FormWrapper>
@@ -135,9 +122,9 @@ export class RegisterPage extends React.PureComponent {
   }
 }
 
-RegisterPage.propTypes = {
+LoginPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  registerPage: PropTypes.shape({
+  loginPage: PropTypes.shape({
     login: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
@@ -145,8 +132,7 @@ RegisterPage.propTypes = {
     isError: PropTypes.bool,
     errorMessage: PropTypes.string,
   }),
-  changeLogin: PropTypes.func.isRequired,
-  changeEmail: PropTypes.func.isRequired,
+  changeIndent: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
   changeLocation: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -154,12 +140,12 @@ RegisterPage.propTypes = {
   currentUser: PropTypes.instanceOf(Map),
 };
 
-RegisterPage.defaultProps = {
+LoginPage.defaultProps = {
   currentUser: null,
 };
 
 const mapStateToProps = createStructuredSelector({
-  registerPage: makeSelectRegisterPage(),
+  loginPage: makeSelectLoginPage(),
   isLoggedIn: makeSelectIsLoggedIn(),
   currentUser: makeSelectCurrentUser(),
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
@@ -168,8 +154,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    changeLogin: evt => dispatch(actions.changeLogin(evt.target.value)),
-    changeEmail: evt => dispatch(actions.changeEmail(evt.target.value)),
+    changeIndent: evt => dispatch(actions.changeIndent(evt.target.value)),
     changePassword: evt => dispatch(actions.changePassword(evt.target.value)),
     changeLocation: (location = '/') => dispatch(push(location)),
     submit: () => dispatch(actions.submit()),
@@ -181,11 +166,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'registerPage', reducer });
-const withSaga = injectSaga({ key: 'registerPage', saga });
+const withReducer = injectReducer({ key: 'loginPage', reducer });
+const withSaga = injectSaga({ key: 'loginPage', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(RegisterPage);
+)(LoginPage);

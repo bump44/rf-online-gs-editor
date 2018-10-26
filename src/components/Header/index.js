@@ -6,6 +6,7 @@
 
 import { FormattedMessage } from 'react-intl';
 import { Icon, Popup, Button, Dropdown, Flag } from 'semantic-ui-react';
+import { isFunction } from 'lodash';
 import { Map } from 'immutable';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -125,11 +126,13 @@ class Header extends React.PureComponent {
                 }
                 content="Create new project"
               />
-              <Menu.Item>
-                <Button color="red" onClick={onClickLogout}>
-                  <Icon name="sign out" fitted />
-                </Button>
-              </Menu.Item>
+              {isFunction(onClickLogout) && (
+                <Menu.Item>
+                  <Button color="red" onClick={onClickLogout}>
+                    <Icon name="sign out" fitted />
+                  </Button>
+                </Menu.Item>
+              )}
             </React.Fragment>
           )}
           {!isLoggedIn && (
@@ -154,7 +157,7 @@ Header.propTypes = {
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
   currentProject: PropTypes.instanceOf(Map),
-  onClickLogout: PropTypes.func.isRequired,
+  onClickLogout: PropTypes.func,
   projectsImportsProcessingData: PropTypes.shape({
     isProcessing: PropTypes.bool.isRequired,
     countTotal: PropTypes.number.isRequired,

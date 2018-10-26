@@ -17,6 +17,7 @@ import React from 'react';
 import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import RegisterPage from '../RegisterPage';
+import LoginPage from '../LoginPage';
 
 // Project(s)
 import ProjectCreatePage from '../ProjectCreatePage';
@@ -36,6 +37,7 @@ export default function App() {
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/register" component={RegisterPage} />
+      <Route exact path="/login" component={LoginPage} />
 
       {/* Project(s) */}
       <Route exact path="/projects" component={ProjectsPage} />
