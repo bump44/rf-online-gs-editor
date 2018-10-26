@@ -35,6 +35,7 @@ export const RESOLVERS = {
   CLIENT_STORE: 'clientStoreResolve',
   SERVER_ITEM: 'serverItemResolve',
   SERVER_STORE: 'serverStoreResolve',
+  SERVER_NPCHARACTER: 'serverNPCharacterResolve',
   SERVER_BOXITEMOUT: 'serverBoxItemOutResolve',
   SERVER_MAPSPT: 'serverMapSptResolve',
   SERVER_MAPPORTAL: 'serverMapPortalResolve',
@@ -89,6 +90,12 @@ export const FILES = {
   'Script/StoreList.dat': {
     path: 'Script/StoreList.dat',
     resolve: RESOLVERS.SERVER_STORE,
+    type: FILE_TYPE_SERVER,
+    extensions: ['dat'],
+  },
+  'Script/NPCharacter.dat': {
+    path: 'Script/NPCharacter.dat',
+    resolve: RESOLVERS.SERVER_NPCHARACTER,
     type: FILE_TYPE_SERVER,
     extensions: ['dat'],
   },
