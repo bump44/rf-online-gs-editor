@@ -7,7 +7,7 @@ import {
 
 import { getNumberOfLetter } from './string';
 
-const DEFENCE_FACING_FALLBACK_VALUE = 1;
+export const DEFENCE_FACING_FALLBACK_VALUE = 1;
 
 export const getEffect25PresentValue = effectValue =>
   parseFloat((effectValue / 1000).toString().replace(/[^\d,.]/g, ''));
