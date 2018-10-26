@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Omashu/rf-online-gs-editor/badge.svg)](https://coveralls.io/github/Omashu/rf-online-gs-editor)
+[![Coverage Status](https://coveralls.io/repos/github/Omashu/rf-online-gs-editor/badge.svg)](https://coveralls.io/github/Omashu/rf-online-gs-editor) [![Known Vulnerabilities](https://snyk.io/test/github/Omashu/rf-online-gs-editor/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Omashu/rf-online-gs-editor?targetFile=package.json)
 
 -----
 
