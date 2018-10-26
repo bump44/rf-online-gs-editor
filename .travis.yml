@@ -6,7 +6,7 @@ node_js:
 
 script:
   - npm test -- --maxWorkers=4
-  - npm run build
+  - npm run package
 
 before_install:
   - export CHROME_BIN=chromium-browser
