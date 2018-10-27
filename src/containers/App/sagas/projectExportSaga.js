@@ -32,6 +32,7 @@ import clientStoreResolve from './projectExport/clientStoreResolve';
 import serverItemResolve from './projectExport/serverItemResolve';
 import serverStoreResolve from './projectExport/serverStoreResolve';
 import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
+import serverNPCharacterResolve from './projectExport/serverNPCharacterResolve';
 // import clientItemNDResolve from './projectExport/clientItemNDResolve';
 
 const Resolvers = {
@@ -39,6 +40,7 @@ const Resolvers = {
   serverItemResolve,
   serverBoxItemOutResolve,
   serverStoreResolve,
+  serverNPCharacterResolve,
   clientStoreResolve,
 };
 

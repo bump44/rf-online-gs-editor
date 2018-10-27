@@ -34,6 +34,7 @@ import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
+import serverNPCharacterResolve from './projectImport/serverNPCharacterResolve';
 import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
 import clientItemNDResolve from './projectImport/clientItemNDResolve';
 import serverMapSptResolve from './projectImport/serverMapSptResolve';
@@ -52,6 +53,7 @@ const Resolvers = {
   serverMapBlockResolve,
   serverMapActiveResolve,
   serverMapPortalResolve,
+  serverNPCharacterResolve,
 };
 
 const Workers = {};
