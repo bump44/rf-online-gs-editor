@@ -139,8 +139,8 @@ export class ProjectExportPage extends React.Component {
     const { project } = projectExportPage;
 
     try {
-      if (statSync(getReleaseFilesPath(project.id))) {
-        remote.shell.openItem(getReleaseFilesPath(project.id));
+      if (statSync(getReleaseFilesPath(project.name))) {
+        remote.shell.openItem(getReleaseFilesPath(project.name));
       }
     } catch (err) {
       remote.dialog.showErrorBox('Release', 'Not found');

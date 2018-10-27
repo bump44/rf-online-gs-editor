@@ -131,6 +131,7 @@ export default function* defaultSaga({
   actions,
   fileData,
   projectDetails,
+  releasePath,
 }) {
   yield delay(1000);
 
@@ -201,12 +202,12 @@ export default function* defaultSaga({
   const fileDir = parsePath.dir;
 
   yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_SERVER_FOLDER, fileDir),
+    getReleaseFilesPath(releasePath, RELEASE_FILES_SERVER_FOLDER, fileDir),
   );
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_SERVER_FOLDER,
       fileDir,
       parsePath.base,
@@ -216,7 +217,7 @@ export default function* defaultSaga({
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_SERVER_FOLDER,
       fileDir,
       `${parsePath.name}_str${parsePath.ext || '.dat'}`,

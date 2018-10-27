@@ -104,7 +104,12 @@ function fillBuffer(
 /**
  * Export Server NPCharacters Resolver
  */
-export default function* defaultSaga({ projectId, actions, fileData }) {
+export default function* defaultSaga({
+  projectId,
+  actions,
+  fileData,
+  releasePath,
+}) {
   yield delay(1000);
 
   const readerStruct = ServerNpcharacterReaderStruct;
@@ -164,12 +169,12 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   const fileDir = parsePath.dir;
 
   yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_SERVER_FOLDER, fileDir),
+    getReleaseFilesPath(releasePath, RELEASE_FILES_SERVER_FOLDER, fileDir),
   );
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_SERVER_FOLDER,
       fileDir,
       parsePath.base,
@@ -179,7 +184,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_SERVER_FOLDER,
       fileDir,
       `${parsePath.name}_str${parsePath.ext || '.dat'}`,
@@ -189,7 +194,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_SERVER_FOLDER,
       fileDir,
       `${parsePath.name}W_str${parsePath.ext || '.dat'}`,

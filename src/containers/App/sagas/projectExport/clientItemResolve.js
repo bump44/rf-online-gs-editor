@@ -80,7 +80,12 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
 /**
  * Export Client Items Resolver
  */
-export default function* defaultSaga({ projectId, actions, fileData }) {
+export default function* defaultSaga({
+  projectId,
+  actions,
+  fileData,
+  releasePath,
+}) {
   yield delay(1000);
   const parsePath = path.parse(fileData.path);
   const fileName = parsePath.name;
@@ -161,16 +166,16 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
   }
 
   yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENT_FOLDER, fileDir),
+    getReleaseFilesPath(releasePath, RELEASE_FILES_CLIENT_FOLDER, fileDir),
   );
 
   yield mkdirSync(
-    getReleaseFilesPath(projectId, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
+    getReleaseFilesPath(releasePath, RELEASE_FILES_CLIENTDAT_FOLDER, fileDir),
   );
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_CLIENTDAT_FOLDER,
       fileDir,
       `${fileName}.dat`,
@@ -180,7 +185,7 @@ export default function* defaultSaga({ projectId, actions, fileData }) {
 
   yield writeFile(
     getReleaseFilesPath(
-      projectId,
+      releasePath,
       RELEASE_FILES_CLIENT_FOLDER,
       fileDir,
       `${fileName}.edf`,

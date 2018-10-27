@@ -26,6 +26,8 @@ import { projectsExportsBindActionsWithFileKey } from '../actions';
 import { makeSelectProjectsExports } from '../selectors';
 import apolloClient from '~/apollo';
 import projectWithAllTypes from '~/apollo/queries/sub/projectWithAllTypes';
+import { getReleaseFilesPath } from '~/utils/path';
+import { RELEASE_FILES_WORKDIR_FOLDER } from '~/utils/constants';
 
 import clientItemResolve from './projectExport/clientItemResolve';
 import clientStoreResolve from './projectExport/clientStoreResolve';
@@ -133,6 +135,11 @@ export function* worker({ projectId, fileKey }) {
       projectId,
       fileKey,
       actions,
+      releasePath: getReleaseFilesPath(project.get('name', projectId)),
+      workdirPath: getReleaseFilesPath(
+        project.get('name', projectId),
+        RELEASE_FILES_WORKDIR_FOLDER,
+      ),
       projectExportState,
       projectDetails: project,
     });
