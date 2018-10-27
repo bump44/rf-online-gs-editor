@@ -7,3 +7,4 @@ export const RELEASE_FILES_FOLDER = 'releaseFiles';
 export const RELEASE_FILES_CLIENTDAT_FOLDER = 'clientdat';
 export const RELEASE_FILES_CLIENT_FOLDER = 'client';
 export const RELEASE_FILES_SERVER_FOLDER = 'server';
+export const RELEASE_FILES_WORKDIR_FOLDER = 'workdir';
