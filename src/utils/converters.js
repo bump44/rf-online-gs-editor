@@ -119,3 +119,17 @@ export const getClientCodeAvoidError = code => {
     return null;
   }
 };
+
+export const convNPCodeServerToClient = code => {
+  const int = parseInt(code, 16);
+  const buf = Buffer.from([0, 0, 0, 0]);
+  buf.writeInt32LE(int);
+  return buf.toString('hex').toUpperCase();
+};
+
+export const convNPCodeClientToServer = code => {
+  const buf = Buffer.from(code, 'hex');
+  const int = buf.readInt32LE(0);
+  const str = int.toString(16);
+  return (str.length === 4 ? `0${str}` : str).toUpperCase();
+};
