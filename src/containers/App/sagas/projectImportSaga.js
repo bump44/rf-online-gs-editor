@@ -1,6 +1,11 @@
 import { FILES } from '~/utils/gameFiles';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
+
 import apolloClient from '~/apollo';
+import projectWithAllTypes from '~/apollo/queries/sub/projectWithAllTypes';
+
+import { getReleaseFilesPath } from '~/utils/path';
+import { RELEASE_FILES_WORKDIR_FOLDER } from '~/utils/constants';
 
 import {
   take,
@@ -30,13 +35,15 @@ import {
 } from '../actions';
 
 import { makeSelectProjectsImports } from '../selectors';
+
 import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
+import clientItemNDResolve from './projectImport/clientItemNDResolve';
+import clientResourceResolve from './projectImport/clientResourceResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
 import serverNPCharacterResolve from './projectImport/serverNPCharacterResolve';
 import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
-import clientItemNDResolve from './projectImport/clientItemNDResolve';
 import serverMapSptResolve from './projectImport/serverMapSptResolve';
 import serverMapBlockResolve from './projectImport/serverMapBlockResolve';
 import serverMapActiveResolve from './projectImport/serverMapActiveResolve';
@@ -46,6 +53,7 @@ const Resolvers = {
   clientItemResolve,
   clientItemNDResolve,
   clientStoreResolve,
+  clientResourceResolve,
   serverItemResolve,
   serverStoreResolve,
   serverBoxItemOutResolve,
@@ -133,6 +141,13 @@ export function* worker({ projectId, fileKey, importType }) {
       throw new Error('File path is required');
     }
 
+    const projectQuery = yield apolloClient.query({
+      query: projectWithAllTypes,
+      variables: { id: projectId },
+    });
+
+    const project = fromJS(projectQuery.data.project);
+
     // use fallback import type
     const nextProjectImportState = projectImportState.set(
       'importType',
@@ -146,6 +161,11 @@ export function* worker({ projectId, fileKey, importType }) {
       fileKey,
       actions,
       projectImportState: nextProjectImportState,
+      releasePath: getReleaseFilesPath(project.get('name', projectId)),
+      workdirPath: getReleaseFilesPath(
+        project.get('name', projectId),
+        RELEASE_FILES_WORKDIR_FOLDER,
+      ),
     });
 
     yield call(changeFileStateToFinished, { actions });
