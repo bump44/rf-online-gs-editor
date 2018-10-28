@@ -1,9 +1,15 @@
 import { isString, trim } from 'lodash';
+import md5 from 'blueimp-md5';
 
 export function getNumberOfLetter(letter, startChar = 'a') {
   const startPos = startChar.charCodeAt(0);
   const currentPos = letter.toLowerCase().charCodeAt(0);
   return currentPos - startPos;
+}
+
+export function getWorkdirFileName(pl = '') {
+  const arr = pl instanceof Array ? pl : [pl];
+  return md5(arr.map(val => val.replace(/[^a-z0-9_-]/gi, '_')).join('_'));
 }
 
 export const normalize = (_str, substring) => {
