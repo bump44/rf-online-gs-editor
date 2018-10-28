@@ -31,6 +31,7 @@ import { RELEASE_FILES_WORKDIR_FOLDER } from '~/utils/constants';
 
 import clientItemResolve from './projectExport/clientItemResolve';
 import clientStoreResolve from './projectExport/clientStoreResolve';
+import clientResourceResolve from './projectExport/clientResourceResolve';
 import serverItemResolve from './projectExport/serverItemResolve';
 import serverStoreResolve from './projectExport/serverStoreResolve';
 import serverBoxItemOutResolve from './projectExport/serverBoxItemOutResolve';
@@ -44,6 +45,7 @@ const Resolvers = {
   serverStoreResolve,
   serverNPCharacterResolve,
   clientStoreResolve,
+  clientResourceResolve,
 };
 
 const Workers = {};
