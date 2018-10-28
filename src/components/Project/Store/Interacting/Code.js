@@ -6,10 +6,16 @@
 
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
-
-import { getCode } from '~/containers/App/getters/projectStore';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import { convNPCodeClientToServer } from '~/utils/converters';
+
+import {
+  getCode,
+  getClientCode,
+  getServerCode,
+} from '~/containers/App/getters/projectStore';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingCode extends React.PureComponent {
@@ -36,6 +42,14 @@ class ProjectStoreInteractingCode extends React.PureComponent {
       entry: store,
     });
 
+    const clientCode = getClientCode(storeNextValues.get('nextValue'), {
+      entry: store,
+    });
+
+    const serverCode = getServerCode(storeNextValues.get('nextValue'), {
+      entry: store,
+    });
+
     return (
       <Input
         size={size}
@@ -45,6 +59,11 @@ class ProjectStoreInteractingCode extends React.PureComponent {
         onChange={this.changeValue}
         className={className}
         label={label}
+        error={
+          value.length !== 5 ||
+          serverCode !== value ||
+          serverCode !== convNPCodeClientToServer(clientCode)
+        }
       />
     );
   }

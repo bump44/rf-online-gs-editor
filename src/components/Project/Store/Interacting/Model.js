@@ -6,10 +6,10 @@
 
 import { Input } from 'semantic-ui-react';
 import { Map } from 'immutable';
-
-import { getModel } from '~/containers/App/getters/projectStore';
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import { getModel } from '~/containers/App/getters/projectStore';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreInteractingModel extends React.PureComponent {
@@ -45,6 +45,7 @@ class ProjectStoreInteractingModel extends React.PureComponent {
         onChange={this.changeValue}
         className={className}
         label={label}
+        error={value.length !== 5}
       />
     );
   }
