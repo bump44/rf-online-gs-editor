@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Code /> Should exist 1`] = `
+<Label>
+  <Code__Text
+    onClick={[Function]}
+  />
+</Label>
+`;
+
+exports[`<Code /> Should have children 1`] = `
+<Label>
+  <Code__Text
+    onClick={[Function]}
+  >
+    children
+  </Code__Text>
+</Label>
+`;
+
+exports[`<Code /> Should have onClick 1`] = `
+<Label>
+  <Code__Text
+    onClick={[Function]}
+  />
+</Label>
+`;
