@@ -4,7 +4,21 @@ import { Map } from 'immutable';
 import { getItemList, getLimItemList } from '../../getters/projectStore';
 import { IMMUTABLE_LIST } from '../../constants';
 
+import { convNPCodeServerToClient } from '~/utils/converters';
+
 const Resolvers = {
+  model(store, value = '') {
+    return store.setIn(['client', 'strModel'], value.toUpperCase());
+  },
+
+  code(store, value = '') {
+    return store
+      .setIn(['server', 'strCode'], `sd${value.toLowerCase()}`)
+      .setIn(['server', 'strBindingDummyName'], `bd${value.toLowerCase()}`)
+      .setIn(['server', 'strStoreNPCcode'], value.toUpperCase())
+      .setIn(['client', 'strCode'], convNPCodeServerToClient(value));
+  },
+
   name: (store, value) =>
     store
       .setIn(['priorStrName'], value)

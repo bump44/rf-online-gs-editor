@@ -22,6 +22,8 @@ export const projectsStores = {
       'angle',
       'npcClass',
       'mapCode',
+      'code',
+      'model',
       'itemsListCount',
       'itemListServerCode',
       'itemListClientCode',
