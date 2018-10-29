@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 class Code extends React.PureComponent {
   static propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.string,
     onClick: PropTypes.func,
   };
 
@@ -40,12 +40,9 @@ class Code extends React.PureComponent {
 
     return (
       <Label>
-        <CodeStyled
-          ref={this.createRef}
-          onClick={onClick || this.onClickSelect}
-        >
+        <Text ref={this.createRef} onClick={onClick || this.onClickSelect}>
           {children}
-        </CodeStyled>
+        </Text>
       </Label>
     );
   }
@@ -53,6 +50,6 @@ class Code extends React.PureComponent {
 
 export default Code;
 
-const CodeStyled = styled.code`
+const Text = styled.code`
   color: rgb(224, 57, 151);
 `;
