@@ -15,7 +15,7 @@
     "test:clean": "rimraf ./coverage",
     "test": "npm run pretest && cross-env NODE_ENV=test jest --coverage",
     "test:only": "cross-env NODE_ENV=test jest",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write"
   },
