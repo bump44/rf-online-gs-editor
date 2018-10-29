@@ -1,6 +1,7 @@
 import { isNullOrUndefined, isNumber } from 'util';
-import { isString, isInteger, trimStart } from 'lodash';
+import { isString, isInteger } from 'lodash';
 
+import { convNPCodeClientToServer } from '~/utils/converters';
 import { getTypeNameByFinite } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
@@ -91,21 +92,27 @@ export const getModel = (
   );
 
 export const getCode = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+  getServerCode(nextValue, { entry }) ||
+  convNPCodeClientToServer(getClientCode(nextValue, { entry }));
+
+export const getClientCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', 'strCode']], def: '', isString },
+  );
+
+export const getServerCode = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', 'strStoreNPCcode']], def: '', fnc: isString },
-  ) ||
-  trimStart(
-    getValue(
-      nextValue,
-      { entry },
-      { fields: [['client', 'strCode']], def: '', fnc: isString },
-    )
-      .split(/(.{2})/g)
-      .reverse()
-      .join(''),
-    '0',
   );
 
 /**
