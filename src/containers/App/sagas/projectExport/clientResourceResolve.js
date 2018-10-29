@@ -344,11 +344,31 @@ function* afterGenerateBufferRepackAndCopyMeshes({
       }
 
       // repack & copy
-      if (validFilePaths.length > 0) {
-        const packedPath = yield repack(validFilePaths);
+      // rfs repack can work with names up to 31 characters
+      const toPackFilePaths = validFilePaths.filter(
+        file => file.name.length <= 31,
+      );
+
+      const toCopyFilePaths = validFilePaths.filter(
+        file => file.name.length > 31,
+      );
+
+      if (toPackFilePaths.length > 0) {
+        const packedPath = yield repack(toPackFilePaths);
         const packedName = `PACKED${i}${t}_${f}.RFS`;
 
         yield copy(packedPath, path.resolve(data.path, packedName));
+      }
+
+      if (toCopyFilePaths.length > 0) {
+        let c = 0;
+        while (toCopyFilePaths.length > c) {
+          yield copy(
+            toCopyFilePaths[c].path,
+            path.resolve(data.path, toCopyFilePaths[c].name),
+          );
+          c += 1;
+        }
       }
 
       t += 1;
@@ -360,9 +380,11 @@ function* afterGenerateBufferRepackAndCopyMeshes({
     );
 
     const buffGen = new BufferGenerator();
-    rfsFiles.forEach(rfsFileName => {
+    rfsFiles.forEach((rfsFileName, index) => {
       buffGen.addString(rfsFileName);
-      buffGen.concat(Buffer.from([0x0d, 0x0a]));
+      if (rfsFiles.length - 1 > index) {
+        buffGen.concat(Buffer.from([0x0d, 0x0a]));
+      }
     });
 
     yield writeFile(
