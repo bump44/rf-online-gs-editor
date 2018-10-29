@@ -10,6 +10,15 @@ export const repack = async (records = []) => {
   const tmpPath = getRandomTmpPath();
   await mkdir(tmpPath);
 
+  // validate file.name length
+  records.forEach(record => {
+    if (record.name.length > 31) {
+      throw new Error(
+        'The name of the packaging must not exceed 31 characters.',
+      );
+    }
+  });
+
   const RFSRePack = path.resolve('./', 'extras/RFSRePack.exe');
   const RFOdpf = path.resolve('./', 'extras/RFO.dpf');
 
@@ -37,7 +46,8 @@ export const repack = async (records = []) => {
     execFile(
       tmpExecPath,
       data.map(file => file.tmpPath),
-      err => (err ? rej(err) : res()),
+      { cwd: tmpPath },
+      (err, std) => (err ? rej(err) : res(std)),
     ),
   );
 
