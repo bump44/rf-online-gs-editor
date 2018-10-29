@@ -25,3 +25,11 @@ exports[`<Code /> Should have onClick 1`] = `
   />
 </Label>
 `;
+
+exports[`<Code /> Should work without errors 1`] = `
+<Label>
+  <Code__Text
+    onClick={[Function]}
+  />
+</Label>
+`;

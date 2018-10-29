@@ -21,4 +21,11 @@ describe('<Code />', () => {
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('Code__Text').prop('onClick')).toBeInstanceOf(Function);
   });
+  it('Should work without errors', () => {
+    const wrapper = shallow(<Code />);
+    const text = wrapper.filter('Code__Text');
+    expect(wrapper).toMatchSnapshot();
+    wrapper.instance().createRef(text);
+    wrapper.find('Code__Text').simulate('click', { preventDefault() {} });
+  });
 });
