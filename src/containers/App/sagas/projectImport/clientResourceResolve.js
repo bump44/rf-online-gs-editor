@@ -211,5 +211,5 @@ function* meshWorkAfterInsert(
 }
 
 function* aniWorkAfterInsert(...args) {
-  yield meshWorkAfterInsert(...args);
+  return yield meshWorkAfterInsert(...args);
 }
