@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadingIndicator /> Should exist 1`] = `
+<Loader
+  active={true}
+  inline="centered"
+>
+  0
+</Loader>
+`;

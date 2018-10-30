@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectMenu /> Should exist 1`] = `
+<ProjectMenu__Aside
+  vertical={true}
+>
+  <MenuItem
+    header={true}
+  >
+    <FormattedMessage
+      defaultMessage="General"
+      id="app.components.ProjectMenu.General"
+      values={Object {}}
+    />
+  </MenuItem>
+  <MenuItem
+    as={[Function]}
+    exact={true}
+    to="/project/123"
+  >
+    <FormattedMessage
+      defaultMessage="Dashboard"
+      id="app.components.ProjectMenu.Dashboard"
+      values={Object {}}
+    />
+  </MenuItem>
+  <MenuItem
+    as={[Function]}
+    exact={true}
+    to="/project/123/contributors"
+  >
+    <FormattedMessage
+      defaultMessage="Contributors"
+      id="app.components.ProjectMenu.Contributors"
+      values={Object {}}
+    />
+  </MenuItem>
+</ProjectMenu__Aside>
+`;

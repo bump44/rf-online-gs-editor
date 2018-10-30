@@ -5,6 +5,7 @@
  */
 
 import { AutoSizer, List } from 'react-virtualized';
+import { Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -14,8 +15,6 @@ import {
   SortableHandle,
   arrayMove,
 } from 'react-sortable-hoc';
-
-import { Icon } from 'semantic-ui-react';
 
 const RowRenderer = rowRenderer => props => (
   <Item

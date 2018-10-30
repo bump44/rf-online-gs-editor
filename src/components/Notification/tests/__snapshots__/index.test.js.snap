@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Notification /> Should exist 1`] = `
+<Notification__NotificationStyled
+  className=""
+  type="default"
+/>
+`;

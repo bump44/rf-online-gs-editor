@@ -14,7 +14,9 @@ import styled from 'styled-components';
 
 function ProjectsMediaItem({ item, currentUser }) {
   const { title, description, name, id, createdAt, owner, isPublic } = item;
-  const isCurrentIsOwner = currentUser && currentUser.get('id') === owner.id;
+  const isCurrentIsOwner = !!(
+    currentUser && currentUser.get('id') === owner.id
+  );
 
   return (
     <Item>

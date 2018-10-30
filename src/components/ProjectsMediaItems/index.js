@@ -9,8 +9,6 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-// import styled from 'styled-components';
-
 import ProjectsMediaItem from '../ProjectsMediaItem';
 
 function ProjectsMediaItems({ items, currentUser }) {

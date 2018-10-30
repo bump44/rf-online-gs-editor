@@ -1,10 +1,11 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-// import ProjectsMediaItems from '../index';
+import ProjectsMediaItems from '../index';
 
 describe('<ProjectsMediaItems />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+  it('Should exist', () => {
+    const wrapper = shallow(<ProjectsMediaItems />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

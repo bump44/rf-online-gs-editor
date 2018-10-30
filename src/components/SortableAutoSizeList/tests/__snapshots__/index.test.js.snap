@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SortableAutoSizeList /> Should create DragHangle 1`] = `
+<span
+  className="draghandle"
+>
+  <Icon
+    as="i"
+    name="bars"
+  />
+</span>
+`;
+
+exports[`<SortableAutoSizeList /> Should exist 1`] = `
+<sortableList
+  axis="y"
+  distance={0}
+  getHelperDimensions={[Function]}
+  hideSortableGhost={true}
+  lockOffset="50%"
+  lockToContainerEdges={false}
+  onSortEnd={[Function]}
+  pressDelay={0}
+  pressThreshold={5}
+  registerChild={[Function]}
+  rowCount={10}
+  rowHeight={100}
+  rowRenderer={[Function]}
+  shouldCancelStart={[Function]}
+  transitionDuration={300}
+  useDragHandle={false}
+  useWindowAsScrollContainer={false}
+/>
+`;

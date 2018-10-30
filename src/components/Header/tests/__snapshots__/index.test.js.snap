@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> Should exist 1`] = `
+<styles
+  color="violet"
+  inverted={true}
+>
+  <Popup
+    content="test"
+    inverted={true}
+    keepInViewPort={true}
+    on="hover"
+    position="top left"
+    size="mini"
+    trigger={
+      <MenuItem
+        as={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "attrs": undefined,
+            "componentStyle": ComponentStyle {
+              "componentId": "styles__BrandLink-sc-1g7oq2h-1",
+              "isStatic": true,
+              "rules": Array [],
+            },
+            "displayName": "styles__BrandLink",
+            "render": [Function],
+            "styledComponentId": "styles__BrandLink-sc-1g7oq2h-1",
+            "target": [Function],
+            "warnTooManyClasses": [Function],
+            "withComponent": [Function],
+            Symbol(Symbol.hasInstance): [Function],
+          }
+        }
+        exact={true}
+        to="/"
+      >
+        <ForwardRef>
+          <FormattedMessage
+            defaultMessage="RFGSEditor"
+            id="app.components.Header.brand"
+            values={Object {}}
+          />
+          <ForwardRef>
+            v
+            1.0.3
+          </ForwardRef>
+        </ForwardRef>
+      </MenuItem>
+    }
+  />
+  <MenuItem
+    as={[Function]}
+    to="/projects"
+  >
+    <FormattedMessage
+      defaultMessage="Projects"
+      id="app.components.Header.Projects"
+      values={Object {}}
+    />
+  </MenuItem>
+  <MenuMenu
+    position="right"
+  >
+    <FormattedMessage
+      defaultMessage="Options"
+      id="app.components.Header.Options"
+      values={Object {}}
+    >
+      <Component />
+    </FormattedMessage>
+    <MenuItem
+      as={[Function]}
+      to="/login"
+    >
+      <Icon
+        as="i"
+        name="sign in"
+      />
+      <FormattedMessage
+        defaultMessage="Sign-in"
+        id="app.components.Header.signIn"
+        values={Object {}}
+      />
+    </MenuItem>
+    <MenuItem
+      as={[Function]}
+      to="/register"
+    >
+      <Icon
+        as="i"
+        name="signup"
+      />
+      <FormattedMessage
+        defaultMessage="Sign-up"
+        id="app.components.Header.signUp"
+        values={Object {}}
+      />
+    </MenuItem>
+  </MenuMenu>
+</styles>
+`;

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectsMediaItem /> Should exist 1`] = `
+<Item>
+  <ItemContent>
+    <ItemHeader
+      as={[Function]}
+      to="/project/123"
+    >
+      <Icon
+        as="i"
+        name="lock"
+      />
+      title
+    </ItemHeader>
+    <ItemMeta>
+      <small
+        className="name"
+      >
+        #
+        name
+      </small>
+    </ItemMeta>
+    <ItemDescription>
+      description
+    </ItemDescription>
+    <ItemExtra>
+      <ProjectsMediaItem__UserName
+        active={false}
+      >
+        <Icon
+          as="i"
+          name="user"
+        />
+        @
+        name
+      </ProjectsMediaItem__UserName>
+      <Icon
+        as="i"
+        name="time"
+      />
+      January 1, 2018 6:00 AM
+    </ItemExtra>
+  </ItemContent>
+</Item>
+`;

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Container /> Should exist 1`] = `
+<Container__ContainerStyled
+  fluid={true}
+/>
+`;

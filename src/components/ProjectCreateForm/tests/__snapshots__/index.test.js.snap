@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectCreateForm /> Should exist 1`] = `
+<Form
+  as="form"
+  loading={false}
+  size="small"
+>
+  <FormField>
+    <label>
+      <FormattedMessage
+        defaultMessage="Title"
+        id="app.components.ProjectCreateForm.Title"
+        values={Object {}}
+      />
+    </label>
+    <input
+      onChange={[Function]}
+      value="title"
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <FormattedMessage
+        defaultMessage="Description"
+        id="app.components.ProjectCreateForm.Description"
+        values={Object {}}
+      />
+    </label>
+    <textarea
+      onChange={[Function]}
+      value="description"
+    />
+  </FormField>
+  <FormField>
+    <Checkbox
+      checked={false}
+      label={
+        <label>
+          <FormattedMessage
+            defaultMessage="Is public project"
+            id="app.components.ProjectCreateForm.IsPublicProject"
+            values={Object {}}
+          />
+        </label>
+      }
+      onChange={[Function]}
+      type="checkbox"
+      value={1}
+    />
+  </FormField>
+  <Button
+    as="button"
+    onClick={[Function]}
+    primary={true}
+    role="button"
+    type="submit"
+  >
+    <Icon
+      as="i"
+      name="plus"
+    />
+    <FormattedMessage
+      defaultMessage="Submit"
+      id="app.components.ProjectCreateForm.Submit"
+      values={Object {}}
+    />
+  </Button>
+</Form>
+`;

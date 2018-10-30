@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectsMediaItems /> Should exist 1`] = `
+<ItemGroup
+  divided={true}
+/>
+`;

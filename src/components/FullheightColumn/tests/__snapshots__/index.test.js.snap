@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FullheightColumn /> Should exist 1`] = `
+<GridColumn
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "column",
+    }
+  }
+>
+  <div />
+</GridColumn>
+`;
+
+exports[`<FullheightColumn /> Should exist FullheightThis 1`] = `
+<StyledComponent
+  forwardedClass={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": undefined,
+      "componentStyle": ComponentStyle {
+        "componentId": "FullheightColumn__FullheightThis-zpb8wc-0",
+        "isStatic": false,
+        "rules": Array [
+          "display:flex;flex:1 100%;padding-top:",
+          [Function],
+          "px;padding-bottom:",
+          [Function],
+          "px;",
+        ],
+      },
+      "displayName": "FullheightColumn__FullheightThis",
+      "render": [Function],
+      "styledComponentId": "FullheightColumn__FullheightThis-zpb8wc-0",
+      "target": "div",
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+>
+  <div />
+</StyledComponent>
+`;

@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 
+const columnStyle = { display: 'flex', flexDirection: 'column' };
+
 class FullheightColumn extends React.PureComponent {
   render() {
     const { children, ...props } = this.props;
@@ -27,10 +29,6 @@ FullheightColumn.propTypes = {
 };
 
 export default FullheightColumn;
-
-const columnStyle = { display: 'flex', flexDirection: 'column' };
-
-// const displayName = 'FullheightColumn__FullheightThis';
 
 export const FullheightThis = styled.div`
   display: flex;

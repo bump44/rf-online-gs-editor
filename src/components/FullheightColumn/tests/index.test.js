@@ -1,10 +1,23 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-// import FullheightColumn from '../index';
+import FullheightColumn, { FullheightThis } from '../index';
 
 describe('<FullheightColumn />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+  it('Should exist', () => {
+    const wrapper = shallow(
+      <FullheightColumn>
+        <div />
+      </FullheightColumn>,
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('Should exist FullheightThis', () => {
+    const wrapper = shallow(
+      <FullheightThis>
+        <div />
+      </FullheightThis>,
+    );
+    expect(wrapper).toMatchSnapshot();
   });
 });

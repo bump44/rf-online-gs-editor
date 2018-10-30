@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InfiniteAutoSizeList /> Should exist 1`] = `
+<InfiniteLoader
+  isRowLoaded={[Function]}
+  loadMoreRows={[Function]}
+  minimumBatchSize={10}
+  rowCount={0}
+  threshold={15}
+>
+  <Component />
+</InfiniteLoader>
+`;

@@ -1,10 +1,11 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-// import Notification from '../index';
+import Notification from '../index';
 
 describe('<Notification />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+  it('Should exist', () => {
+    const wrapper = shallow(<Notification />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

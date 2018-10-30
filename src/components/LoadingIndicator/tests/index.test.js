@@ -1,10 +1,11 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-// import LoadingIndicator from '../index';
+import LoadingIndicator from '../index';
 
 describe('<LoadingIndicator />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+  it('Should exist', () => {
+    const wrapper = shallow(<LoadingIndicator />);
+    expect(wrapper).toMatchSnapshot();
   });
 });

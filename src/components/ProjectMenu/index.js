@@ -117,9 +117,9 @@ function ProjectMenu({
 }
 
 ProjectMenu.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
   projectId: PropTypes.string.isRequired,
   project: PropTypes.instanceOf(Map),
+  isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.instanceOf(Map),
   projectImportsProcessingData: PropTypes.shape({
     isProcessing: PropTypes.bool.isRequired,
@@ -133,6 +133,7 @@ ProjectMenu.propTypes = {
 ProjectMenu.defaultProps = {
   project: null,
   currentUser: null,
+  isLoggedIn: false,
 };
 
 export default ProjectMenu;
