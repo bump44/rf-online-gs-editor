@@ -1,10 +1,11 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react';
+import { shallow } from 'enzyme';
 
-// import ProjectBoxItemOut from '../index';
+import ProjectBoxItemOut from '../index';
 
 describe('<ProjectBoxItemOut />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+  it('Should exist', () => {
+    const wrapper = shallow(<ProjectBoxItemOut />);
+    expect(wrapper).toMatchSnapshot();
   });
 });
