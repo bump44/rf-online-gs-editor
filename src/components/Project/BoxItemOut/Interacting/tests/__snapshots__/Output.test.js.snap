@@ -1,0 +1,1697 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputCode 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputCount 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputCount to 0 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputProb 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputProb to 0 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputProbPercent 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should change outputProbPercent to 1 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should click disable 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should exist 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should render item 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <ProjectItemLabelDetail
+      item={
+        Immutable.Map {
+          "server": Immutable.Map {
+            "strCode": "iyyyy01",
+            "strName": "Item title",
+          },
+        }
+      }
+      itemActions={Object {}}
+      itemNextValues={Immutable.Map {}}
+      link={false}
+      size="small"
+    />
+    <Label>
+      Item title
+    </Label>
+  </CommentText>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value="iyyyy01"
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={false}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={99}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={false}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={10000}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={100}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should select item 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should toggle selectItemModalOpen 1`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={false}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
+
+exports[`<ProjectBoxItemOutInteractingOutput /> Should toggle selectItemModalOpen 2`] = `
+<Comment
+  key="1"
+>
+  <CommentAuthor>
+    №
+    1
+  </CommentAuthor>
+  <CommentText>
+    <Input
+      className="mr-10 mb-5"
+      label="Code"
+      onChange={[Function]}
+      size="mini"
+      type="text"
+      value=""
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Count"
+      max={99}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      error={true}
+      label="Probability"
+      max={10000}
+      min={1}
+      onChange={[Function]}
+      size="mini"
+      type="number"
+      value={0}
+    />
+    <Input
+      className="mr-10 mb-5"
+      label="As %"
+      max={100}
+      onChange={[Function]}
+      size="mini"
+      step="0.1"
+      type="number"
+      value={0}
+    />
+  </CommentText>
+  <CommentActions>
+    <Modal
+      centered={true}
+      closeOnDimmerClick={true}
+      closeOnDocumentClick={false}
+      dimmer={true}
+      eventPool="Modal"
+      onClose={[Function]}
+      open={true}
+      size="fullscreen"
+      style={
+        Object {
+          "height": "calc(100% - 60px)",
+          "left": "initial !important",
+        }
+      }
+      trigger={
+        <CommentAction
+          as="a"
+          onClick={[Function]}
+        >
+          <FormattedMessage
+            defaultMessage="Select item"
+            id="app.components.ProjectBoxItemOut.SelectItem"
+            values={Object {}}
+          />
+        </CommentAction>
+      }
+    >
+      <ModalHeader>
+        <FormattedMessage
+          defaultMessage="Select item"
+          id="app.components.ProjectBoxItemOut.SelectItem"
+          values={Object {}}
+        />
+      </ModalHeader>
+      <ModalContent
+        style={
+          Object {
+            "height": "calc(100% - 90px)",
+          }
+        }
+      >
+        <ProjectItemsFinder
+          actions={
+            Object {
+              "changeFilterSortBy": [Function],
+              "changeFilterSortWay": [Function],
+              "changeFilterTakeSkip": [Function],
+              "changeFilterWhereSearch": [Function],
+              "changeFilterWhereType": [Function],
+            }
+          }
+          itemActions={Object {}}
+          itemGradeTypes={Immutable.List []}
+          localSettings={Immutable.Map {}}
+          moneyTypes={Immutable.List []}
+          nextValues={Immutable.Map {}}
+          onClickSelect={[Function]}
+          selectable={true}
+          state={Immutable.Map {}}
+          weaponTypes={Immutable.List []}
+        />
+      </ModalContent>
+    </Modal>
+    <CommentAction
+      as="a"
+      onClick={[Function]}
+    >
+      <FormattedMessage
+        defaultMessage="Disable"
+        id="app.components.ProjectBoxItemOut.Disable"
+        values={Object {}}
+      />
+    </CommentAction>
+  </CommentActions>
+</Comment>
+`;
