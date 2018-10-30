@@ -7957,9 +7957,9 @@ sanitize-html@^1.19.1:
     srcset "^1.0.0"
     xtend "^4.0.0"
 
-sanitize.css@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-7.0.3.tgz#121929e784381013256cd4805d1d8983a95ffae3"
+sanitize.css@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-8.0.0.tgz#b025845b772a2c0c996e62e3b2d1bbf10ca78e37"
 
 sass-lookup@^1.0.2:
   version "1.1.0"
