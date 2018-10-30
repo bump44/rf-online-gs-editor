@@ -1089,7 +1089,7 @@ babel-plugin-module-resolver@^3.1.1:
     reselect "^3.0.1"
     resolve "^1.4.0"
 
-"babel-plugin-styled-components@>= 1":
+"babel-plugin-styled-components@>= 1", babel-plugin-styled-components@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.8.0.tgz#9dd054c8e86825203449a852a5746f29f2dab857"
   integrity sha512-PcrdbXFO/9Plo9JURIj8G0Dsz+Ct8r+NvjoLh6qPt8Y/3EIAj1gHGW1ocPY1IkQbXZLBEZZSRBAxJem1KFdBXg==
@@ -1097,6 +1097,7 @@ babel-plugin-module-resolver@^3.1.1:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     lodash "^4.17.10"
 
+<<<<<<< HEAD
 babel-plugin-styled-components@^1.6.4:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-1.7.1.tgz#c291d2a48ec77bb0828275b87696b6594a2f80f9"
@@ -1105,6 +1106,8 @@ babel-plugin-styled-components@^1.6.4:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     lodash "^4.17.10"
 
+=======
+>>>>>>> db57d303ae602a62c0a6dca9438d7c41d2a0f4e4
 babel-plugin-syntax-async-functions@^6.1.4, babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "http://registry.npmjs.org/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -1515,10 +1518,16 @@ babel-plugin-transform-react-pure-class-to-function@^1.0.1:
   dependencies:
     babel-helper-is-react-class "^1.0.0"
 
+<<<<<<< HEAD
 babel-plugin-transform-react-remove-prop-types@^0.4.15:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.18.tgz#85ff79d66047b34288c6f7cc986b8854ab384f8c"
   integrity sha512-azed2nHo8vmOy7EY26KH+om5oOcWRs0r1U8wOmhwta+SBMMnmJ4H6yaBZRCcHBtMeWp9AVhvBTL/lpR1kEx+Xw==
+=======
+babel-plugin-transform-react-remove-prop-types@^0.4.19:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.19.tgz#dc9d8fb176a407a75efe73f231550450e29a3b17"
+>>>>>>> db57d303ae602a62c0a6dca9438d7c41d2a0f4e4
 
 babel-plugin-transform-regenerator@^6.22.0:
   version "6.26.0"
@@ -3753,10 +3762,16 @@ eslint-plugin-import@^2.14.0:
     read-pkg-up "^2.0.0"
     resolve "^1.6.0"
 
+<<<<<<< HEAD
 eslint-plugin-jsx-a11y@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.1.1.tgz#7bf56dbe7d47d811d14dbb3ddff644aa656ce8e1"
   integrity sha512-JsxNKqa3TwmPypeXNnI75FntkUktGzI1wSa1LgNZdSOMI+B4sxnr1lSF8m8lPiz4mKiC+14ysZQM4scewUrP7A==
+=======
+eslint-plugin-jsx-a11y@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.1.2.tgz#69bca4890b36dcf0fe16dd2129d2d88b98f33f88"
+>>>>>>> db57d303ae602a62c0a6dca9438d7c41d2a0f4e4
   dependencies:
     aria-query "^3.0.0"
     array-includes "^3.0.3"
@@ -5004,10 +5019,16 @@ hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.5:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
+<<<<<<< HEAD
 hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.0.1.tgz#fba3e7df0210eb9447757ca1a7cb607162f0a364"
   integrity sha512-1kXwPsOi0OGQIZNVMPvgWJ9tSnGMiMfJdihqEzrPEXlHOBh9AAHXX/QYmAJTXztnz/K+PQ8ryCb4eGaN6HlGbQ==
+=======
+hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
+>>>>>>> db57d303ae602a62c0a6dca9438d7c41d2a0f4e4
   dependencies:
     react-is "^16.3.2"
 
@@ -9201,10 +9222,16 @@ sanitize-html@^1.19.1:
     srcset "^1.0.0"
     xtend "^4.0.0"
 
+<<<<<<< HEAD
 sanitize.css@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-7.0.3.tgz#121929e784381013256cd4805d1d8983a95ffae3"
   integrity sha512-jV5ON1hb1vYixnWu7FOboBhYNowww+YYM04gOS2vGaXUmXciJ3YKVjZcnRo74R8OFjSySaXRJjzkjcl1emr1oA==
+=======
+sanitize.css@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-8.0.0.tgz#b025845b772a2c0c996e62e3b2d1bbf10ca78e37"
+>>>>>>> db57d303ae602a62c0a6dca9438d7c41d2a0f4e4
 
 sass-lookup@^1.0.2:
   version "1.1.0"
