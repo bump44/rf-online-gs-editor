@@ -9,7 +9,12 @@ export function getNumberOfLetter(letter, startChar = 'a') {
 
 export function getWorkdirFileName(pl = '') {
   const arr = pl instanceof Array ? pl : [pl];
-  return md5(arr.map(val => val.replace(/[^a-z0-9_-]/gi, '_')).join('_'));
+  return md5(
+    arr
+      .map(val => val.replace(/[^a-z0-9_-]/gi, '_'))
+      .join('_')
+      .toUpperCase(),
+  );
 }
 
 export const normalize = (_str, substring) => {
