@@ -97,9 +97,13 @@ function bindActions(actions) {
 injectActions(
   projectsEntriesFinder[ITEM],
   { ...filterActions },
-  {
-    subType: ITEM,
-  },
+  { subType: ITEM },
+);
+
+injectActions(
+  projectsEntriesFinder[STORE],
+  { ...filterActions },
+  { subType: STORE },
 );
 
 export const projectsEntriesFinderItemsBindActions = bindActions(
