@@ -17,6 +17,13 @@ export function getWorkdirFileName(pl = '') {
   );
 }
 
+export function normalizeResourcePath(str) {
+  return `.\\${trim(
+    trim(normalize(str, 128).toUpperCase(), '.').replace('/', '\\'),
+    '\\',
+  )}\\`;
+}
+
 export const normalize = (_str, substring) => {
   if (!isString(_str)) {
     return '';
