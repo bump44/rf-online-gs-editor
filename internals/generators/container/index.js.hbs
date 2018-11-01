@@ -53,7 +53,8 @@ const mapStateToProps = createStructuredSelector({
 });
 {{/if}}
 
-function mapDispatchToProps(dispatch) {
+// individual export for testing
+export function mapDispatchToProps(dispatch) {
   return {
     dispatch,
   };
