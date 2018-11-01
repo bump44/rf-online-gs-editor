@@ -22,6 +22,7 @@ import {
   projectsEntriesFinderItemsBindActions,
   projectsMapSptsBindActions,
   logoutCurrentUser,
+  projectsResourcesBindActions,
 } from '~/containers/App/actions';
 
 import {
@@ -158,6 +159,9 @@ export class ProjectStorePage extends React.PureComponent {
     const fnProjectMapSptsActions = projectsMapSptsBindActions(
       actionsBindPayload,
     );
+    const fnProjectResourcesActions = projectsResourcesBindActions(
+      actionsBindPayload,
+    );
 
     const store = currentProjectStore;
 
@@ -245,6 +249,7 @@ export class ProjectStorePage extends React.PureComponent {
                       buttonTypes={buttonTypes}
                       mapNameTypes={mapNameTypes}
                       entriesFinderItems={entriesFinderItems}
+                      resourceActions={fnProjectResourcesActions}
                       nextValues={nextValues}
                     />
                   </FullheightAutoSizer>

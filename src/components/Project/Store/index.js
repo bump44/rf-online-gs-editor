@@ -34,6 +34,7 @@ import ProjectStoreInteractingItemsListCount from './Interacting/ItemsListCount'
 import ProjectStoreInteractingButtonType from './Interacting/ButtonType';
 import ProjectStoreInteractingMapNameType from './Interacting/MapNameType';
 
+import ProjectResourceSegmentBasic from '../Resource/Segment/Basic';
 import ProjectMapSptSegmentBasic from '../MapSpt/Segment/Basic';
 import ProjectStoreInteractingItemsListContentTxt from './Interacting/ItemsListContentTxt';
 import ProjectStoreInteractingCode from './Interacting/Code';
@@ -64,6 +65,7 @@ class ProjectStore extends React.PureComponent {
     this.renderLimItemsList = this.renderLimItemsList.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
     this.renderBindings = this.renderBindings.bind(this);
+    this.renderResources = this.renderResources.bind(this);
 
     this.copyAndRedirect = () => {
       const { store, storeActions } = this.props;
@@ -95,6 +97,13 @@ class ProjectStore extends React.PureComponent {
           content: <FormattedMessage {...messages.Binding} />,
         },
         render: this.renderBindings,
+      },
+      {
+        menuItem: {
+          key: 'resources',
+          content: <FormattedMessage {...messages.Resources} />,
+        },
+        render: this.renderResources,
       },
       {
         menuItem: {
@@ -312,11 +321,56 @@ class ProjectStore extends React.PureComponent {
 
         {mapSpts.map(mapSpt => (
           <ProjectMapSptSegmentBasic
+            key={mapSpt.get('id')}
             mapSpt={mapSpt}
             mapSptNextValues={nextValues.get(mapSpt.get('id'), IMMUTABLE_MAP)}
             nextValues={nextValues}
             mapSptActions={mapSptActions}
             mapNameTypes={mapNameTypes}
+          />
+        ))}
+      </Tab.Pane>
+    );
+  }
+
+  renderResources() {
+    const { store, storeNextValues, nextValues, resourceActions } = this.props;
+
+    const storeNextValue = storeNextValues.get('nextValue');
+    const resources = projectStore.getResources(storeNextValue, {
+      entry: store,
+    });
+
+    const boneIsDefined = projectStore.getResourceBoneIsDefined(
+      storeNextValue,
+      { entry: store },
+    );
+
+    const meshIsDefined = projectStore.getResourceMeshIsDefined(
+      storeNextValue,
+      { entry: store },
+    );
+
+    const aniIsDefined = projectStore.getResourceAniIsDefined(storeNextValue, {
+      entry: store,
+    });
+
+    return (
+      <Tab.Pane attached={false}>
+        {!boneIsDefined && <Button>Create Bone</Button>}
+        {!meshIsDefined && <Button>Create Mesh</Button>}
+        {!aniIsDefined && <Button>Create Ani</Button>}
+
+        {resources.map(resource => (
+          <ProjectResourceSegmentBasic
+            key={resource.get('id')}
+            resource={resource}
+            resourceNextValues={nextValues.get(
+              resource.get('id'),
+              IMMUTABLE_MAP,
+            )}
+            nextValues={nextValues}
+            resourceActions={resourceActions}
           />
         ))}
       </Tab.Pane>
@@ -449,8 +503,9 @@ ProjectStore.propTypes = {
 
   itemActions: PropTypes.object.isRequired,
   mapSptActions: PropTypes.object.isRequired,
-
+  resourceActions: PropTypes.object.isRequired,
   entriesFinderItemsActions: PropTypes.object.isRequired,
+
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   localSettings: PropTypes.instanceOf(Map).isRequired,
   moneyTypes: PropTypes.instanceOf(List).isRequired,

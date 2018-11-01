@@ -23,6 +23,10 @@ export default defineMessages({
     id: 'app.components.ProjectStore.Binding',
     defaultMessage: 'Binding',
   },
+  Resources: {
+    id: 'app.components.ProjectStore.Resources',
+    defaultMessage: 'Resources',
+  },
   PositionBinding: {
     id: 'app.components.ProjectStore.PositionBinding',
     defaultMessage: 'Position binding',
