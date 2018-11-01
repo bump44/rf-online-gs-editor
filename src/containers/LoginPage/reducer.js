@@ -9,7 +9,7 @@ import { fromJS } from 'immutable';
 import { DEFAULT_ACTION, CHANGE_FIELD_VALUE } from './constants';
 
 export const initialState = fromJS({
-  indent: '',
+  ident: '',
   password: '',
   isLoading: false,
   isError: false,

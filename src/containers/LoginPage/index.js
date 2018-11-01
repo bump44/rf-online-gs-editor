@@ -67,7 +67,7 @@ export class LoginPage extends React.PureComponent {
   render() {
     const {
       loginPage,
-      changeIndent,
+      changeIdent,
       changePassword,
       submit,
       isLoggedIn,
@@ -75,7 +75,7 @@ export class LoginPage extends React.PureComponent {
       projectsImportsProcessingData,
     } = this.props;
 
-    const { indent, password, isLoading, isError, errorMessage } = loginPage;
+    const { ident, password, isLoading, isError, errorMessage } = loginPage;
 
     return (
       <div>
@@ -100,9 +100,9 @@ export class LoginPage extends React.PureComponent {
 
             <Form size="small" loading={isLoading}>
               {this.renderField({
-                label: <FormattedMessage {...messages.Indent} />,
-                value: indent,
-                onChange: changeIndent,
+                label: <FormattedMessage {...messages.Ident} />,
+                value: ident,
+                onChange: changeIdent,
               })}
               {this.renderField({
                 label: <FormattedMessage {...messages.Password} />,
@@ -132,7 +132,7 @@ LoginPage.propTypes = {
     isError: PropTypes.bool,
     errorMessage: PropTypes.string,
   }),
-  changeIndent: PropTypes.func.isRequired,
+  changeIdent: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
   changeLocation: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -154,7 +154,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    changeIndent: evt => dispatch(actions.changeIndent(evt.target.value)),
+    changeIdent: evt => dispatch(actions.changeIdent(evt.target.value)),
     changePassword: evt => dispatch(actions.changePassword(evt.target.value)),
     changeLocation: (location = '/') => dispatch(push(location)),
     submit: () => dispatch(actions.submit()),

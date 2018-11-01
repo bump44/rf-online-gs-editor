@@ -11,8 +11,8 @@ export default defineMessages({
     id: 'app.containers.LoginPage.header',
     defaultMessage: 'This is LoginPage container !',
   },
-  Indent: {
-    id: 'app.containers.LoginPage.Indent',
+  Ident: {
+    id: 'app.containers.LoginPage.Ident',
     defaultMessage: 'Login or e-mail address',
   },
   Password: {

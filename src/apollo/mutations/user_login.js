@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation UserLogin($indent: String!, $password: String!) {
-    userLogin(indent: $indent, password: $password) {
+  mutation UserLogin($ident: String!, $password: String!) {
+    userLogin(ident: $ident, password: $password) {
       token
       user {
         id

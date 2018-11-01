@@ -21,8 +21,8 @@ export function changeFieldValue(key, value) {
   };
 }
 
-export function changeIndent(value) {
-  return changeFieldValue('indent', value);
+export function changeIdent(value) {
+  return changeFieldValue('ident', value);
 }
 
 export function changePassword(value) {

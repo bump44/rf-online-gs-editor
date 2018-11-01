@@ -5,7 +5,7 @@ describe('loginPageReducer', () => {
   it('returns the initial state', () => {
     expect(loginPageReducer(undefined, {})).toEqual(
       fromJS({
-        indent: '',
+        ident: '',
         password: '',
         isLoading: false,
         isError: false,

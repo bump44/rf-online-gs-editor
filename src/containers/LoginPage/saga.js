@@ -27,7 +27,7 @@ export function* submit() {
     const result = yield call(apolloClient.mutate, {
       mutation: userLoginMutation,
       variables: {
-        indent: loginPage.indent,
+        ident: loginPage.ident,
         password: loginPage.password,
       },
     });
