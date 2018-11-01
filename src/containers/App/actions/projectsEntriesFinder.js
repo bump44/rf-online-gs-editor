@@ -1,6 +1,4 @@
 import {
-  ITEM,
-  STORE,
   PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_TYPE,
   PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_WHERE_SEARCH,
   PROJECTS_ENTRIES_FINDER_CHANGE_FILTER_TAKE_SKIP,
@@ -13,6 +11,10 @@ import {
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_LOADED,
   PROJECTS_ENTRIES_FINDER_CHANGE_IS_ERROR,
   PROJECTS_ENTRIES_FINDER_CHANGE_ERROR_MESSAGE,
+  BOXITEMOUT,
+  RESOURCE,
+  ITEM,
+  STORE,
 } from '../constants';
 
 const filterActions = {
@@ -67,6 +69,8 @@ const filterActions = {
 export const projectsEntriesFinder = {
   [ITEM]: {},
   [STORE]: {},
+  [BOXITEMOUT]: {},
+  [RESOURCE]: {},
 };
 
 function injectActions(toObject, actions = {}, params = {}) {

@@ -116,37 +116,29 @@ export const IMMUTABLE_MAP = Map({});
 export const IMMUTABLE_LIST = List([]);
 
 // Projects EntriesFinder Defaults
+export const PROJECTS_ENTRIES_FINDER_STATE_DEFAULT = fromJS({
+  isLoading: false,
+  isLoaded: false,
+  isError: false,
+  errorMessage: '',
+  filter: {
+    take: 25,
+    skip: 0,
+    sortBy: 'nIndex',
+    sortWay: 1,
+    where: { search: '', type: '' },
+  },
+  result: { total: 1, items: [] },
+});
+
 export const PROJECTS_ENTRIES_FINDER_STATE_DEFAULTS = {
-  [ITEM]: fromJS({
-    subType: ITEM,
-    isLoading: false,
-    isLoaded: false,
-    isError: false,
-    errorMessage: '',
-    filter: {
-      take: 25,
-      skip: 0,
-      sortBy: 'nIndex',
-      sortWay: 1,
-      where: { search: '', type: '' },
-    },
-    result: { total: 1, items: [] },
-  }),
-  [STORE]: fromJS({
-    subType: STORE,
-    isLoading: false,
-    isLoaded: false,
-    isError: false,
-    errorMessage: '',
-    filter: {
-      take: 25,
-      skip: 0,
-      sortBy: 'nIndex',
-      sortWay: 1,
-      where: { search: '' },
-    },
-    result: { total: 1, items: [] },
-  }),
+  [ITEM]: PROJECTS_ENTRIES_FINDER_STATE_DEFAULT.set('subType', ITEM),
+  [STORE]: PROJECTS_ENTRIES_FINDER_STATE_DEFAULT.set('subType', STORE),
+  [BOXITEMOUT]: PROJECTS_ENTRIES_FINDER_STATE_DEFAULT.set(
+    'subType',
+    BOXITEMOUT,
+  ),
+  [RESOURCE]: PROJECTS_ENTRIES_FINDER_STATE_DEFAULT.set('subType', RESOURCE),
 };
 
 // Action States Constants
