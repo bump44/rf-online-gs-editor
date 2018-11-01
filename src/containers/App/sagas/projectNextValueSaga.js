@@ -10,6 +10,7 @@ import itemRestoreVirtual from '~/apollo/mutations/item_restore_virtual';
 import itemUpdate from '~/apollo/mutations/item_update';
 import storeUpdate from '~/apollo/mutations/store_update';
 import storeCopy from '~/apollo/mutations/store_copy';
+import resourceUpdate from '~/apollo/mutations/resource_update';
 
 import {
   take,
@@ -33,6 +34,8 @@ import {
   STORE,
   BOXITEMOUT,
   PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
+  PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
+  RESOURCE,
 } from '../constants';
 
 import {
@@ -52,6 +55,7 @@ import itemResolvers from './projectNextValue/itemResolvers';
 import storeResolvers from './projectNextValue/storeResolvers';
 import boxItemOutResolvers from './projectNextValue/boxItemOutResolvers';
 import mapSptResolvers from './projectNextValue/mapSptResolvers';
+import resourceResolvers from './projectNextValue/resourceResolvers';
 
 import {
   projectsNextValuesChangeIsRemoving,
@@ -60,6 +64,8 @@ import {
   projectsNextValuesChangeIsCopying,
 } from '../actions/projectsNextValues';
 
+import workerCreateModelFilesFromThisData from './projectNextValue/workerCreateModelFilesFromThisData';
+
 const Workers = {};
 
 const Resolvers = {
@@ -67,12 +73,14 @@ const Resolvers = {
   [STORE]: storeResolvers,
   [BOXITEMOUT]: boxItemOutResolvers,
   [MAPSPT]: mapSptResolvers,
+  [RESOURCE]: resourceResolvers,
 };
 
 const MutationUpdateQueries = {
   [ITEM]: itemUpdate,
   [STORE]: storeUpdate,
   [BOXITEMOUT]: boxItemOutUpdate,
+  [RESOURCE]: resourceUpdate,
 };
 
 const MutationRemoveVirtualQueries = {
@@ -503,6 +511,25 @@ export function* watchCopyAndRedirect() {
   }
 }
 
+export function* watchCreateModelFilesFromThisData() {
+  while (true) {
+    const props = yield take(
+      PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
+    );
+    props.keyId = props.entry.get('id');
+
+    const { projectId, keyId } = props;
+    const mainKey = `${projectId}:${keyId}:createModelFilesFromThisData`;
+
+    if (Workers[mainKey]) {
+      yield cancel(Workers[mainKey]);
+      Workers[mainKey] = undefined;
+    }
+
+    Workers[mainKey] = yield fork(workerCreateModelFilesFromThisData, props);
+  }
+}
+
 export default function* defaultSaga() {
   yield all([
     fork(watchChangeProp),
@@ -511,5 +538,6 @@ export default function* defaultSaga() {
     fork(watchRemoveFully),
     fork(watchRestoreVirtual),
     fork(watchCopyAndRedirect),
+    fork(watchCreateModelFilesFromThisData),
   ]);
 }
