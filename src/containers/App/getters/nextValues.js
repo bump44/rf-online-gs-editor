@@ -1,3 +1,4 @@
+import { isBoolean, isString } from 'lodash';
 import { IMMUTABLE_MAP } from '../constants';
 
 const ICONS = {
@@ -58,3 +59,57 @@ export const getStatusColor = (nextValues = IMMUTABLE_MAP) => {
 
   return COLORS.DEFAULT;
 };
+
+export const getSubTaskIsProcessing = (nextValues = IMMUTABLE_MAP, action) => {
+  const taskName = action;
+
+  if (typeof taskName !== 'string') {
+    return false;
+  }
+
+  const value = nextValues.getIn(['subTasks', taskName, 'isProcessing']);
+
+  if (isBoolean(value)) {
+    return value;
+  }
+
+  return false;
+};
+
+export const getSubTaskIsError = (nextValues = IMMUTABLE_MAP, action) => {
+  const taskName = action;
+
+  if (typeof taskName !== 'string') {
+    return false;
+  }
+
+  const value = nextValues.getIn(['subTasks', taskName, 'isError']);
+
+  if (isBoolean(value)) {
+    return value;
+  }
+
+  return false;
+};
+
+export const getSubTaskErrorMessage = (nextValues = IMMUTABLE_MAP, action) => {
+  const taskName = action;
+
+  if (typeof taskName !== 'string') {
+    return '';
+  }
+
+  const value = nextValues.getIn(['subTasks', taskName, 'errorMessage']);
+
+  if (isString(value)) {
+    return value;
+  }
+
+  return '';
+};
+
+export const getSubTask = (nextValues, action) => ({
+  isProcessing: getSubTaskIsProcessing(nextValues, action),
+  isError: getSubTaskIsError(nextValues, action),
+  errorMessage: getSubTaskErrorMessage(nextValues, action),
+});
