@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoginPage /> directly test mapDispatchToProps 1`] = `
+Object {
+  "key": "ident",
+  "type": "app/LoginPage/CHANGE_FIELD_VALUE",
+  "value": "test",
+}
+`;
+
+exports[`<LoginPage /> directly test mapDispatchToProps 2`] = `
+Object {
+  "key": "password",
+  "type": "app/LoginPage/CHANGE_FIELD_VALUE",
+  "value": "test",
+}
+`;
+
+exports[`<LoginPage /> directly test mapDispatchToProps 3`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`<LoginPage /> directly test mapDispatchToProps 4`] = `
+Object {
+  "payload": Object {
+    "args": Array [
+      "/some-page",
+    ],
+    "method": "push",
+  },
+  "type": "@@router/CALL_HISTORY_METHOD",
+}
+`;
+
+exports[`<LoginPage /> directly test mapDispatchToProps 5`] = `
+Object {
+  "type": "app/LoginPage/SUBMIT",
+}
+`;
+
+exports[`<LoginPage /> should exist 1`] = `
+<div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      LoginPage
+    </title>
+    <meta
+      content="Description of LoginPage"
+      name="description"
+    />
+  </HelmetWrapper>
+  <Header
+    currentProject={null}
+    currentUser={null}
+    isLoggedIn={false}
+    projectsImportsProcessingData={
+      Object {
+        "countCompleted": 0,
+        "countProcesses": 0,
+        "countTotal": 0,
+        "isProcessing": false,
+        "percent": 0,
+      }
+    }
+  />
+  <div
+    className="container is-fluid p-10"
+  >
+    <FormWrapper>
+      <Form
+        as="form"
+        size="small"
+      >
+        <FormField>
+          <label>
+            <FormattedMessage
+              defaultMessage="Login or e-mail address"
+              id="app.containers.LoginPage.Ident"
+              values={Object {}}
+            />
+          </label>
+          <input
+            disabled={false}
+            onChange={[MockFunction]}
+            type="text"
+          />
+        </FormField>
+        <FormField>
+          <label>
+            <FormattedMessage
+              defaultMessage="Password"
+              id="app.containers.LoginPage.Password"
+              values={Object {}}
+            />
+          </label>
+          <input
+            disabled={false}
+            onChange={[MockFunction]}
+            type="password"
+          />
+        </FormField>
+        <Button
+          as="button"
+          onClick={[MockFunction]}
+          primary={true}
+          role="button"
+        >
+          <FormattedMessage
+            defaultMessage="Login"
+            id="app.containers.LoginPage.SubmitLoginForm"
+            values={Object {}}
+          />
+        </Button>
+      </Form>
+    </FormWrapper>
+  </div>
+</div>
+`;
+
+exports[`<LoginPage /> should render errorMessage 1`] = `
+<div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      LoginPage
+    </title>
+    <meta
+      content="Description of LoginPage"
+      name="description"
+    />
+  </HelmetWrapper>
+  <Header
+    currentProject={null}
+    currentUser={null}
+    isLoggedIn={false}
+    projectsImportsProcessingData={
+      Object {
+        "countCompleted": 0,
+        "countProcesses": 0,
+        "countTotal": 0,
+        "isProcessing": false,
+        "percent": 0,
+      }
+    }
+  />
+  <div
+    className="container is-fluid p-10"
+  >
+    <FormWrapper>
+      <Notification
+        className=""
+        type="danger"
+      >
+        Error message
+      </Notification>
+      <Form
+        as="form"
+        size="small"
+      >
+        <FormField>
+          <label>
+            <FormattedMessage
+              defaultMessage="Login or e-mail address"
+              id="app.containers.LoginPage.Ident"
+              values={Object {}}
+            />
+          </label>
+          <input
+            disabled={false}
+            onChange={[MockFunction]}
+            type="text"
+          />
+        </FormField>
+        <FormField>
+          <label>
+            <FormattedMessage
+              defaultMessage="Password"
+              id="app.containers.LoginPage.Password"
+              values={Object {}}
+            />
+          </label>
+          <input
+            disabled={false}
+            onChange={[MockFunction]}
+            type="password"
+          />
+        </FormField>
+        <Button
+          as="button"
+          onClick={[MockFunction]}
+          primary={true}
+          role="button"
+        >
+          <FormattedMessage
+            defaultMessage="Login"
+            id="app.containers.LoginPage.SubmitLoginForm"
+            values={Object {}}
+          />
+        </Button>
+      </Form>
+    </FormWrapper>
+  </div>
+</div>
+`;

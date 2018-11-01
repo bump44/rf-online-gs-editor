@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`selectLoginPageDomain returns the initial state 1`] = `
+Immutable.Map {
+  "ident": "",
+  "password": "",
+  "isLoading": false,
+  "isError": false,
+  "errorMessage": "",
+}
+`;
+
+exports[`selectLoginPageDomain returns the loginPage state 1`] = `
+Immutable.Map {
+  "test": 1,
+  "value": 2,
+}
+`;
+
+exports[`selectLoginPageDomain returns the loginPage state object 1`] = `
+Object {
+  "test": 1,
+  "value": 2,
+}
+`;

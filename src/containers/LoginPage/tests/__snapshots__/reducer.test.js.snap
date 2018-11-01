@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loginPageReducer returns the initial state 1`] = `
+Immutable.Map {
+  "ident": "",
+  "password": "",
+  "isLoading": false,
+  "isError": false,
+  "errorMessage": "",
+}
+`;
+
+exports[`loginPageReducer should mutate by action type CHANGE_FIELD_VALUE 1`] = `
+Immutable.Map {
+  "ident": "test",
+  "password": "",
+  "isLoading": false,
+  "isError": false,
+  "errorMessage": "",
+}
+`;
+
+exports[`loginPageReducer should mutate by action type DEFAULT_ACTION 1`] = `
+Immutable.Map {
+  "ident": "",
+  "password": "",
+  "isLoading": false,
+  "isError": false,
+  "errorMessage": "",
+}
+`;
