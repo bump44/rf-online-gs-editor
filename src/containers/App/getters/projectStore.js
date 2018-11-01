@@ -6,6 +6,7 @@ import { getTypeNameByFinite } from '~/structs/item_types_utils';
 import { getValue } from './nextValue';
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 import * as projectItem from './projectItem';
+import { STORE_BONE, STORE_MESH, STORE_ANI } from '~/structs/resource_types';
 
 /**
  * Return the most important title of the subject
@@ -219,6 +220,29 @@ export const getMapSpts = (
   nextValue
     .get('mapSpts', IMMUTABLE_LIST)
     .concat(entry.get('mapSpts', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
+
+export const getResources = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+) =>
+  nextValue
+    .get('resources', IMMUTABLE_LIST)
+    .concat(entry.get('resources', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
+
+export const getResourceBoneIsDefined = (nextValue, { entry }) =>
+  getResources(nextValue, { entry }).some(
+    resource => resource.get('type') === STORE_BONE,
+  );
+
+export const getResourceMeshIsDefined = (nextValue, { entry }) =>
+  getResources(nextValue, { entry }).some(
+    resource => resource.get('type') === STORE_MESH,
+  );
+
+export const getResourceAniIsDefined = (nextValue, { entry }) =>
+  getResources(nextValue, { entry }).some(
+    resource => resource.get('type') === STORE_ANI,
+  );
 
 export const getItems = (
   nextValue = IMMUTABLE_MAP,
