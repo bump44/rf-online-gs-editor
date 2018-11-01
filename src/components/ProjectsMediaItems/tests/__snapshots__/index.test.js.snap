@@ -5,3 +5,28 @@ exports[`<ProjectsMediaItems /> Should exist 1`] = `
   divided={true}
 />
 `;
+
+exports[`<ProjectsMediaItems /> Should render items 1`] = `
+<ItemGroup
+  divided={true}
+>
+  <ProjectsMediaItem
+    currentUser={null}
+    item={
+      Object {
+        "createdAt": "2018-01-01 06:00",
+        "description": "description",
+        "id": "123",
+        "isPublic": false,
+        "name": "name",
+        "owner": Object {
+          "id": "456",
+          "login": "name",
+        },
+        "title": "title",
+      }
+    }
+    key="123"
+  />
+</ItemGroup>
+`;

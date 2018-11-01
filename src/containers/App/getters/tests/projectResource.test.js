@@ -12,7 +12,7 @@ describe('App getters', () => {
   describe('projectResource', () => {
     // getType
     it('getType should return default empty string', () => {
-      expect(getType()).toEqual('');
+      expect(getType(undefined, {})).toEqual('');
       expect(
         getType(undefined, { entry: immutable.Map({ type: 10 }) }),
       ).toEqual('');
@@ -25,7 +25,7 @@ describe('App getters', () => {
 
     // getCode
     it('getCode should return default empty string', () => {
-      expect(getCode()).toEqual('');
+      expect(getCode(undefined, {})).toEqual('');
       expect(
         getCode(undefined, { entry: immutable.Map({ strCode: 10 }) }),
       ).toEqual('');
@@ -38,7 +38,7 @@ describe('App getters', () => {
 
     // getFileNameBBX
     it('getFileNameBBX should return default empty string', () => {
-      expect(getFileNameBBX()).toEqual('');
+      expect(getFileNameBBX(undefined, {})).toEqual('');
       expect(
         getFileNameBBX(undefined, {
           entry: immutable.Map({ strFileNameBBX: 10 }),
@@ -55,7 +55,7 @@ describe('App getters', () => {
 
     // getFileNameBN
     it('getFileNameBN should return default empty string', () => {
-      expect(getFileNameBN()).toEqual('');
+      expect(getFileNameBN(undefined, {})).toEqual('');
       expect(
         getFileNameBN(undefined, {
           entry: immutable.Map({ strFileNameBN: 10 }),
@@ -72,7 +72,7 @@ describe('App getters', () => {
 
     // getPath
     it('getPath should return default empty string', () => {
-      expect(getPath()).toEqual('');
+      expect(getPath(undefined, {})).toEqual('');
       expect(
         getPath(undefined, {
           entry: immutable.Map({ strPath: 10 }),

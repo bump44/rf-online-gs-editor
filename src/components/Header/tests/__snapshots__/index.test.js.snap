@@ -27,6 +27,7 @@ exports[`<Header /> Should exist 1`] = `
             "render": [Function],
             "styledComponentId": "styles__BrandLink-sc-1g7oq2h-1",
             "target": [Function],
+            "toString": [Function],
             "warnTooManyClasses": [Function],
             "withComponent": [Function],
             Symbol(Symbol.hasInstance): [Function],

@@ -4,7 +4,13 @@ import {
   projectsItemsBindActions,
 } from '../projectsItems';
 
-import { PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE, ITEM } from '../../constants';
+import {
+  ITEM,
+  PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE,
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
+  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+} from '../../constants';
 
 describe('App actions', () => {
   describe('ProjectsItems', () => {
@@ -12,7 +18,21 @@ describe('App actions', () => {
       Object.keys(projectsItems).forEach(propKey => {
         const action = projectsItems[propKey];
         const result = action();
-        expect(result.type).toEqual(PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE);
+
+        switch (result.propKey) {
+          case 'removeVirtual':
+            expect(result.type).toEqual(PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL);
+            break;
+          case 'removeFully':
+            expect(result.type).toEqual(PROJECTS_NEXT_VALUES_REMOVE_FULLY);
+            break;
+          case 'restoreVirtual':
+            expect(result.type).toEqual(PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL);
+            break;
+          default:
+            expect(result.type).toEqual(PROJECTS_NEXT_VALUES_CHANGE_PROP_VALUE);
+        }
+
         expect(result.subType).toEqual(ITEM);
       });
     });

@@ -14,10 +14,10 @@ const props = {
     isPublic: false,
     owner: {
       login: 'name',
-      id: 456,
+      id: '456',
     },
   },
-  currentUser: immutable.fromJS({ id: 456, login: 'name' }),
+  currentUser: immutable.fromJS({ id: '456', login: 'name' }),
 };
 
 describe('<ProjectsMediaItem />', () => {
