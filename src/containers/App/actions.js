@@ -77,6 +77,12 @@ import {
   projectsMapSptsBindActions,
 } from './actions/projectsMapSpts';
 
+import {
+  projectsResources,
+  projectsResourcesActionNames,
+  projectsResourcesBindActions,
+} from './actions/projectsResources';
+
 export {
   announceProjectCountItems,
   announceProjectCountStores,
@@ -131,6 +137,11 @@ export {
   projectsMapSpts,
   projectsMapSptsActionNames,
   projectsMapSptsBindActions,
+};
+export {
+  projectsResources,
+  projectsResourcesActionNames,
+  projectsResourcesBindActions,
 };
 
 /**
