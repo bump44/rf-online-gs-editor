@@ -39,6 +39,9 @@ import {
   PROJECTS_NEXT_VALUES_CHANGE_IS_RESTORING,
   PROJECTS_IMPORTS_SERVER_MAPS_CHANGE_PROP_VALUE,
   PROJECTS_IMPORTS_SERVER_MAPS_REMOVE,
+  PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_PROCESSING,
+  PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_ERROR,
+  PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_ERROR_MESSAGE,
 } from './constants';
 
 // The initial state of the App
@@ -120,6 +123,9 @@ export const initialState = fromJS({
    *      isCopying: false,
    *      isRemoving: false,
    *      isRestoring: false,
+   *      subTasks: {
+   *        [task.name]: { isProcessing: false, isError: false, errorMessage: '' },
+   *      },
    *      errorMessage: '',
    *      nextValue: {},
    *    }
@@ -283,6 +289,42 @@ function appReducer(state = initialState, action) {
       return state.setIn(
         ['projectsNextValues', action.projectId, action.keyId, 'nextValue'],
         action.nextValue,
+      );
+    case PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_PROCESSING:
+      return state.setIn(
+        [
+          'projectsNextValues',
+          action.projectId,
+          action.keyId,
+          'subTasks',
+          action.taskName,
+          'isProcessing',
+        ],
+        action.isProcessing,
+      );
+    case PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_ERROR:
+      return state.setIn(
+        [
+          'projectsNextValues',
+          action.projectId,
+          action.keyId,
+          'subTasks',
+          action.taskName,
+          'isError',
+        ],
+        action.isError,
+      );
+    case PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_ERROR_MESSAGE:
+      return state.setIn(
+        [
+          'projectsNextValues',
+          action.projectId,
+          action.keyId,
+          'subTasks',
+          action.taskName,
+          'errorMessage',
+        ],
+        action.errorMessage,
       );
     case PROJECTS_NEXT_VALUES_CHANGE_IS_SAVING:
       return state.setIn(
