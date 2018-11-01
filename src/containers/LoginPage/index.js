@@ -151,7 +151,7 @@ const mapStateToProps = createStructuredSelector({
   projectsImportsProcessingData: makeSelectProjectsImportsProcessingData(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     changeIdent: evt => dispatch(actions.changeIdent(evt.target.value)),
