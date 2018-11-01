@@ -146,6 +146,22 @@ export class ProjectPage extends React.PureComponent {
                     </Statistic.Value>
                     <Statistic.Label>Stores</Statistic.Label>
                   </Statistic>
+                  <Statistic>
+                    <Statistic.Value>
+                      {currentProject
+                        .getIn(['resources', 'total'], 0)
+                        .toLocaleString()}
+                    </Statistic.Value>
+                    <Statistic.Label>Resources</Statistic.Label>
+                  </Statistic>
+                  <Statistic>
+                    <Statistic.Value>
+                      {currentProject
+                        .getIn(['mapSpts', 'total'], 0)
+                        .toLocaleString()}
+                    </Statistic.Value>
+                    <Statistic.Label>MapSpts</Statistic.Label>
+                  </Statistic>
                 </Statistic.Group>
               </Grid.Column>
             </Grid>

@@ -31,6 +31,12 @@ export default gql`
       boxItemOuts {
         total
       }
+      resources {
+        total
+      }
+      mapSpts {
+        total
+      }
     }
   }
 `;
