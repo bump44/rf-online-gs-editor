@@ -1,3 +1,4 @@
+import invariant from 'invariant';
 import { fromJS } from 'immutable';
 import { saveTokenMe } from '~/utils/ls';
 
@@ -42,6 +43,8 @@ import {
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_PROCESSING,
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_ERROR_MESSAGE,
+  PROJECTS_EXPORTS_SERVER_MAPS_CHANGE_PROP_VALUE,
+  PROJECTS_EXPORTS_SERVER_MAPS_REMOVE,
 } from './constants';
 
 // The initial state of the App
@@ -109,6 +112,23 @@ export const initialState = fromJS({
    * }
    */
   projectsExports: {},
+
+  /**
+   * Projects ExportsServerMaps Operations
+   * {
+   *  [project.id]: {
+   *    [mapName]: {
+   *      status: WAITING/PROCESSING/FINISHED/ERROR/CANCELLED,
+   *      errorMessage: '',
+   *      projectId: '',
+   *      mapName: '',
+   *      message: '',
+   *      loaded: 0,
+   *      total: 0,
+   *    }
+   *  }
+   */
+  projectsExportsServerMaps: {},
 
   /**
    * Projects Next Values Operations
@@ -440,6 +460,16 @@ function appReducer(state = initialState, action) {
           action.fileKey,
         );
 
+    // PROJECTS_EXPORTS_SERVER_MAPS
+    case PROJECTS_EXPORTS_SERVER_MAPS_CHANGE_PROP_VALUE:
+      return logicProjectsExportsServerMapsChangePropValue(state, action);
+    case PROJECTS_EXPORTS_SERVER_MAPS_REMOVE:
+      return state.removeIn([
+        'projectsExportsServerMaps',
+        action.projectId,
+        action.mapName,
+      ]);
+
     case CHANGE_CURRENT_USER:
       return state
         .set('currentUser', fromJS(action.user))
@@ -505,4 +535,29 @@ function logicProjectsImportsServerMapsChangePropValue(state, action) {
       ],
       action.mapName,
     );
+}
+
+function logicProjectsExportsServerMapsChangePropValue(state, action) {
+  invariant(
+    typeof action.projectId === 'string' && action.projectId.length > 0,
+    `Argument 'projectId' is required and must be a string`,
+  );
+
+  invariant(
+    typeof action.mapName === 'string' && action.mapName.length > 0,
+    `Argument 'mapName' is required and must be a string`,
+  );
+
+  const keys = ['projectsExportsServerMaps', action.projectId, action.mapName];
+
+  return state.setIn(
+    keys,
+    state.getIn(keys, IMMUTABLE_MAP).merge(
+      fromJS({
+        [action.propKey]: action.propValue,
+        projectId: action.projectId,
+        mapName: action.mapName,
+      }),
+    ),
+  );
 }
