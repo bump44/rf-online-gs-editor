@@ -32,6 +32,7 @@ import {
 import { getReleaseFilesPath } from '~/utils/path';
 import injectSaga from '~/utils/injectSaga';
 import injectReducer from '~/utils/injectReducer';
+
 import {
   CLIENT_FILES,
   FILES,
@@ -43,6 +44,7 @@ import {
   makeSelectIsLoggedIn,
   makeSelectCurrentUser,
   makeSelectProjectsExports,
+  makeSelectProjectsExportsServerMaps,
 } from '~/containers/App/selectors';
 
 import {
@@ -50,6 +52,9 @@ import {
   projectsExportsBindActionsWithFileKey,
   projectsExportsStartFileExport,
   projectsExportsCancelFileExport,
+  projectsExportsServerMapsBindActions,
+  projectsExportsServerMapsStartMapExport,
+  projectsExportsServerMapsCancelMapExport,
 } from '~/containers/App/actions';
 
 import {
@@ -83,6 +88,7 @@ export class ProjectExportPage extends React.Component {
   constructor(props) {
     super(props);
     this.renderFiles = this.renderFiles.bind(this);
+    this.renderServerMaps = this.renderServerMaps.bind(this);
     this.onClickStartAll = this.onClickStartAll.bind(this);
     this.onClickCancelAll = this.onClickCancelAll.bind(this);
     this.isSomeStarted = this.isSomeStarted.bind(this);
@@ -291,6 +297,103 @@ export class ProjectExportPage extends React.Component {
     });
   }
 
+  renderServerMaps(serverMaps = IMMUTABLE_MAP) {
+    const {
+      fnProjectsExportsServerMapsStartMapExport,
+      fnProjectsExportsServerMapsCancelMapExport,
+      projectExportPage,
+    } = this.props;
+
+    const startActions = {
+      fnProjectsExportsServerMapsStartMapExport,
+      fnProjectsExportsServerMapsCancelMapExport,
+    };
+
+    const { project } = projectExportPage;
+
+    return map(serverMaps.toJS(), (serverMap, mapName) => {
+      const state = serverMaps.get(mapName, IMMUTABLE_MAP);
+      const status = state.get('status', WAITING);
+      const errorMessage = state.get('errorMessage', '');
+      const message = state.get('message', '');
+      const total = state.get('total', 0);
+      const loaded = state.get('loaded', 0);
+
+      const percent = (() => {
+        if (total <= 0) return 0;
+        if (loaded >= total) return 100;
+        return ((loaded / total) * 100).toFixed(1);
+      })();
+
+      const onClickStartAction =
+        status !== PROCESSING
+          ? 'fnProjectsExportsServerMapsStartMapExport'
+          : 'fnProjectsExportsServerMapsCancelMapExport';
+
+      const onClickStart = () =>
+        startActions[onClickStartAction]({
+          projectId: project.id,
+          mapName,
+        });
+
+      return (
+        <Comment key={mapName}>
+          <Comment.Content>
+            <Comment.Author>
+              <Label
+                horizontal
+                color={cx({
+                  teal: status === WAITING,
+                  purple: status === PROCESSING,
+                  green: status === FINISHED,
+                  red: status === ERROR,
+                  yellow: status === CANCELLED,
+                })}
+              >
+                {status}
+              </Label>
+              {mapName}
+            </Comment.Author>
+            {status === ERROR && (
+              <Comment.Text>
+                <Notification type="danger">{errorMessage}</Notification>
+              </Comment.Text>
+            )}
+            <Comment.Text />
+            {status === PROCESSING && (
+              <React.Fragment>
+                {message && <Comment.Text>{message}</Comment.Text>}
+                <Comment.Text>
+                  <Progress size="tiny" percent={percent} indicating>
+                    {percent}%
+                  </Progress>
+                </Comment.Text>
+              </React.Fragment>
+            )}
+            <Comment.Actions>
+              <Comment.Action onClick={onClickStart}>
+                <Icon
+                  name={cx({
+                    play: [WAITING, FINISHED, CANCELLED, ERROR].includes(
+                      status,
+                    ),
+                    times: status === PROCESSING,
+                  })}
+                />
+                {status !== PROCESSING && (
+                  <FormattedMessage {...messages.Start} />
+                )}
+                {status === PROCESSING && (
+                  <FormattedMessage {...messages.Cancel} />
+                )}
+              </Comment.Action>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
+      );
+    });
+  }
+
   render() {
     const {
       isLoggedIn,
@@ -300,6 +403,7 @@ export class ProjectExportPage extends React.Component {
       fnLogoutCurrentUser,
       projectsExportsProcessingData,
       projectExportsProcessingData,
+      projectsExportsServerMaps,
     } = this.props;
 
     const {
@@ -310,6 +414,8 @@ export class ProjectExportPage extends React.Component {
       isLoading,
       id,
     } = projectExportPage;
+
+    const serverMaps = projectsExportsServerMaps.get(id, IMMUTABLE_MAP);
 
     return (
       <div>
@@ -395,6 +501,15 @@ export class ProjectExportPage extends React.Component {
                             {this.renderFiles(CLIENT_ND_FILES)}
                           </Comment.Group>
                         </SegmentComments>
+
+                        <PageHeader>Server Map Files</PageHeader>
+                        {serverMaps.count() > 0 && (
+                          <SegmentComments>
+                            <Comment.Group>
+                              {this.renderServerMaps(serverMaps)}
+                            </Comment.Group>
+                          </SegmentComments>
+                        )}
                       </Grid.Column>
                       <Grid.Column>
                         <PageHeader>Server Files</PageHeader>
@@ -439,6 +554,7 @@ const mapStateToProps = createStructuredSelector({
   currentProject: makeSelectProject(),
   currentUser: makeSelectCurrentUser(),
   projectsExports: makeSelectProjectsExports(),
+  projectsExportsServerMaps: makeSelectProjectsExportsServerMaps(),
 });
 
 function mapDispatchToProps(dispatch, props) {
@@ -459,6 +575,14 @@ function mapDispatchToProps(dispatch, props) {
     fnProjectsExportsCancelFileExport: args =>
       dispatch(projectsExportsCancelFileExport(args)),
     fnProjectsExportsChangeFilePropValue,
+    fnProjectExportsServerMapsActions: projectsExportsServerMapsBindActions({
+      projectId,
+      dispatch,
+    }),
+    fnProjectsExportsServerMapsStartMapExport: args =>
+      dispatch(projectsExportsServerMapsStartMapExport(args)),
+    fnProjectsExportsServerMapsCancelMapExport: args =>
+      dispatch(projectsExportsServerMapsCancelMapExport(args)),
   };
 }
 
