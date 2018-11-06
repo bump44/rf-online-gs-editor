@@ -1,6 +1,6 @@
 import { isNullOrUndefined } from 'util';
 
-import { IMMUTABLE_MAP } from '../constants';
+import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 
 function isNotNullOrUndefined(value) {
   return !isNullOrUndefined(value);
@@ -23,3 +23,17 @@ export const getValue = (
 
   return def;
 };
+
+export const getListValue = (
+  nextValue = IMMUTABLE_MAP,
+  { entry = IMMUTABLE_MAP },
+  { field } = {},
+) =>
+  (
+    nextValue
+      .get(field, IMMUTABLE_LIST)
+      .concat(entry.get(field, IMMUTABLE_LIST)) || IMMUTABLE_LIST
+  )
+    .groupBy(x => x.get('id'))
+    .map(xs => xs.first())
+    .toList();
