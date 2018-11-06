@@ -29,6 +29,7 @@ class ProjectStoreInteractingMapNameType extends React.PureComponent {
       size,
       className,
       fluid,
+      disabled,
       types,
     } = this.props;
 
@@ -44,6 +45,7 @@ class ProjectStoreInteractingMapNameType extends React.PureComponent {
         size={size}
         className={className}
         fluid={fluid}
+        disabled={disabled}
       />
     );
   }
@@ -56,6 +58,7 @@ ProjectStoreInteractingMapNameType.propTypes = {
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
   fluid: PropTypes.bool,
+  disabled: PropTypes.bool,
   types: PropTypes.instanceOf(List).isRequired,
 };
 
@@ -63,6 +66,7 @@ ProjectStoreInteractingMapNameType.defaultProps = {
   size: 'mini',
   className: '',
   fluid: true,
+  disabled: false,
 };
 
 export default ProjectStoreInteractingMapNameType;

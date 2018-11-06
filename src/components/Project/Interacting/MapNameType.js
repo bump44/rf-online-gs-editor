@@ -24,7 +24,7 @@ class ProjectInteractingMapNameType extends React.PureComponent {
   }
 
   render() {
-    const { value, size, className, fluid, types } = this.props;
+    const { value, size, className, fluid, disabled, types } = this.props;
 
     const type = types.find(val => val.get('value') === value);
     const isUnknown = !type;
@@ -46,46 +46,49 @@ class ProjectInteractingMapNameType extends React.PureComponent {
       <Input
         size={size}
         fluid={fluid}
+        disabled={disabled}
         value={value}
         onChange={this.changeValue}
         className={className}
         label={
-          <Dropdown
-            text={dropdownText}
-            inline
-            labeled
-            scrolling
-            item
-            value={value}
-          >
-            <Dropdown.Menu>
-              {isUnknown && (
-                <Dropdown.Item
-                  selected
-                  text={
-                    <span>
-                      {`${value}: `}
-                      <FormattedMessage {...messages.UnknownMapNameType} />
-                    </span>
-                  }
-                />
-              )}
+          !disabled && (
+            <Dropdown
+              text={dropdownText}
+              inline
+              labeled
+              scrolling
+              item
+              value={value}
+            >
+              <Dropdown.Menu>
+                {isUnknown && (
+                  <Dropdown.Item
+                    selected
+                    text={
+                      <span>
+                        {`${value}: `}
+                        <FormattedMessage {...messages.UnknownMapNameType} />
+                      </span>
+                    }
+                  />
+                )}
 
-              {types.map(val => (
-                <Dropdown.Item
-                  onClick={this.changeValue}
-                  selected={val.get('value') === value}
-                  key={val.get('value')}
-                  value={val.get('value')}
-                  text={
-                    <span>
-                      {val.get('value')}: {val.get('title')}
-                    </span>
-                  }
-                />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+                {types.map(val => (
+                  <Dropdown.Item
+                    onClick={this.changeValue}
+                    selected={val.get('value') === value}
+                    key={val.get('value')}
+                    value={val.get('value')}
+                    text={
+                      <span>
+                        {val.get('value')}: {val.get('title')}
+                      </span>
+                    }
+                  />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          )
         }
       />
     );
@@ -97,6 +100,7 @@ ProjectInteractingMapNameType.propTypes = {
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
   fluid: PropTypes.bool,
+  disabled: PropTypes.bool,
   types: PropTypes.instanceOf(List).isRequired,
   value: PropTypes.string,
 };
@@ -105,6 +109,7 @@ ProjectInteractingMapNameType.defaultProps = {
   size: 'mini',
   className: '',
   fluid: true,
+  disabled: false,
   value: null,
 };
 
