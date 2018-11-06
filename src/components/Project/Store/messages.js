@@ -108,6 +108,10 @@ export default defineMessages({
     id: 'app.components.ProjectStore.Basic',
     defaultMessage: 'Basic',
   },
+  Actions: {
+    id: 'app.components.ProjectStore.Actions',
+    defaultMessage: 'Actions',
+  },
   Buttons: {
     id: 'app.components.ProjectStore.Buttons',
     defaultMessage: 'Buttons',
