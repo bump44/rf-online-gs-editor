@@ -3,7 +3,9 @@ import upperFirst from 'lodash/upperFirst';
 import {
   projectsNextValuesChangePropValue,
   projectsNextValuesCopyAndRedirect,
+  projectsNextValuesCreateMapSpt,
 } from './projectsNextValues';
+
 import { STORE } from '../constants';
 
 /**
@@ -98,6 +100,12 @@ export const projectsStores = {
       ...args,
       subType: STORE,
       propKey: 'copyAndRedirect',
+    }),
+  createMapSpt: args =>
+    projectsNextValuesCreateMapSpt({
+      ...args,
+      subType: STORE,
+      propKey: 'createMapSpt',
     }),
 };
 

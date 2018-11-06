@@ -17,6 +17,7 @@ import {
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_PROCESSING,
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_IS_ERROR,
   PROJECTS_NEXT_VALUES_SUB_TASK_CHANGE_ERROR_MESSAGE,
+  PROJECTS_NEXT_VALUES_CREATE_MAPSPT,
 } from '../constants';
 
 /**
@@ -184,97 +185,58 @@ export function projectsNextValuesChangeNextValueOnlyInState(
   };
 }
 
-export function projectsNextValuesRemoveVirtual({
-  projectId,
-  entry,
-  propKey,
-  propValue,
-  additionalData = {},
-  subType,
-}) {
-  return {
-    type: PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+/**
+ * Special actions
+ *
+ * equal:
+ *   export function projectsNextValuesRemoveVirtual({
+ *     projectId,
+ *     entry,
+ *     propKey,
+ *     propValue,
+ *     additionalData = {},
+ *     subType,
+ *   }) {
+ *     return {
+ *       type: PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+ *       projectId,
+ *       entry,
+ *       propKey,
+ *       propValue,
+ *       additionalData,
+ *       subType,
+ *     };
+ *   }
+ */
+export const [
+  projectsNextValuesRemoveVirtual,
+  projectsNextValuesRemoveFully,
+  projectsNextValuesRestoreVirtual,
+  projectsNextValuesCopyAndRedirect,
+  projectsNextValuesCreateModelFilesFromThisData,
+  projectsNextValuesCreateMapSpt,
+] = [
+  PROJECTS_NEXT_VALUES_REMOVE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_REMOVE_FULLY,
+  PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
+  PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
+  PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
+  PROJECTS_NEXT_VALUES_CREATE_MAPSPT,
+].map(
+  type => ({
+    projectId,
+    entry,
+    propKey,
+    propValue,
+    additionalData = {},
+    subType,
+  }) => ({
+    type,
     projectId,
     entry,
     propKey,
     propValue,
     additionalData,
     subType,
-  };
-}
-
-export function projectsNextValuesRemoveFully({
-  projectId,
-  entry,
-  propKey,
-  propValue,
-  additionalData = {},
-  subType,
-}) {
-  return {
-    type: PROJECTS_NEXT_VALUES_REMOVE_FULLY,
-    projectId,
-    entry,
-    propKey,
-    propValue,
-    additionalData,
-    subType,
-  };
-}
-
-export function projectsNextValuesRestoreVirtual({
-  projectId,
-  entry,
-  propKey,
-  propValue,
-  additionalData = {},
-  subType,
-}) {
-  return {
-    type: PROJECTS_NEXT_VALUES_RESTORE_VIRTUAL,
-    projectId,
-    entry,
-    propKey,
-    propValue,
-    additionalData,
-    subType,
-  };
-}
-
-export function projectsNextValuesCopyAndRedirect({
-  projectId,
-  entry,
-  propKey,
-  propValue,
-  additionalData = {},
-  subType,
-}) {
-  return {
-    type: PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
-    projectId,
-    entry,
-    propKey,
-    propValue,
-    additionalData,
-    subType,
-  };
-}
-
-export function projectsNextValuesCreateModelFilesFromThisData({
-  projectId,
-  entry,
-  propKey,
-  propValue,
-  additionalData = {},
-  subType,
-}) {
-  return {
-    type: PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
-    projectId,
-    entry,
-    propKey,
-    propValue,
-    additionalData,
-    subType,
-  };
-}
+  }),
+);

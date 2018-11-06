@@ -21,6 +21,7 @@ import React from 'react';
 
 import { IMMUTABLE_MAP } from '~/containers/App/constants';
 import * as projectStore from '~/containers/App/getters/projectStore';
+import { getSubTask } from '~/containers/App/getters/nextValues';
 
 import messages from './messages';
 import ProjectStoreInteractingName from './Interacting/Name';
@@ -70,6 +71,40 @@ class ProjectStore extends React.PureComponent {
     this.copyAndRedirect = () => {
       const { store, storeActions } = this.props;
       storeActions.copyAndRedirect(store);
+    };
+
+    this.createMapSptSD = () => {
+      const { store, storeActions, storeNextValues } = this.props;
+      const mapName = projectStore.getMapCode(
+        storeNextValues.get('nextValue'),
+        { entry: store },
+      );
+      const strAnchor = projectStore.getSdCode(
+        storeNextValues.get('nextValue'),
+        {
+          entry: store,
+        },
+      );
+      storeActions.createMapSpt(store, {
+        values: { mapName, strAnchor },
+      });
+    };
+
+    this.createMapSptBD = () => {
+      const { store, storeActions, storeNextValues } = this.props;
+      const mapName = projectStore.getMapCode(
+        storeNextValues.get('nextValue'),
+        { entry: store },
+      );
+      const strAnchor = projectStore.getBdCode(
+        storeNextValues.get('nextValue'),
+        {
+          entry: store,
+        },
+      );
+      storeActions.createMapSpt(store, {
+        values: { mapName, strAnchor },
+      });
     };
   }
 
@@ -303,6 +338,14 @@ class ProjectStore extends React.PureComponent {
     const bdCode = projectStore.getBdCode(storeNextValue, { entry: store });
     const mapCode = projectStore.getMapCode(storeNextValue, { entry: store });
     const mapSpts = projectStore.getMapSpts(storeNextValue, { entry: store });
+    const sdIsExists = mapSpts.some(
+      mapSpt => mapSpt.get('strAnchor') === sdCode,
+    );
+    const bdIsExists = mapSpts.some(
+      mapSpt => mapSpt.get('strAnchor') === bdCode,
+    );
+
+    const actionCreateMapSpt = getSubTask(storeNextValues, 'createMapSpt');
 
     return (
       <Tab.Pane attached={false}>
@@ -312,11 +355,44 @@ class ProjectStore extends React.PureComponent {
 
         <Divider />
 
+        {actionCreateMapSpt.isError && (
+          <Notification type="danger">
+            {actionCreateMapSpt.errorMessage}
+          </Notification>
+        )}
+
+        {!sdIsExists && (
+          <Button
+            primary
+            size="mini"
+            disabled={actionCreateMapSpt.isProcessing}
+            loading={actionCreateMapSpt.isProcessing}
+            onClick={this.createMapSptSD}
+          >
+            Create SD MapSpt
+          </Button>
+        )}
+
+        {!bdIsExists && (
+          <Button
+            primary
+            size="mini"
+            disabled={actionCreateMapSpt.isProcessing}
+            loading={actionCreateMapSpt.isProcessing}
+            onClick={this.createMapSptBD}
+          >
+            Create BD MapSpt
+          </Button>
+        )}
+
+        {(!sdIsExists || !bdIsExists) && <Divider />}
+
         <ProjectStoreInteractingMapNameType
           store={store}
           storeNextValues={storeNextValues}
           types={mapNameTypes}
           onChangeValue={storeActions.changeMapCode}
+          disabled={actionCreateMapSpt.isProcessing}
         />
 
         {mapSpts.map(mapSpt => (

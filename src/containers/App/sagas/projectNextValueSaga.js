@@ -36,6 +36,7 @@ import {
   PROJECTS_NEXT_VALUES_COPY_AND_REDIRECT,
   PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
   RESOURCE,
+  PROJECTS_NEXT_VALUES_CREATE_MAPSPT,
 } from '../constants';
 
 import {
@@ -62,9 +63,13 @@ import {
   projectsNextValuesChangeNextValueOnlyInState,
   projectsNextValuesChangeIsRestoring,
   projectsNextValuesChangeIsCopying,
+  projectsNextValuesSubTaskChangeIsError,
+  projectsNextValuesSubTaskChangeIsProcessing,
+  projectsNextValuesSubTaskChangeErrorMessage,
 } from '../actions/projectsNextValues';
 
 import workerCreateModelFilesFromThisData from './projectNextValue/workerCreateModelFilesFromThisData';
+import workerCreateMapSpt from './projectNextValue/workerCreateMapSpt';
 
 const Workers = {};
 
@@ -511,22 +516,68 @@ export function* watchCopyAndRedirect() {
   }
 }
 
-export function* watchCreateModelFilesFromThisData() {
+export function* createWatchSpecial() {
+  const actions = {
+    [PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA]: workerCreateModelFilesFromThisData,
+    [PROJECTS_NEXT_VALUES_CREATE_MAPSPT]: workerCreateMapSpt,
+  };
+
+  const types = Object.keys(actions);
+
+  const makeCallAction = ({ taskName, projectId, keyId }) => (action, value) =>
+    action({ projectId, keyId, taskName }, value);
+
+  const makeActions = callAction => ({
+    changeToStarted: function* genChangeToStarted() {
+      yield put(callAction(projectsNextValuesSubTaskChangeIsError, false));
+      yield put(callAction(projectsNextValuesSubTaskChangeErrorMessage, ''));
+      yield put(callAction(projectsNextValuesSubTaskChangeIsProcessing, true));
+    },
+    changeToFailed: function* genChangeToFailed(err) {
+      yield put(
+        callAction(projectsNextValuesSubTaskChangeErrorMessage, err.message),
+      );
+      yield put(callAction(projectsNextValuesSubTaskChangeIsError, true));
+      yield put(callAction(projectsNextValuesSubTaskChangeIsProcessing, false));
+    },
+    changeToSuccess: function* genChangeToSuccess() {
+      yield put(callAction(projectsNextValuesSubTaskChangeErrorMessage, ''));
+      yield put(callAction(projectsNextValuesSubTaskChangeIsError, false));
+      yield put(callAction(projectsNextValuesSubTaskChangeIsProcessing, false));
+    },
+    changeIsError: function* genChangeIsError(value) {
+      yield put(callAction(projectsNextValuesSubTaskChangeIsError, value));
+    },
+    changeIsProcessing: function* genChangeIsProcessing(value) {
+      yield put(callAction(projectsNextValuesSubTaskChangeIsProcessing, value));
+    },
+    changeErrorMessage: function* genChangeErrorMessage(value) {
+      yield put(callAction(projectsNextValuesSubTaskChangeErrorMessage, value));
+    },
+  });
+
   while (true) {
-    const props = yield take(
-      PROJECTS_NEXT_VALUES_CREATE_MODEL_FILES_FROM_THIS_DATA,
-    );
+    const props = yield take(types);
     props.keyId = props.entry.get('id');
 
     const { projectId, keyId } = props;
-    const mainKey = `${projectId}:${keyId}:createModelFilesFromThisData`;
+    const mainKey = `${projectId}:${keyId}:${props.type}`;
 
     if (Workers[mainKey]) {
       yield cancel(Workers[mainKey]);
       Workers[mainKey] = undefined;
     }
 
-    Workers[mainKey] = yield fork(workerCreateModelFilesFromThisData, props);
+    const callAction = makeCallAction({
+      taskName: props.propKey,
+      projectId,
+      keyId,
+    });
+
+    Workers[mainKey] = yield fork(actions[props.type], {
+      ...props,
+      actions: makeActions(callAction),
+    });
   }
 }
 
@@ -538,6 +589,6 @@ export default function* defaultSaga() {
     fork(watchRemoveFully),
     fork(watchRestoreVirtual),
     fork(watchCopyAndRedirect),
-    fork(watchCreateModelFilesFromThisData),
+    fork(createWatchSpecial),
   ]);
 }
