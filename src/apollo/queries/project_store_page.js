@@ -7,6 +7,7 @@ import ProjectIncludeAllTypes from '~/apollo/fragments/ProjectIncludeAllTypes';
 import StoreClientNameParts from '~/apollo/fragments/StoreClientNameParts';
 import StoreServerNameParts from '~/apollo/fragments/StoreServerNameParts';
 import ResourceNameParts from '~/apollo/fragments/ResourceNameParts';
+import NPCharacterNameParts from '~/apollo/fragments/NPCharacterNameParts';
 
 export default gql`
   query($id: String!, $storeId: String!) {
@@ -92,6 +93,13 @@ export default gql`
           ...ItemServerNameParts
         }
       }
+
+      npcharacter {
+        id
+        projectId
+        nIndex
+        ...NPCharacterNameParts
+      }
     }
   }
 
@@ -103,4 +111,5 @@ export default gql`
   ${ItemServerNameParts}
   ${MapSptNameParts}
   ${ResourceNameParts}
+  ${NPCharacterNameParts}
 `;
