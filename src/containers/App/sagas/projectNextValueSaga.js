@@ -11,6 +11,7 @@ import itemUpdate from '~/apollo/mutations/item_update';
 import storeUpdate from '~/apollo/mutations/store_update';
 import storeCopy from '~/apollo/mutations/store_copy';
 import resourceUpdate from '~/apollo/mutations/resource_update';
+import mapSptUpdate from '~/apollo/mutations/mapspt_update';
 
 import {
   take,
@@ -86,6 +87,7 @@ const MutationUpdateQueries = {
   [STORE]: storeUpdate,
   [BOXITEMOUT]: boxItemOutUpdate,
   [RESOURCE]: resourceUpdate,
+  [MAPSPT]: mapSptUpdate,
 };
 
 const MutationRemoveVirtualQueries = {
