@@ -632,3 +632,14 @@ export const getButtonType = (
   const value = getButtonValue(nextValue, { entry }, { n });
   return buttonTypes.find(buttonType => buttonType.get('value') === value);
 };
+
+export const getRace = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['npcharacter', 'nRace'], ['client', 'nRace']],
+      def: -1,
+      fnc: isInteger,
+    },
+  );

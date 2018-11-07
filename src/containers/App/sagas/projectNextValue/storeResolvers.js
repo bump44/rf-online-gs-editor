@@ -7,6 +7,12 @@ import { IMMUTABLE_LIST } from '../../constants';
 import { convNPCodeServerToClient } from '~/utils/converters';
 
 const Resolvers = {
+  race(store, value) {
+    return store
+      .setIn(['client', 'nRace'], value)
+      .setIn(['npcharacter', 'nRace'], value);
+  },
+
   model(store, value = '') {
     return store.setIn(['client', 'strModel'], value.toUpperCase());
   },

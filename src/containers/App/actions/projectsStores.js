@@ -26,6 +26,7 @@ export const projectsStores = {
       'mapCode',
       'code',
       'model',
+      'race',
       'itemsListCount',
       'itemListServerCode',
       'itemListClientCode',

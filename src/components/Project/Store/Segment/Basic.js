@@ -10,6 +10,8 @@ import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { getUseAngle } from '~/containers/App/getters/projectStore';
+
 import messages from '../messages';
 import ProjectStoreInteractingAngle from '../Interacting/Angle';
 import ProjectStoreInteractingCode from '../Interacting/Code';
@@ -19,8 +21,7 @@ import ProjectStoreInteractingName from '../Interacting/Name';
 import ProjectStoreInteractingSize from '../Interacting/Size';
 import ProjectStoreInteractingTrade from '../Interacting/Trade';
 import ProjectStoreInteractingUseAngle from '../Interacting/UseAngle';
-
-import { getUseAngle } from '~/containers/App/getters/projectStore';
+import ProjectStoreInteractingRaceSelect from '../Interacting/RaceSelect';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStore extends React.PureComponent {
@@ -40,6 +41,14 @@ class ProjectStore extends React.PureComponent {
               storeNextValues={storeNextValues}
               onChangeValue={storeActions.changeName}
               className="pb-5"
+              label={
+                <ProjectStoreInteractingRaceSelect
+                  store={store}
+                  storeNextValues={storeNextValues}
+                  onChangeValue={storeActions.changeRace}
+                  fluid={false}
+                />
+              }
             />
             <ProjectStoreInteractingLastName
               store={store}

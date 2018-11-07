@@ -124,4 +124,20 @@ export default defineMessages({
     id: 'app.components.ProjectStore.LimItemsList',
     defaultMessage: 'Limited Items list',
   },
+  All: {
+    id: 'app.components.ProjectStore.All',
+    defaultMessage: 'All',
+  },
+  Bellato: {
+    id: 'app.components.ProjectStore.Bellato',
+    defaultMessage: 'Bellato',
+  },
+  Cora: {
+    id: 'app.components.ProjectStore.Cora',
+    defaultMessage: 'Cora',
+  },
+  Accretia: {
+    id: 'app.components.ProjectStore.Accretia',
+    defaultMessage: 'Accretia',
+  },
 });

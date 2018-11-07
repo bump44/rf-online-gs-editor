@@ -13,6 +13,16 @@ import { IMMUTABLE_MAP } from '~/containers/App/constants';
 import { getResources } from '~/containers/App/getters/projectStore';
 import ProjectResourceSegmentBasic from '../../Resource/Segment/Basic';
 
+const styles = {
+  segment: {
+    padding: 0,
+    background: 'none',
+    border: 0,
+    boxShadow: 'none',
+    height: '100%',
+  },
+};
+
 /* eslint-disable react/prefer-stateless-function */
 class ProjectStoreSegmentResources extends React.PureComponent {
   render() {
@@ -23,7 +33,7 @@ class ProjectStoreSegmentResources extends React.PureComponent {
     });
 
     return (
-      <Segment>
+      <Segment style={styles.segment}>
         {resources.map(resource => (
           <ProjectResourceSegmentBasic
             key={resource.get('id')}

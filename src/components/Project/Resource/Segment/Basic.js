@@ -274,7 +274,7 @@ class ProjectResourceSegmentBasic extends React.PureComponent {
   }
 
   render() {
-    const { resource, resourceNextValues } = this.props;
+    const { resource, resourceNextValues, style } = this.props;
     const type = getType(resourceNextValues.get('nextValue'), {
       entry: resource,
     });
@@ -285,16 +285,19 @@ class ProjectResourceSegmentBasic extends React.PureComponent {
     );
 
     return (
-      <Segment color="yellow">
+      <Segment color="yellow" style={style}>
         {isBone(type) && this.renderBone()}
         {isMesh(type) && this.renderMesh()}
         {isAni(type) && this.renderAni()}
+
         <Divider />
+
         {actionCreateModelFilesFromThisData.isError && (
           <Notification type="danger">
             {actionCreateModelFilesFromThisData.errorMessage}
           </Notification>
         )}
+
         <Button
           primary
           size="small"
@@ -315,6 +318,11 @@ ProjectResourceSegmentBasic.propTypes = {
   resource: PropTypes.instanceOf(Map).isRequired,
   resourceNextValues: PropTypes.instanceOf(Map).isRequired,
   resourceActions: PropTypes.object.isRequired,
+  style: PropTypes.object,
+};
+
+ProjectResourceSegmentBasic.defaultProps = {
+  style: {},
 };
 
 export default ProjectResourceSegmentBasic;
