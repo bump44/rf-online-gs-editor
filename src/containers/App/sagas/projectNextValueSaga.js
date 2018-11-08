@@ -107,7 +107,7 @@ const MutationCopyQueries = {
 };
 
 const PickFields = {
-  [STORE]: ['client', 'server'],
+  [STORE]: ['client', 'server', 'npcharacter'],
 };
 
 const OmitFields = {};

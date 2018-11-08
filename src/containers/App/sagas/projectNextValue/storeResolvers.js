@@ -22,6 +22,7 @@ const Resolvers = {
       .setIn(['server', 'strCode'], `sd${value.toLowerCase()}`)
       .setIn(['server', 'strBindingDummyName'], `bd${value.toLowerCase()}`)
       .setIn(['server', 'strStoreNPCcode'], value.toUpperCase())
+      .setIn(['npcharacter', 'strCode'], value.toUpperCase())
       .setIn(['client', 'strCode'], convNPCodeServerToClient(value));
   },
 
