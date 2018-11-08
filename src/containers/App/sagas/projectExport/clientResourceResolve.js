@@ -1,6 +1,6 @@
 import { delay } from 'redux-saga';
 import { put, call } from 'redux-saga/effects';
-import { trim, compact, isString, chunk } from 'lodash';
+import { compact, isString, chunk } from 'lodash';
 import { copy } from 'fs-extra';
 import gql from 'graphql-tag';
 import path from 'path';
@@ -25,7 +25,12 @@ import {
 } from '~/utils/constants';
 
 import { isBone, isMesh, isAni } from '~/structs/resource_types_utils';
-import { normalize, getWorkdirFileName } from '~/utils/string';
+
+import {
+  normalize,
+  getWorkdirFileName,
+  normalizeResourcePath,
+} from '~/utils/string';
 
 function buildQueryObjects(fieldNames = []) {
   return gql`
@@ -54,7 +59,7 @@ function* loadObjects({ type, projectId, fieldNames, loaded, changeLoaded }) {
       variables: {
         skip: objects.length,
         take: 100,
-        sort: { createdAt: 1 },
+        sort: { id: 1 },
         where: { type, projectId },
       },
     });
@@ -413,12 +418,16 @@ function* takeValidFilePath(paths = []) {
     i += 1;
   }
 
-  return null;
-}
+  // eslint-disable-next-line
+  console.warn(
+    'Export',
+    'ClientResource',
+    'takeValidFilePath',
+    paths,
+    'ENOENT',
+  );
 
-function normalizeResourcePath(str) {
-  return `.\\${trim(
-    trim(normalize(str, 128).toUpperCase(), '.').replace('/', '\\'),
-    '\\',
-  )}\\`;
+  // TODO: add redux log
+
+  return null;
 }
