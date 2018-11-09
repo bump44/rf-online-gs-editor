@@ -122,6 +122,7 @@ export const STORE = 'STORE';
 export const BOXITEMOUT = 'BOXITEMOUT';
 export const MAPSPT = 'MAPSPT';
 export const RESOURCE = 'RESOURCE';
+export const POTIONITEMEFFECT = 'POTIONITEMEFFECT';
 
 // Immutable BaseObjects
 export const IMMUTABLE_MAP = Map({});

@@ -23,6 +23,7 @@ import {
   projectsBoxItemOutsBindActions,
   projectsEntriesFinderItemsBindActions,
   logoutCurrentUser,
+  projectsPotionItemEffectsBindActions,
 } from '~/containers/App/actions';
 
 import {
@@ -152,6 +153,9 @@ export class ProjectItemPage extends React.PureComponent {
     const boxItemOutActions = projectsBoxItemOutsBindActions(
       actionsBindPayload,
     );
+    const potionItemEffectActions = projectsPotionItemEffectsBindActions(
+      actionsBindPayload,
+    );
 
     const nextValues =
       currentProject &&
@@ -237,6 +241,7 @@ export class ProjectItemPage extends React.PureComponent {
                       boxItemOutActions={boxItemOutActions}
                       entriesFinderItems={entriesFinderItems}
                       entriesFinderItemsActions={entriesFinderItemsActions}
+                      potionItemEffectActions={potionItemEffectActions}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>

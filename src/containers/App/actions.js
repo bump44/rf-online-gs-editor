@@ -92,6 +92,12 @@ import {
   projectsResourcesBindActions,
 } from './actions/projectsResources';
 
+import {
+  projectsPotionItemEffects,
+  projectsPotionItemEffectsActionNames,
+  projectsPotionItemEffectsBindActions,
+} from './actions/projectsPotionItemEffect';
+
 export {
   announceProjectCountItems,
   announceProjectCountStores,
@@ -159,6 +165,11 @@ export {
   projectsResources,
   projectsResourcesActionNames,
   projectsResourcesBindActions,
+};
+export {
+  projectsPotionItemEffects,
+  projectsPotionItemEffectsActionNames,
+  projectsPotionItemEffectsBindActions,
 };
 
 /**
