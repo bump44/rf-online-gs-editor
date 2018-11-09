@@ -372,7 +372,10 @@ export class ProjectImportPage extends React.Component {
     const { project } = projectImportPage;
     const projectImports = projectsImports.get(project.id, IMMUTABLE_MAP);
 
-    return map(files, (file, key) => {
+    const fileKeys = Object.keys(files).sort();
+
+    return map(fileKeys, key => {
+      const file = files[key];
       const fileActions = fnProjectsImportsChangeFilePropValue[key];
       const fileState = projectImports.get(key, IMMUTABLE_MAP);
       const filePath = fileState.get('filePath', '').trim();
