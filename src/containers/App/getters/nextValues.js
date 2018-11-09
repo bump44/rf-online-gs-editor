@@ -113,3 +113,6 @@ export const getSubTask = (nextValues, action) => ({
   isError: getSubTaskIsError(nextValues, action),
   errorMessage: getSubTaskErrorMessage(nextValues, action),
 });
+
+export const getNextValues = (nextValues, entry = IMMUTABLE_MAP) =>
+  nextValues.get(entry.get('id'), IMMUTABLE_MAP);
