@@ -2,6 +2,7 @@ import * as ITEM_TYPES from '~/structs/item_types';
 
 import RenderArmor from './Render/Armor';
 import RenderBox from './Render/Box';
+import RenderPotion from './Render/Potion';
 import RenderTool from './Render/Tool';
 
 // want help in writing specific components ;)
@@ -19,7 +20,7 @@ export default {
   [ITEM_TYPES.AMULET]: RenderTool,
   [ITEM_TYPES.BULLET]: RenderTool,
   [ITEM_TYPES.MAKETOOL]: RenderTool,
-  [ITEM_TYPES.POTION]: RenderTool,
+  [ITEM_TYPES.POTION]: RenderPotion,
   [ITEM_TYPES.BAG]: RenderTool,
   [ITEM_TYPES.BATTERY]: RenderTool,
   [ITEM_TYPES.ORE]: RenderTool,
