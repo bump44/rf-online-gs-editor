@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import SegmentBasic from '../Segment/Basic';
-import SegmentBoxOutputs from '../Segment/BoxOutputs';
+import SegmentBoxOuts from '../Segment/BoxOuts';
 
 const tabStyle = { height: '100%' };
 const tabMenu = {
@@ -57,7 +57,7 @@ class ProjectItemRenderBox extends React.PureComponent {
     } = this.props;
 
     return (
-      <SegmentBoxOutputs
+      <SegmentBoxOuts
         item={item}
         itemNextValues={itemNextValues}
         nextValues={nextValues}
