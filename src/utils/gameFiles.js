@@ -38,6 +38,7 @@ export const RESOLVERS = {
   SERVER_STORE: 'serverStoreResolve',
   SERVER_NPCHARACTER: 'serverNPCharacterResolve',
   SERVER_BOXITEMOUT: 'serverBoxItemOutResolve',
+  SERVER_POTIONITEMEFFECT: 'serverPotionItemEffectResolve',
   SERVER_MAPSPT: 'serverMapSptResolve',
   SERVER_MAPPORTAL: 'serverMapPortalResolve',
   SERVER_MAPBLOCK: 'serverMapBlockResolve',
@@ -201,6 +202,12 @@ export const FILES = {
     resolve: RESOLVERS.SERVER_ITEM,
     type: FILE_TYPE_SERVER,
     args: { type: ITEM_TYPES.DUNGEONKEY },
+    extensions: ['dat'],
+  },
+  'Script/PotionItemEffect.dat': {
+    path: 'Script/PotionItemEffect.dat',
+    resolve: RESOLVERS.SERVER_POTIONITEMEFFECT,
+    type: FILE_TYPE_SERVER,
     extensions: ['dat'],
   },
 };
