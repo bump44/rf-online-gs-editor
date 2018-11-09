@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 
 import BoxItemOutNameParts from '~/apollo/fragments/BoxItemOutNameParts';
+import PotionItemEffectNameParts from '~/apollo/fragments/PotionItemEffectNameParts';
 import ItemClientNameParts from '~/apollo/fragments/ItemClientNameParts';
 import ItemServerNameParts from '~/apollo/fragments/ItemServerNameParts';
 import ProjectIncludeAllTypes from '~/apollo/fragments/ProjectIncludeAllTypes';
@@ -107,6 +108,13 @@ export default gql`
           }
         }
       }
+
+      potionItemEffects {
+        id
+        nIndex
+        projectId
+        ...PotionItemEffectNameParts
+      }
     }
   }
 
@@ -115,4 +123,5 @@ export default gql`
   ${ItemClientNameParts}
   ${ItemServerNameParts}
   ${BoxItemOutNameParts}
+  ${PotionItemEffectNameParts}
 `;
