@@ -38,8 +38,6 @@ class ProjectItemSegmentBasic extends React.PureComponent {
     this.renderCivils = this.renderCivils.bind(this);
     this.renderCurrentMoney = this.renderCurrentMoney.bind(this);
     this.renderAllMoneyFields = this.renderAllMoneyFields.bind(this);
-    this.renderLevels = this.renderLevels.bind(this);
-    this.renderDefences = this.renderDefences.bind(this);
   }
 
   renderNames() {
