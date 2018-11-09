@@ -14,7 +14,9 @@ import {
 import { isNullOrUndefined } from 'util';
 
 import { getFiniteByTypeName } from '~/structs/item_types_utils';
-import { getValue } from './nextValue';
+import { getValue, getListValue } from './nextValue';
+import { getNextValues } from './nextValues';
+import { getCode } from './projectPotionItemEffect';
 
 import {
   DEFAULT_STORAGE_PRICE_PERCENT,
@@ -656,6 +658,23 @@ export const getBoxItemOut = (
   const strCode = getServerCode(nextValue, { entry });
   return boxItemOuts.find(boxItemOut => boxItemOut.get('strCode') === strCode);
 };
+
+export const getPotionItemEffect = (nextValue, { entry, nextValues }) =>
+  getListValue(nextValue, { entry }, { field: 'potionItemEffects' })
+    .filter(
+      potionItemEffect =>
+        getCode(getNextValues(nextValues, potionItemEffect), {
+          entry: potionItemEffect,
+        }) === getEffectCode(nextValue, { entry }),
+    )
+    .first();
+
+export const getEffectCode = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', 'strEffCode']], def: '', fnc: isString },
+  );
 
 export const getExpertTypeValue = (
   nextValue = IMMUTABLE_MAP,
