@@ -44,6 +44,7 @@ import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
 import serverNPCharacterResolve from './projectImport/serverNPCharacterResolve';
 import serverBoxItemOutResolve from './projectImport/serverBoxItemOutResolve';
+import serverPotionItemEffectResolve from './projectImport/serverPotionItemEffectResolve';
 import serverMapSptResolve from './projectImport/serverMapSptResolve';
 import serverMapBlockResolve from './projectImport/serverMapBlockResolve';
 import serverMapActiveResolve from './projectImport/serverMapActiveResolve';
@@ -62,6 +63,7 @@ const Resolvers = {
   serverMapActiveResolve,
   serverMapPortalResolve,
   serverNPCharacterResolve,
+  serverPotionItemEffectResolve,
 };
 
 const Workers = {};
