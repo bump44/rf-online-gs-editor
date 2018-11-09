@@ -2,6 +2,11 @@ import { isString, isInteger, isNumber } from 'lodash';
 import { getValue } from './nextValue';
 import { getWorkdirFileName } from '~/utils/string';
 
+export const getOswName = (nextValue, { entry }) =>
+  getOswName1(getCode(nextValue, { entry }));
+
+export const getOswName1 = code => `OSW_${code}`.toUpperCase();
+
 export const getType = (nextValue, { entry }) =>
   getValue(
     nextValue,
@@ -30,6 +35,16 @@ export const getFileName = (nextValue, { entry }) =>
     { fields: [['strFileName']], def: '', fnc: isString },
   );
 
+export const getFileNameIsOsw = (nextValue, { entry }) => {
+  const oswName = getOswName(nextValue, { entry });
+  const fileName = getFileName(nextValue, { entry });
+  return getFileNameIsOsw1(fileName, oswName);
+};
+
+export const getFileNameIsOsw1 = (fileName, oswName) =>
+  fileName.toUpperCase().replace(/^(.+?)\..+?$/, '$1') ===
+  oswName.toUpperCase();
+
 export const getFileNameBBX = (nextValue, { entry }) =>
   getValue(
     nextValue,
@@ -37,12 +52,24 @@ export const getFileNameBBX = (nextValue, { entry }) =>
     { fields: [['strFileNameBBX']], def: '', fnc: isString },
   );
 
+export const getFileNameBBXIsOsw = (nextValue, { entry }) => {
+  const oswName = getOswName(nextValue, { entry });
+  const fileName = getFileNameBBX(nextValue, { entry });
+  return getFileNameIsOsw1(fileName, oswName);
+};
+
 export const getFileNameBN = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['strFileNameBN']], def: '', fnc: isString },
   );
+
+export const getFileNameBNIsOsw = (nextValue, { entry }) => {
+  const oswName = getOswName(nextValue, { entry });
+  const fileName = getFileNameBN(nextValue, { entry });
+  return getFileNameIsOsw1(fileName, oswName);
+};
 
 export const getFileNameHashBBX = (nextValue, { entry }) =>
   getWorkdirFileName([

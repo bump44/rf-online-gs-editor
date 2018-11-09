@@ -36,6 +36,9 @@ import {
   getTexturePath,
   getPropNum,
   getPropValue,
+  getFileNameIsOsw,
+  getFileNameBBXIsOsw,
+  getFileNameBNIsOsw,
 } from '~/containers/App/getters/projectResource';
 
 import { isBone, isMesh, isAni } from '~/structs/resource_types_utils';
@@ -284,6 +287,18 @@ class ProjectResourceSegmentBasic extends React.PureComponent {
       'createModelFilesFromThisData',
     );
 
+    const actionCreateModelFilesFromThisDataIsDisabled =
+      actionCreateModelFilesFromThisData.isProcessing ||
+      getFileNameIsOsw(resourceNextValues.get('nextValue'), {
+        entry: resource,
+      }) ||
+      (getFileNameBBXIsOsw(resourceNextValues.get('nextValue'), {
+        entry: resource,
+      }) &&
+        getFileNameBNIsOsw(resourceNextValues.get('nextValue'), {
+          entry: resource,
+        }));
+
     return (
       <Segment color="yellow" style={style}>
         {isBone(type) && this.renderBone()}
@@ -303,7 +318,7 @@ class ProjectResourceSegmentBasic extends React.PureComponent {
           size="small"
           onClick={this.createModelFilesFromThisData}
           loading={actionCreateModelFilesFromThisData.isProcessing}
-          disabled={actionCreateModelFilesFromThisData.isProcessing}
+          disabled={actionCreateModelFilesFromThisDataIsDisabled}
         >
           Create Model Files From This Data
         </Button>

@@ -22,6 +22,8 @@ import {
   getFileNameBBX,
   getFileNameBN,
   getFileName,
+  getOswName1,
+  getFileNameIsOsw1,
 } from '../../getters/projectResource';
 
 import { isBone, isMesh, isAni } from '~/structs/resource_types_utils';
@@ -64,27 +66,31 @@ export function* takeValidFilePath(paths = []) {
 }
 
 export function getFilesToCopy({ folderPath, workdirPath, code, files = [] }) {
-  return files
-    .filter(file => isString(file.name))
-    .filter(file => file.name.length > 0)
-    .filter(file => /^\..+$/i.test(file.ext))
-    .map(file => ({
-      ...file,
-      name: file.name,
-      nextName: `OSW_${code}${file.ext}`.toUpperCase(),
-      hash: getWorkdirFileName([folderPath, file.name]),
-    }))
-    .map(file => ({
-      ...file,
-      shouldBeHerePaths: [
-        path.resolve(workdirPath, folderPath, file.name),
-        path.resolve(workdirPath, file.hash),
-      ],
-      copyToPath: path.resolve(
-        workdirPath,
-        getWorkdirFileName([folderPath, file.nextName]),
-      ),
-    }));
+  return (
+    files
+      .filter(file => isString(file.name))
+      .filter(file => file.name.length > 0)
+      .filter(file => /^\..+$/i.test(file.ext))
+      .map(file => ({
+        ...file,
+        name: file.name,
+        nextName: `${getOswName1(code)}${file.ext}`.toUpperCase(),
+        hash: getWorkdirFileName([folderPath, file.name]),
+      }))
+      .map(file => ({
+        ...file,
+        shouldBeHerePaths: [
+          path.resolve(workdirPath, folderPath, file.name),
+          path.resolve(workdirPath, file.hash),
+        ],
+        copyToPath: path.resolve(
+          workdirPath,
+          getWorkdirFileName([folderPath, file.nextName]),
+        ),
+      }))
+      // skip same source to destination
+      .filter(file => !getFileNameIsOsw1(file.name, file.nextName))
+  );
 }
 
 export function* copyFiles({ files = [], entry }) {
