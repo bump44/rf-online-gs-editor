@@ -1,22 +1,15 @@
 import { isString, isInteger, isBoolean, isNumber } from 'lodash';
 
 import { getValue } from './nextValue';
-import { IMMUTABLE_MAP } from '../constants';
 
-export const getMapName = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getMapName = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['mapName']], def: '', fnc: isString },
   );
 
-export const getAnchor = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getAnchor = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -27,7 +20,7 @@ export const getAnchor = (
     },
   );
 
-export const getA1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA1 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -38,7 +31,7 @@ export const getA1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getA2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA2 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -49,7 +42,7 @@ export const getA2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getA3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA3 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -60,7 +53,7 @@ export const getA3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getA4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA4 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -71,7 +64,7 @@ export const getA4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getA5 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA5 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -82,7 +75,7 @@ export const getA5 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getA6 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getA6 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -93,10 +86,7 @@ export const getA6 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getExcludeNodeTm = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getExcludeNodeTm = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -107,7 +97,7 @@ export const getExcludeNodeTm = (
     },
   );
 
-export const getB1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getB1 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -118,7 +108,7 @@ export const getB1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getB2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getB2 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -129,7 +119,7 @@ export const getB2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getB3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getB3 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -140,7 +130,7 @@ export const getB3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getB4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getB4 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -151,7 +141,7 @@ export const getB4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getC1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getC1 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -162,7 +152,7 @@ export const getC1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getC2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getC2 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -173,7 +163,7 @@ export const getC2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getC3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getC3 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -184,7 +174,7 @@ export const getC3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getC4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getC4 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -195,7 +185,7 @@ export const getC4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getD1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getD1 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -206,7 +196,7 @@ export const getD1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getD2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getD2 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -217,7 +207,7 @@ export const getD2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getD3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getD3 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -228,7 +218,7 @@ export const getD3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getD4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getD4 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -239,7 +229,7 @@ export const getD4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getE1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getE1 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -250,7 +240,7 @@ export const getE1 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getE2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getE2 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -261,7 +251,7 @@ export const getE2 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getE3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getE3 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -272,7 +262,7 @@ export const getE3 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getE4 = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getE4 = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },

@@ -201,6 +201,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
     const autoReverseClientCodes = localSettings.get(AUTO_REVERSE_CLIENT_CODES);
     const nextValue = storeNextValues.get('nextValue');
+
     const itemList = projectStore.getItemList(
       nextValue,
       { entry: store, nextValues },
@@ -393,9 +394,7 @@ class ProjectStoreInteractingItemList extends React.PureComponent {
 
     const listCount = projectStore.getItemsListCount(
       storeNextValues.get('nextValue'),
-      {
-        entry: store,
-      },
+      { entry: store },
     );
 
     return (

@@ -1,6 +1,6 @@
 /**
  *
- * ProjectPotionItemEffectFieldFormattedMessage
+ * ProjectSkillForceFieldFormattedMessage
  *
  */
 
@@ -11,7 +11,7 @@ import React from 'react';
 import messages from '../messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectPotionItemEffectFieldFormattedMessage extends React.PureComponent {
+class ProjectSkillForceFieldFormattedMessage extends React.PureComponent {
   render() {
     const { message, children } = this.props;
 
@@ -29,9 +29,9 @@ class ProjectPotionItemEffectFieldFormattedMessage extends React.PureComponent {
   }
 }
 
-ProjectPotionItemEffectFieldFormattedMessage.propTypes = {
+ProjectSkillForceFieldFormattedMessage.propTypes = {
   message: PropTypes.string.isRequired,
   children: PropTypes.func,
 };
 
-export default ProjectPotionItemEffectFieldFormattedMessage;
+export default ProjectSkillForceFieldFormattedMessage;

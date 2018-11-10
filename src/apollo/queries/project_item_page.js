@@ -1,7 +1,8 @@
 import gql from 'graphql-tag';
 
 import BoxItemOutNameParts from '~/apollo/fragments/BoxItemOutNameParts';
-import PotionItemEffectNameParts from '~/apollo/fragments/PotionItemEffectNameParts';
+import SkillForceClientNameParts from '~/apollo/fragments/SkillForceClientNameParts';
+import SkillForceServerNameParts from '~/apollo/fragments/SkillForceServerNameParts';
 import ItemClientNameParts from '~/apollo/fragments/ItemClientNameParts';
 import ItemServerNameParts from '~/apollo/fragments/ItemServerNameParts';
 import ProjectIncludeAllTypes from '~/apollo/fragments/ProjectIncludeAllTypes';
@@ -109,11 +110,19 @@ export default gql`
         }
       }
 
-      potionItemEffects {
+      skillForces {
         id
         nIndex
         projectId
-        ...PotionItemEffectNameParts
+        type
+
+        client {
+          ...SkillForceClientNameParts
+        }
+
+        server {
+          ...SkillForceServerNameParts
+        }
       }
     }
   }
@@ -123,5 +132,6 @@ export default gql`
   ${ItemClientNameParts}
   ${ItemServerNameParts}
   ${BoxItemOutNameParts}
-  ${PotionItemEffectNameParts}
+  ${SkillForceServerNameParts}
+  ${SkillForceClientNameParts}
 `;

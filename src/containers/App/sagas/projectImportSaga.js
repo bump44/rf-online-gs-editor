@@ -40,6 +40,7 @@ import clientItemResolve from './projectImport/clientItemResolve';
 import clientStoreResolve from './projectImport/clientStoreResolve';
 import clientItemNDResolve from './projectImport/clientItemNDResolve';
 import clientResourceResolve from './projectImport/clientResourceResolve';
+import clientSkillForceResolve from './projectImport/clientSkillForceResolve';
 import serverItemResolve from './projectImport/serverItemResolve';
 import serverStoreResolve from './projectImport/serverStoreResolve';
 import serverNPCharacterResolve from './projectImport/serverNPCharacterResolve';
@@ -55,6 +56,7 @@ const Resolvers = {
   clientItemNDResolve,
   clientStoreResolve,
   clientResourceResolve,
+  clientSkillForceResolve,
   serverItemResolve,
   serverStoreResolve,
   serverBoxItemOutResolve,

@@ -34,7 +34,7 @@ function ProjectItem({
   boxItemOutActions,
   entriesFinderItemsActions,
   entriesFinderItems,
-  potionItemEffectActions,
+  skillForceActions,
 }) {
   const Render =
     renderResolvers[
@@ -87,7 +87,7 @@ function ProjectItem({
           boxItemOutActions={boxItemOutActions}
           entriesFinderItemsActions={entriesFinderItemsActions}
           entriesFinderItems={entriesFinderItems}
-          potionItemEffectActions={potionItemEffectActions}
+          skillForceActions={skillForceActions}
         />
       )}
     </div>
@@ -106,7 +106,7 @@ ProjectItem.propTypes = {
   weaponTypes: PropTypes.instanceOf(List).isRequired,
   itemActions: PropTypes.object.isRequired,
   boxItemOutActions: PropTypes.object.isRequired,
-  potionItemEffectActions: PropTypes.object.isRequired,
+  skillForceActions: PropTypes.object.isRequired,
   entriesFinderItemsActions: PropTypes.object.isRequired,
   entriesFinderItems: PropTypes.instanceOf(Map).isRequired,
   style: PropTypes.object,

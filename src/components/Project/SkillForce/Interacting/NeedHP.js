@@ -1,6 +1,6 @@
 /**
  *
- * ProjectPotionItemEffectInteractingNeedSP
+ * ProjectSkillForceInteractingNeedHP
  *
  */
 
@@ -9,25 +9,25 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { getNeedSP } from '~/containers/App/getters/projectPotionItemEffect';
-import ProjectPotionItemEffectFieldFormattedMessage from '../FieldFormattedMessage';
+import { getNeedHP } from '~/containers/App/getters/projectSkillForce';
+import ProjectSkillForceFieldFormattedMessage from '../FieldFormattedMessage';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectPotionItemEffectInteractingNeedSP extends React.PureComponent {
+class ProjectSkillForceInteractingNeedHP extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.renderInput = this.renderInput.bind(this);
     this.changeValue = evt => {
-      const { onChangeValue, potionItemEffect } = this.props;
-      onChangeValue(potionItemEffect, parseInt(evt.target.value, 10) || 0);
+      const { onChangeValue, skillForce } = this.props;
+      onChangeValue(skillForce, parseInt(evt.target.value, 10) || 0);
     };
   }
 
   renderInput(message) {
     const {
-      potionItemEffect,
-      potionItemEffectNextValues,
+      skillForce,
+      skillForceNextValues,
       className,
       label,
       fluid,
@@ -35,8 +35,8 @@ class ProjectPotionItemEffectInteractingNeedSP extends React.PureComponent {
       withDefaultLabel,
     } = this.props;
 
-    const value = getNeedSP(potionItemEffectNextValues.get('nextValue'), {
-      entry: potionItemEffect,
+    const value = getNeedHP(skillForceNextValues.get('nextValue'), {
+      entry: skillForce,
     });
 
     const labelProp = label || withDefaultLabel ? label || message : undefined;
@@ -55,16 +55,16 @@ class ProjectPotionItemEffectInteractingNeedSP extends React.PureComponent {
 
   render() {
     return (
-      <ProjectPotionItemEffectFieldFormattedMessage message="NeedSP">
+      <ProjectSkillForceFieldFormattedMessage message="NeedHP">
         {this.renderInput}
-      </ProjectPotionItemEffectFieldFormattedMessage>
+      </ProjectSkillForceFieldFormattedMessage>
     );
   }
 }
 
-ProjectPotionItemEffectInteractingNeedSP.propTypes = {
-  potionItemEffect: PropTypes.instanceOf(Map).isRequired,
-  potionItemEffectNextValues: PropTypes.instanceOf(Map).isRequired,
+ProjectSkillForceInteractingNeedHP.propTypes = {
+  skillForce: PropTypes.instanceOf(Map).isRequired,
+  skillForceNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
@@ -77,7 +77,7 @@ ProjectPotionItemEffectInteractingNeedSP.propTypes = {
   withDefaultLabel: PropTypes.bool,
 };
 
-ProjectPotionItemEffectInteractingNeedSP.defaultProps = {
+ProjectSkillForceInteractingNeedHP.defaultProps = {
   size: 'mini',
   className: '',
   label: null,
@@ -85,4 +85,4 @@ ProjectPotionItemEffectInteractingNeedSP.defaultProps = {
   withDefaultLabel: true,
 };
 
-export default ProjectPotionItemEffectInteractingNeedSP;
+export default ProjectSkillForceInteractingNeedHP;

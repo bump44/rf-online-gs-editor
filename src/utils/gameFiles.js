@@ -33,6 +33,7 @@ export const RESOLVERS = {
   CLIENT_ITEM: 'clientItemResolve',
   CLIENT_ITEMND: 'clientItemNDResolve',
   CLIENT_STORE: 'clientStoreResolve',
+  CLIENT_SKILLFORCE: 'clientSkillForceResolve',
   CLIENT_RESOURCE: 'clientResourceResolve',
   SERVER_ITEM: 'serverItemResolve',
   SERVER_STORE: 'serverStoreResolve',
@@ -80,6 +81,12 @@ export const FILES = {
   'DataTable/Store.edf': {
     path: 'DataTable/Store.edf',
     resolve: RESOLVERS.CLIENT_STORE,
+    type: FILE_TYPE_CLIENT,
+    extensions: ['dat', 'edf'],
+  },
+  'DataTable/SkillForce.edf': {
+    path: 'DataTable/SkillForce.edf',
+    resolve: RESOLVERS.CLIENT_SKILLFORCE,
     type: FILE_TYPE_CLIENT,
     extensions: ['dat', 'edf'],
   },

@@ -1,37 +1,30 @@
-import { isNullOrUndefined, isNumber } from 'util';
-import { isString, isInteger } from 'lodash';
+import { isString, isInteger, isBoolean, isNumber } from 'lodash';
 
 import { convNPCodeClientToServer } from '~/utils/converters';
 import { getTypeNameByFinite } from '~/structs/item_types_utils';
-import { getValue, getListValue } from './nextValue';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
-import * as projectItem from './projectItem';
 import { STORE_BONE, STORE_MESH, STORE_ANI } from '~/structs/resource_types';
+import { getValue, getListValue } from './nextValue';
+import { getNextValues } from './nextValues';
 
-/**
- * Return the most important title of the subject
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String
- */
-export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get(
-    'priorStrName',
-    entry.getIn(
-      [
+import * as projectItem from './projectItem';
+import * as projectResource from './projectResource';
+
+export const getName = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [
         ['priorStrName'],
         ['client', 'strStoreNPCname'],
         ['server', 'strStoreNPCname'],
-      ].find(fieldSets => !isNullOrUndefined(entry.getIn(fieldSets))) ||
-        'priorStrName',
-    ),
-  ) || '';
+      ],
+      def: '',
+      fnc: isString,
+    },
+  );
 
-export const getSdCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getSdCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -42,10 +35,7 @@ export const getSdCode = (
     },
   );
 
-export const getBdCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getBdCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -56,10 +46,7 @@ export const getBdCode = (
     },
   );
 
-export const getMapCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getMapCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -70,18 +57,12 @@ export const getMapCode = (
     },
   );
 
-export const getMapNameType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, mapNameTypes = IMMUTABLE_LIST },
-) => {
+export const getMapNameType = (nextValue, { entry, mapNameTypes }) => {
   const value = getMapCode(nextValue, { entry });
   return mapNameTypes.find(mapNameType => mapNameType.get('value') === value);
 };
 
-export const getModel = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getModel = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -92,245 +73,146 @@ export const getModel = (
     },
   );
 
-export const getCode = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getCode = (nextValue, { entry }) =>
   getServerCode(nextValue, { entry }) ||
   convNPCodeClientToServer(getClientCode(nextValue, { entry }));
 
-export const getClientCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getClientCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', 'strCode']], def: '', isString },
   );
 
-export const getServerCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getServerCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', 'strStoreNPCcode']], def: '', fnc: isString },
   );
 
-/**
- * Return the most important last title of the subject
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String
- */
-export const getLastName = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['client', 'strStoreNPClastName'],
-    entry.getIn(
-      [['client', 'strStoreNPClastName']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['client', 'strStoreNPClastName'],
-    ),
-  ) || '';
-
-/**
- * Return vendor trade type
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getTrade = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['client', 'nStoreTrade'],
-    entry.getIn(
-      [['server', 'nStoreTrade'], ['client', 'nStoreTrade']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['server', 'nStoreTrade'],
-    ),
-  ) || 0;
-
-/**
- * Return use angle
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Boolean
- */
-export const getUseAngle = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['client', 'bSetNPCangle'],
-    entry.getIn(
-      [['client', 'bSetNPCangle']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['client', 'bSetNPCangle'],
-    ),
+export const getLastName = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', 'strStoreNPClastName']], def: '', fnc: isString },
   );
 
-/**
- * Return vendor size
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getSize = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.getIn(
-    ['client', 'fStoreNPCsize'],
-    entry.getIn(
-      [['client', 'fStoreNPCsize']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['client', 'fStoreNPCsize'],
-    ),
-  ) || 1;
+export const getTrade = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nStoreTrade'], ['client', 'nStoreTrade']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
 
-/**
- * Return vendor angle
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getAngle = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['client', 'fStoreNPCangle'],
-    entry.getIn(
-      [['client', 'fStoreNPCangle']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['client', 'fStoreNPCangle'],
-    ),
-  ) || 0;
+export const getUseAngle = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['client', 'bSetNPCangle']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
 
-export const getMapSpts = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => getListValue(nextValue, { entry }, { field: 'mapSpts' });
+export const getSize = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['client', 'fStoreNPCsize']],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
 
-export const getResources = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue
-    .get('resources', IMMUTABLE_LIST)
-    .concat(entry.get('resources', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
+export const getAngle = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['client', 'fStoreNPCangle']],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
 
-export const getResourceBoneIsDefined = (nextValue, { entry }) =>
+export const getMapSpts = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'mapSpts' });
+
+export const getResources = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'resources' });
+
+export const getResourceBoneIsDefined = (nextValue, { entry, nextValues }) =>
   getResources(nextValue, { entry }).some(
-    resource => resource.get('type') === STORE_BONE,
+    resource =>
+      projectResource.getType(getNextValues(nextValues, resource), {
+        entry: resource,
+      }) === STORE_BONE,
   );
 
-export const getResourceMeshIsDefined = (nextValue, { entry }) =>
+export const getResourceMeshIsDefined = (nextValue, { entry, nextValues }) =>
   getResources(nextValue, { entry }).some(
-    resource => resource.get('type') === STORE_MESH,
+    resource =>
+      projectResource.getType(getNextValues(nextValues, resource), {
+        entry: resource,
+      }) === STORE_MESH,
   );
 
-export const getResourceAniIsDefined = (nextValue, { entry }) =>
+export const getResourceAniIsDefined = (nextValue, { entry, nextValues }) =>
   getResources(nextValue, { entry }).some(
-    resource => resource.get('type') === STORE_ANI,
+    resource =>
+      projectResource.getType(getNextValues(nextValues, resource), {
+        entry: resource,
+      }) === STORE_ANI,
   );
 
-export const getItems = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue
-    .get('items', IMMUTABLE_LIST)
-    .concat(entry.get('items', IMMUTABLE_LIST)) || IMMUTABLE_LIST;
+export const getItems = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'items' });
 
-/**
- * Return vendor list item type from client cell
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns Number
- */
-export const getItemListClientType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getItemListClientType = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', `nItemListType__${n}_1`]], def: 0, fnc: isInteger },
   );
 
-export const getLimItemListClientType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getLimItemListClientType = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', `nLimItemType__${n}_1`]], def: 0, fnc: isInteger },
   );
 
-/**
- * Return vendor list item code from client cell
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns String
- */
-export const getItemListClientCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getItemListClientCode = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', `strItemList__${n}_2`]], def: '', fnc: isString },
   );
 
-export const getLimItemListClientCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getLimItemListClientCode = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', `strLimItemCode__${n}_2`]], def: '', fnc: isString },
   );
 
-export const getLimItemListClientCount = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getLimItemListClientCount = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['client', `nLimMaxCount__${n}_3`]], def: 0, fnc: isInteger },
   );
 
-/**
- * Return vendor list item from client cell
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns Immutable.Map|undefined
- */
 export const getItemListClient = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { n = 1 },
 ) => {
   const finite = getItemListClientType(nextValue, { entry }, { n });
@@ -349,8 +231,8 @@ export const getItemListClient = (
 };
 
 export const getLimItemListClient = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { n = 1 },
 ) => {
   const finite = getLimItemListClientType(nextValue, { entry }, { n });
@@ -369,32 +251,24 @@ export const getLimItemListClient = (
 };
 
 export const getItemByClientCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { code, typeName } = {},
 ) =>
   getItems(nextValue, { entry }).find(
-    value =>
-      projectItem.getClientCode(nextValues.get(value.get('id')), {
-        entry: value,
+    item =>
+      projectItem.getClientCode(getNextValues(nextValues, item), {
+        entry: item,
       }) === code &&
       typeName ===
-        projectItem.getType(nextValues.get(value.get('id')), {
-          entry: value,
+        projectItem.getType(getNextValues(nextValues, item), {
+          entry: item,
         }),
   );
 
-/**
- * Return vendor list item from server cell
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns Immutable.Map|undefined
- */
 export const getItemListServer = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { n = 1 },
 ) => {
   const code = getItemListServerCode(nextValue, { entry }, { n });
@@ -405,8 +279,8 @@ export const getItemListServer = (
 };
 
 export const getLimItemListServer = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { n = 1 },
 ) => {
   const code = getLimItemListServerCode(nextValue, { entry }, { n });
@@ -417,66 +291,38 @@ export const getLimItemListServer = (
 };
 
 export const getItemByServerCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { code } = {},
 ) =>
   getItems(nextValue, { entry }).find(
     item =>
-      projectItem.getServerCode(nextValues.get(item.get('id')), {
+      projectItem.getServerCode(getNextValues(nextValues, item), {
         entry: item,
       }) === code,
   );
 
-/**
- * Return vendor list item code from server cell
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns String
- */
-export const getItemListServerCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getItemListServerCode = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', `strItemCode__${n}`]], def: '', fnc: isString },
   );
 
-export const getLimItemListServerCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getLimItemListServerCode = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', `strLimItemCode__${n}_1`]], def: '', fnc: isString },
   );
 
-export const getLimItemListServerCount = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 },
-) =>
+export const getLimItemListServerCount = (nextValue, { entry }, { n = 1 }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', `nLimMaxCount__${n}_2`]], def: 0, fnc: isInteger },
   );
 
-/**
- * Return vendor list item all data
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-200
- *
- * @returns Object
- */
 export const getItemList = (...props) => ({
   client: getItemListClient(...props),
   server: getItemListServer(...props),
@@ -497,53 +343,28 @@ export const getLimItemList = (...props) => ({
   n: props[2].n,
 });
 
-/**
- * Return vendor list items all data
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Array
- */
-export const getItemsList = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
-) =>
+export const getItemsList = (nextValue, { entry, nextValues }) =>
   Array.from(Array(200)).map((_, index) =>
     getItemList(nextValue, { entry, nextValues }, { n: index + 1 }),
   );
 
-export const getLimItemsList = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, nextValues = IMMUTABLE_MAP },
-) =>
+export const getLimItemsList = (nextValue, { entry, nextValues }) =>
   Array.from(Array(16)).map((_, index) =>
     getLimItemList(nextValue, { entry, nextValues }, { n: index + 1 }),
   );
 
-/**
- * Return vendor list items count
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getItemsListCount = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['server', 'nStoreListCount'],
-    entry.getIn(
-      [['server', 'nStoreListCount'], ['client', 'nStoreLISTcount']].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['server', 'nStoreListCount'],
-    ),
-  ) || 0;
+export const getItemsListCount = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nStoreListCount'], ['client', 'nStoreListCount']],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
 
-export const getLimItemsListCount = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getLimItemsListCount = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -554,79 +375,45 @@ export const getLimItemsListCount = (
     },
   );
 
-/**
- * Return id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getId = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get('id') || entry.get('id') || undefined;
+export const getId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['id']], def: undefined, fnc: isString },
+  );
 
-/**
- * Return project id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getProjectId = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(['project', 'id']) ||
-  entry.getIn(['project', 'id']) ||
-  undefined;
+export const getProjectId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['projectId'], ['project', 'id']],
+      def: undefined,
+      fnc: isString,
+    },
+  );
 
-/**
- * Return index
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number|undefined
- */
-export const getIndex = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => {
-  const value = nextValue.get('nIndex', entry.get('nIndex'));
-  return isNumber(value) ? value : undefined;
-};
+export const getIndex = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['nIndex']], def: undefined, fnc: isNumber },
+  );
 
-/**
- * Return vendor button type value
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-10
- *
- * @returns Number
- */
-export const getButtonValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
-  nextValue.getIn(
-    ['server', `nNpcClass__${n}`],
-    entry.getIn(
-      [['server', `nNpcClass__${n}`], ['client', `nNpcClass__${n}`]].find(
-        fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-      ) || ['server', `nNpcClass__${n}`],
-    ),
-  ) || 0;
+export const getButtonValue = (nextValue, { entry }, { n = 1 } = {}) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', `nNpcClass__${n}`], ['client', `nNpcClass__${n}`]],
+      def: 0,
+      fnc: isNumber,
+    },
+  );
 
-/**
- * Return vendor button type
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- * @param {Object} props n: cell 1-10
- *
- * @returns Immutable.Map|undefined
- */
 export const getButtonType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, buttonTypes = IMMUTABLE_LIST },
+  nextValue,
+  { entry, buttonTypes },
   { n = 1 } = {},
 ) => {
   const value = getButtonValue(nextValue, { entry }, { n });

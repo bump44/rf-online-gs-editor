@@ -93,10 +93,10 @@ import {
 } from './actions/projectsResources';
 
 import {
-  projectsPotionItemEffects,
-  projectsPotionItemEffectsActionNames,
-  projectsPotionItemEffectsBindActions,
-} from './actions/projectsPotionItemEffect';
+  projectsSkillForces,
+  projectsSkillForcesActionNames,
+  projectsSkillForcesBindActions,
+} from './actions/projectsSkillForces';
 
 export {
   announceProjectCountItems,
@@ -167,9 +167,9 @@ export {
   projectsResourcesBindActions,
 };
 export {
-  projectsPotionItemEffects,
-  projectsPotionItemEffectsActionNames,
-  projectsPotionItemEffectsBindActions,
+  projectsSkillForces,
+  projectsSkillForcesActionNames,
+  projectsSkillForcesBindActions,
 };
 
 /**

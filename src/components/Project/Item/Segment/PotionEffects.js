@@ -13,26 +13,26 @@ import React from 'react';
 import { getPotionItemEffect } from '~/containers/App/getters/projectItem';
 import { getNextValues } from '~/containers/App/getters/nextValues';
 
-import ProjectPotionItemEffectInteractingActivate from '../../PotionItemEffect/Interacting/Activate';
-import ProjectPotionItemEffectInteractingCumulType from '../../PotionItemEffect/Interacting/CumulType';
-import ProjectPotionItemEffectInteractingEnable from '../../PotionItemEffect/Interacting/Enable';
-import ProjectPotionItemEffectInteractingFixshield from '../../PotionItemEffect/Interacting/Fixshield';
-import ProjectPotionItemEffectInteractingNeedHP from '../../PotionItemEffect/Interacting/NeedHP';
-import ProjectPotionItemEffectInteractingNeedFP from '../../PotionItemEffect/Interacting/NeedFP';
-import ProjectPotionItemEffectInteractingNeedSP from '../../PotionItemEffect/Interacting/NeedSP';
-import ProjectPotionItemEffectInteractingNeedItemCode from '../../PotionItemEffect/Interacting/NeedItemCode';
-import ProjectPotionItemEffectInteractingNeedItemCount from '../../PotionItemEffect/Interacting/NeedItemCount';
+import ProjectSkillForceInteractingActivate from '../../SkillForce/Interacting/Activate';
+import ProjectSkillForceInteractingCumulType from '../../SkillForce/Interacting/CumulType';
+import ProjectSkillForceInteractingEnable from '../../SkillForce/Interacting/Enable';
+import ProjectSkillForceInteractingFixshield from '../../SkillForce/Interacting/Fixshield';
+import ProjectSkillForceInteractingNeedHP from '../../SkillForce/Interacting/NeedHP';
+import ProjectSkillForceInteractingNeedFP from '../../SkillForce/Interacting/NeedFP';
+import ProjectSkillForceInteractingNeedSP from '../../SkillForce/Interacting/NeedSP';
+import ProjectSkillForceInteractingNeedItemCode from '../../SkillForce/Interacting/NeedItemCode';
+import ProjectSkillForceInteractingNeedItemCount from '../../SkillForce/Interacting/NeedItemCount';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentPotionEffects extends React.PureComponent {
-  renderCheckboxes(potionItemEffectNextValues, potionItemEffect) {
-    const { potionItemEffectActions } = this.props;
+  renderCheckboxes(skillForceNextValues, skillForce) {
+    const { skillForceActions } = this.props;
 
     const components = {
-      ProjectPotionItemEffectInteractingActivate,
-      ProjectPotionItemEffectInteractingCumulType,
-      ProjectPotionItemEffectInteractingEnable,
-      ProjectPotionItemEffectInteractingFixshield,
+      ProjectSkillForceInteractingActivate,
+      ProjectSkillForceInteractingCumulType,
+      ProjectSkillForceInteractingEnable,
+      ProjectSkillForceInteractingFixshield,
     };
 
     return (
@@ -40,11 +40,11 @@ class ProjectItemSegmentPotionEffects extends React.PureComponent {
         {map(components, (Component, key) => (
           <Component
             key={key}
-            potionItemEffect={potionItemEffect}
-            potionItemEffectNextValues={potionItemEffectNextValues}
+            skillForce={skillForce}
+            skillForceNextValues={skillForceNextValues}
             onChangeValue={
-              potionItemEffectActions[
-                `change${key.replace('ProjectPotionItemEffectInteracting', '')}`
+              skillForceActions[
+                `change${key.replace('ProjectSkillForceInteracting', '')}`
               ]
             }
             className="mr-15"
@@ -55,48 +55,40 @@ class ProjectItemSegmentPotionEffects extends React.PureComponent {
   }
 
   render() {
-    const {
-      item,
-      itemNextValues,
-      potionItemEffectActions,
-      nextValues,
-    } = this.props;
+    const { item, itemNextValues, skillForceActions, nextValues } = this.props;
 
-    const potionItemEffect = getPotionItemEffect(
-      itemNextValues.get('nextValue'),
-      { entry: item, nextValues },
-    );
-
-    const potionItemEffectNextValues = getNextValues(
+    const skillForce = getPotionItemEffect(itemNextValues.get('nextValue'), {
+      entry: item,
       nextValues,
-      potionItemEffect,
-    );
+    });
+
+    const skillForceNextValues = getNextValues(nextValues, skillForce);
 
     return (
       <Segment>
-        {this.renderCheckboxes(potionItemEffectNextValues, potionItemEffect)}
+        {this.renderCheckboxes(skillForceNextValues, skillForce)}
         <Divider />
         <Grid columns="equal">
           <Grid.Column>
             <div className="mb-15">
-              <ProjectPotionItemEffectInteractingNeedHP
-                potionItemEffectNextValues={potionItemEffectNextValues}
-                potionItemEffect={potionItemEffect}
-                onChangeValue={potionItemEffectActions.changeNeedHP}
+              <ProjectSkillForceInteractingNeedHP
+                skillForceNextValues={skillForceNextValues}
+                skillForce={skillForce}
+                onChangeValue={skillForceActions.changeNeedHP}
               />
             </div>
             <div className="mb-15">
-              <ProjectPotionItemEffectInteractingNeedFP
-                potionItemEffectNextValues={potionItemEffectNextValues}
-                potionItemEffect={potionItemEffect}
-                onChangeValue={potionItemEffectActions.changeNeedFP}
+              <ProjectSkillForceInteractingNeedFP
+                skillForceNextValues={skillForceNextValues}
+                skillForce={skillForce}
+                onChangeValue={skillForceActions.changeNeedFP}
               />
             </div>
             <div className="mb-15">
-              <ProjectPotionItemEffectInteractingNeedSP
-                potionItemEffectNextValues={potionItemEffectNextValues}
-                potionItemEffect={potionItemEffect}
-                onChangeValue={potionItemEffectActions.changeNeedSP}
+              <ProjectSkillForceInteractingNeedSP
+                skillForceNextValues={skillForceNextValues}
+                skillForce={skillForce}
+                onChangeValue={skillForceActions.changeNeedSP}
               />
             </div>
           </Grid.Column>
@@ -104,18 +96,18 @@ class ProjectItemSegmentPotionEffects extends React.PureComponent {
             {Array.from(Array(3)).map((_, index) => (
               <Grid columns="equal" key={`needItem${index + 1}`}>
                 <Grid.Column>
-                  <ProjectPotionItemEffectInteractingNeedItemCode
-                    potionItemEffectNextValues={potionItemEffectNextValues}
-                    potionItemEffect={potionItemEffect}
-                    onChangeValue={potionItemEffectActions.changeNeedItemCode}
+                  <ProjectSkillForceInteractingNeedItemCode
+                    skillForceNextValues={skillForceNextValues}
+                    skillForce={skillForce}
+                    onChangeValue={skillForceActions.changeNeedItemCode}
                     n={index + 1}
                   />
                 </Grid.Column>
                 <Grid.Column>
-                  <ProjectPotionItemEffectInteractingNeedItemCount
-                    potionItemEffectNextValues={potionItemEffectNextValues}
-                    potionItemEffect={potionItemEffect}
-                    onChangeValue={potionItemEffectActions.changeNeedItemCount}
+                  <ProjectSkillForceInteractingNeedItemCount
+                    skillForceNextValues={skillForceNextValues}
+                    skillForce={skillForce}
+                    onChangeValue={skillForceActions.changeNeedItemCount}
                     n={index + 1}
                   />
                 </Grid.Column>
@@ -132,7 +124,7 @@ ProjectItemSegmentPotionEffects.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
-  potionItemEffectActions: PropTypes.object.isRequired,
+  skillForceActions: PropTypes.object.isRequired,
 };
 
 export default ProjectItemSegmentPotionEffects;

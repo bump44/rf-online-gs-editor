@@ -1,4 +1,4 @@
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import { getListValue } from './nextValue';
 
 /**
  * Return the refs data
@@ -7,10 +7,7 @@ import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
  *
  * @returns String
  */
-export const getRefs = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => ({
+export const getRefs = (nextValue, { entry }) => ({
   moneyTypes: getRefMoneyTypes(nextValue, { entry }),
   itemGradeTypes: getRefItemGradeTypes(nextValue, { entry }),
   weaponTypes: getRefWeaponTypes(nextValue, { entry }),
@@ -20,65 +17,14 @@ export const getRefs = (
   mapNameTypes: getRefMapNameTypes(nextValue, { entry }),
 });
 
-export const getRefMapNameTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['mapNameTypes', 'items'],
-    entry.getIn(['mapNameTypes', 'items'], IMMUTABLE_LIST),
-  );
+export const getRef = (nextValue, { entry }, fieldName) =>
+  getListValue(nextValue, { entry }, { field: [fieldName, 'items'] });
 
-export const getRefEffectTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['effectTypes', 'items'],
-    entry.getIn(['effectTypes', 'items'], IMMUTABLE_LIST),
-  );
-
-export const getRefExpertTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['expertTypes', 'items'],
-    entry.getIn(['expertTypes', 'items'], IMMUTABLE_LIST),
-  );
-
-export const getRefMoneyTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['moneyTypes', 'items'],
-    entry.getIn(['moneyTypes', 'items'], IMMUTABLE_LIST),
-  );
-
-export const getRefItemGradeTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['itemGradeTypes', 'items'],
-    entry.getIn(['itemGradeTypes', 'items'], IMMUTABLE_LIST),
-  );
-
-export const getRefWeaponTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['weaponTypes', 'items'],
-    entry.getIn(['weaponTypes', 'items'], IMMUTABLE_LIST),
-  );
-
-export const getRefButtonTypes = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(
-    ['buttonTypes', 'items'],
-    entry.getIn(['buttonTypes', 'items'], IMMUTABLE_LIST),
-  );
+export const getRefMapNameTypes = (...args) => getRef(...args, 'mapNameTypes');
+export const getRefEffectTypes = (...args) => getRef(...args, 'effectTypes');
+export const getRefExpertTypes = (...args) => getRef(...args, 'expertTypes');
+export const getRefMoneyTypes = (...args) => getRef(...args, 'moneyTypes');
+export const getRefItemGradeTypes = (...args) =>
+  getRef(...args, 'itemGradeTypes');
+export const getRefWeaponTypes = (...args) => getRef(...args, 'weaponTypes');
+export const getRefButtonTypes = (...args) => getRef(...args, 'buttonTypes');

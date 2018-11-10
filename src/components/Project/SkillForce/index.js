@@ -1,6 +1,6 @@
 /**
  *
- * ProjectPotionItemEffect
+ * ProjectSkillForce
  *
  */
 
@@ -10,7 +10,7 @@ import React from 'react';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectPotionItemEffect extends React.PureComponent {
+class ProjectSkillForce extends React.PureComponent {
   render() {
     return (
       <div>
@@ -20,6 +20,6 @@ class ProjectPotionItemEffect extends React.PureComponent {
   }
 }
 
-ProjectPotionItemEffect.propTypes = {};
+ProjectSkillForce.propTypes = {};
 
-export default ProjectPotionItemEffect;
+export default ProjectSkillForce;

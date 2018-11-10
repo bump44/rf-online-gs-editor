@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment PotionItemEffectNameParts on PotionItemEffect {
+  fragment SkillForceServerNameParts on SkillForceServer {
     strCode
     nClass
     nIconIDX

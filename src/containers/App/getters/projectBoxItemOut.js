@@ -2,67 +2,49 @@
  * Getting data on more important item fields
  */
 
-import { isNumber, max } from 'lodash';
+import { isNumber, isInteger, isString, max } from 'lodash';
 
-import { getValue } from './nextValue';
-import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
+import { getNextValues } from './nextValues';
+import { getValue, getMapValue, getListValue } from './nextValue';
+import * as projectItem from './projectItem';
 
-/**
- * Return id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getId = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get('id') || entry.get('id') || undefined;
+export const getId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['id']], def: undefined, fnc: isString },
+  );
 
-/**
- * Return index
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number|undefined
- */
-export const getIndex = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getIndex = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['nIndex']], def: undefined, fnc: isNumber },
   );
 
-/**
- * Return project id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getProjectId = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(['project', 'id']) ||
-  entry.getIn(['project', 'id']) ||
-  undefined;
+export const getProjectId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['projectId'], ['project', 'id']],
+      def: undefined,
+      fnc: isString,
+    },
+  );
 
-/**
- * Return box item
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Immutable.Map|undefined
- */
-export const getItem = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get('item', entry.get('item')) || undefined;
+export const getCode = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['strCode']], def: '', fnc: isString },
+  );
 
-export const getItems = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => nextValue.get('items', entry.get('items')) || IMMUTABLE_LIST;
+export const getItem = (nextValue, { entry }) =>
+  getMapValue(nextValue, { entry }, { field: 'item' });
+
+export const getItems = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'items' });
 
 export const getOutput = (...props) => ({
   code: getOutputCode(...props),
@@ -74,69 +56,57 @@ export const getOutput = (...props) => ({
 });
 
 export const getOutputItem = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  nextValue,
+  { entry, nextValues },
   { n = 1 } = {},
 ) => {
   const strCode = getOutputCode(nextValue, { entry }, { n });
   const items = getItems(nextValue, { entry });
-  return items.find(item => item.getIn(['server', 'strCode']) === strCode);
+
+  return items.find(
+    item =>
+      projectItem.getServerCode(getNextValues(nextValues, item), {
+        entry: item,
+      }) === strCode,
+  );
 };
 
-export const getOutputCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
-  nextValue.getIn(
-    [`strItemCode__${n}_1`],
-    entry.getIn([`strItemCode__${n}_1`]),
-  ) || '';
+export const getOutputCode = (nextValue, { entry }, { n = 1 } = {}) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [[`strItemCode__${n}_1`]], def: '', fnc: isString },
+  );
 
-export const getOutputProb = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getOutputProb = (nextValue, { entry }, { n = 1 } = {}) =>
   max([
-    nextValue.getIn(
-      [`nItemProb__${n}_3`],
-      entry.getIn([`nItemProb__${n}_3`]),
-    ) || 0,
+    getValue(
+      nextValue,
+      { entry },
+      { fields: [[`nItemProb__${n}_3`]], def: 0, fnc: isInteger },
+    ),
     0,
   ]);
 
-export const getOutputProbPercent = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) => (getOutputProb(nextValue, { entry }, { n }) / 10000) * 100;
+export const getOutputProbPercent = (nextValue, { entry }, { n = 1 } = {}) =>
+  (getOutputProb(nextValue, { entry }, { n }) / 10000) * 100;
 
-export const getOutputCount = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getOutputCount = (nextValue, { entry }, { n = 1 } = {}) =>
   max([
-    nextValue.getIn(
-      [`nItemCount__${n}_2`],
-      entry.getIn([`nItemCount__${n}_2`]),
-    ) || 0,
+    getValue(
+      nextValue,
+      { entry },
+      { fields: [[`nItemCount__${n}_2`]], def: 0, fnc: isInteger },
+    ),
     0,
   ]);
 
-export const getOutputs = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getOutputs = (nextValue, { entry }) =>
   Array.from(Array(61)).map((_, index) =>
     getOutput(nextValue, { entry }, { n: index + 1 }),
   );
 
-export const getOutputsProb = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getOutputsProb = (nextValue, { entry }) =>
   Array.from(Array(61)).reduce(
     (accumulator, _, index) =>
       accumulator + getOutputProb(nextValue, { entry }, { n: index + 1 }),

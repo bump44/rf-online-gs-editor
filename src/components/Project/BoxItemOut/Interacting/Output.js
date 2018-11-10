@@ -118,7 +118,7 @@ class ProjectBoxItemOutInteractingOutput extends React.PureComponent {
     const n = index + 1;
     const output = projectBoxItemOut.getOutput(
       boxItemOutNextValues.get('nextValue'),
-      { entry: boxItemOut },
+      { entry: boxItemOut, nextValues },
       { n },
     );
 

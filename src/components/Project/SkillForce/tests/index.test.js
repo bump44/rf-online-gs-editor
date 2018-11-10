@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import ProjectPotionItemEffect from '../index';
+// import ProjectSkillForce from '../index';
 
-describe('<ProjectPotionItemEffect />', () => {
+describe('<ProjectSkillForce />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true);
   });

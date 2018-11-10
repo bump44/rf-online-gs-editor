@@ -2,9 +2,10 @@ import { call, put } from 'redux-saga/effects';
 import { COUNT } from '~/classes/constants';
 import { delay } from 'redux-saga';
 import apolloClient from '~/apollo';
-import importServerMutation from '~/apollo/mutations/potionItemEffect_import_server';
+import importServerMutation from '~/apollo/mutations/skillforce_import_server';
 import chunk from 'lodash/chunk';
 import FileReader from '~/structs/server/potionItemEffect/reader';
+import { POTION } from '~/structs/skillforce_types';
 
 /**
  * Import Server PotionItemEffect Resolver
@@ -41,6 +42,7 @@ export default function* defaultSaga({
       variables: {
         projectId,
         blocks: chunks[t],
+        type: POTION,
         importType,
       },
     });

@@ -4,6 +4,7 @@ export default gql`
   fragment ProjectIncludeAllTypes on Project {
     moneyTypes {
       items {
+        id
         title
         value
         fieldName
@@ -13,6 +14,7 @@ export default gql`
 
     itemGradeTypes {
       items {
+        id
         title
         value
       }
@@ -20,6 +22,7 @@ export default gql`
 
     weaponTypes {
       items {
+        id
         title
         value
       }
@@ -27,6 +30,7 @@ export default gql`
 
     buttonTypes {
       items {
+        id
         title
         value
       }
@@ -34,6 +38,7 @@ export default gql`
 
     effectTypes {
       items {
+        id
         title
         value
       }
@@ -41,6 +46,7 @@ export default gql`
 
     expertTypes {
       items {
+        id
         title
         value
       }
@@ -48,6 +54,7 @@ export default gql`
 
     mapNameTypes {
       items {
+        id
         title
         value
         caseSens

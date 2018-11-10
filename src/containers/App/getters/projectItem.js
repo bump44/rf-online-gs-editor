@@ -11,47 +11,29 @@ import {
   isString,
 } from 'lodash';
 
-import { isNullOrUndefined } from 'util';
-
 import { getFiniteByTypeName } from '~/structs/item_types_utils';
-import { getValue, getListValue } from './nextValue';
+import { POTION } from '~/structs/skillforce_types';
+import { DEFAULT_STORAGE_PRICE_PERCENT } from '../constants';
 import { getNextValues } from './nextValues';
-import { getCode } from './projectPotionItemEffect';
+import { getValue, getListValue } from './nextValue';
+import * as projectBoxItemOut from './projectBoxItemOut';
+import * as projectSkillForce from './projectSkillForce';
 
-import {
-  DEFAULT_STORAGE_PRICE_PERCENT,
-  IMMUTABLE_MAP,
-  IMMUTABLE_LIST,
-} from '../constants';
-
-export const getIsRemoved = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getIsRemoved = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['isRemoved']], def: false, fnc: isBoolean },
   );
 
-export const getIsRemovedFully = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getIsRemovedFully = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['isRemovedFully']], def: false, fnc: isBoolean },
   );
 
-/**
- * Return the most important title of the subject
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String
- */
-export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getName = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -69,17 +51,7 @@ export const getName = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-/**
- * Return money (number-type)
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getMoney = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getMoney = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -90,49 +62,19 @@ export const getMoney = (
     },
   );
 
-/**
- * Return moneyType
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *                       moneyTypes: list of money types
- *
- * @returns Immutable.Map|undefined
- */
-export const getMoneyType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, moneyTypes = IMMUTABLE_LIST },
-) => {
+export const getMoneyType = (nextValue, { entry, moneyTypes }) => {
   const value = getMoney(nextValue, { entry });
   return moneyTypes.find(val => val.get('value') === value);
 };
 
-/**
- * Return moneyValue by current moneyType
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *                       moneyTypes: list of money types
- *
- * @returns Number
- */
-export const getMoneyValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, moneyTypes = IMMUTABLE_LIST },
-) => {
+export const getMoneyValue = (nextValue, { entry, moneyTypes }) => {
   const moneyType = getMoneyType(nextValue, { entry, moneyTypes });
   return getMoneyValueByMoneyType(nextValue, { entry }, { moneyType });
 };
 
-/**
- * Return moneyValue by moneyType
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *                       moneyTypes: list of money types
- *
- * @returns Number
- */
 export const getMoneyValueByMoneyType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  nextValue,
+  { entry },
   { moneyType },
 ) => {
   // unknown money type
@@ -140,38 +82,23 @@ export const getMoneyValueByMoneyType = (
     return 0;
   }
 
-  return (
-    parseInt(
-      nextValue.getIn(
+  return getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [
         ['server', moneyType.get('fieldName')],
-        entry.getIn(
-          [
-            ['server', moneyType.get('fieldName')],
-            ['client', moneyType.get('fieldName')],
-          ].find(fieldSets => !isNullOrUndefined(entry.getIn(fieldSets))) || [
-            'server',
-            moneyType.get('fieldName'),
-          ],
-          0,
-        ),
-      ),
-    ) || 0
+        ['client', moneyType.get('fieldName')],
+      ],
+      def: 0,
+      fnc: isInteger,
+    },
   );
 };
 
-/**
- * Return moneyValue by current moneyType & percent
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *                       moneyTypes: list of money types
- * @param {Object} props percent: number of percent
- *                       valuation: use importance of currency
- *
- * @returns Number
- */
 export const getMoneyValueByPercent = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, moneyTypes = IMMUTABLE_LIST },
+  nextValue,
+  { entry, moneyTypes },
   { percent = 0, valuation = true } = {},
 ) => {
   const moneyType = getMoneyType(nextValue, { entry, moneyTypes });
@@ -188,46 +115,20 @@ export const getMoneyValueByPercent = (
   return Math.ceil((value * percent) / 100);
 };
 
-/**
- * Return storage price
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number
- */
-export const getStoragePrice = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  parseInt(
-    nextValue.getIn(
-      ['server', 'nStoragePrice'],
-      entry.getIn(
-        [['server', 'nStoragePrice'], ['client', 'nStoragePrice']].find(
-          fieldSets => !isNullOrUndefined(entry.getIn(fieldSets)),
-        ) || ['server', 'nStoragePrice'],
-        0,
-      ),
-    ),
-  ) || 0;
+export const getStoragePrice = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nStoragePrice'], ['client', 'nStoragePrice']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
 
-/**
- * Return storage price percent of current money value
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *                       moneyTypes: list of money types
- *                       localSettings: map local program settings
- * @param {Object} props valuation: use importance of currency
- *
- * @returns Number
- */
 export const getStoragePricePercent = (
-  nextValue = IMMUTABLE_MAP,
-  {
-    entry = IMMUTABLE_MAP,
-    moneyTypes = IMMUTABLE_LIST,
-    localSettings = IMMUTABLE_MAP,
-  },
+  nextValue,
+  { entry, moneyTypes, localSettings },
   { valuation = true } = {},
 ) => {
   const moneyType = getMoneyType(nextValue, { entry, moneyTypes });
@@ -247,125 +148,94 @@ export const getStoragePricePercent = (
   return (storagePriceNext / moneyValue) * 100;
 };
 
-/**
- * Return id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getId = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get('id') || entry.get('id') || undefined;
-
-/**
- * Return type (face, upper, ...)
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getType = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
-  nextValue.get('type') || entry.get('type') || undefined;
-
-/**
- * Return index
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns Number|undefined
- */
-export const getIndex = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => {
-  const value = nextValue.get('nIndex', entry.get('nIndex'));
-  return isNumber(value) ? value : undefined;
-};
-
-/**
- * Return project id
- * @param {Object} nextValue next item values
- * @param {Object} props entry: the first thing we got from the server
- *
- * @returns String|undefined
- */
-export const getProjectId = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(['project', 'id']) ||
-  entry.getIn(['project', 'id']) ||
-  undefined;
-
-export const getCivilA = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['server', 'civil_a'],
-    entry.getIn(
-      [['server', 'civil_a'], ['client', 'civil_a']].find(fieldSets =>
-        isBoolean(entry.getIn(fieldSets)),
-      ) || ['server', 'civil_a'],
-    ),
+export const getId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['id']], def: undefined, fnc: isString },
   );
 
-export const getCivilBM = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['server', 'civil_bm'],
-    entry.getIn(
-      [['server', 'civil_bm'], ['client', 'civil_bm']].find(fieldSets =>
-        isBoolean(entry.getIn(fieldSets)),
-      ) || ['server', 'civil_bm'],
-    ),
+export const getType = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['type']], def: undefined, fnc: isString },
   );
 
-export const getCivilBF = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['server', 'civil_bf'],
-    entry.getIn(
-      [['server', 'civil_bf'], ['client', 'civil_bf']].find(fieldSets =>
-        isBoolean(entry.getIn(fieldSets)),
-      ) || ['server', 'civil_bf'],
-    ),
+export const getIndex = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['nIndex']], def: undefined, fnc: isInteger },
   );
 
-export const getCivilCM = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['server', 'civil_cm'],
-    entry.getIn(
-      [['server', 'civil_cm'], ['client', 'civil_cm']].find(fieldSets =>
-        isBoolean(entry.getIn(fieldSets)),
-      ) || ['server', 'civil_cm'],
-    ),
+export const getProjectId = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['projectId'], ['project', 'id']],
+      def: undefined,
+      fnc: isString,
+    },
   );
 
-export const getCivilCF = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  !!nextValue.getIn(
-    ['server', 'civil_cf'],
-    entry.getIn(
-      [['server', 'civil_cf'], ['client', 'civil_cf']].find(fieldSets =>
-        isBoolean(entry.getIn(fieldSets)),
-      ) || ['server', 'civil_cf'],
-    ),
+export const getCivilA = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'civil_a'], ['client', 'civil_a']],
+      def: false,
+      fnc: isBoolean,
+    },
   );
 
-export const getDefFc = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getCivilBM = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'civil_bm'], ['client', 'civil_bm']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getCivilBF = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'civil_bf'], ['client', 'civil_bf']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getCivilCM = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'civil_cm'], ['client', 'civil_cm']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getCivilCF = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'civil_cf'], ['client', 'civil_cf']],
+      def: false,
+      fnc: isBoolean,
+    },
+  );
+
+export const getDefFc = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -380,10 +250,7 @@ export const getDefFc = (
     },
   );
 
-export const getDefFacing = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getDefFacing = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -394,10 +261,7 @@ export const getDefFacing = (
     },
   );
 
-export const getDefGap = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getDefGap = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -408,10 +272,7 @@ export const getDefGap = (
     },
   );
 
-export const getExchange = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getExchange = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -422,7 +283,7 @@ export const getExchange = (
     },
   );
 
-export const getSell = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getSell = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -433,10 +294,7 @@ export const getSell = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getGround = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getGround = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -447,10 +305,7 @@ export const getGround = (
     },
   );
 
-export const getGoldPoint = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getGoldPoint = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -461,10 +316,7 @@ export const getGoldPoint = (
     },
   );
 
-export const getKillPoint = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getKillPoint = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -475,10 +327,7 @@ export const getKillPoint = (
     },
   );
 
-export const getProcPoint = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getProcPoint = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -489,10 +338,7 @@ export const getProcPoint = (
     },
   );
 
-export const getStdPoint = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getStdPoint = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -503,10 +349,7 @@ export const getStdPoint = (
     },
   );
 
-export const getStdPrice = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getStdPrice = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -517,10 +360,7 @@ export const getStdPrice = (
     },
   );
 
-export const getLevel = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getLevel = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -531,10 +371,7 @@ export const getLevel = (
     },
   );
 
-export const getItemGrade = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getItemGrade = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -545,18 +382,12 @@ export const getItemGrade = (
     },
   );
 
-export const getItemGradeType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, itemGradeTypes = IMMUTABLE_LIST },
-) => {
+export const getItemGradeType = (nextValue, { entry, itemGradeTypes }) => {
   const value = getItemGrade(nextValue, { entry });
   return itemGradeTypes.find(val => val.get('value') === value);
 };
 
-export const getStoragePossible = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getStoragePossible = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -567,10 +398,7 @@ export const getStoragePossible = (
     },
   );
 
-export const getSubType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getSubType = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -581,10 +409,7 @@ export const getSubType = (
     },
   );
 
-export const getUpLevel = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getUpLevel = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -595,7 +420,7 @@ export const getUpLevel = (
     },
   );
 
-export const getWP = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
+export const getWP = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
@@ -606,81 +431,121 @@ export const getWP = (nextValue = IMMUTABLE_MAP, { entry = IMMUTABLE_MAP }) =>
     },
   );
 
-export const getWPType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, weaponTypes = IMMUTABLE_LIST },
-) => {
+export const getWPType = (nextValue, { entry, weaponTypes }) => {
   const value = getWP(nextValue, { entry });
   return weaponTypes.find(val => val.get('value') === value);
 };
 
-export const getClientCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(['client', 'strCode'], entry.getIn(['client', 'strCode'])) ||
-  '';
+export const getClientCode = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', 'strCode']], def: '', fnc: isString },
+  );
 
-export const getClientTypeFinite = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => {
-  const type = nextValue.get('type', entry.get('type'));
+export const getClientTypeFinite = (nextValue, { entry }) => {
+  const type = getType(nextValue, { entry });
   return getFiniteByTypeName(type);
 };
 
-export const getServerCode = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
-  nextValue.getIn(['server', 'strCode'], entry.getIn(['server', 'strCode'])) ||
-  '';
+export const getServerCode = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', 'strCode']], def: '', fnc: isString },
+  );
 
-export const getRouteLink = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) =>
+export const getRouteLink = (nextValue, { entry }) =>
   `/project/${getProjectId(nextValue, {
     entry,
   })}/items/${getId(nextValue, {
     entry,
   })}`;
 
-export const getBoxItemOut = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-) => {
-  const boxItemOuts =
-    nextValue
-      .get('boxItemOuts', IMMUTABLE_LIST)
-      .concat(entry.get('boxItemOuts')) || IMMUTABLE_LIST;
+export const getBoxItemOut = (nextValue, { entry, nextValues }) => {
+  const boxItemOuts = getListValue(
+    nextValue,
+    { entry },
+    { field: 'boxItemOuts' },
+  );
 
   const strCode = getServerCode(nextValue, { entry });
-  return boxItemOuts.find(boxItemOut => boxItemOut.get('strCode') === strCode);
+
+  return boxItemOuts.find(
+    boxItemOut =>
+      projectBoxItemOut.getCode(getNextValues(nextValues, boxItemOut), {
+        entry: boxItemOut,
+      }) === strCode,
+  );
 };
 
-export const getPotionItemEffect = (nextValue, { entry, nextValues }) =>
-  getListValue(nextValue, { entry }, { field: 'potionItemEffects' })
-    .filter(
-      potionItemEffect =>
-        getCode(getNextValues(nextValues, potionItemEffect), {
-          entry: potionItemEffect,
-        }) === getEffectCode(nextValue, { entry }),
-    )
-    .first();
+export const getPotionItemEffect = (nextValue, { entry, nextValues }) => {
+  const skillForces = getListValue(
+    nextValue,
+    { entry },
+    { field: 'skillForces' },
+  ).filter(
+    skillForce =>
+      projectSkillForce.getType(getNextValues(nextValues, skillForce), {
+        entry: skillForce,
+      }) === POTION,
+  );
 
-export const getEffectCode = (nextValue, { entry }) =>
+  // find by server code
+  const serverEffectCode = getServerEffectCode(nextValue, { entry });
+
+  if (serverEffectCode.length > 0) {
+    const res = skillForces.find(
+      skillForce =>
+        projectSkillForce.getServerCode(getNextValues(nextValues, skillForce), {
+          entry: skillForce,
+        }) === serverEffectCode,
+    );
+
+    if (res) {
+      return res;
+    }
+  }
+
+  // find by client code
+  const buf = Buffer.from([0, 0, 0, 0]);
+  buf.writeInt32LE(getClientEffectCode(nextValue, { entry }));
+
+  const clientEffectCode = buf.toString('hex');
+  const convServerEffectCode = parseInt(
+    clientEffectCode
+      .split(/(.{2})/g)
+      .reverse()
+      .join(''),
+    16,
+  ).toString(16);
+
+  return skillForces.find(
+    skillForce =>
+      projectSkillForce.getClientCode(getNextValues(nextValues, skillForce), {
+        entry: skillForce,
+      }) === clientEffectCode ||
+      projectSkillForce.getServerCode(getNextValues(nextValues, skillForce), {
+        entry: skillForce,
+      }) === convServerEffectCode,
+  );
+};
+
+export const getServerEffectCode = (nextValue, { entry }) =>
   getValue(
     nextValue,
     { entry },
     { fields: [['server', 'strEffCode']], def: '', fnc: isString },
   );
 
-export const getExpertTypeValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getClientEffectCode = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', 'nEffCode']], def: 0, fnc: isInteger },
+  );
+
+export const getExpertTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
   getValue(
     nextValue,
     { entry },
@@ -692,25 +557,21 @@ export const getExpertTypeValue = (
   );
 
 export const getExpertTypeValueIsDisabled = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  nextValue,
+  { entry },
   { n = 1 } = {},
 ) => getExpertTypeValue(nextValue, { entry }, { n }) === -1;
 
 export const getExpertType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, expertTypes = IMMUTABLE_LIST },
+  nextValue,
+  { entry, expertTypes },
   { n = 1 } = {},
 ) => {
   const value = getExpertTypeValue(nextValue, { entry }, { n });
   return expertTypes.find(expertType => expertType.get('value') === value);
 };
 
-export const getExpertValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getExpertValue = (nextValue, { entry }, { n = 1 } = {}) =>
   getValue(
     nextValue,
     { entry },
@@ -721,11 +582,7 @@ export const getExpertValue = (
     },
   );
 
-export const getEffectTypeValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getEffectTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
   getValue(
     nextValue,
     { entry },
@@ -737,25 +594,21 @@ export const getEffectTypeValue = (
   );
 
 export const getEffectTypeValueIsDisabled = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
+  nextValue,
+  { entry },
   { n = 1 } = {},
 ) => getEffectTypeValue(nextValue, { entry }, { n }) === 0;
 
 export const getEffectType = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP, effectTypes = IMMUTABLE_LIST },
+  nextValue,
+  { entry, effectTypes },
   { n = 1 } = {},
 ) => {
   const value = getEffectTypeValue(nextValue, { entry }, { n });
   return effectTypes.find(effectType => effectType.get('value') === value);
 };
 
-export const getEffectValue = (
-  nextValue = IMMUTABLE_MAP,
-  { entry = IMMUTABLE_MAP },
-  { n = 1 } = {},
-) =>
+export const getEffectValue = (nextValue, { entry }, { n = 1 } = {}) =>
   getValue(
     nextValue,
     { entry },

@@ -1,13 +1,13 @@
 import upperFirst from 'lodash/upperFirst';
 
-import { POTIONITEMEFFECT } from '../constants';
+import { SKILLFORCE } from '../constants';
 import { projectsNextValuesChangePropValue } from './projectsNextValues';
 
 /**
- * ProjectsPotionItemEffects Actions
+ * ProjectsSkillForces Actions
  */
 
-export const projectsPotionItemEffects = {
+export const projectsSkillForces = {
   // generated actions eq. changeActivate
   ...(() => {
     const propKeys = ['activate'];
@@ -16,7 +16,7 @@ export const projectsPotionItemEffects = {
       fns[`change${upperFirst(propKey)}`] = args =>
         projectsNextValuesChangePropValue({
           ...args,
-          subType: POTIONITEMEFFECT,
+          subType: SKILLFORCE,
           propKey,
         });
     });
@@ -24,18 +24,16 @@ export const projectsPotionItemEffects = {
   })(),
 };
 
-export const projectsPotionItemEffectsActionNames = Object.keys(
-  projectsPotionItemEffects,
-);
+export const projectsSkillForcesActionNames = Object.keys(projectsSkillForces);
 
-export const projectsPotionItemEffectsBindActions = ({
+export const projectsSkillForcesBindActions = ({
   projectId,
   additionalData = {},
   dispatch = args => args,
 }) => {
   const nextFns = {};
-  projectsPotionItemEffectsActionNames.forEach(actionKey => {
-    const actionFn = projectsPotionItemEffects[actionKey];
+  projectsSkillForcesActionNames.forEach(actionKey => {
+    const actionFn = projectsSkillForces[actionKey];
     nextFns[actionKey] = (entry, propValue, someAdditionalData = {}) =>
       dispatch(
         actionFn({

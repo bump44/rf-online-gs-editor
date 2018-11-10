@@ -23,7 +23,7 @@ import {
   projectsBoxItemOutsBindActions,
   projectsEntriesFinderItemsBindActions,
   logoutCurrentUser,
-  projectsPotionItemEffectsBindActions,
+  projectsSkillForcesBindActions,
 } from '~/containers/App/actions';
 
 import {
@@ -153,7 +153,7 @@ export class ProjectItemPage extends React.PureComponent {
     const boxItemOutActions = projectsBoxItemOutsBindActions(
       actionsBindPayload,
     );
-    const potionItemEffectActions = projectsPotionItemEffectsBindActions(
+    const skillForceActions = projectsSkillForcesBindActions(
       actionsBindPayload,
     );
 
@@ -241,7 +241,7 @@ export class ProjectItemPage extends React.PureComponent {
                       boxItemOutActions={boxItemOutActions}
                       entriesFinderItems={entriesFinderItems}
                       entriesFinderItemsActions={entriesFinderItemsActions}
-                      potionItemEffectActions={potionItemEffectActions}
+                      skillForceActions={skillForceActions}
                     />
                   </FullheightAutoSizer>
                 </FullheightThis>

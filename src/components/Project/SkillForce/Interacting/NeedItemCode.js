@@ -1,6 +1,6 @@
 /**
  *
- * ProjectPotionItemEffectInteractingNeedItemCount
+ * ProjectSkillForceInteractingNeedItemCode
  *
  */
 
@@ -9,28 +9,25 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { getNeedItemCount } from '~/containers/App/getters/projectPotionItemEffect';
-import ProjectPotionItemEffectFieldFormattedMessage from '../FieldFormattedMessage';
+import { getNeedItemCode } from '~/containers/App/getters/projectSkillForce';
+import ProjectSkillForceFieldFormattedMessage from '../FieldFormattedMessage';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectPotionItemEffectInteractingNeedItemCount extends React.PureComponent {
+class ProjectSkillForceInteractingNeedItemCode extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.renderInput = this.renderInput.bind(this);
     this.changeValue = evt => {
-      const { onChangeValue, potionItemEffect, n } = this.props;
-      onChangeValue(potionItemEffect, {
-        value: parseInt(evt.target.value, 10) || 0,
-        n,
-      });
+      const { onChangeValue, skillForce, n } = this.props;
+      onChangeValue(skillForce, { value: evt.target.value, n });
     };
   }
 
   renderInput(message) {
     const {
-      potionItemEffect,
-      potionItemEffectNextValues,
+      skillForce,
+      skillForceNextValues,
       className,
       label,
       fluid,
@@ -39,9 +36,9 @@ class ProjectPotionItemEffectInteractingNeedItemCount extends React.PureComponen
       n,
     } = this.props;
 
-    const value = getNeedItemCount(
-      potionItemEffectNextValues.get('nextValue'),
-      { entry: potionItemEffect },
+    const value = getNeedItemCode(
+      skillForceNextValues.get('nextValue'),
+      { entry: skillForce },
       { n },
     );
 
@@ -55,24 +52,22 @@ class ProjectPotionItemEffectInteractingNeedItemCount extends React.PureComponen
         value={value}
         onChange={this.changeValue}
         className={className}
-        min="0"
-        type="number"
       />
     );
   }
 
   render() {
     return (
-      <ProjectPotionItemEffectFieldFormattedMessage message="NeedItemCount">
+      <ProjectSkillForceFieldFormattedMessage message="NeedItemCode">
         {this.renderInput}
-      </ProjectPotionItemEffectFieldFormattedMessage>
+      </ProjectSkillForceFieldFormattedMessage>
     );
   }
 }
 
-ProjectPotionItemEffectInteractingNeedItemCount.propTypes = {
-  potionItemEffect: PropTypes.instanceOf(Map).isRequired,
-  potionItemEffectNextValues: PropTypes.instanceOf(Map).isRequired,
+ProjectSkillForceInteractingNeedItemCode.propTypes = {
+  skillForce: PropTypes.instanceOf(Map).isRequired,
+  skillForceNextValues: PropTypes.instanceOf(Map).isRequired,
   onChangeValue: PropTypes.func.isRequired,
   size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
   className: PropTypes.string,
@@ -86,7 +81,7 @@ ProjectPotionItemEffectInteractingNeedItemCount.propTypes = {
   n: PropTypes.number.isRequired,
 };
 
-ProjectPotionItemEffectInteractingNeedItemCount.defaultProps = {
+ProjectSkillForceInteractingNeedItemCode.defaultProps = {
   size: 'mini',
   className: '',
   label: null,
@@ -94,4 +89,4 @@ ProjectPotionItemEffectInteractingNeedItemCount.defaultProps = {
   withDefaultLabel: true,
 };
 
-export default ProjectPotionItemEffectInteractingNeedItemCount;
+export default ProjectSkillForceInteractingNeedItemCode;
