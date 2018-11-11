@@ -2,6 +2,24 @@ import { isBoolean, isInteger, isString } from 'lodash';
 
 import { getValue } from './nextValue';
 
+export const getName = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [
+        ['client', 'strKorName'],
+        ['client', 'strEngName'],
+        ['client', 'strMastKorName'],
+        ['client', 'strMastEngName'],
+        ['server', 'strKorName'],
+        ['server', 'strEngName'],
+        ['server', 'strMastKorName'],
+        ['server', 'strMastEngName'],
+      ],
+    },
+  );
+
 export const getActivate = (nextValue, { entry }) =>
   getValue(
     nextValue,
