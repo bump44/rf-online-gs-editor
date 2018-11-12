@@ -2,7 +2,7 @@ import { isNullOrUndefined } from 'util';
 
 import { IMMUTABLE_MAP, IMMUTABLE_LIST } from '../constants';
 
-function isNotNullOrUndefined(value) {
+export function isNotNullOrUndefined(value) {
   return !isNullOrUndefined(value);
 }
 
