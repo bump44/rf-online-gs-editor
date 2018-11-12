@@ -2205,10 +2205,10 @@ clean-css@^3.1.9:
     commander "2.8.x"
     source-map "0.4.x"
 
-clean-stack@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-1.3.0.tgz#9e821501ae979986c46b1d66d2d432db2fd4ae31"
-  integrity sha1-noIVAa6XmYbEax1m0tQy2y/UrjE=
+clean-stack@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.0.0.tgz#301bfa9e8dd2d3d984c0e542f7aa67b996f63e0a"
+  integrity sha512-VEoL9Qh7I8s8iHnV53DaeWSt8NJ0g3khMfK6NiCPB7H657juhro+cSw2O88uo3bo0c0X5usamtXk0/Of0wXa5A==
 
 cli-cursor@^1.0.1:
   version "1.0.2"
@@ -3365,6 +3365,11 @@ electron-installer-snap@^2.0.0:
     which "^1.3.0"
     yargs "^11.0.0"
 
+electron-is-dev@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.0.1.tgz#6e0a184736fe7aea77d18210b0b0f6a02402c4bc"
+  integrity sha512-iwM3EotA9HTXqMGpQRkR/kT8OZqBbdfHTnlwcxsjSLYqY8svvsq0MuujsWCn3/vtgRmDv/PC/gKUUpoZvi5C1w==
+
 electron-osx-sign@^0.4.1:
   version "0.4.10"
   resolved "https://registry.yarnpkg.com/electron-osx-sign/-/electron-osx-sign-0.4.10.tgz#be4f3b89b2a75a1dc5f1e7249081ab2929ca3a26"
@@ -3443,12 +3448,13 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.70.tgz#ded377256d92d81b4257d36c65aa890274afcfd2"
   integrity sha512-WYMjqCnPVS5JA+XvwEnpwucJpVi2+q9cdCFpbhxgWGsCtforFBEkuP9+nCyy/wnU/0SyLcLRIeZct9ayMGcXoQ==
 
-electron-unhandled@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/electron-unhandled/-/electron-unhandled-1.1.0.tgz#ebb4e7cbfca20ba696f6bbe513e5929e1533ba46"
-  integrity sha512-SOetzTuZtUMczV1CI5l2OFlJrkEDwczUuKfWVLB/LzZCN777s+nVPP8ZM2WQHAQYaEJp6WnzqyQQfwUHSU/E1Q==
+electron-unhandled@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/electron-unhandled/-/electron-unhandled-2.1.0.tgz#c72e59bbb481aecb53ab3f472a334ad1b48c90d2"
+  integrity sha512-c7igzS87v05tHbdeTN6mkbctzmnsgLQO7ASGxOraF1cB/UM+AEdn4cp/TeS+pKGq8PxLiXII+54ab4jYHryJMQ==
   dependencies:
-    clean-stack "^1.3.0"
+    clean-stack "^2.0.0"
+    electron-is-dev "^1.0.1"
     ensure-error "^1.0.0"
     lodash.debounce "^4.0.8"
 
