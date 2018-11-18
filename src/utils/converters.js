@@ -133,3 +133,33 @@ export const convNPCodeClientToServer = code => {
   const str = int.toString(16);
   return (str.length === 4 ? `0${str}` : str).toUpperCase();
 };
+
+export const convStringModelToHex1 = code => convNPCodeServerToClient(code);
+
+export const convStringModelToHex2 = code => {
+  const fill = str =>
+    Array.from(Array(8))
+      .map((_, index) => (str[index] !== undefined ? str[index] : '0'))
+      .join('');
+
+  const code1 = fill(`0${code}`);
+
+  return convNPCodeServerToClient(code1);
+};
+
+export const convItemModelClientToServer = model => {
+  const buf = Buffer.from(model, 'hex');
+  const str = buf
+    .slice(0, 3)
+    .reverse()
+    .toString('hex')
+    .toUpperCase();
+  return str;
+};
+
+export const convItemModelServerToClient = model => {
+  const int = parseInt(model, 16);
+  const buf = Buffer.from([0, 0, 0, 0]);
+  buf.writeInt32LE(int);
+  return buf.toString('hex').toUpperCase();
+};

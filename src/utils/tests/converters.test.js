@@ -1,5 +1,6 @@
-import { readFileSync } from 'fs';
+import { createReadStream } from 'fs';
 import path from 'path';
+import csv from 'csv-parser';
 
 import {
   getClientCode,
@@ -8,28 +9,45 @@ import {
   DEFENCE_FACING_FALLBACK_VALUE,
   getDefenceFacingPresentValue,
   getDefenctFacingUnpresentValue,
+  convItemModelClientToServer,
+  convItemModelServerToClient,
 } from '../converters';
 
 /**
  * Test converters
  */
 
+let itemModels = [];
+let itemCodes = [];
+
+async function readCsv(fileName) {
+  const results = [];
+  await new Promise((res, rej) => {
+    createReadStream(
+      path.resolve(__dirname, './__converters__', `${fileName}.csv`),
+    )
+      .pipe(csv())
+      .on('data', data => results.push(data))
+      .on('end', res)
+      .on('error', rej);
+  });
+  return results;
+}
+
 describe('converters', () => {
+  beforeEach(async () => {
+    itemModels = await readCsv('item_models');
+    itemCodes = await readCsv('item_codes');
+  });
+
+  afterEach(async () => {
+    itemModels = [];
+    itemCodes = [];
+  });
+
   it('test getClientCode', () => {
-    const schemaPath = path.resolve(
-      __dirname,
-      './__converters__/codes_schema.json',
-    );
-
-    const codesSchema = JSON.parse(readFileSync(schemaPath).toString());
-
-    codesSchema.forEach(codeSchema => {
-      expect(getClientCode(codeSchema.server)).toEqual(
-        codeSchema.client
-          .split(/(.{2})/g)
-          .reverse()
-          .join(''),
-      );
+    itemCodes.forEach(itemCode => {
+      expect(getClientCode(itemCode.server)).toEqual(itemCode.client);
     });
   });
 
@@ -91,5 +109,21 @@ describe('converters', () => {
     values.forEach(vals =>
       expect(getDefenctFacingUnpresentValue(vals[0])).toEqual(vals[1]),
     );
+  });
+
+  it('test convItemModelClientToServer', () => {
+    itemModels.forEach(itemModel => {
+      expect(convItemModelClientToServer(itemModel.client)).toEqual(
+        itemModel.server,
+      );
+    });
+  });
+
+  it('test convItemModelServerToClient', () => {
+    itemModels.forEach(itemModel => {
+      expect(convItemModelServerToClient(itemModel.server)).toEqual(
+        itemModel.client,
+      );
+    });
   });
 });
