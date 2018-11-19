@@ -211,7 +211,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.30.tgz#2c82cbed5f79d72280c131d2acffa88fbd8dd353"
   integrity sha512-Le8HGMI5gjFSBqcCuKP/wfHC19oURzkU2D+ERIescUoJd+CmNEMYBib9LQ4zj1HHEZOJQWhw2ZTnbD8weASh/Q==
 
-"@types/prop-types@^15.5.4":
+"@types/prop-types@^15.5.6":
   version "15.5.6"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.6.tgz#9c03d3fed70a8d517c191b7734da2879b50ca26c"
   integrity sha512-ZBFR7TROLVzCkswA3Fmqq+IIJt62/T7aY/Dmz+QkU7CaW2QFqAitCE8Ups7IzmGhcN1YWMBT4Qcoc07jU9hOJQ==
@@ -8456,12 +8456,12 @@ react-apollo@^2.3.1:
     lodash.isequal "^4.5.0"
     prop-types "^15.6.0"
 
-react-contenteditable@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.1.1.tgz#a76d620e04627e43770c23ef5ec3c39b7f75db9d"
-  integrity sha512-j2FOzHEiMkI5io9ePRXjE55dCtgIZ6HlfG/ryi4vTV25ajGkEGpsOuBssda20I9NqEL6p0N6uHRWDWyXwgaJyQ==
+react-contenteditable@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.2.1.tgz#07b87ca3783e4489ddc5f7032c4a0f6e5e838dae"
+  integrity sha512-f4ms7si3MAyiWLOozaF+lf6xr8jPcAxpFmIw4tfbXtgQe3x9Zydv0negjzk9LWZTmi+1bHh1BoGiseU1vigCQQ==
   dependencies:
-    "@types/prop-types" "^15.5.4"
+    "@types/prop-types" "^15.5.6"
     fast-deep-equal "^2.0.1"
 
 react-dom@^16.6.3:
