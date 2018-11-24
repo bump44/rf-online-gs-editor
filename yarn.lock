@@ -428,12 +428,12 @@ apollo-client@^2.4.6:
   optionalDependencies:
     "@types/async" "2.0.50"
 
-apollo-link-context@^1.0.8:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.9.tgz#7fbc034de44546e957a840be76b2f6277c785e8f"
-  integrity sha512-gcC1WH7mTyNtS0bF4fPijepXqnERwZjm1JCkuOT6ADBTpDTXIqK+Ec+/QkVawDO26EV9OX5ujWe4kI1qC6T6tA==
+apollo-link-context@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/apollo-link-context/-/apollo-link-context-1.0.10.tgz#c20b0b32c6e4e08c0d3967174f9c2a897c8431fe"
+  integrity sha512-HX3BEmkANs2A8AcYCy92SFJrW+0SbGrhDTSHV6ZwKIJ9ZrsOtly8cMrRLzEw1emjHIz5SP7XJEn3ko7BwhBBSw==
   dependencies:
-    apollo-link "^1.2.3"
+    apollo-link "^1.2.4"
 
 apollo-link-dedup@^1.0.0:
   version "1.0.10"
