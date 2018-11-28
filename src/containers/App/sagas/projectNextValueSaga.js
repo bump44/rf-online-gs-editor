@@ -138,6 +138,7 @@ export function* changeProp({
     const nextMap = resolver(projectNextValue, propValue, {
       localSettings,
       entry,
+      nextValues: projectsNextValues.get(projectId, IMMUTABLE_MAP),
       ...props.additionalData,
     });
 

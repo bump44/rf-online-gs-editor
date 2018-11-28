@@ -17,7 +17,10 @@ class ProjectStoreInteractingSize extends React.PureComponent {
 
     this.changeValue = evt => {
       const { onChangeValue, store } = this.props;
-      onChangeValue(store, parseFloat(evt.target.value) || 1);
+      onChangeValue(
+        store,
+        parseFloat(evt.target.value.replace(/[^0-9,.]/g, '')) || 1,
+      );
     };
   }
 

@@ -18,6 +18,7 @@ import { getNextValues } from './nextValues';
 import { getValue, getListValue } from './nextValue';
 import * as projectBoxItemOut from './projectBoxItemOut';
 import * as projectSkillForce from './projectSkillForce';
+import { convItemModelClientToServer } from '~/utils/converters';
 
 export const getIsRemoved = (nextValue, { entry }) =>
   getValue(
@@ -494,7 +495,7 @@ export const getPotionItemEffect = (nextValue, { entry, nextValues }) => {
   // find by server code
   const serverEffectCode = getServerEffectCode(nextValue, { entry });
 
-  if (serverEffectCode.length > 0) {
+  if (serverEffectCode && serverEffectCode.length > 0) {
     const res = skillForces.find(
       skillForce =>
         projectSkillForce.getServerCode(getNextValues(nextValues, skillForce), {
@@ -545,7 +546,7 @@ export const getClientEffectCode = (nextValue, { entry }) =>
     { fields: [['client', 'nEffCode']], def: 0, fnc: isInteger },
   );
 
-export const getExpertTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
+export const getExpertTypeValue = (nextValue, { entry }, { n }) =>
   getValue(
     nextValue,
     { entry },
@@ -556,22 +557,15 @@ export const getExpertTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
     },
   );
 
-export const getExpertTypeValueIsDisabled = (
-  nextValue,
-  { entry },
-  { n = 1 } = {},
-) => getExpertTypeValue(nextValue, { entry }, { n }) === -1;
+export const getExpertTypeValueIsDisabled = (nextValue, { entry }, { n }) =>
+  getExpertTypeValue(nextValue, { entry }, { n }) === -1;
 
-export const getExpertType = (
-  nextValue,
-  { entry, expertTypes },
-  { n = 1 } = {},
-) => {
+export const getExpertType = (nextValue, { entry, expertTypes }, { n }) => {
   const value = getExpertTypeValue(nextValue, { entry }, { n });
   return expertTypes.find(expertType => expertType.get('value') === value);
 };
 
-export const getExpertValue = (nextValue, { entry }, { n = 1 } = {}) =>
+export const getExpertValue = (nextValue, { entry }, { n }) =>
   getValue(
     nextValue,
     { entry },
@@ -582,7 +576,7 @@ export const getExpertValue = (nextValue, { entry }, { n = 1 } = {}) =>
     },
   );
 
-export const getEffectTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
+export const getEffectTypeValue = (nextValue, { entry }, { n }) =>
   getValue(
     nextValue,
     { entry },
@@ -593,22 +587,15 @@ export const getEffectTypeValue = (nextValue, { entry }, { n = 1 } = {}) =>
     },
   );
 
-export const getEffectTypeValueIsDisabled = (
-  nextValue,
-  { entry },
-  { n = 1 } = {},
-) => getEffectTypeValue(nextValue, { entry }, { n }) === 0;
+export const getEffectTypeValueIsDisabled = (nextValue, { entry }, { n }) =>
+  getEffectTypeValue(nextValue, { entry }, { n }) === 0;
 
-export const getEffectType = (
-  nextValue,
-  { entry, effectTypes },
-  { n = 1 } = {},
-) => {
+export const getEffectType = (nextValue, { entry, effectTypes }, { n }) => {
   const value = getEffectTypeValue(nextValue, { entry }, { n });
   return effectTypes.find(effectType => effectType.get('value') === value);
 };
 
-export const getEffectValue = (nextValue, { entry }, { n = 1 } = {}) =>
+export const getEffectValue = (nextValue, { entry }, { n }) =>
   getValue(
     nextValue,
     { entry },
@@ -616,5 +603,64 @@ export const getEffectValue = (nextValue, { entry }, { n = 1 } = {}) =>
       fields: [['server', `fEffUnit__${n}`], ['client', `fEffUnit__${n}`]],
       def: -1,
       fnc: isNumber,
+    },
+  );
+
+export const getItems = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'items' });
+
+export const getSkillForces = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'skillForces' });
+
+export const getBoxItemOuts = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'boxItemOuts' });
+
+export const getResources = (nextValue, { entry }) =>
+  getListValue(nextValue, { entry }, { field: 'resources' });
+
+export const getClientModel = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['client', 'strModel']], def: '', fnc: isString },
+  );
+
+export const getModel = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    { fields: [['server', 'strModel']], def: '', fnc: isString },
+  ) || convItemModelClientToServer(getClientModel(nextValue, { entry }));
+
+export const getKindClt = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nKindClt'], ['client', 'nKindClt']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getFixPart = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nFixPart'], ['client', 'nFixPart']],
+      def: 0,
+      fnc: isInteger,
+    },
+  );
+
+export const getDefEffType = (nextValue, { entry }) =>
+  getValue(
+    nextValue,
+    { entry },
+    {
+      fields: [['server', 'nDefEffType'], ['client', 'nDefEffType']],
+      def: 0,
+      fnc: isInteger,
     },
   );

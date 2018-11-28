@@ -4,7 +4,7 @@
  *
  */
 
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment, Divider } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -27,17 +27,51 @@ import ProjectItemInteractingStdPoint from '../Interacting/StdPoint';
 import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
 import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
 import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
+import ProjectItemInteractingModel from '../Interacting/Model';
+import ProjectItemInteractingServerCode from '../Interacting/ServerCode';
+import ProjectItemInteractingClientCode from '../Interacting/ClientCode';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBasic extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.renderCodes = this.renderCodes.bind(this);
     this.renderNames = this.renderNames.bind(this);
     this.renderTransfers = this.renderTransfers.bind(this);
     this.renderCivils = this.renderCivils.bind(this);
     this.renderCurrentMoney = this.renderCurrentMoney.bind(this);
     this.renderAllMoneyFields = this.renderAllMoneyFields.bind(this);
+  }
+
+  renderCodes() {
+    const { item, itemNextValues, itemActions } = this.props;
+    return (
+      <div>
+        <ProjectItemInteractingModel
+          item={item}
+          itemNextValues={itemNextValues}
+          onChangeValue={itemActions.changeModel}
+        />
+        <Divider />
+        <Grid columns="equal">
+          <Grid.Column>
+            <ProjectItemInteractingServerCode
+              item={item}
+              itemNextValues={itemNextValues}
+              onChangeValue={itemActions.changeServerCode}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <ProjectItemInteractingClientCode
+              item={item}
+              itemNextValues={itemNextValues}
+              onChangeValue={itemActions.changeClientCode}
+            />
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
   }
 
   renderNames() {
@@ -211,6 +245,8 @@ class ProjectItemSegmentBasic extends React.PureComponent {
               <Header size="tiny">Transfer & Civil permissions</Header>
               {this.renderTransfers()}
               {this.renderCivils()}
+              <Header size="tiny">Code(s)</Header>
+              {this.renderCodes()}
             </Grid.Column>
             <Grid.Column width={9} verticalAlign="top">
               <Header size="tiny">Current money type & value</Header>

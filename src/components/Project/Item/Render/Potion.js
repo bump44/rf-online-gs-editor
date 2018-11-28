@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import SegmentActions from '../Segment/Actions';
 import SegmentBasic from '../Segment/Basic';
-import SegmentPotionEffects from '../Segment/PotionEffects';
+import SegmentSkillForces from '../Segment/SkillForces';
 import SegmentBuilder from './SegmentBuilder';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -17,7 +17,7 @@ class ProjectItemRenderPotion extends SegmentBuilder {
   componentWillMount() {
     this.addTabPane('basics', 'Basic', SegmentBasic)
       .addTabPane('actions', 'Actions', SegmentActions)
-      .addTabPane('potionEffects', 'Potion Effects', SegmentPotionEffects);
+      .addTabPane('skillForces', 'Skill Forces', SegmentSkillForces);
   }
 }
 

@@ -1,16 +1,16 @@
 /**
  *
- * ProjectItemSegmentPotionEffects
+ * ProjectItemSegmentSkillForces
  *
  */
 
 import { Map } from 'immutable';
 import { map } from 'lodash';
-import { Segment, Grid, Divider } from 'semantic-ui-react';
+import { Segment, Grid, Divider, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { getPotionItemEffect } from '~/containers/App/getters/projectItem';
+import { getSkillForces } from '~/containers/App/getters/projectItem';
 import { getNextValues } from '~/containers/App/getters/nextValues';
 
 import ProjectSkillForceInteractingActivate from '../../SkillForce/Interacting/Activate';
@@ -22,9 +22,12 @@ import ProjectSkillForceInteractingNeedFP from '../../SkillForce/Interacting/Nee
 import ProjectSkillForceInteractingNeedSP from '../../SkillForce/Interacting/NeedSP';
 import ProjectSkillForceInteractingNeedItemCode from '../../SkillForce/Interacting/NeedItemCode';
 import ProjectSkillForceInteractingNeedItemCount from '../../SkillForce/Interacting/NeedItemCount';
+import ProjectSkillForceInteractingName from '../../SkillForce/Interacting/Name';
+import ProjectSkillForceInteractingActableDst from '../../SkillForce/Interacting/ActableDst';
+import ProjectSkillForceInteractingFixWeapon from '../../SkillForce/Interacting/FixWeapon';
 
 /* eslint-disable react/prefer-stateless-function */
-class ProjectItemSegmentPotionEffects extends React.PureComponent {
+class ProjectItemSegmentSkillForces extends React.PureComponent {
   renderCheckboxes(skillForceNextValues, skillForce) {
     const { skillForceActions } = this.props;
 
@@ -54,18 +57,18 @@ class ProjectItemSegmentPotionEffects extends React.PureComponent {
     );
   }
 
-  render() {
-    const { item, itemNextValues, skillForceActions, nextValues } = this.props;
-
-    const skillForce = getPotionItemEffect(itemNextValues.get('nextValue'), {
-      entry: item,
-      nextValues,
-    });
-
-    const skillForceNextValues = getNextValues(nextValues, skillForce);
+  renderRow(key, skillForceNextValues, skillForce) {
+    const { skillForceActions } = this.props;
 
     return (
-      <Segment>
+      <Segment key={key}>
+        <ProjectSkillForceInteractingName
+          skillForceNextValues={skillForceNextValues}
+          skillForce={skillForce}
+          onChangeValue={skillForceActions.changeName}
+          className="mr-15"
+          fluid={false}
+        />
         {this.renderCheckboxes(skillForceNextValues, skillForce)}
         <Divider />
         <Grid columns="equal">
@@ -115,16 +118,61 @@ class ProjectItemSegmentPotionEffects extends React.PureComponent {
             ))}
           </Grid.Column>
         </Grid>
+        <Grid columns="equal">
+          <Grid.Column>
+            <Header size="tiny">Actable Dst(s)</Header>
+            {Array.from(Array(5)).map((_, index) => (
+              <ProjectSkillForceInteractingActableDst
+                key={`actableDst${index + 1}`}
+                skillForceNextValues={skillForceNextValues}
+                skillForce={skillForce}
+                onChangeValue={skillForceActions.changeActableDstN}
+                n={index + 1}
+                className="mr-15 mb-5"
+              />
+            ))}
+          </Grid.Column>
+          <Grid.Column>
+            <Header size="tiny">Fix Weapon(s)</Header>
+            {Array.from(Array(16)).map((_, index) => (
+              <ProjectSkillForceInteractingFixWeapon
+                key={`fixWeapon${index + 1}`}
+                skillForceNextValues={skillForceNextValues}
+                skillForce={skillForce}
+                onChangeValue={skillForceActions.changeFixWeaponN}
+                n={index + 1}
+                className="mr-15 mb-5"
+              />
+            ))}
+          </Grid.Column>
+        </Grid>
       </Segment>
+    );
+  }
+
+  render() {
+    const { item, itemNextValues, nextValues } = this.props;
+
+    const skillForces = getSkillForces(itemNextValues.get('nextValue'), {
+      entry: item,
+      nextValues,
+    });
+
+    return skillForces.map(skillForce =>
+      this.renderRow(
+        skillForce.get('id'),
+        getNextValues(nextValues, skillForce),
+        skillForce,
+      ),
     );
   }
 }
 
-ProjectItemSegmentPotionEffects.propTypes = {
+ProjectItemSegmentSkillForces.propTypes = {
   item: PropTypes.instanceOf(Map).isRequired,
   itemNextValues: PropTypes.instanceOf(Map).isRequired,
   nextValues: PropTypes.instanceOf(Map).isRequired,
   skillForceActions: PropTypes.object.isRequired,
 };
 
-export default ProjectItemSegmentPotionEffects;
+export default ProjectItemSegmentSkillForces;

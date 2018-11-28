@@ -4,10 +4,11 @@ import RenderArmor from './Render/Armor';
 import RenderBox from './Render/Box';
 import RenderPotion from './Render/Potion';
 import RenderTool from './Render/Tool';
+import RenderFace from './Render/Face';
 
 // want help in writing specific components ;)
 export default {
-  [ITEM_TYPES.FACE]: RenderTool,
+  [ITEM_TYPES.FACE]: RenderFace,
   [ITEM_TYPES.UPPER]: RenderArmor,
   [ITEM_TYPES.LOWER]: RenderArmor,
   [ITEM_TYPES.GAUNTLET]: RenderArmor,

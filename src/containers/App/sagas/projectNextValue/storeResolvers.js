@@ -148,7 +148,7 @@ const Resolvers = {
       .setIn(['server', `nStoreListCount`], value)
       .setIn(['client', `nStoreLISTcount`], value),
 
-  itemsListResort: (store, nextIndexes, { entry }) => {
+  itemsListResort: (store, nextIndexes, { entry, nextValues }) => {
     let nextStore = store;
 
     nextIndexes.forEach((nextIndex, index) => {
@@ -156,7 +156,12 @@ const Resolvers = {
         return;
       }
 
-      const itemList = getItemList(store, { entry }, { n: nextIndex + 1 });
+      const itemList = getItemList(
+        store,
+        { entry, nextValues },
+        { n: nextIndex + 1 },
+      );
+
       nextStore = Resolvers.itemListUpdate(nextStore, {
         n: index + 1,
         clientCode: itemList.clientCode,

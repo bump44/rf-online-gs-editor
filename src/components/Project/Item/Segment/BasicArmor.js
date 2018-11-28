@@ -4,7 +4,7 @@
  *
  */
 
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment, Divider } from 'semantic-ui-react';
 import { Map, List } from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -34,12 +34,16 @@ import ProjectItemInteractingStdPrice from '../Interacting/StdPrice';
 import ProjectItemInteractingStoragePossible from '../Interacting/StoragePossible';
 import ProjectItemInteractingStoragePrice from '../Interacting/StoragePrice';
 import ProjectItemInteractingUpLevelLim from '../Interacting/UpLevelLim';
+import ProjectItemInteractingModel from '../Interacting/Model';
+import ProjectItemInteractingServerCode from '../Interacting/ServerCode';
+import ProjectItemInteractingClientCode from '../Interacting/ClientCode';
 
 /* eslint-disable react/prefer-stateless-function */
 class ProjectItemSegmentBasicArmor extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.renderCodes = this.renderCodes.bind(this);
     this.renderNames = this.renderNames.bind(this);
     this.renderTransfers = this.renderTransfers.bind(this);
     this.renderCivils = this.renderCivils.bind(this);
@@ -47,6 +51,36 @@ class ProjectItemSegmentBasicArmor extends React.PureComponent {
     this.renderAllMoneyFields = this.renderAllMoneyFields.bind(this);
     this.renderLevels = this.renderLevels.bind(this);
     this.renderDefences = this.renderDefences.bind(this);
+  }
+
+  renderCodes() {
+    const { item, itemNextValues, itemActions } = this.props;
+    return (
+      <div>
+        <ProjectItemInteractingModel
+          item={item}
+          itemNextValues={itemNextValues}
+          onChangeValue={itemActions.changeModel}
+        />
+        <Divider />
+        <Grid columns="equal">
+          <Grid.Column>
+            <ProjectItemInteractingServerCode
+              item={item}
+              itemNextValues={itemNextValues}
+              onChangeValue={itemActions.changeServerCode}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <ProjectItemInteractingClientCode
+              item={item}
+              itemNextValues={itemNextValues}
+              onChangeValue={itemActions.changeClientCode}
+            />
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
   }
 
   renderNames() {
@@ -295,6 +329,8 @@ class ProjectItemSegmentBasicArmor extends React.PureComponent {
               {this.renderCurrentMoney()}
               <Header size="tiny">All money fields</Header>
               {this.renderAllMoneyFields()}
+              <Header size="tiny">Code(s)</Header>
+              {this.renderCodes()}
             </Grid.Column>
           </Grid.Row>
         </Grid>
