@@ -17,7 +17,7 @@ exports[`<Header /> Should exist 1`] = `
         as={
           Object {
             "$$typeof": Symbol(react.forward_ref),
-            "attrs": undefined,
+            "attrs": Array [],
             "componentStyle": ComponentStyle {
               "componentId": "styles__BrandLink-sc-1g7oq2h-1",
               "isStatic": true,
