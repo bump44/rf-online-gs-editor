@@ -102,11 +102,10 @@ function fillBuffer(
 }
 
 function filtrateData(obj = {}, { mapNameTypeCaseSens } = {}) {
-  const itemCodeFields = Array.from(Array(216)).map(
-    (_, index) =>
-      index >= 200
-        ? `strLimItemCode__${index - 200 + 1}_1`
-        : `strItemCode__${index + 1}`,
+  const itemCodeFields = Array.from(Array(216)).map((_, index) =>
+    index >= 200
+      ? `strLimItemCode__${index - 200 + 1}_1`
+      : `strItemCode__${index + 1}`,
   );
 
   const nextObject = {};

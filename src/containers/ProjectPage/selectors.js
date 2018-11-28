@@ -12,14 +12,20 @@ const selectProjectPageDomain = state => state.get('projectPage', initialState);
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectPageDomain, substate => substate.get('project'));
+  createSelector(
+    selectProjectPageDomain,
+    substate => substate.get('project'),
+  );
 
 /**
  * Default selector used by ProjectPage
  */
 
 const makeSelectProjectPage = () =>
-  createSelector(selectProjectPageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectPageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectPage;
 export { selectProjectPageDomain, makeSelectProject };

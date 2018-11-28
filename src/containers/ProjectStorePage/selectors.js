@@ -13,21 +13,27 @@ const selectProjectStorePageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectStorePageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectStorePageDomain,
+    substate => substate.get('project'),
   );
 
 const makeSelectProjectStore = () =>
-  createSelector(selectProjectStorePageDomain, substate =>
-    substate.get('projectStore'),
+  createSelector(
+    selectProjectStorePageDomain,
+    substate => substate.get('projectStore'),
   );
 
 const makeSelectId = () =>
-  createSelector(selectProjectStorePageDomain, substate => substate.get('id'));
+  createSelector(
+    selectProjectStorePageDomain,
+    substate => substate.get('id'),
+  );
 
 const makeSelectStoreId = () =>
-  createSelector(selectProjectStorePageDomain, substate =>
-    substate.get('storeId'),
+  createSelector(
+    selectProjectStorePageDomain,
+    substate => substate.get('storeId'),
   );
 
 /**
@@ -35,7 +41,10 @@ const makeSelectStoreId = () =>
  */
 
 const makeSelectProjectStorePage = () =>
-  createSelector(selectProjectStorePageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectStorePageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectStorePage;
 export {

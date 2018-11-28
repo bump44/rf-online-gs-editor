@@ -13,8 +13,9 @@ const selectProjectExportPageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectExportPageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectExportPageDomain,
+    substate => substate.get('project'),
   );
 
 /**
@@ -22,7 +23,10 @@ const makeSelectProject = () =>
  */
 
 const makeSelectProjectExportPage = () =>
-  createSelector(selectProjectExportPageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectExportPageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectExportPage;
 export { selectProjectExportPageDomain, makeSelectProject };

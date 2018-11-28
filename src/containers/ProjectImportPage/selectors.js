@@ -13,13 +13,15 @@ const selectProjectImportPageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectImportPageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectImportPageDomain,
+    substate => substate.get('project'),
   );
 
 const makeSelectImportType = () =>
-  createSelector(selectProjectImportPageDomain, substate =>
-    substate.get('importType'),
+  createSelector(
+    selectProjectImportPageDomain,
+    substate => substate.get('importType'),
   );
 
 /**
@@ -27,7 +29,10 @@ const makeSelectImportType = () =>
  */
 
 const makeSelectProjectImportPage = () =>
-  createSelector(selectProjectImportPageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectImportPageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectImportPage;
 export {

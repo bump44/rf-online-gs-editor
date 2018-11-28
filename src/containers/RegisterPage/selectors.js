@@ -18,7 +18,10 @@ const selectRegisterPageDomain = state =>
  */
 
 const makeSelectRegisterPage = () =>
-  createSelector(selectRegisterPageDomain, substate => substate.toJS());
+  createSelector(
+    selectRegisterPageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectRegisterPage;
 export { selectRegisterPageDomain };

@@ -14,46 +14,58 @@ const selectProjectStoresPageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.get('project'),
   );
 
 const makeSelectId = () =>
-  createSelector(selectProjectStoresPageDomain, substate => substate.get('id'));
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.get('id'),
+  );
 
 const makeSelectProjectMoneyTypes = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.getIn(['project', 'moneyTypes', 'items'], List([])),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.getIn(['project', 'moneyTypes', 'items'], List([])),
   );
 
 const makeSelectProjectItemGradeTypes = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.getIn(['project', 'itemGradeTypes', 'items'], List([])),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate =>
+      substate.getIn(['project', 'itemGradeTypes', 'items'], List([])),
   );
 
 const makeSelectProjectWeaponTypes = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.getIn(['project', 'weaponTypes', 'items'], List([])),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.getIn(['project', 'weaponTypes', 'items'], List([])),
   );
 
 const makeSelectResultTotal = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.getIn(['result', 'total']),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.getIn(['result', 'total']),
   );
 
 const makeSelectResultItems = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.getIn(['result', 'items']),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.getIn(['result', 'items']),
   );
 
 const makeSelectResult = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.get('result'),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.get('result'),
   );
 
 const makeSelectFilter = () =>
-  createSelector(selectProjectStoresPageDomain, substate =>
-    substate.get('filter'),
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.get('filter'),
   );
 
 /**
@@ -61,7 +73,10 @@ const makeSelectFilter = () =>
  */
 
 const makeSelectProjectStoresPage = () =>
-  createSelector(selectProjectStoresPageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectStoresPageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectStoresPage;
 export {

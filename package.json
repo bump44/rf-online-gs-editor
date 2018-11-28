@@ -17,7 +17,7 @@
     "test:only": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write src/**/*.js"
   },
   "keywords": [],
   "author": "mivl",

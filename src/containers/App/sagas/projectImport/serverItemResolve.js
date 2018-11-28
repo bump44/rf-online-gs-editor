@@ -18,7 +18,9 @@ pull(
   ITEM_TYPES.UNK3,
 ).forEach(type => {
   try {
-    TypeToReader[type] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
+    TypeToReader[
+      type
+    ] = require(`../../../../structs/server/item/${type}_reader`).default; // eslint-disable-line
   } catch (err) {
     console.warn(err); // eslint-disable-line
   }

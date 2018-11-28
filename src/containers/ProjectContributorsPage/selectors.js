@@ -13,8 +13,9 @@ const selectProjectContributorsPageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectContributorsPageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectContributorsPageDomain,
+    substate => substate.get('project'),
   );
 
 /**
@@ -22,8 +23,9 @@ const makeSelectProject = () =>
  */
 
 const makeSelectProjectContributorsPage = () =>
-  createSelector(selectProjectContributorsPageDomain, substate =>
-    substate.toJS(),
+  createSelector(
+    selectProjectContributorsPageDomain,
+    substate => substate.toJS(),
   );
 
 export default makeSelectProjectContributorsPage;

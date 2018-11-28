@@ -13,33 +13,39 @@ const selectProjectBoxItemOutsPageDomain = state =>
  * Other specific selectors
  */
 const makeSelectProject = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.get('project'),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.get('project'),
   );
 
 const makeSelectId = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.get('id'),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.get('id'),
   );
 
 const makeSelectResultTotal = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.getIn(['result', 'total']),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.getIn(['result', 'total']),
   );
 
 const makeSelectResultItems = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.getIn(['result', 'items']),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.getIn(['result', 'items']),
   );
 
 const makeSelectResult = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.get('result'),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.get('result'),
   );
 
 const makeSelectFilter = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate =>
-    substate.get('filter'),
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate.get('filter'),
   );
 
 /**
@@ -47,7 +53,10 @@ const makeSelectFilter = () =>
  */
 
 const makeSelectProjectBoxItemOutsPage = () =>
-  createSelector(selectProjectBoxItemOutsPageDomain, substate => substate);
+  createSelector(
+    selectProjectBoxItemOutsPageDomain,
+    substate => substate,
+  );
 
 export default makeSelectProjectBoxItemOutsPage;
 export {

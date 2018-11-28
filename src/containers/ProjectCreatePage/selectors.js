@@ -18,7 +18,10 @@ const selectProjectCreatePageDomain = state =>
  */
 
 const makeSelectProjectCreatePage = () =>
-  createSelector(selectProjectCreatePageDomain, substate => substate.toJS());
+  createSelector(
+    selectProjectCreatePageDomain,
+    substate => substate.toJS(),
+  );
 
 export default makeSelectProjectCreatePage;
 export { selectProjectCreatePageDomain };
