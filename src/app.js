@@ -29,7 +29,7 @@ import { loadState, saveState } from '~/utils/ls';
 import { initialState as appInitialState } from './containers/App/reducer';
 
 // Import CSS reset and Global Styles
-import './global-styles';
+import GlobalStyle from './global-styles';
 
 // Create redux store with history
 const initialState = loadState() || {};
@@ -61,15 +61,18 @@ const render = messages => {
   const App = require('./containers/App').default; // eslint-disable-line
 
   ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <ApolloProvider client={apolloClient}>
-            <App />
-          </ApolloProvider>
-        </ConnectedRouter>
-      </LanguageProvider>
-    </Provider>,
+    <React.Fragment>
+      <GlobalStyle />
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <ApolloProvider client={apolloClient}>
+              <App />
+            </ApolloProvider>
+          </ConnectedRouter>
+        </LanguageProvider>
+      </Provider>
+    </React.Fragment>,
     MOUNT_NODE,
   );
 };

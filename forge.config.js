@@ -6,8 +6,8 @@ module.exports = {
     win32: ['squirrel', 'zip'],
   },
   electronPackagerConfig: {
-    packageManager: 'npm',
-    asar: true,
+    packageManager: 'yarn',
+    asar: false,
     ignore: [
       '.vscode',
       'coverage',

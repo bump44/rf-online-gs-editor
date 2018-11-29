@@ -20,6 +20,7 @@ module.exports = (extractPath, electronVersion, platform, arch, done) => {
   console.log(`
 
 ${chalk.yellow('build-scripts:compute-app-data')}
+  ${chalk.cyanBright('to:')} ${writeToPath}
 ${Object.keys(application)
     .map(key => ` ${chalk.cyanBright(`${key}:`)} ${application[key]}`)
     .join('\n')}`);
