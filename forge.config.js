@@ -1,4 +1,5 @@
 const copyExtras = require('./internals/build-scripts/copy-extras.js');
+const computeAppData = require('./internals/build-scripts/compute-app-data.js');
 
 module.exports = {
   make_targets: {
@@ -17,7 +18,7 @@ module.exports = {
       'resources',
       'temporary',
     ],
-    afterExtract: [copyExtras],
+    afterExtract: [copyExtras, computeAppData],
   },
   electronWinstallerConfig: {
     name: 'rf-online-gs-editor',

@@ -12,10 +12,9 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import application from '~/package';
 import i18n from '../../i18n';
 import messages from './messages';
-
-import packagejson from '../../../package.json';
 
 import Menu, {
   BrandLink,
@@ -49,7 +48,7 @@ class Header extends React.PureComponent {
             <Menu.Item as={BrandLink} to="/" exact>
               <BrandContent>
                 <FormattedMessage {...messages.brand} />
-                <BrandVersion>v{packagejson.version}</BrandVersion>
+                <BrandVersion>v{application.version}</BrandVersion>
               </BrandContent>
             </Menu.Item>
           }
