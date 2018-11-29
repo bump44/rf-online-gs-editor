@@ -15,7 +15,7 @@ exports[`<FullheightColumn /> Should exist 1`] = `
 
 exports[`<FullheightColumn /> Should exist FullheightThis 1`] = `
 <StyledComponent
-  forwardedClass={
+  forwardedComponent={
     Object {
       "$$typeof": Symbol(react.forward_ref),
       "attrs": Array [],
@@ -31,6 +31,7 @@ exports[`<FullheightColumn /> Should exist FullheightThis 1`] = `
         ],
       },
       "displayName": "FullheightColumn__FullheightThis",
+      "foldedComponentIds": Array [],
       "render": [Function],
       "styledComponentId": "FullheightColumn__FullheightThis-zpb8wc-0",
       "target": "div",

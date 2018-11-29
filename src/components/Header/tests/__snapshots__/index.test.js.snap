@@ -24,6 +24,7 @@ exports[`<Header /> Should exist 1`] = `
               "rules": Array [],
             },
             "displayName": "styles__BrandLink",
+            "foldedComponentIds": Array [],
             "render": [Function],
             "styledComponentId": "styles__BrandLink-sc-1g7oq2h-1",
             "target": [Function],
@@ -44,7 +45,6 @@ exports[`<Header /> Should exist 1`] = `
           />
           <ForwardRef>
             v
-            1.0.3
           </ForwardRef>
         </ForwardRef>
       </MenuItem>
