@@ -4,7 +4,7 @@ module.exports = objectPath =>
     () => /^\/src.*?\/tests(\/.+?\.test\.js)?$/g.test(objectPath),
     // ignore main folders
     () =>
-      /^\/(resources|\.vscode|coverage|extras|internals|out|releaseFiles|temporary)\/?$/g.test(
+      /^\/(resources|\.vscode|\.cache|\.git|coverage|extras|internals|out|releaseFiles|temporary)\/?$/g.test(
         objectPath,
       ),
   ].some(fnc => fnc());

@@ -128,10 +128,19 @@ export const convNPCodeServerToClient = code => {
 };
 
 export const convNPCodeClientToServer = code => {
-  const buf = Buffer.from(code, 'hex');
-  const int = buf.readInt32LE(0);
-  const str = int.toString(16);
-  return (str.length === 4 ? `0${str}` : str).toUpperCase();
+  const fb = '00000';
+  if (!code || !isString(code)) {
+    return fb;
+  }
+
+  try {
+    const buf = Buffer.from(code, 'hex');
+    const int = buf.readInt32LE(0);
+    const str = int.toString(16);
+    return (str.length === 4 ? `0${str}` : str).toUpperCase();
+  } catch (err) {
+    return fb;
+  }
 };
 
 export const convStringModelToHex1 = code => convNPCodeServerToClient(code);
