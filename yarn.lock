@@ -4335,10 +4335,10 @@ fmix@^0.1.0:
   dependencies:
     imul "^1.0.0"
 
-fontfaceobserver@^2.0.13:
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/fontfaceobserver/-/fontfaceobserver-2.0.13.tgz#47adbb343261eda98cb44db2152196ff124d3221"
-  integrity sha1-R627NDJh7amMtE2yFSGW/xJNMiE=
+fontfaceobserver@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fontfaceobserver/-/fontfaceobserver-2.1.0.tgz#e2705d293e2c585a6531c2a722905657317a2991"
+  integrity sha512-ReOsO2F66jUa0jmv2nlM/s1MiutJx/srhAe2+TE8dJCMi02ZZOcCTxTCQFr3Yet+uODUtnr4Mewg+tNQ+4V1Ng==
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"

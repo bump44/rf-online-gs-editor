@@ -73,7 +73,7 @@
     "electron-compile": "^6.4.3",
     "electron-squirrel-startup": "^1.0.0",
     "electron-unhandled": "^2.1.0",
-    "fontfaceobserver": "^2.0.13",
+    "fontfaceobserver": "^2.1.0",
     "fs-extra": "^7.0.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
