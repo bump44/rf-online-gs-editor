@@ -8519,10 +8519,10 @@ react-apollo@^2.3.1:
     lodash.isequal "^4.5.0"
     prop-types "^15.6.0"
 
-react-contenteditable@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.2.1.tgz#07b87ca3783e4489ddc5f7032c4a0f6e5e838dae"
-  integrity sha512-f4ms7si3MAyiWLOozaF+lf6xr8jPcAxpFmIw4tfbXtgQe3x9Zydv0negjzk9LWZTmi+1bHh1BoGiseU1vigCQQ==
+react-contenteditable@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-contenteditable/-/react-contenteditable-3.2.2.tgz#39ec379193e597e06e66f0352d6c6f90c6addfac"
+  integrity sha512-2igwIl8KHDbd3rEz9DO/4iOhGboX6t4DENv7uQOfsJikac0NVCuahdYw2ztAhHT84p3JqKJNIROk+aMK+duRwA==
   dependencies:
     "@types/prop-types" "^15.5.6"
     fast-deep-equal "^2.0.1"
