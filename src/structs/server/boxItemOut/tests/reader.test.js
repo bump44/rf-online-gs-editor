@@ -15,6 +15,9 @@ describe('Structs', () => {
           expect(reader.getStruct()).toEqual(readerStruct);
           expect(reader.getPath()).toEqual(path);
         });
+        it('should throw error because path is required', () => {
+          expect(() => new Reader()).toThrow();
+        });
       });
     });
   });
