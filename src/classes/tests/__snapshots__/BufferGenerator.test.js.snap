@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Classes BufferGenerator should add by field & concat buffers 1`] = `
+Object {
+  "data": Array [
+    115,
+    111,
+    109,
+    101,
+    32,
+    115,
+    116,
+    114,
+    105,
+    110,
+    103,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+  ],
+  "type": "Buffer",
+}
+`;
+
+exports[`Classes BufferGenerator should add by field throw error 1`] = `"Field number must be have length oneOf(8, 16, 32)"`;
+
+exports[`Classes BufferGenerator should add by field throw error 2`] = `"Field boolean must be have length oneOf(8, 16, 32)"`;
+
+exports[`Classes BufferGenerator should add by field throw error 3`] = `"Field have incorrect type attribute"`;
+
+exports[`Classes BufferGenerator should add string to buffer 1`] = `"Encoding not recognized: 'undefined_encode' (searched as: 'undefinedencode')"`;
