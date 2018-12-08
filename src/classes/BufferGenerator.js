@@ -1,6 +1,5 @@
 /*
   eslint-disable no-plusplus,
-  default-case,
   no-fallthrough,
 */
 
@@ -49,9 +48,21 @@ class BufferGenerator {
     return this.concat(buffer);
   }
 
+  addInt32BE(value) {
+    const buffer = this.createBuffer(4);
+    buffer.writeInt32BE(parseInt(value), 0);
+    return this.concat(buffer);
+  }
+
   addFloatLE(value) {
     const buffer = this.createBuffer(4);
     buffer.writeFloatLE(parseFloat(value), 0);
+    return this.concat(buffer);
+  }
+
+  addFloatBE(value) {
+    const buffer = this.createBuffer(4);
+    buffer.writeFloatBE(parseFloat(value), 0);
     return this.concat(buffer);
   }
 
@@ -95,6 +106,10 @@ class BufferGenerator {
               default:
                 return this.addInt32LE(value);
             }
+          default:
+            throw new Error(
+              'Field number must be have length oneOf(8, 16, 32)',
+            );
         }
       case String:
         switch (field.getLen(values)) {
@@ -114,15 +129,17 @@ class BufferGenerator {
           case 8:
             return this.addInt8(value ? 1 : 0);
           case 16:
-            return this.addInt8(value ? 1 : 0);
+            return this.addInt16LE(value ? 1 : 0);
           case 32:
             return this.addInt32LE(value ? 1 : 0);
+          default:
+            throw new Error(
+              'Field boolean must be have length oneOf(8, 16, 32)',
+            );
         }
+      default:
+        throw new Error('Field have incorrect type attribute');
     }
-
-    throw new Error(
-      `Undefined field type ${typeof field.getType()}: ${field.getLen(values)}`,
-    );
   }
 }
 
