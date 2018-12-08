@@ -11,7 +11,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { FormattedMessage } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { Map } from 'immutable';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 
 import injectReducer from '~/utils/injectReducer';
 import injectSaga from '~/utils/injectSaga';

@@ -18,7 +18,7 @@ import {
 
 import { makeSelectProject } from '~/containers/ProjectPage/selectors';
 import { Map } from 'immutable';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import Container from '~/components/Container';
 import Header from '~/components/Header';
 import injectReducer from '~/utils/injectReducer';

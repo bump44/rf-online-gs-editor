@@ -1,6 +1,7 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
+
 import apolloClient from '~/apollo';
 import CreateMutation from '~/apollo/mutations/project_create';
 

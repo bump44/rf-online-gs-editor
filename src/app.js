@@ -12,67 +12,38 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router/immutable';
 import { ApolloProvider } from 'react-apollo';
 import { writeFileSync } from 'fs';
-import createHistory from 'history/createMemoryHistory';
-import throttle from 'lodash/throttle';
-import pick from 'lodash/pick';
 import path from 'path';
 import unhandled from 'electron-unhandled';
 
 import LanguageProvider from './containers/LanguageProvider';
 import configureStore from './configureStore';
 import apolloClient from './apollo';
+import history from './utils/history';
+import { loadState } from './utils/ls';
 import { translationMessages } from './i18n';
-import { loadState, saveState } from '~/utils/ls';
-import { initialState as appInitialState } from './containers/App/reducer';
-
-// Import CSS reset and Global Styles
-import GlobalStyle from './global-styles';
 
 // Create redux store with history
 const initialState = loadState() || {};
-const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 const unhandledErrorLogPath = path.resolve('./', 'unhandled_error_log.txt');
-
-store.subscribe(
-  throttle(
-    () =>
-      saveState({
-        global: {
-          ...appInitialState.toJS(),
-          ...pick(
-            store
-              .getState()
-              .get('global')
-              .toJS(),
-            ['isLoggedIn', 'currentUser', 'currentUserToken', 'localSettings'],
-          ),
-        },
-      }),
-    1000,
-  ),
-);
 
 const render = messages => {
   const App = require('./containers/App').default; // eslint-disable-line
 
   ReactDOM.render(
-    <React.Fragment>
-      <GlobalStyle />
-      <Provider store={store}>
-        <LanguageProvider messages={messages}>
+    <Provider store={store}>
+      <LanguageProvider messages={messages}>
+        <ApolloProvider client={apolloClient}>
           <ConnectedRouter history={history}>
-            <ApolloProvider client={apolloClient}>
-              <App />
-            </ApolloProvider>
+            <App />
           </ConnectedRouter>
-        </LanguageProvider>
-      </Provider>
-    </React.Fragment>,
+        </ApolloProvider>
+      </LanguageProvider>
+    </Provider>,
     MOUNT_NODE,
   );
 };

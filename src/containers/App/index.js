@@ -14,6 +14,8 @@
 import { Switch, Route } from 'react-router-dom';
 import React from 'react';
 
+import GlobalStyle from '~/global-styles';
+
 import HomePage from '../HomePage';
 import NotFoundPage from '../NotFoundPage';
 import RegisterPage from '../RegisterPage';
@@ -34,41 +36,44 @@ import ProjectsPage from '../ProjectsPage';
 
 export default function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/register" component={RegisterPage} />
-      <Route exact path="/login" component={LoginPage} />
+    <div>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/login" component={LoginPage} />
 
-      {/* Project(s) */}
-      <Route exact path="/projects" component={ProjectsPage} />
-      <Route exact path="/project/create" component={ProjectCreatePage} />
-      <Route exact path="/project/:id" component={ProjectPage} />
-      <Route
-        exact
-        path="/project/:id/contributors"
-        component={ProjectContributorsPage}
-      />
-      <Route exact path="/project/:id/import" component={ProjectImportPage} />
-      <Route exact path="/project/:id/export" component={ProjectExportPage} />
-      <Route exact path="/project/:id/items" component={ProjectItemsPage} />
-      <Route
-        exact
-        path="/project/:id/items/:itemId"
-        component={ProjectItemPage}
-      />
-      <Route exact path="/project/:id/stores" component={ProjectStoresPage} />
-      <Route
-        exact
-        path="/project/:id/stores/:storeId"
-        component={ProjectStorePage}
-      />
-      <Route
-        exact
-        path="/project/:id/boxItemOuts"
-        component={ProjectBoxItemOutsPage}
-      />
+        {/* Project(s) */}
+        <Route exact path="/projects" component={ProjectsPage} />
+        <Route exact path="/project/create" component={ProjectCreatePage} />
+        <Route exact path="/project/:id" component={ProjectPage} />
+        <Route
+          exact
+          path="/project/:id/contributors"
+          component={ProjectContributorsPage}
+        />
+        <Route exact path="/project/:id/import" component={ProjectImportPage} />
+        <Route exact path="/project/:id/export" component={ProjectExportPage} />
+        <Route exact path="/project/:id/items" component={ProjectItemsPage} />
+        <Route
+          exact
+          path="/project/:id/items/:itemId"
+          component={ProjectItemPage}
+        />
+        <Route exact path="/project/:id/stores" component={ProjectStoresPage} />
+        <Route
+          exact
+          path="/project/:id/stores/:storeId"
+          component={ProjectStorePage}
+        />
+        <Route
+          exact
+          path="/project/:id/boxItemOuts"
+          component={ProjectBoxItemOutsPage}
+        />
 
-      <Route component={NotFoundPage} />
-    </Switch>
+        <Route component={NotFoundPage} />
+      </Switch>
+      <GlobalStyle />
+    </div>
   );
 }
