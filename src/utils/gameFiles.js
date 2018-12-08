@@ -244,11 +244,6 @@ Object.values(ITEM_TYPES)
   .forEach(type => {
     const path = `Script/${upperFirst(type)}Item.dat`;
 
-    // check the presence, so that you do not accidentally overwrite existing ones with such a filling
-    if (FILES[path] !== undefined) {
-      throw new Error(`File by path ${path} already exists`);
-    }
-
     FILES[path] = {
       path,
       resolve: RESOLVERS.SERVER_ITEM,
