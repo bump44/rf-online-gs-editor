@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Structs Server BoxItemOut DefaultHeader should exist 1`] = `
+Array [
+  Object {
+    "as": undefined,
+    "len": 32,
+    "name": "nCount",
+    "schemaProps": Object {},
+    "type": [Function],
+    "typeClassName": "Number",
+    "weight": 4,
+  },
+  Object {
+    "as": undefined,
+    "len": 32,
+    "name": "nCountColumns",
+    "schemaProps": Object {},
+    "type": [Function],
+    "typeClassName": "Number",
+    "weight": 4,
+  },
+  Object {
+    "as": undefined,
+    "len": 32,
+    "name": "nBlockSize",
+    "schemaProps": Object {},
+    "type": [Function],
+    "typeClassName": "Number",
+    "weight": 4,
+  },
+]
+`;
