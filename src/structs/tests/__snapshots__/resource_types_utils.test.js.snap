@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Structs ResourceTypesUtils should have aniTypes 1`] = `
+Array [
+  "player_ani1",
+  "player_ani2",
+  "player_ani3",
+  "monster_ani",
+  "animus_ani",
+  "tower_ani",
+  "store_ani",
+  "item_ani",
+  "mau_ani",
+]
+`;
+
+exports[`Structs ResourceTypesUtils should have boneTypes 1`] = `
+Array [
+  "player_bone1",
+  "player_bone2",
+  "player_bone3",
+  "monster_bone",
+  "animus_bone",
+  "tower_bone",
+  "store_bone",
+  "item_bone",
+  "mau_bone",
+]
+`;
+
+exports[`Structs ResourceTypesUtils should have meshTypes 1`] = `
+Array [
+  "player_mesh1",
+  "player_mesh2",
+  "player_mesh3",
+  "monster_mesh",
+  "animus_mesh",
+  "tower_mesh",
+  "store_mesh",
+  "item_mesh",
+  "mau_mesh",
+]
+`;

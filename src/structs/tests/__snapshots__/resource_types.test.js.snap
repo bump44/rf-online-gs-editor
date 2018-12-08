@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Structs ResourceTypes should have resourceTypes 1`] = `
+Object {
+  "ANIMUS_ANI": "animus_ani",
+  "ANIMUS_BONE": "animus_bone",
+  "ANIMUS_MESH": "animus_mesh",
+  "ITEM_ANI": "item_ani",
+  "ITEM_BONE": "item_bone",
+  "ITEM_MESH": "item_mesh",
+  "MAU_ANI": "mau_ani",
+  "MAU_BONE": "mau_bone",
+  "MAU_MESH": "mau_mesh",
+  "MONSTER_ANI": "monster_ani",
+  "MONSTER_BONE": "monster_bone",
+  "MONSTER_MESH": "monster_mesh",
+  "PLAYER_ANI1": "player_ani1",
+  "PLAYER_ANI2": "player_ani2",
+  "PLAYER_ANI3": "player_ani3",
+  "PLAYER_BONE1": "player_bone1",
+  "PLAYER_BONE2": "player_bone2",
+  "PLAYER_BONE3": "player_bone3",
+  "PLAYER_MESH1": "player_mesh1",
+  "PLAYER_MESH2": "player_mesh2",
+  "PLAYER_MESH3": "player_mesh3",
+  "STORE_ANI": "store_ani",
+  "STORE_BONE": "store_bone",
+  "STORE_MESH": "store_mesh",
+  "TOWER_ANI": "tower_ani",
+  "TOWER_BONE": "tower_bone",
+  "TOWER_MESH": "tower_mesh",
+}
+`;

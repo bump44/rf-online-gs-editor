@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Structs SkillforceTypes should have skillforceTypes 1`] = `
+Object {
+  "BULLET": "bullet",
+  "CLASS_SKILL": "class_skill",
+  "POTION": "potion",
+  "SKILL": "skill",
+  "SPELL": "spell",
+}
+`;
