@@ -143,6 +143,15 @@ class Struct {
     return this.fields.map(field => field.toSchema());
   }
 
+  toPlainObject(payload) {
+    return {
+      weight: this.getWeight(payload),
+      fields: this.getFields().map(field => field.toPlainObject(payload)),
+      fieldNames: this.getFieldNames(),
+      isDynamic: this.isDynamic(),
+    };
+  }
+
   isDynamic() {
     return this.fields.some(field => field.isDynamic());
   }

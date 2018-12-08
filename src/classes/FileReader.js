@@ -274,4 +274,16 @@ export default class FileReader {
     const [header] = this.getHeaders();
     return header;
   }
+
+  getName() {
+    return this.name;
+  }
+
+  getStruct() {
+    return this.struct;
+  }
+
+  getPath() {
+    return this.path;
+  }
 }

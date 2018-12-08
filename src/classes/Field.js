@@ -71,6 +71,24 @@ class Field {
   }
 
   /**
+   * Return typeClassName attribute
+   *
+   * @returns String oneOf([Number, Boolean, String])
+   */
+  getTypeClassName() {
+    const obj = this.getType();
+    if (obj && obj.toString) {
+      const arr = obj.toString().match(/function\s*(\w+)/);
+
+      if (arr && arr.length === 2) {
+        return arr[1];
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * Return length attribute
    * @param {Object} payload required if isDynamic true
    *
@@ -137,6 +155,21 @@ class Field {
     return {
       type: this.type,
       name: this.name,
+    };
+  }
+
+  toPlainObject(payload) {
+    invariant(!this.isDynamic() || payload, `Values is required`);
+    const values = payload || {};
+
+    return {
+      type: this.getType(),
+      typeClassName: this.getTypeClassName(),
+      name: this.getName(),
+      len: this.getLen(values),
+      as: this.getAs(),
+      weight: this.getWeight(values),
+      schemaProps: this.schemaProps,
     };
   }
 
