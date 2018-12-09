@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<FullheightColumn /> should FullheightAutoSizer render Child 1`] = `
+.c0 {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 15px;
+}
+
+<div
+  style={
+    Object {
+      "height": 0,
+      "overflow": "visible",
+      "width": 0,
+    }
+  }
+>
+  <div
+    className="c0"
+    height={0}
+    width={0}
+  >
+    <div>
+      Children
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<FullheightColumn /> should exist FullheightAutoSizer 1`] = `
 <AutoSizer
   disableHeight={false}

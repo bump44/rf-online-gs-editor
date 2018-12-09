@@ -47,4 +47,15 @@ describe('<FullheightColumn />', () => {
     );
     expect(wrapper).toMatchSnapshot();
   });
+  it('should FullheightAutoSizer render Child', () => {
+    const rendered = renderer
+      .create(
+        <FullheightAutoSizer>
+          <div>Children</div>
+        </FullheightAutoSizer>,
+      )
+      .toJSON();
+
+    expect(rendered).toMatchSnapshot();
+  });
 });
