@@ -1,6 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<FullheightColumn /> Should exist 1`] = `
+exports[`<FullheightColumn /> should exist FullheightAutoSizer 1`] = `
+<AutoSizer
+  disableHeight={false}
+  disableWidth={false}
+  onResize={[Function]}
+  style={Object {}}
+>
+  <Component />
+</AutoSizer>
+`;
+
+exports[`<FullheightColumn /> should exist FullheightAutoSizerChild 1`] = `
+.c0 {
+  width: undefinedpx;
+  height: undefinedpx;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 15px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<FullheightColumn /> should exist FullheightColumn 1`] = `
 <GridColumn
   style={
     Object {
@@ -13,35 +38,54 @@ exports[`<FullheightColumn /> Should exist 1`] = `
 </GridColumn>
 `;
 
-exports[`<FullheightColumn /> Should exist FullheightThis 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "FullheightColumn__FullheightThis-zpb8wc-0",
-        "isStatic": false,
-        "rules": Array [
-          "display:flex;flex:1 100%;padding-top:",
-          [Function],
-          "px;padding-bottom:",
-          [Function],
-          "px;",
-        ],
-      },
-      "displayName": "FullheightColumn__FullheightThis",
-      "foldedComponentIds": Array [],
-      "render": [Function],
-      "styledComponentId": "FullheightColumn__FullheightThis-zpb8wc-0",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
->
-  <div />
-</StyledComponent>
+exports[`<FullheightColumn /> should exist FullheightThis 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 100%;
+  -ms-flex: 1 100%;
+  flex: 1 100%;
+  padding-top: 15px;
+  padding-bottom: 0px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`<FullheightColumn /> should render FullheightAutoSizerChild with custom props 1`] = `
+.c0 {
+  width: 10px;
+  height: 99px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 15px;
+}
+
+<div
+  className="c0"
+  height={99}
+  width={10}
+/>
+`;
+
+exports[`<FullheightColumn /> should render FullheightThis with custom props 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 100%;
+  -ms-flex: 1 100%;
+  flex: 1 100%;
+  padding-top: 10px;
+  padding-bottom: 99px;
+}
+
+<div
+  className="c0"
+/>
 `;
