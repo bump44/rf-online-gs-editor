@@ -30,13 +30,6 @@ FullheightColumn.propTypes = {
 
 export default FullheightColumn;
 
-export const FullheightThis = styled.div`
-  display: flex;
-  flex: 1 100%;
-  padding-top: ${({ paddingTop }) => paddingTop || 15}px;
-  padding-bottom: ${({ paddingBottom }) => paddingBottom || 0}px;
-`;
-
 export function FullheightAutoSizer({ children }) {
   return (
     <AutoSizer>
@@ -53,7 +46,16 @@ FullheightAutoSizer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const FullheightAutoSizerChild = styled.div`
+// styled
+
+export const FullheightThis = styled.div`
+  display: flex;
+  flex: 1 100%;
+  padding-top: ${({ paddingTop }) => paddingTop || 15}px;
+  padding-bottom: ${({ paddingBottom }) => paddingBottom || 0}px;
+`;
+
+export const FullheightAutoSizerChild = styled.div`
   ${({ width, height }) => `
     width: ${width}px;
     height: ${height}px;
