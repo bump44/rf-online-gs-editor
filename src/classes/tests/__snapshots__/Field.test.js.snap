@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Classes Field should exist toObject 1`] = `
+Object {
+  "name": "fl",
+  "type": [Function],
+}
+`;
+
+exports[`Classes Field should exist toPlainObject 1`] = `
+Object {
+  "as": undefined,
+  "len": 32,
+  "name": "fl",
+  "schemaProps": Object {},
+  "type": [Function],
+  "typeClassName": "Number",
+  "weight": 4,
+}
+`;
+
+exports[`Classes Field should exist toSchema 1`] = `
+Object {
+  "name": "fl",
+  "props": Object {
+    "type": [Function],
+  },
+  "type": [Function],
+}
+`;
