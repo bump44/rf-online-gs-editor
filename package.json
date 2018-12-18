@@ -103,7 +103,7 @@
     "redux-immutable": "^4.0.0",
     "redux-saga": "^0.16.2",
     "reselect": "^4.0.0",
-    "sanitize-html": "^1.19.3",
+    "sanitize-html": "^1.20.0",
     "sanitize.css": "^8.0.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
