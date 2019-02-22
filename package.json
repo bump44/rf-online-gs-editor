@@ -147,6 +147,6 @@
     "jsdom": "^13.1.0",
     "plop": "^2.1.0",
     "prettier": "^1.15.3",
-    "react-test-renderer": "^16.6.3"
+    "react-test-renderer": "^16.8.3"
   }
 }
