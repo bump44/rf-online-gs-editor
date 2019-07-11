@@ -83,7 +83,7 @@
     "iconv-lite": "^0.4.24",
     "immutable": "^3.8.2",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
