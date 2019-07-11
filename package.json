@@ -91,7 +91,7 @@
     "react-contenteditable": "^3.2.3",
     "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
-    "react-hot-loader": "^4.3.12",
+    "react-hot-loader": "^4.12.6",
     "react-intl": "^2.7.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
