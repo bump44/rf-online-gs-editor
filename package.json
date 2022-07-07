@@ -84,7 +84,7 @@
     "immutable": "^3.8.2",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
-    "moment": "^2.23.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-apollo": "^2.3.1",
